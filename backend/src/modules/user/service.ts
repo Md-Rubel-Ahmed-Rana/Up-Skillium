@@ -1,9 +1,11 @@
 import { Types } from "mongoose";
 import { User } from "./model";
 import { ICreateUser } from "./user.interface";
+import { BcryptInstance } from "../../lib/bcrypt";
 
 class Service {
   async register(user: ICreateUser): Promise<Types.ObjectId> {
+    user.password = await BcryptInstance.hash(user.password);
     const newUser = await User.create(user);
     return newUser._id;
   }
@@ -11,10 +13,11 @@ class Service {
     return User.findOne({ email: email });
   }
   async findUserById(id: string) {
-    return User.findById(id);
+    const user = await User.findById(id).select({ password: 0 });
+    return user;
   }
-  async findUserByEmailWithPassword(id: string) {
-    return User.findById(id);
+  async findUserByEmailWithPassword(email: string) {
+    return User.findOne({ email: email });
   }
 }
 

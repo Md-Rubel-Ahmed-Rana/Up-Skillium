@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const generateStudentId = (lastStudentId) => {
     const parts = lastStudentId.split("-");
     const numericPart = parts[2];
@@ -8,3 +9,4 @@ const generateStudentId = (lastStudentId) => {
     const incrementedId = `US-ST-${newNumericPart}`;
     return incrementedId;
 };
+exports.default = generateStudentId;

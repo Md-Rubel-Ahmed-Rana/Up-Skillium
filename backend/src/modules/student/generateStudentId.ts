@@ -9,3 +9,5 @@ const generateStudentId = (lastStudentId: string): string => {
   const incrementedId = `US-ST-${newNumericPart}`;
   return incrementedId;
 };
+
+export default generateStudentId;
