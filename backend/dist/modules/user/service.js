@@ -11,9 +11,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const model_1 = require("./model");
+const bcrypt_1 = require("../../lib/bcrypt");
 class Service {
     register(user) {
         return __awaiter(this, void 0, void 0, function* () {
+            user.password = yield bcrypt_1.BcryptInstance.hash(user.password);
             const newUser = yield model_1.User.create(user);
             return newUser._id;
         });
@@ -25,12 +27,13 @@ class Service {
     }
     findUserById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.User.findById(id);
+            const user = yield model_1.User.findById(id).select({ password: 0 });
+            return user;
         });
     }
-    findUserByEmailWithPassword(id) {
+    findUserByEmailWithPassword(email) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.User.findById(id);
+            return model_1.User.findOne({ email: email });
         });
     }
 }
