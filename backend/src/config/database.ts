@@ -1,30 +1,29 @@
 import mongoose from "mongoose";
-import { config } from "./envConfig";
-import { logger } from "./logger";
+import config from "./envConfig";
 
 class Database {
   async connect() {
-    logger.info("Connecting to Database. Please wait...");
+    console.info("Connecting to Database. Please wait...");
     try {
-      await mongoose.connect(config.database.uri);
+      await mongoose.connect(config.database.url);
 
-      logger.info("Database connected...");
+      console.info("Database connected...");
     } catch (error: any) {
-      logger.error(`Database connection error: ${error.message}`);
+      console.error(`Database connection error: ${error.message}`);
 
       throw error;
     }
 
     mongoose.connection.on("connected", () => {
-      logger.info("Mongoose connected to database");
+      console.info("Mongoose connected to database");
     });
 
     mongoose.connection.on("error", (err) => {
-      logger.error(`Mongoose connection error: ${err}`);
+      console.error(`Mongoose connection error: ${err}`);
     });
 
     mongoose.connection.on("disconnected", () => {
-      logger.warn("Mongoose disconnected from database");
+      console.warn("Mongoose disconnected from database");
     });
   }
 }
