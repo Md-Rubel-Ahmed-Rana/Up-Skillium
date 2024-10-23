@@ -1,9 +1,10 @@
+import Register from "@/components/register"
 
 
 const RegisterPage = () => {
   return (
     <div>
-      This is register page
+      <Register />
     </div>
   )
 }
