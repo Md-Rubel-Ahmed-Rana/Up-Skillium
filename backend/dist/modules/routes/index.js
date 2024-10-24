@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RootRoutes = void 0;
 const express_1 = require("express");
 const route_1 = require("../auth/route");
+const routes_1 = require("../course/routes");
 const router = (0, express_1.Router)();
 router.use("/auth", route_1.AuthRoutes);
+router.use("/course", routes_1.CourseRoutes);
 exports.RootRoutes = router;
