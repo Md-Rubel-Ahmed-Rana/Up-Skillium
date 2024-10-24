@@ -13,7 +13,7 @@ class Service {
       : generateStudentId("US-ST-0000");
 
     data.studentId = studentId;
-    const role = await RoleService.getRoleByRoleName("student");
+    const role = await RoleService.getRoleByRoleName(data.role);
 
     const userId = await UserService.register({
       name: data.user.name,

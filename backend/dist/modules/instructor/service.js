@@ -12,19 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.StudentService = void 0;
+exports.InstructorService = void 0;
 const service_1 = require("../role/service");
 const service_2 = require("../user/service");
-const generateStudentId_1 = __importDefault(require("./generateStudentId"));
 const model_1 = require("./model");
+const generateTeacherId_1 = __importDefault(require("./generateTeacherId"));
 class Service {
-    createNewStudent(data) {
+    createNewInstructor(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const lastStudent = yield model_1.Student.findOne({}).sort({ createdAt: -1 });
-            const studentId = lastStudent
-                ? (0, generateStudentId_1.default)(lastStudent.studentId)
-                : (0, generateStudentId_1.default)("US-ST-0000");
-            data.studentId = studentId;
+            const lastTeacherId = yield model_1.Instructor.findOne({}).sort({ createdAt: -1 });
+            const teacherId = lastTeacherId
+                ? (0, generateTeacherId_1.default)(lastTeacherId.teacherId)
+                : (0, generateTeacherId_1.default)("US-TE-0000");
+            data.teacherId = teacherId;
             const role = yield service_1.RoleService.getRoleByRoleName(data.role);
             const userId = yield service_2.UserService.register({
                 name: data.user.name,
@@ -33,8 +33,8 @@ class Service {
                 role: role === null || role === void 0 ? void 0 : role.id,
             });
             data.userId = userId;
-            yield model_1.Student.create(data);
+            yield model_1.Instructor.create(data);
         });
     }
 }
-exports.StudentService = new Service();
+exports.InstructorService = new Service();
