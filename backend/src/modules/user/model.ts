@@ -26,8 +26,9 @@ export const userSchema = new Schema<ICreateUser>(
       required: true,
     },
     role: {
-      type: String,
+      type: Schema.Types.ObjectId,
       required: true,
+      ref: "Role",
     },
     password: {
       type: String,
@@ -47,10 +48,6 @@ export const userSchema = new Schema<ICreateUser>(
     },
     emergencyContact: {
       type: emergencyContactSchema,
-    },
-    permissions: {
-      type: [String],
-      required: true,
     },
   },
   {

@@ -13,7 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentService = void 0;
-const service_1 = require("../user/service");
+const service_1 = require("../role/service");
+const service_2 = require("../user/service");
 const generateStudentId_1 = __importDefault(require("./generateStudentId"));
 const model_1 = require("./model");
 class Service {
@@ -24,12 +25,12 @@ class Service {
                 ? (0, generateStudentId_1.default)(lastStudent.studentId)
                 : (0, generateStudentId_1.default)("US-ST-0000");
             data.studentId = studentId;
-            const userId = yield service_1.UserService.register({
+            const role = yield service_1.RoleService.getRoleByRoleName("student");
+            const userId = yield service_2.UserService.register({
                 name: data.user.name,
                 email: data.user.email,
                 password: data.user.password,
-                role: "student",
-                permissions: ["student", "course_view"],
+                role: role === null || role === void 0 ? void 0 : role.id,
             });
             data.userId = userId;
             yield model_1.Student.create(data);
