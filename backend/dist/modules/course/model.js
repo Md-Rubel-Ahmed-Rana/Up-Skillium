@@ -34,5 +34,11 @@ const courseSchema = new mongoose_1.Schema({
         enum: ["draft", "published", "archived"],
         default: "draft",
     },
+}, {
+    timestamps: true,
+    toJSON: {
+        versionKey: false,
+        virtuals: true,
+    },
 });
 exports.Course = (0, mongoose_1.model)("Course", courseSchema);

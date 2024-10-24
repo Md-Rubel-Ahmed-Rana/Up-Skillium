@@ -13,7 +13,9 @@ class Service {
     return User.findOne({ email: email });
   }
   async findUserById(id: string) {
-    const user = await User.findById(id).select({ password: 0 });
+    const user = await User.findById(id)
+      .select({ password: 0 })
+      .populate("role");
     return user;
   }
   async findUserByEmailWithPassword(email: string) {

@@ -9,34 +9,38 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserService = void 0;
+exports.RoleService = void 0;
 const model_1 = require("./model");
-const bcrypt_1 = require("../../lib/bcrypt");
 class Service {
-    register(user) {
+    createRole(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            user.password = yield bcrypt_1.BcryptInstance.hash(user.password);
-            const newUser = yield model_1.User.create(user);
-            return newUser._id;
+            yield model_1.Role.create(data);
         });
     }
-    findUserByEmail(email) {
+    getAllRoles() {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.User.findOne({ email: email });
+            return yield model_1.Role.find({});
         });
     }
-    findUserById(id) {
+    getRoleById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const user = yield model_1.User.findById(id)
-                .select({ password: 0 })
-                .populate("role");
-            return user;
+            return yield model_1.Role.findById(id);
         });
     }
-    findUserByEmailWithPassword(email) {
+    getRoleByRoleName(roleName) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.User.findOne({ email: email });
+            return yield model_1.Role.findOne({ role: roleName });
+        });
+    }
+    updateRole(id, updatedData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Role.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });
+        });
+    }
+    deleteRole(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Role.findByIdAndDelete(id);
         });
     }
 }
-exports.UserService = new Service();
+exports.RoleService = new Service();

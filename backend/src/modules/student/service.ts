@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+import { RoleService } from "../role/service";
 import { UserService } from "../user/service";
 import generateStudentId from "./generateStudentId";
 import { INewStudent } from "./interface";
@@ -11,13 +13,13 @@ class Service {
       : generateStudentId("US-ST-0000");
 
     data.studentId = studentId;
+    const role = await RoleService.getRoleByRoleName("student");
 
     const userId = await UserService.register({
       name: data.user.name,
       email: data.user.email,
       password: data.user.password,
-      role: "student",
-      permissions: ["student", "course_view"],
+      role: role?.id as Types.ObjectId,
     });
     data.userId = userId;
     await Student.create(data);

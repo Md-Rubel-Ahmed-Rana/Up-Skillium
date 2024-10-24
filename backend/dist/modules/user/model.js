@@ -24,8 +24,9 @@ exports.userSchema = new mongoose_1.Schema({
         required: true,
     },
     role: {
-        type: String,
+        type: mongoose_1.Schema.Types.ObjectId,
         required: true,
+        ref: "Role",
     },
     password: {
         type: String,
@@ -45,10 +46,6 @@ exports.userSchema = new mongoose_1.Schema({
     },
     emergencyContact: {
         type: emergencyContactSchema,
-    },
-    permissions: {
-        type: [String],
-        required: true,
     },
 }, {
     timestamps: true,
