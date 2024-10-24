@@ -1,13 +1,11 @@
 
 
-import { Avatar, MenuProps } from 'antd';
+import { MenuProps } from 'antd';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
 
-import userProfilePic from "../../public/assets/images/p5.jpg";
-import { Color } from 'antd/es/color-picker';
-import Image from 'next/image';
+
 const Dropdown = dynamic(() => import("antd/lib/dropdown"), { ssr: false });
 
 const NavbarDropdown = () => {
