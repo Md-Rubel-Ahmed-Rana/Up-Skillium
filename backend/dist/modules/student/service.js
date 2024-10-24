@@ -8,17 +8,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.StudentService = void 0;
+const service_1 = require("../user/service");
+const generateStudentId_1 = __importDefault(require("./generateStudentId"));
 const model_1 = require("./model");
 class Service {
     createNewStudent(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const lastStudent = yield model_1.Student.findOne({}).sort({ createdAt: -1 });
             const studentId = lastStudent
-                ? generateStudentId(lastStudent.studentId)
-                : generateStudentId("US-ST-0000");
+                ? (0, generateStudentId_1.default)(lastStudent.studentId)
+                : (0, generateStudentId_1.default)("US-ST-0000");
             data.studentId = studentId;
+            const userId = yield service_1.UserService.register({
+                name: data.user.name,
+                email: data.user.email,
+                password: data.user.password,
+                role: "student",
+                permissions: ["student", "course_view"],
+            });
+            data.userId = userId;
             yield model_1.Student.create(data);
         });
     }
