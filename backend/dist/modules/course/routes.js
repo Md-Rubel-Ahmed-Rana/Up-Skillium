@@ -5,4 +5,8 @@ const express_1 = require("express");
 const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/create", controller_1.CourseController.createCourse);
+router.get("/", controller_1.CourseController.getCourses);
+router.get("/:id", controller_1.CourseController.getSingleCourse);
+router.patch("/:id", controller_1.CourseController.updateCourse);
+router.delete("/:id", controller_1.CourseController.deleteCourse);
 exports.CourseRoutes = router;
