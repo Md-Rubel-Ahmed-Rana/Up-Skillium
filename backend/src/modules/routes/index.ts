@@ -4,6 +4,7 @@ import { CourseRoutes } from "../course/routes";
 import { StudentRoutes } from "../student/routes";
 import { RoleRoutes } from "../role/routes";
 import { InstructorRoutes } from "../instructor/routes";
+import { AdminRoutes } from "../admin/routes";
 
 const router = Router();
 
@@ -14,6 +15,8 @@ router.use("/course", CourseRoutes);
 router.use("/student", StudentRoutes);
 
 router.use("/instructor", InstructorRoutes);
+
+router.use("/admin", AdminRoutes);
 
 router.use("/role", RoleRoutes);
 
