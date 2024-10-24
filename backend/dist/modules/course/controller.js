@@ -27,6 +27,51 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.getCourses = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const searchText = req.query.searchText || "";
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const filters = req.query.filters
+                ? JSON.parse(req.query.filters)
+                : {};
+            const courses = yield service_1.CourseService.getCourses(searchText, page, limit, filters);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Courses fetched successfully",
+                data: courses,
+            });
+        }));
+        this.getSingleCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            const course = yield service_1.CourseService.getSingleCourse(id);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Course fetched successfully",
+                data: course,
+            });
+        }));
+        this.updateCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.CourseService.updateCourse(id, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Course updated successfully",
+                data: null,
+            });
+        }));
+        this.deleteCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.CourseService.deleteCourse(id);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Course deleted successfully",
+                data: null,
+            });
+        }));
     }
 }
 exports.CourseController = new Controller();
