@@ -1,11 +1,13 @@
 
 
-import { MenuProps } from 'antd';
+import { Avatar, MenuProps } from 'antd';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
+
+import userProfilePic from "../../public/assets/images/p5.jpg";
+import { Color } from 'antd/es/color-picker';
 import Image from 'next/image';
-import userProfilePic from "../../public/assets/images/p5.jpg"; 
 const Dropdown = dynamic(() => import("antd/lib/dropdown"), { ssr: false });
 
 const NavbarDropdown = () => {
@@ -37,15 +39,12 @@ const NavbarDropdown = () => {
     ];
 
     return (
-        <div>
-            <Dropdown menu={{ items }} placement="bottomRight" arrow> 
-                <Image
-                    src={userProfilePic}
-                    alt="Profile"           
-                    className="rounded-full h-10 w-10 cursor-pointer"
-                />    
-            </Dropdown>
-        </div>
+
+        <Dropdown menu={{ items }} placement="bottomRight" arrow>
+            <img style={{width: '50px', height: '50px', borderRadius: '50%'}} 
+            src="https://i.ibb.co.com/mGpJ6w7/user-Profile.jpg" alt='Profile' className='border-2 border-blue-600'/>
+        </Dropdown>
+
     );
 };
 
