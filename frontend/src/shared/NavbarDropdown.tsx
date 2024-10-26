@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { MenuProps } from 'antd';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
