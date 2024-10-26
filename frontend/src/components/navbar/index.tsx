@@ -5,7 +5,6 @@ import Image from "next/image";
 import navbarLogo from "../../../public/assets/images/navbarLogo.webp";
 import NavbarDropdown from "@/shared/NavbarDropdown";
 
-
 const NavbarPage = () => {
     const [isOpen, setIsOpen] = useState(false);
 
