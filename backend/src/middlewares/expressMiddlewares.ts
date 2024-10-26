@@ -10,7 +10,7 @@ export const expressMiddlewares = (app: Application) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
   app.use(helmet());
-  app.use(apiRateLimiter.limitAPIRequest());
+  // app.use(apiRateLimiter.limitAPIRequest());
   app.use(cookieParser());
 
   app.use(morgan("dev"));
