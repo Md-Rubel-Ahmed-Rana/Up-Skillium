@@ -22,6 +22,10 @@ const NavbarPage = () => {
             path: "/",
         },
         {
+            name: "Course Details",
+            path: "/courseDetails",
+        },
+        {
             name: "Courses",
             path: "/courses",
         },
