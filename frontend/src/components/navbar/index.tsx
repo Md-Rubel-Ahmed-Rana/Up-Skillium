@@ -1,12 +1,9 @@
-
-
 import Link from "next/link";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import navbarLogo from "../../../public/assets/images/navbarLogo.webp";
 import NavbarDropdown from "@/shared/NavbarDropdown";
-
 
 const NavbarPage = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +36,7 @@ const NavbarPage = () => {
         },
     ];
     return (
-        <nav className="bg-gray-50 shadow-md text-black fixed w-full z-30">
+        <nav className="bg-gray-50 shadow-md text-black fixed w-full z-30 mt-0">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
 
