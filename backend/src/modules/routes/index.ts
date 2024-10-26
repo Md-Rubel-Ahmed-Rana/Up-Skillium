@@ -5,6 +5,7 @@ import { StudentRoutes } from "../student/routes";
 import { RoleRoutes } from "../role/routes";
 import { InstructorRoutes } from "../instructor/routes";
 import { AdminRoutes } from "../admin/routes";
+import { CategoryRoutes } from "../category/routes";
 
 const router = Router();
 
@@ -19,5 +20,7 @@ router.use("/instructor", InstructorRoutes);
 router.use("/admin", AdminRoutes);
 
 router.use("/role", RoleRoutes);
+
+router.use("/category", CategoryRoutes);
 
 export const RootRoutes = router;
