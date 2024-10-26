@@ -1,6 +1,6 @@
 
 
-import { Avatar, MenuProps } from 'antd';
+import { MenuProps } from 'antd';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import React from 'react';
