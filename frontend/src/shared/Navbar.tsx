@@ -1,13 +1,11 @@
-import NavbarPage from "@/components/navbar"
-
-
+import NavbarPage from "@/components/navbar";
 
 const Navbar = () => {
   return (
     <div>
-    <NavbarPage />
+      <NavbarPage />
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
