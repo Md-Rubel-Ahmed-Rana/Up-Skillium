@@ -17,7 +17,7 @@ const NavbarDropdown = () => {
         {
             key: '2',
             label: (
-                <Link href="/deshboard">
+                <Link href="/dashboards">
                     Dashboard
                 </Link>
             ),
