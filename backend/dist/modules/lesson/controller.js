@@ -37,7 +37,6 @@ class Controller extends rootController_1.default {
                 data: lessons,
             });
         }));
-        // Get a single lesson by ID
         this.getLessonById = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const lesson = yield service_1.LessonService.getLessonById(id);

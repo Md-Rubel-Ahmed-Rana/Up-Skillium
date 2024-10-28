@@ -30,7 +30,6 @@ class Controller extends RootController {
     });
   });
 
-  // Get a single lesson by ID
   getLessonById = this.catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
     const lesson = await LessonService.getLessonById(id);

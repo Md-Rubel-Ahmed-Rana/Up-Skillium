@@ -2,7 +2,7 @@ import { IQuizQuestion } from "../quiz/interface";
 
 export type ILesson = {
   title: string;
-  type: "video" | "instruction" | "quiz";
+  type: "content" | "instruction" | "quiz" | "assignment";
   videoLength?: number;
   videoUrl?: string;
   content?: string;
