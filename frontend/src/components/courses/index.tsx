@@ -4,10 +4,12 @@ import CourseCard from "./CourseCard";
 
 const CourseContainer = () => {
   const { data } = useGetAllCoursesQuery({});
+  console.log(data)
   const courses = data?.data;
+
   return (
-    <div>
-      {courses.map((course: any) => (
+    <div className="grid grid-cols-3 gap-7 mt-10">
+      {courses?.map((course: any) => (
         <CourseCard key={course?.id} course={course} />
       ))}
     </div>
@@ -15,3 +17,6 @@ const CourseContainer = () => {
 };
 
 export default CourseContainer;
+
+
+

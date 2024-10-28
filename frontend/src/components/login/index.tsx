@@ -7,10 +7,10 @@ import { useUserLoginMutation } from "@/features/auth";
 import toast from "react-hot-toast";
 
 const Button = dynamic(() => import("antd/lib/button"), { ssr: false });
-const Input = dynamic(() => import("antd/lib/input"), { ssr: false });
-const InputPassword = dynamic(() => import("antd/lib/input/Password"), {
-  ssr: false,
-});
+// const Input = dynamic(() => import("antd/lib/input"), { ssr: false });
+// const InputPassword = dynamic(() => import("antd/lib/input/Password"), {
+//   ssr: false,
+// });
 
 type FieldType = {
   email: string;
@@ -27,6 +27,7 @@ const Login: React.FC = () => {
   const [loginUser, { isLoading }] = useUserLoginMutation();
 
   const handleLogin: SubmitHandler<FieldType> = async (data) => {
+    console.log(data)
     try {
       const response: any = await loginUser(data);
       if (response?.data?.statusCode === 200) {
@@ -54,7 +55,7 @@ const Login: React.FC = () => {
         </h2>
 
         <div>
-          <Input
+          <input
             className="w-full py-2"
             {...register("email", { required: "Email is required" })}
             placeholder="Email"
@@ -65,7 +66,7 @@ const Login: React.FC = () => {
         </div>
 
         <div>
-          <InputPassword
+          <input
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-500"
             {...register("password", { required: "Password is required" })}
             placeholder="Password"
