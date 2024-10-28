@@ -1,1 +1,13 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LessonRoutes = void 0;
+const express_1 = require("express");
+const controller_1 = require("./controller");
+const router = (0, express_1.Router)();
+router.post("/create", controller_1.LessonController.createLesson);
+router.get("/", controller_1.LessonController.getAllLessons);
+router.get("/:id", controller_1.LessonController.getLessonById);
+router.patch("/:id", controller_1.LessonController.updateLesson);
+router.delete("/:id", controller_1.LessonController.deleteLesson);
+router.get("/course/:courseId", controller_1.LessonController.getLessonsByCourse);
+exports.LessonRoutes = router;
