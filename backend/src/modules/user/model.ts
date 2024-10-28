@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { ICreateUser } from "./user.interface";
+import { ICreateUser } from "./interface";
 
 const addressSchema = new Schema({
   street: { type: String, required: true },

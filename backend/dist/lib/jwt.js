@@ -56,10 +56,10 @@ class JWT {
             const accessToken = (_a = req === null || req === void 0 ? void 0 : req.cookies) === null || _a === void 0 ? void 0 : _a.upSkilliumAccessToken;
             const refreshToken = (_b = req === null || req === void 0 ? void 0 : req.cookies) === null || _b === void 0 ? void 0 : _b.upSkilliumRefreshToken;
             if (!accessToken || !refreshToken) {
-                return res.status(403).json({
-                    statusCode: 403,
+                return res.status(401).json({
+                    statusCode: 401,
                     success: false,
-                    message: "Missing authentication tokens",
+                    message: "User was not logged in. Please login",
                 });
             }
             try {
@@ -72,8 +72,8 @@ class JWT {
                 if (error instanceof jsonwebtoken_1.TokenExpiredError) {
                     return this.handleExpiredAccessToken(refreshToken, res, next);
                 }
-                return res.status(403).json({
-                    statusCode: 403,
+                return res.status(401).json({
+                    statusCode: 401,
                     success: false,
                     message: "Unauthorized access",
                 });

@@ -15,6 +15,7 @@ type IEmergencyContact = {
 };
 
 export type ICreateUser = {
+  image?: string;
   name: string;
   email: string;
   role: Types.ObjectId;
@@ -29,6 +30,7 @@ export type ICreateUser = {
 export type IGetUser = {
   id: string;
   name: string;
+  image: string;
   email: string;
   role: Types.ObjectId;
   dateOfBirth: Date;
@@ -36,6 +38,4 @@ export type IGetUser = {
   address: IAddress;
   emergencyContact: IEmergencyContact;
   phoneNumber: string;
-  createdAt: Date;
-  updatedAt: Date;
 };

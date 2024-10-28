@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { ICreateUser } from "../user/user.interface";
+import { ICreateUser } from "../user/interface";
 
 export type IAdmin = {
   userId: Types.ObjectId;

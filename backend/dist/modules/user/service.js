@@ -8,10 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const model_1 = require("./model");
 const bcrypt_1 = require("../../lib/bcrypt");
+const apiError_1 = __importDefault(require("../../shared/apiError"));
 class Service {
     register(user) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -33,9 +37,54 @@ class Service {
             return user;
         });
     }
+    findUsers() {
+        return __awaiter(this, arguments, void 0, function* (search = "", page = 1, limit = 5) {
+            const searchQuery = search
+                ? {
+                    $or: [
+                        { name: { $regex: search, $options: "i" } },
+                        { email: { $regex: search, $options: "i" } },
+                    ],
+                }
+                : {};
+            const skip = (page - 1) * limit;
+            const users = yield model_1.User.find(searchQuery)
+                .skip(skip)
+                .limit(limit)
+                .lean()
+                .exec();
+            const total = yield model_1.User.countDocuments();
+            return { users, total };
+        });
+    }
     findUserByEmailWithPassword(email) {
         return __awaiter(this, void 0, void 0, function* () {
             return model_1.User.findOne({ email: email });
+        });
+    }
+    updateUser(id, updatedData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.User.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });
+        });
+    }
+    changePassword(userId, oldPassword, newPassword) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const isExist = yield model_1.User.findById(userId);
+            if (!isExist) {
+                throw new apiError_1.default(404, "User was not found!");
+            }
+            else {
+                const isOldPasswordMatched = yield bcrypt_1.BcryptInstance.compare(oldPassword, isExist.password);
+                if (!isOldPasswordMatched) {
+                    throw new apiError_1.default(400, "Incorrect password. Please enter your correct password");
+                }
+                else {
+                    const newHashedPassword = yield bcrypt_1.BcryptInstance.hash(newPassword);
+                    yield model_1.User.findByIdAndUpdate(userId, {
+                        $set: { password: newHashedPassword },
+                    });
+                }
+            }
         });
     }
 }
