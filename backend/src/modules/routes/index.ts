@@ -9,6 +9,7 @@ import { CategoryRoutes } from "../category/routes";
 import { CourseOutlineRoutes } from "../course-outline/routes";
 import { EducationRoutes } from "../education/routes";
 import { UserRoutes } from "../user/routes";
+import { ModuleRoutes } from "../module/routes";
 
 const router = Router();
 
@@ -29,6 +30,8 @@ router.use("/role", RoleRoutes);
 router.use("/category", CategoryRoutes);
 
 router.use("/course-outline", CourseOutlineRoutes);
+
+router.use("/module", ModuleRoutes);
 
 router.use("/education", EducationRoutes);
 
