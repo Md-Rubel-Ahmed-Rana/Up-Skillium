@@ -28,8 +28,8 @@ class Service {
   async getSingleModule(moduleId: string): Promise<IModule | null> {
     return await Module.findById(moduleId);
   }
-  async getModuleByCourseId(courseId: string): Promise<IModule | null> {
-    return await Module.findOne({ courseId: courseId });
+  async getModuleByCourseId(courseId: string): Promise<IModule[]> {
+    return await Module.find({ courseId: courseId });
   }
   async updateModule(id: string, updatedData: Partial<IModule>): Promise<void> {
     await Module.findByIdAndUpdate(id, { $set: { ...updatedData } });

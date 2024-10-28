@@ -35,7 +35,7 @@ class Service {
     }
     getModuleByCourseId(courseId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.Module.findOne({ courseId: courseId });
+            return yield model_1.Module.find({ courseId: courseId });
         });
     }
     updateModule(id, updatedData) {
