@@ -13,13 +13,16 @@ export const lessonSchema = new Schema<ILesson>(
       type: String,
       required: true,
     },
+    moduleId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+    },
     serial: {
       type: Number,
       required: true,
     },
     content: {
       type: String,
-      required: true,
     },
     videoUrl: {
       type: String,

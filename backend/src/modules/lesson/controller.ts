@@ -18,7 +18,7 @@ class Controller extends RootController {
     const { search = "", type, page = 1, limit = 10 } = req.query;
     const lessons = await LessonService.getAllLessons(
       search as string,
-      type as "video" | "instruction" | "quiz",
+      type as "video" | "instruction" | "quiz" | "assignment",
       Number(page),
       Number(limit)
     );
@@ -63,11 +63,11 @@ class Controller extends RootController {
     });
   });
 
-  getLessonsByCourse = this.catchAsync(async (req: Request, res: Response) => {
-    const { courseId } = req.params;
+  getLessonsByModule = this.catchAsync(async (req: Request, res: Response) => {
+    const { moduleId } = req.params;
     const { page = 1, limit = 10 } = req.query;
-    const lessons = await LessonService.getLessonsByCourse(
-      courseId as unknown as Types.ObjectId,
+    const lessons = await LessonService.getLessonsByModule(
+      moduleId as unknown as Types.ObjectId,
       Number(page),
       Number(limit)
     );

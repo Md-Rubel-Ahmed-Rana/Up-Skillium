@@ -39,10 +39,10 @@ class Service {
             yield model_1.Lesson.findByIdAndDelete(id).exec();
         });
     }
-    getLessonsByCourse(courseId_1) {
-        return __awaiter(this, arguments, void 0, function* (courseId, page = 1, limit = 10) {
+    getLessonsByModule(moduleId_1) {
+        return __awaiter(this, arguments, void 0, function* (moduleId, page = 1, limit = 10) {
             const skip = (page - 1) * limit;
-            return yield model_1.Lesson.find({ courseId }).skip(skip).limit(limit).exec();
+            return yield model_1.Lesson.find({ moduleId }).skip(skip).limit(limit).exec();
         });
     }
 }

@@ -1,8 +1,10 @@
+import { Types } from "mongoose";
 import { IQuizQuestion } from "../quiz/interface";
 
 export type ILesson = {
   title: string;
-  type: "content" | "instruction" | "quiz" | "assignment";
+  type: "video" | "instruction" | "quiz" | "assignment";
+  moduleId: Types.ObjectId;
   videoLength?: number;
   videoUrl?: string;
   content?: string;

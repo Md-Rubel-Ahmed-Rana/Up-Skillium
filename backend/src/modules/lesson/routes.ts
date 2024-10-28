@@ -13,6 +13,6 @@ router.patch("/:id", LessonController.updateLesson);
 
 router.delete("/:id", LessonController.deleteLesson);
 
-router.get("/course/:courseId", LessonController.getLessonsByCourse);
+router.get("/module/:moduleId", LessonController.getLessonsByModule);
 
 export const LessonRoutes = router;

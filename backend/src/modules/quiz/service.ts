@@ -9,6 +9,7 @@ class Service {
       ...data.lesson,
       quizQuestions: data.quizzes,
     });
+    await Quiz.create(data.quizzes);
   }
   async getAllQuizzes(
     search: string = "",

@@ -16,13 +16,16 @@ exports.lessonSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    moduleId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        required: true,
+    },
     serial: {
         type: Number,
         required: true,
     },
     content: {
         type: String,
-        required: true,
     },
     videoUrl: {
         type: String,
