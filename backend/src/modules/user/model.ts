@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { ICreateUser } from "./interface";
+import schemaOption from "../../utils/schemaOption";
 
 const addressSchema = new Schema({
   street: { type: String, required: true },
@@ -50,13 +51,7 @@ export const userSchema = new Schema<ICreateUser>(
       type: emergencyContactSchema,
     },
   },
-  {
-    timestamps: true,
-    toJSON: {
-      versionKey: false,
-      virtuals: true,
-    },
-  }
+  schemaOption
 );
 
 export const User = model("User", userSchema);

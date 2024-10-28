@@ -3,35 +3,33 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Education = void 0;
+exports.Lesson = exports.lessonSchema = void 0;
 const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
-const educationSchema = new mongoose_1.Schema({
-    userId: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
-    },
-    degree: {
+const model_1 = require("../quiz/model");
+exports.lessonSchema = new mongoose_1.Schema({
+    title: {
         type: String,
         required: true,
     },
-    fieldOfStudy: {
-        type: String,
-    },
-    institution: {
+    type: {
         type: String,
         required: true,
     },
-    startDate: {
-        type: Date,
+    serial: {
+        type: Number,
         required: true,
     },
-    endDate: {
-        type: Date,
+    content: {
+        type: String,
+        required: true,
     },
-    description: {
+    videoUrl: {
         type: String,
     },
+    videoLength: {
+        type: Number,
+    },
+    quizQuestions: [model_1.quizSchema],
 }, schemaOption_1.default);
-exports.Education = (0, mongoose_1.model)("Education", educationSchema);
+exports.Lesson = (0, mongoose_1.model)("Lesson", exports.lessonSchema);

@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IAdmin } from "./interface";
+import schemaOption from "../../utils/schemaOption";
 
 const adminSchema = new Schema<IAdmin>(
   {
@@ -12,13 +13,7 @@ const adminSchema = new Schema<IAdmin>(
       website: { type: String },
     },
   },
-  {
-    timestamps: true,
-    toJSON: {
-      versionKey: false,
-      virtuals: true,
-    },
-  }
+  schemaOption
 );
 
 export const Admin = model("Admin", adminSchema);

@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IInstructor } from "./interface";
+import schemaOption from "../../utils/schemaOption";
 
 const instructorSchema = new Schema<IInstructor>(
   {
@@ -17,13 +18,7 @@ const instructorSchema = new Schema<IInstructor>(
       totalReviews: { type: Number, default: 0 },
     },
   },
-  {
-    timestamps: true,
-    toJSON: {
-      versionKey: false,
-      virtuals: true,
-    },
-  }
+  schemaOption
 );
 
 export const Instructor = model("Instructor", instructorSchema);
