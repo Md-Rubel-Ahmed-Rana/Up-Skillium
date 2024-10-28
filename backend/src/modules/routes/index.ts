@@ -8,10 +8,13 @@ import { AdminRoutes } from "../admin/routes";
 import { CategoryRoutes } from "../category/routes";
 import { CourseOutlineRoutes } from "../course-outline/routes";
 import { EducationRoutes } from "../education/routes";
+import { UserRoutes } from "../user/routes";
 
 const router = Router();
 
 router.use("/auth", AuthRoutes);
+
+router.use("/user", UserRoutes);
 
 router.use("/course", CourseRoutes);
 

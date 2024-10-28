@@ -1,5 +1,5 @@
 import { JwtPayload } from "jsonwebtoken";
-import { GetUser } from "../modules/user/user.interface";
+import { GetUser } from "../modules/user/interface";
 
 declare global {
   namespace Express {
