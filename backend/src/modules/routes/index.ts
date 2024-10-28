@@ -11,6 +11,7 @@ import { EducationRoutes } from "../education/routes";
 import { UserRoutes } from "../user/routes";
 import { ModuleRoutes } from "../module/routes";
 import { LessonRoutes } from "../lesson/routes";
+import { QuizRoutes } from "../quiz/routes";
 
 const router = Router();
 
@@ -35,6 +36,8 @@ router.use("/course-outline", CourseOutlineRoutes);
 router.use("/module", ModuleRoutes);
 
 router.use("/lesson", LessonRoutes);
+
+router.use("/quiz", QuizRoutes);
 
 router.use("/education", EducationRoutes);
 
