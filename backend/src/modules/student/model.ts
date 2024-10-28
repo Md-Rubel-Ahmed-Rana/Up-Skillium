@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { INewStudent } from "./interface";
+import schemaOption from "../../utils/schemaOption";
 
 const studentSchema = new Schema<INewStudent>(
   {
@@ -13,13 +14,7 @@ const studentSchema = new Schema<INewStudent>(
     },
     coursesEnrolled: [Schema.Types.ObjectId],
   },
-  {
-    timestamps: true,
-    toJSON: {
-      versionKey: false,
-      virtuals: true,
-    },
-  }
+  schemaOption
 );
 
 export const Student = model("Student", studentSchema);

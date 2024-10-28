@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Course = void 0;
 const mongoose_1 = require("mongoose");
+const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 const courseSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -34,11 +38,5 @@ const courseSchema = new mongoose_1.Schema({
         enum: ["draft", "published", "archived"],
         default: "draft",
     },
-}, {
-    timestamps: true,
-    toJSON: {
-        versionKey: false,
-        virtuals: true,
-    },
-});
+}, schemaOption_1.default);
 exports.Course = (0, mongoose_1.model)("Course", courseSchema);

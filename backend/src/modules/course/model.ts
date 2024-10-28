@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { ICourse } from "./interface";
+import schemaOption from "../../utils/schemaOption";
 
 const courseSchema = new Schema<ICourse>(
   {
@@ -35,13 +36,7 @@ const courseSchema = new Schema<ICourse>(
       default: "draft",
     },
   },
-  {
-    timestamps: true,
-    toJSON: {
-      versionKey: false,
-      virtuals: true,
-    },
-  }
+  schemaOption
 );
 
 export const Course = model("Course", courseSchema);

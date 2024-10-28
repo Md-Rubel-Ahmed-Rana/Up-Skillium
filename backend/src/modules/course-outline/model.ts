@@ -1,17 +1,12 @@
 import { model, Schema } from "mongoose";
 import { ICourseOutline, IModuleOutline } from "./interface";
+import schemaOption from "../../utils/schemaOption";
 
 const moduleSchema = new Schema<IModuleOutline>(
   {
     name: { type: String, required: true },
   },
-  {
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-      versionKey: false,
-    },
-  }
+  schemaOption
 );
 
 const courseOutlineSchema = new Schema<ICourseOutline>(
@@ -20,13 +15,7 @@ const courseOutlineSchema = new Schema<ICourseOutline>(
     description: { type: String, required: true },
     modules: [moduleSchema],
   },
-  {
-    timestamps: true,
-    toJSON: {
-      virtuals: true,
-      versionKey: false,
-    },
-  }
+  schemaOption
 );
 
 export const CourseOutline = model("CourseOutline", courseOutlineSchema);
