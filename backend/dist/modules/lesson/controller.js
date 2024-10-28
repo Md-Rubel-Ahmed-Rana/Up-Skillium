@@ -67,10 +67,10 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
-        this.getLessonsByCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { courseId } = req.params;
+        this.getLessonsByModule = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { moduleId } = req.params;
             const { page = 1, limit = 10 } = req.query;
-            const lessons = yield service_1.LessonService.getLessonsByCourse(courseId, Number(page), Number(limit));
+            const lessons = yield service_1.LessonService.getLessonsByModule(moduleId, Number(page), Number(limit));
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,

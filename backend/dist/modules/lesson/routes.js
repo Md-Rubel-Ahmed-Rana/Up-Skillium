@@ -9,5 +9,5 @@ router.get("/", controller_1.LessonController.getAllLessons);
 router.get("/:id", controller_1.LessonController.getLessonById);
 router.patch("/:id", controller_1.LessonController.updateLesson);
 router.delete("/:id", controller_1.LessonController.deleteLesson);
-router.get("/course/:courseId", controller_1.LessonController.getLessonsByCourse);
+router.get("/module/:moduleId", controller_1.LessonController.getLessonsByModule);
 exports.LessonRoutes = router;
