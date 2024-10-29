@@ -4,9 +4,9 @@ import schemaOption from "../../utils/schemaOption";
 
 const adminSchema = new Schema<IAdmin>(
   {
-    bio: { type: String, required: true },
+    bio: { type: String },
     adminId: { type: String, required: true },
-    userId: { type: Schema.Types.ObjectId, ref: "User" },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     socialLinks: {
       linkedin: { type: String },
       twitter: { type: String },
