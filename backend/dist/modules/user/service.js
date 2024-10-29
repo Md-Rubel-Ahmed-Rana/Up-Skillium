@@ -20,6 +20,7 @@ const service_1 = require("../role/service");
 const service_2 = require("../student/service");
 const service_3 = require("../instructor/service");
 const service_4 = require("../admin/service");
+const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 class Service {
     createUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -100,6 +101,15 @@ class Service {
                     });
                 }
             }
+        });
+    }
+    updateProfileImage(id, imageUrl) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield model_1.User.findById(id);
+            if (user && (user === null || user === void 0 ? void 0 : user.image)) {
+                yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(user === null || user === void 0 ? void 0 : user.image);
+            }
+            yield model_1.User.findByIdAndUpdate(id, { $set: { image: imageUrl } });
         });
     }
 }

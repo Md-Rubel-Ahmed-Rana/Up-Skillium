@@ -52,6 +52,16 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.updateProfileImage = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.UserService.updateProfileImage(id, req.url);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Profile picture changed successfully",
+                data: null,
+            });
+        }));
     }
 }
 exports.UserController = new Controller();
