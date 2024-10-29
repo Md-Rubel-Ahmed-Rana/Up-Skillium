@@ -30,7 +30,12 @@ const NavbarDropdown = () => {
   ];
 
   return (
-    <Dropdown menu={{ items }} placement="bottomRight" arrow>
+    <Dropdown
+      className="cursor-pointer"
+      menu={{ items }}
+      placement="bottomRight"
+      arrow
+    >
       {user && user?.image ? (
         <img
           style={{ width: "50px", height: "50px", borderRadius: "50%" }}
