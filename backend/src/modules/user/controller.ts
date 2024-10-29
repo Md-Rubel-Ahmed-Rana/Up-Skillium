@@ -1,6 +1,7 @@
 import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { UserService } from "./service";
+import { Types } from "mongoose";
 
 class Controller extends RootController {
   findUsers = this.catchAsync(async (req: Request, res: Response) => {
@@ -34,6 +35,16 @@ class Controller extends RootController {
       statusCode: 200,
       success: true,
       message: "Password has been changed successfully",
+      data: null,
+    });
+  });
+  updateProfileImage = this.catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id as unknown as Types.ObjectId;
+    await UserService.updateProfileImage(id, req.url);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Profile picture changed successfully",
       data: null,
     });
   });

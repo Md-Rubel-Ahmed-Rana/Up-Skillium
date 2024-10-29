@@ -7,6 +7,7 @@ import { RoleService } from "../role/service";
 import { StudentService } from "../student/service";
 import { InstructorService } from "../instructor/service";
 import { AdminService } from "../admin/service";
+import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 
 class Service {
   async createUser(user: ICreateUser): Promise<void> {
@@ -93,6 +94,13 @@ class Service {
         });
       }
     }
+  }
+  async updateProfileImage(id: Types.ObjectId, imageUrl: string) {
+    const user = await User.findById(id);
+    if (user && user?.image) {
+      await FileUploadMiddleware.deleteSingle(user?.image);
+    }
+    await User.findByIdAndUpdate(id, { $set: { image: imageUrl } });
   }
 }
 

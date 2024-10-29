@@ -27,6 +27,10 @@ exports.userSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    image: {
+        type: String,
+        required: true,
+    },
     role: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
