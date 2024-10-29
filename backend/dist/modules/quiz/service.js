@@ -15,8 +15,9 @@ const model_1 = require("./model");
 class Service {
     createQuiz(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield service_1.LessonService.createLesson(Object.assign(Object.assign({}, data.lesson), { quizQuestions: data.quizzes }));
-            yield model_1.Quiz.create(data.quizzes);
+            const newQuizzes = yield model_1.Quiz.create(data.quizzes);
+            const quizIds = newQuizzes.map((quiz) => quiz._id);
+            yield service_1.LessonService.createLesson(Object.assign(Object.assign({}, data.lesson), { quizQuestions: quizIds }));
         });
     }
     getAllQuizzes() {

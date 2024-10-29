@@ -5,11 +5,12 @@ import { Quiz } from "./model";
 
 class Service {
   async createQuiz(data: INewQuiz): Promise<void> {
+    const newQuizzes = await Quiz.create(data.quizzes);
+    const quizIds = newQuizzes.map((quiz) => quiz._id);
     await LessonService.createLesson({
       ...data.lesson,
-      quizQuestions: data.quizzes,
+      quizQuestions: quizIds,
     });
-    await Quiz.create(data.quizzes);
   }
   async getAllQuizzes(
     search: string = "",

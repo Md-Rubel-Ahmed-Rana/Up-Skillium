@@ -60,6 +60,16 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
+        this.getFullClassByCourseId = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const courseId = req.params.courseId;
+            const data = yield service_1.ModuleService.getFullClassByCourseId(courseId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Classes fetched successfully",
+                data: data,
+            });
+        }));
         this.updateModule = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             yield service_1.ModuleService.updateModule(id, req.body);

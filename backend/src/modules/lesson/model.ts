@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { ILesson } from "./interface";
 import schemaOption from "../../utils/schemaOption";
-import { quizSchema } from "../quiz/model";
+import { Module } from "../module/model";
 
 export const lessonSchema = new Schema<ILesson>(
   {
@@ -13,7 +13,7 @@ export const lessonSchema = new Schema<ILesson>(
       type: String,
       required: true,
     },
-    moduleId: {
+    module: {
       type: Schema.Types.ObjectId,
       required: true,
     },
@@ -30,9 +30,15 @@ export const lessonSchema = new Schema<ILesson>(
     videoLength: {
       type: Number,
     },
-    quizQuestions: [quizSchema],
+    quizQuestions: [{ type: Schema.Types.ObjectId, ref: "Quiz", default: [] }],
   },
   schemaOption
 );
+
+lessonSchema.post("save", async function (doc) {
+  await Module.findByIdAndUpdate(doc.module, {
+    $push: { lessons: doc._id },
+  });
+});
 
 export const Lesson = model("Lesson", lessonSchema);

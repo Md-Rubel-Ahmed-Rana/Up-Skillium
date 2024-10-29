@@ -1,3 +1,4 @@
+import { CourseService } from "../course/service";
 import { IModule } from "./interface";
 import { Module } from "./model";
 
@@ -30,6 +31,25 @@ class Service {
   }
   async getModuleByCourseId(courseId: string): Promise<IModule[]> {
     return await Module.find({ courseId: courseId });
+  }
+  async getFullClassByCourseId(courseId: string) {
+    const course = await CourseService.getSingleCourse(courseId);
+
+    const modules = await Module.find({ course: courseId })
+      .sort({ serial: 1 })
+      .populate([
+        {
+          path: "lessons",
+          model: "Lesson",
+          options: { sort: { serial: 1 } },
+          populate: {
+            path: "quizQuestions",
+            model: "Quiz",
+          },
+        },
+      ]);
+
+    return { course, modules };
   }
   async updateModule(id: string, updatedData: Partial<IModule>): Promise<void> {
     await Module.findByIdAndUpdate(id, { $set: { ...updatedData } });
