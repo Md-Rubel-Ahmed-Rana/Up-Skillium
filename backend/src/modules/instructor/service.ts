@@ -1,28 +1,15 @@
-import { Types } from "mongoose";
-import { RoleService } from "../role/service";
-import { UserService } from "../user/service";
-import { IInstructor } from "./interface";
 import { Instructor } from "./model";
 import generateTeacherId from "./generateTeacherId";
+import { Types } from "mongoose";
 
 class Service {
-  async createNewInstructor(data: IInstructor): Promise<void> {
+  async createNewInstructor(userId: Types.ObjectId): Promise<void> {
     const lastTeacherId = await Instructor.findOne({}).sort({ createdAt: -1 });
     const teacherId = lastTeacherId
       ? generateTeacherId(lastTeacherId.teacherId)
       : generateTeacherId("US-TE-0000");
 
-    data.teacherId = teacherId;
-    const role = await RoleService.getRoleByRoleName(data.role);
-
-    const userId = await UserService.register({
-      name: data.user.name,
-      email: data.user.email,
-      password: data.user.password,
-      role: role?.id as Types.ObjectId,
-    });
-    data.userId = userId;
-    await Instructor.create(data);
+    await Instructor.create({ userId: userId, teacherId });
   }
 }
 

@@ -4,6 +4,8 @@ import { JwtInstance } from "../../lib/jwt";
 
 const router = Router();
 
+router.post("/register", AuthController.register);
+
 router.get("/", JwtInstance.verifyToken, AuthController.auth);
 
 router.post("/login", AuthController.login);

@@ -16,12 +16,27 @@ exports.UserService = void 0;
 const model_1 = require("./model");
 const bcrypt_1 = require("../../lib/bcrypt");
 const apiError_1 = __importDefault(require("../../shared/apiError"));
+const service_1 = require("../role/service");
+const service_2 = require("../student/service");
+const service_3 = require("../instructor/service");
+const service_4 = require("../admin/service");
 class Service {
-    register(user) {
+    createUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
+            const userRole = user.role;
+            const role = yield service_1.RoleService.getRoleByRoleName(userRole);
             user.password = yield bcrypt_1.BcryptInstance.hash(user.password);
+            user.role = role === null || role === void 0 ? void 0 : role.id;
             const newUser = yield model_1.User.create(user);
-            return newUser._id;
+            if ((role === null || role === void 0 ? void 0 : role.role) === "student") {
+                yield service_2.StudentService.createNewStudent(newUser._id);
+            }
+            else if ((role === null || role === void 0 ? void 0 : role.role) === "instructor") {
+                yield service_3.InstructorService.createNewInstructor(newUser._id);
+            }
+            else if ((role === null || role === void 0 ? void 0 : role.role) === "admin") {
+                yield service_4.AdminService.createNewAdmin(newUser._id);
+            }
         });
     }
     findUserByEmail(email) {

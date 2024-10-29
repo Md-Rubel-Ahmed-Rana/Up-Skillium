@@ -15,15 +15,9 @@ type IEmergencyContact = {
 };
 
 export type ICreateUser = {
-  image?: string;
   name: string;
   email: string;
-  role: Types.ObjectId;
-  dateOfBirth?: Date;
-  phoneNumber?: string;
-  gender?: string;
-  address?: IAddress;
-  emergencyContact?: IEmergencyContact;
+  role: string | Types.ObjectId;
   password: string;
 };
 
@@ -34,6 +28,18 @@ export type IGetUser = {
   email: string;
   role: Types.ObjectId;
   dateOfBirth: Date;
+  gender: string;
+  address: IAddress;
+  emergencyContact: IEmergencyContact;
+  phoneNumber: string;
+};
+export type IUser = {
+  name: string;
+  image: string;
+  email: string;
+  role: Types.ObjectId;
+  dateOfBirth: Date;
+  password: string;
   gender: string;
   address: IAddress;
   emergencyContact: IEmergencyContact;

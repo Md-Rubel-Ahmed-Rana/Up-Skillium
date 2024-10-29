@@ -43,5 +43,15 @@ class Service {
             return { accessToken, refreshToken };
         });
     }
+    register(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield service_1.UserService.createUser({
+                name: data.name,
+                email: data.email,
+                role: data.role,
+                password: data.password,
+            });
+        });
+    }
 }
 exports.AuthService = new Service();
