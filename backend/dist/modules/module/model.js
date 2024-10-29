@@ -6,9 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Module = void 0;
 const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
-const model_1 = require("../lesson/model");
 const moduleSchema = new mongoose_1.Schema({
-    courseId: {
+    course: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
     },
@@ -22,6 +21,6 @@ const moduleSchema = new mongoose_1.Schema({
     serial: {
         type: Number,
     },
-    lessons: [model_1.lessonSchema],
+    lessons: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Lesson", default: [] }],
 }, schemaOption_1.default);
 exports.Module = (0, mongoose_1.model)("Module", moduleSchema);

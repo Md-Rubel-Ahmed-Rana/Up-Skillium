@@ -5,7 +5,7 @@ import { lessonSchema } from "../lesson/model";
 
 const moduleSchema = new Schema<IModule>(
   {
-    courseId: {
+    course: {
       type: Schema.Types.ObjectId,
       required: true,
     },
@@ -19,7 +19,7 @@ const moduleSchema = new Schema<IModule>(
     serial: {
       type: Number,
     },
-    lessons: [lessonSchema],
+    lessons: [{ type: Schema.Types.ObjectId, ref: "Lesson", default: [] }],
   },
   schemaOption
 );

@@ -4,7 +4,7 @@ import schemaOption from "../../utils/schemaOption";
 
 export const quizSchema = new Schema<IQuizQuestion>(
   {
-    moduleId: {
+    module: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Module",

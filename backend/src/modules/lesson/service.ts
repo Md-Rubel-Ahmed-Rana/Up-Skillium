@@ -41,7 +41,10 @@ class Service {
     limit: number = 10
   ): Promise<ILesson[]> {
     const skip = (page - 1) * limit;
-    return await Lesson.find({ moduleId }).skip(skip).limit(limit).exec();
+    return await Lesson.find({ module: moduleId })
+      .skip(skip)
+      .limit(limit)
+      .exec();
   }
 }
 

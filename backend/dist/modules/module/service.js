@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModuleService = void 0;
+const service_1 = require("../course/service");
 const model_1 = require("./model");
 class Service {
     createNewModule(data) {
@@ -36,6 +37,25 @@ class Service {
     getModuleByCourseId(courseId) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.Module.find({ courseId: courseId });
+        });
+    }
+    getFullClassByCourseId(courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const course = yield service_1.CourseService.getSingleCourse(courseId);
+            const modules = yield model_1.Module.find({ course: courseId })
+                .sort({ serial: 1 })
+                .populate([
+                {
+                    path: "lessons",
+                    model: "Lesson",
+                    options: { sort: { serial: 1 } },
+                    populate: {
+                        path: "quizQuestions",
+                        model: "Quiz",
+                    },
+                },
+            ]);
+            return { course, modules };
         });
     }
     updateModule(id, updatedData) {

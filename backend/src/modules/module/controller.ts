@@ -50,6 +50,18 @@ class Controller extends RootController {
       data: data,
     });
   });
+  getFullClassByCourseId = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const courseId = req.params.courseId;
+      const data = await ModuleService.getFullClassByCourseId(courseId);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Classes fetched successfully",
+        data: data,
+      });
+    }
+  );
   updateModule = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await ModuleService.updateModule(id, req.body);

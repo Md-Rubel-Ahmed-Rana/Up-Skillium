@@ -7,7 +7,7 @@ exports.Quiz = exports.quizSchema = void 0;
 const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 exports.quizSchema = new mongoose_1.Schema({
-    moduleId: {
+    module: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
         ref: "Module",

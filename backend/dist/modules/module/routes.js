@@ -8,6 +8,7 @@ router.post("/create", controller_1.ModuleController.createNewModule);
 router.get("/", controller_1.ModuleController.getAllModules);
 router.get("/:id", controller_1.ModuleController.getSingleModule);
 router.get("/by-course/:courseId", controller_1.ModuleController.getModuleByCourseId);
+router.get("/classes/:courseId", controller_1.ModuleController.getFullClassByCourseId);
 router.patch("/:id", controller_1.ModuleController.updateModule);
 router.delete("/:id", controller_1.ModuleController.deleteModule);
 exports.ModuleRoutes = router;

@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { ILesson } from "../lesson/interface";
 
 export type IQuizQuestion = {
-  moduleId: Types.ObjectId;
+  module: Types.ObjectId;
   question: string;
   options: string[];
   correctAnswer: string;
