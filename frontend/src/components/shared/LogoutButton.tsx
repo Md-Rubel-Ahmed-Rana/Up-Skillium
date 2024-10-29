@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLogoutMutation } from "@/features/auth";
 import { Button, Typography } from "antd/lib";
-import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 const { Text } = Typography;
 
@@ -12,14 +11,13 @@ type Props = {
 
 const LogoutButton = ({ isButton, buttonStyles }: Props) => {
   const [logout] = useLogoutMutation();
-  const router = useRouter();
 
   const handleLogout = async () => {
     try {
       const response: any = await logout({});
       if (response?.data?.statusCode === 200) {
         toast.success(response?.data?.message || "Message was not found");
-        router.replace("/");
+        window.location.replace("/");
       } else {
         toast.error(
           response?.data?.message ||

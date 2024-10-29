@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Image from "next/image";
 import navbarLogo from "../../../public/assets/images/navbarLogo.webp";
-import NavbarDropdown from "@/shared/NavbarDropdown";
+import NavbarDropdown from "@/components/shared/NavbarDropdown";
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { IUser } from "@/types/user.type";
 
@@ -30,7 +30,7 @@ const NavbarPage = () => {
       name: "Courses",
       path: "/courses",
     },
-   
+
     {
       name: "About Us",
       path: "/about-us",

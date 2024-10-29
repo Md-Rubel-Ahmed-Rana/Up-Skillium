@@ -15,6 +15,23 @@ const authApi = apiSlice.injectEndpoints({
         body: { email, password },
       }),
     }),
+    userRegister: builder.mutation({
+      query: ({
+        name,
+        email,
+        role,
+        password,
+      }: {
+        name: string;
+        email: string;
+        role: string;
+        password: string;
+      }) => ({
+        method: "POST",
+        url: "/auth/register",
+        body: { name, email, role, password },
+      }),
+    }),
     logout: builder.mutation({
       query: () => ({
         method: "DELETE",
@@ -28,4 +45,5 @@ export const {
   useGetLoggedInUserQuery,
   useUserLoginMutation,
   useLogoutMutation,
+  useUserRegisterMutation,
 } = authApi;
