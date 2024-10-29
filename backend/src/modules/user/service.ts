@@ -3,12 +3,28 @@ import { User } from "./model";
 import { ICreateUser, IGetUser } from "./interface";
 import { BcryptInstance } from "../../lib/bcrypt";
 import ApiError from "../../shared/apiError";
+import { RoleService } from "../role/service";
+import { StudentService } from "../student/service";
+import { InstructorService } from "../instructor/service";
+import { AdminService } from "../admin/service";
 
 class Service {
-  async register(user: ICreateUser): Promise<Types.ObjectId> {
+  async createUser(user: ICreateUser): Promise<void> {
+    const userRole = user.role as string;
+    const role = await RoleService.getRoleByRoleName(userRole);
+
     user.password = await BcryptInstance.hash(user.password);
+    user.role = role?.id as Types.ObjectId;
+
     const newUser = await User.create(user);
-    return newUser._id;
+
+    if (role?.role === "student") {
+      await StudentService.createNewStudent(newUser._id);
+    } else if (role?.role === "instructor") {
+      await InstructorService.createNewInstructor(newUser._id);
+    } else if (role?.role === "admin") {
+      await AdminService.createNewAdmin(newUser._id);
+    }
   }
   async findUserByEmail(email: string) {
     return User.findOne({ email: email });

@@ -29,6 +29,15 @@ class Controller extends rootController_1.default {
                 data: result,
             });
         }));
+        this.register = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield service_1.AuthService.register(req.body);
+            this.apiResponse(res, {
+                statusCode: 201,
+                success: true,
+                message: "User registered successfully",
+                data: null,
+            });
+        }));
         this.login = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const { email, password } = req.body;
             const { accessToken, refreshToken } = yield service_1.AuthService.login(email, password);

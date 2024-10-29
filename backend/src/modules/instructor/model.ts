@@ -4,9 +4,9 @@ import schemaOption from "../../utils/schemaOption";
 
 const instructorSchema = new Schema<IInstructor>(
   {
-    bio: { type: String, required: true },
+    bio: { type: String },
     teacherId: { type: String, required: true },
-    userId: { type: Schema.Types.ObjectId, ref: "User" },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
     socialLinks: {
       linkedin: { type: String },

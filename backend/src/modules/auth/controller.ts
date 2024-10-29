@@ -14,6 +14,15 @@ class Controller extends RootController {
       data: result,
     });
   });
+  register = this.catchAsync(async (req: Request, res: Response) => {
+    await AuthService.register(req.body);
+    this.apiResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "User registered successfully",
+      data: null,
+    });
+  });
   login = this.catchAsync(async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const { accessToken, refreshToken } = await AuthService.login(

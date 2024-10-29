@@ -7,9 +7,9 @@ exports.Instructor = void 0;
 const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 const instructorSchema = new mongoose_1.Schema({
-    bio: { type: String, required: true },
+    bio: { type: String },
     teacherId: { type: String, required: true },
-    userId: { type: mongoose_1.Schema.Types.ObjectId, ref: "User" },
+    userId: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
     courses: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Course" }],
     socialLinks: {
         linkedin: { type: String },

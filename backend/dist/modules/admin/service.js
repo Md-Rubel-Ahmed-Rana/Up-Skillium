@@ -13,27 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminService = void 0;
-const service_1 = require("../role/service");
-const service_2 = require("../user/service");
 const model_1 = require("./model");
 const generateAdminId_1 = __importDefault(require("./generateAdminId"));
 class Service {
-    createNewAdmin(data) {
+    createNewAdmin(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const lastAdmin = yield model_1.Admin.findOne({}).sort({ createdAt: -1 });
             const adminId = lastAdmin
                 ? (0, generateAdminId_1.default)(lastAdmin.adminId)
                 : (0, generateAdminId_1.default)("US-AD-0000");
-            data.adminId = adminId;
-            const role = yield service_1.RoleService.getRoleByRoleName(data.role);
-            const userId = yield service_2.UserService.register({
-                name: data.user.name,
-                email: data.user.email,
-                password: data.user.password,
-                role: role === null || role === void 0 ? void 0 : role.id,
-            });
-            data.userId = userId;
-            yield model_1.Admin.create(data);
+            yield model_1.Admin.create({ userId: userId, adminId });
         });
     }
 }
