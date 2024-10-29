@@ -5,11 +5,12 @@ import Image from "next/image";
 import navbarLogo from "../../../public/assets/images/navbarLogo.webp";
 import NavbarDropdown from "@/shared/NavbarDropdown";
 import { useGetLoggedInUserQuery } from "@/features/auth";
+import { IUser } from "@/types/user.type";
 
 const NavbarPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data } = useGetLoggedInUserQuery({});
-  const user = data?.data;
+  const user = data?.data as IUser;
   console.log(user);
 
   const toggleMenu = () => {
@@ -29,15 +30,13 @@ const NavbarPage = () => {
       name: "Courses",
       path: "/courses",
     },
-    {
-      name: "My Courses",
-      path: "/my-courses",
-    },
+   
     {
       name: "About Us",
       path: "/about-us",
     },
   ];
+
   return (
     <nav className="bg-gray-50 shadow-md text-black fixed w-full z-30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -77,7 +76,24 @@ const NavbarPage = () => {
                 </Link>
               ))}
             </div>
-            <NavbarDropdown />
+            {user && user?.id ? (
+              <NavbarDropdown />
+            ) : (
+              <>
+                <Link
+                  href={"/login"}
+                  className="px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
+                >
+                  Login
+                </Link>
+                <Link
+                  href={"/register"}
+                  className="px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
         {isOpen && (
