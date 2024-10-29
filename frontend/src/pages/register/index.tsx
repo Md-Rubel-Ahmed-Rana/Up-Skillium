@@ -1,12 +1,17 @@
-import Register from "@/components/register"
-
+import Register from "@/components/register";
+import PageMetadata from "@/utils/PageMetadata";
 
 const RegisterPage = () => {
   return (
-    <div>
+    <>
+      <PageMetadata
+        title="Register - Up Skillium"
+        description="this is up skillium register signup page"
+        keywords="up skillium, online course, web development, digital marketing"
+      />
       <Register />
-    </div>
-  )
-}
+    </>
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;
