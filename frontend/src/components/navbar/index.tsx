@@ -11,7 +11,6 @@ const NavbarPage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
-  console.log(user);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
