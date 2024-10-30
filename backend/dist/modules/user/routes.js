@@ -13,5 +13,7 @@ router.get("/", controller_1.UserController.findUsers);
 router.patch("/:id", controller_1.UserController.updateUser);
 router.patch("/change-password/:userId", controller_1.UserController.changePassword);
 router.patch("/update-basic-info/:id", controller_1.UserController.updateUserBasicInfo);
+router.patch("/update-address/:id", controller_1.UserController.updateUserAddress);
+router.patch("/update-emergency-contact/:id", controller_1.UserController.updateEmergencyContact);
 router.patch("/change-profile-picture/:id", multer_1.default.single("file"), fileUploaderMiddleware_1.FileUploadMiddleware.singleFile("profile-picture"), controller_1.UserController.updateProfileImage);
 exports.UserRoutes = router;

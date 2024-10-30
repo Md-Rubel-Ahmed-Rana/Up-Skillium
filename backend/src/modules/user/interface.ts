@@ -1,14 +1,13 @@
 import { Types } from "mongoose";
 
-type IAddress = {
+export type IAddress = {
   street: string;
   city: string;
   state: string;
-  postalCode: string;
   country: string;
 };
 
-type IEmergencyContact = {
+export type IEmergencyContact = {
   name: string;
   relationship: string;
   phone: string;

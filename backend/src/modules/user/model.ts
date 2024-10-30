@@ -3,17 +3,16 @@ import schemaOption from "../../utils/schemaOption";
 import { IUser } from "./interface";
 
 const addressSchema = new Schema({
-  street: { type: String, required: true },
-  city: { type: String, required: true },
-  state: { type: String, required: true },
-  postalCode: { type: String, required: true },
-  country: { type: String, required: true },
+  street: { type: String },
+  city: { type: String },
+  state: { type: String },
+  country: { type: String },
 });
 
 const emergencyContactSchema = new Schema({
-  name: { type: String, required: true },
-  relationship: { type: String, required: true },
-  phone: { type: String, required: true },
+  name: { type: String },
+  relationship: { type: String },
+  phone: { type: String },
 });
 
 export const userSchema = new Schema<IUser>(
@@ -28,7 +27,6 @@ export const userSchema = new Schema<IUser>(
     },
     image: {
       type: String,
-      required: true,
     },
     role: {
       type: Schema.Types.ObjectId,
