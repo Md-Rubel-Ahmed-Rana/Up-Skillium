@@ -7,6 +7,7 @@ import { FaPhone, FaEdit } from "react-icons/fa";
 import dayjs from "dayjs";
 import { useUpdateUserBasicInfoMutation } from "@/features/user";
 import toast from "react-hot-toast";
+import { useMediaQuery } from "react-responsive";
 
 const { Option } = Select;
 
@@ -15,6 +16,7 @@ type Props = {
 };
 
 const BasicInformation = ({ user }: Props) => {
+  const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [isEdit, setIsEdit] = useState(false);
   const [updateInfo, { isLoading }] = useUpdateUserBasicInfoMutation();
   const [newValues, setNewValues] = useState({
@@ -60,7 +62,9 @@ const BasicInformation = ({ user }: Props) => {
     <Descriptions
       title={
         <div className="flex items-center gap-2">
-          <span>Basic Information</span>
+          <span className={!isLargeDevice && isEdit ? "hidden" : "block"}>
+            Basic Information
+          </span>
           {isEdit ? (
             <>
               <Button
@@ -88,7 +92,7 @@ const BasicInformation = ({ user }: Props) => {
       bordered
       className="mt-4 pb-4 border-b"
     >
-      <Descriptions.Item label="Email" span={1}>
+      <Descriptions.Item label="Email" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
           <Input type="email" value={newValues.email} readOnly disabled />
         ) : (
@@ -99,7 +103,7 @@ const BasicInformation = ({ user }: Props) => {
         )}
       </Descriptions.Item>
 
-      <Descriptions.Item label="Phone" span={1}>
+      <Descriptions.Item label="Phone" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
           <Input
             type="text"
@@ -114,7 +118,7 @@ const BasicInformation = ({ user }: Props) => {
         )}
       </Descriptions.Item>
 
-      <Descriptions.Item label="Date of Birth" span={1}>
+      <Descriptions.Item label="Date of Birth" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
           <DatePicker
             value={newValues.dateOfBirth}
@@ -127,7 +131,7 @@ const BasicInformation = ({ user }: Props) => {
         )}
       </Descriptions.Item>
 
-      <Descriptions.Item label="Gender" span={1}>
+      <Descriptions.Item label="Gender" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
           <Select
             value={newValues.gender}

@@ -5,12 +5,14 @@ import { Button, Descriptions, Input } from "antd/lib";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
 
 type Props = {
   user: IUser;
 };
 
 const UserAddress = ({ user }: Props) => {
+  const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [updateAddress, { isLoading }] = useUpdateUserAddressMutation();
   const [isEdit, setIsEdit] = useState(false);
   const [newValues, setNewValues] = useState({
@@ -50,7 +52,9 @@ const UserAddress = ({ user }: Props) => {
     <Descriptions
       title={
         <div className="flex items-center gap-2">
-          <span>Address</span>
+          <span className={!isLargeDevice && isEdit ? "hidden" : "block"}>
+            Address
+          </span>
           {isEdit ? (
             <>
               <Button
@@ -78,7 +82,7 @@ const UserAddress = ({ user }: Props) => {
       bordered
       className="mt-4 pb-4 border-b"
     >
-      <Descriptions.Item label="Street" span={1}>
+      <Descriptions.Item label="Street" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
           <Input
             type="text"
@@ -89,7 +93,7 @@ const UserAddress = ({ user }: Props) => {
           <p> {user?.address?.street || "Empty"}</p>
         )}
       </Descriptions.Item>
-      <Descriptions.Item label="City" span={1}>
+      <Descriptions.Item label="City" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
           <Input
             type="text"
@@ -100,7 +104,7 @@ const UserAddress = ({ user }: Props) => {
           <p> {user?.address?.city || "Empty"}</p>
         )}
       </Descriptions.Item>
-      <Descriptions.Item label="State" span={1}>
+      <Descriptions.Item label="State" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
           <Input
             type="text"
@@ -111,7 +115,7 @@ const UserAddress = ({ user }: Props) => {
           <p> {user?.address?.state || "Empty"}</p>
         )}
       </Descriptions.Item>
-      <Descriptions.Item label="Country" span={1}>
+      <Descriptions.Item label="Country" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
           <Input
             type="text"
