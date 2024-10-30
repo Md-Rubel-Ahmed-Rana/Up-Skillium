@@ -30,10 +30,50 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    updateUserAddress: builder.mutation({
+      query: ({
+        id,
+        street,
+        city,
+        state,
+        country,
+      }: {
+        id: string;
+        street: string;
+        city: string;
+        state: string;
+        country: string;
+      }) => ({
+        method: "PATCH",
+        url: `/user/update-address/${id}`,
+        body: { street, city, state, country },
+      }),
+      invalidatesTags: ["user"],
+    }),
+    updateEmergencyContact: builder.mutation({
+      query: ({
+        id,
+        name,
+        relationship,
+        phone,
+      }: {
+        id: string;
+        name: string;
+        relationship: string;
+        phone: string;
+      }) => ({
+        method: "PATCH",
+        url: `/user/update-emergency-contact/${id}`,
+        body: { name, relationship, phone },
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
 export const {
   useChangeProfilePictureMutation,
   useUpdateUserBasicInfoMutation,
+  useUpdateUserAddressMutation,
+  useUpdateEmergencyContactMutation,
 } = userApi;
