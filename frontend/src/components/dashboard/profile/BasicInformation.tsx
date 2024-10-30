@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { CiMail } from "react-icons/ci";
 import { FaPhone, FaEdit } from "react-icons/fa";
 import dayjs from "dayjs";
+import { useUpdateUserBasicInfoMutation } from "@/features/user";
+import toast from "react-hot-toast";
 
 const { Option } = Select;
 
@@ -14,6 +16,7 @@ type Props = {
 
 const BasicInformation = ({ user }: Props) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [updateInfo, { isLoading }] = useUpdateUserBasicInfoMutation();
   const [newValues, setNewValues] = useState({
     email: user?.email || "",
     phoneNumber: user?.phoneNumber || "",
@@ -25,8 +28,31 @@ const BasicInformation = ({ user }: Props) => {
     setNewValues((prevValues) => ({ ...prevValues, [field]: value }));
   };
 
-  const handleUpdateInfo = () => {
-    console.log("Updated Info:", newValues);
+  const handleUpdateInfo = async () => {
+    try {
+      const updatedValues = {
+        ...newValues,
+        id: user.id,
+        dateOfBirth: newValues.dateOfBirth
+          ? newValues.dateOfBirth.toDate()
+          : null,
+      };
+
+      const response: any = await updateInfo(updatedValues);
+      if (response?.data?.statusCode === 200) {
+        toast.success(
+          response?.data?.message || "Basic information updated successfully"
+        );
+      } else {
+        toast.error(
+          response?.error?.message ||
+            response?.error?.data?.message ||
+            "Failed to update info"
+        );
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "There was a server-side error occurred");
+    }
     setIsEdit(false);
   };
 
@@ -37,10 +63,18 @@ const BasicInformation = ({ user }: Props) => {
           <span>Basic Information</span>
           {isEdit ? (
             <>
-              <Button onClick={handleUpdateInfo} type="primary">
-                Save changes
+              <Button
+                disabled={isLoading}
+                onClick={handleUpdateInfo}
+                loading={isLoading}
+                iconPosition="end"
+                type="primary"
+              >
+                {isLoading ? "Loading" : "Save changes"}
               </Button>
-              <Button onClick={() => setIsEdit(false)}>Cancel</Button>
+              <Button disabled={isLoading} onClick={() => setIsEdit(false)}>
+                Cancel
+              </Button>
             </>
           ) : (
             <FaEdit

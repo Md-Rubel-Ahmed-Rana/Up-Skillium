@@ -10,7 +10,30 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    updateUserBasicInfo: builder.mutation({
+      query: ({
+        id,
+        email,
+        phoneNumber,
+        dateOfBirth,
+        gender,
+      }: {
+        id: string;
+        email: string;
+        phoneNumber: string;
+        gender: string;
+        dateOfBirth: Date | null;
+      }) => ({
+        method: "PATCH",
+        url: `/user/update-basic-info/${id}`,
+        body: { email, phoneNumber, dateOfBirth, gender },
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
-export const { useChangeProfilePictureMutation } = userApi;
+export const {
+  useChangeProfilePictureMutation,
+  useUpdateUserBasicInfoMutation,
+} = userApi;
