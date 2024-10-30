@@ -1,6 +1,7 @@
 import { IUser } from "@/types/user.type";
 import { Descriptions } from "antd/lib";
 import React from "react";
+import { FaEdit } from "react-icons/fa";
 
 type Props = {
   user: IUser;
@@ -9,10 +10,15 @@ type Props = {
 const EmergencyContact = ({ user }: Props) => {
   return (
     <Descriptions
-      title="Emergency Contact"
+      title={
+        <div className="flex items-center gap-2">
+          <span>Emergency Contact</span>
+          <FaEdit className="cursor-pointer" />
+        </div>
+      }
       column={{ xs: 1, sm: 1, md: 2 }}
       bordered
-      className="mt-4"
+      className="mt-4 pb-4 border-b"
     >
       <Descriptions.Item label="Name">
         {user?.emergencyContact?.name || "Empty"}
