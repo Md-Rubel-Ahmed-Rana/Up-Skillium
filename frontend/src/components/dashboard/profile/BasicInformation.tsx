@@ -90,11 +90,7 @@ const BasicInformation = ({ user }: Props) => {
     >
       <Descriptions.Item label="Email" span={1}>
         {isEdit ? (
-          <Input
-            type="email"
-            value={newValues.email}
-            onChange={(e) => handleInputChange("email", e.target.value)}
-          />
+          <Input type="email" value={newValues.email} readOnly disabled />
         ) : (
           <div className="flex items-center gap-2">
             <CiMail />
