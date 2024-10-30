@@ -72,6 +72,26 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.updateUserAddress = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.UserService.updateUserAddress(id, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Address updated successfully",
+                data: null,
+            });
+        }));
+        this.updateEmergencyContact = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.UserService.updateEmergencyContact(id, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Emergency contact updated successfully",
+                data: null,
+            });
+        }));
     }
 }
 exports.UserController = new Controller();

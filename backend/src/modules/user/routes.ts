@@ -13,6 +13,13 @@ router.patch("/change-password/:userId", UserController.changePassword);
 
 router.patch("/update-basic-info/:id", UserController.updateUserBasicInfo);
 
+router.patch("/update-address/:id", UserController.updateUserAddress);
+
+router.patch(
+  "/update-emergency-contact/:id",
+  UserController.updateEmergencyContact
+);
+
 router.patch(
   "/change-profile-picture/:id",
   upload.single("file"),

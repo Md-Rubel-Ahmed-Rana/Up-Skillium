@@ -1,6 +1,12 @@
 import { Types } from "mongoose";
 import { User } from "./model";
-import { ICreateUser, IGetUser, IUserBasicInfo } from "./interface";
+import {
+  IAddress,
+  ICreateUser,
+  IEmergencyContact,
+  IGetUser,
+  IUserBasicInfo,
+} from "./interface";
 import { BcryptInstance } from "../../lib/bcrypt";
 import ApiError from "../../shared/apiError";
 import { RoleService } from "../role/service";
@@ -74,6 +80,20 @@ class Service {
     updatedData: IUserBasicInfo
   ): Promise<void> {
     await User.findByIdAndUpdate(id, { $set: { ...updatedData } });
+  }
+  async updateUserAddress(
+    id: Types.ObjectId,
+    updatedData: IAddress
+  ): Promise<void> {
+    await User.findByIdAndUpdate(id, { $set: { address: { ...updatedData } } });
+  }
+  async updateEmergencyContact(
+    id: Types.ObjectId,
+    updatedData: IEmergencyContact
+  ): Promise<void> {
+    await User.findByIdAndUpdate(id, {
+      $set: { emergencyContact: { ...updatedData } },
+    });
   }
   async changePassword(
     userId: string,

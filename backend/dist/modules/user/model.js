@@ -7,16 +7,15 @@ exports.User = exports.userSchema = void 0;
 const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 const addressSchema = new mongoose_1.Schema({
-    street: { type: String, required: true },
-    city: { type: String, required: true },
-    state: { type: String, required: true },
-    postalCode: { type: String, required: true },
-    country: { type: String, required: true },
+    street: { type: String },
+    city: { type: String },
+    state: { type: String },
+    country: { type: String },
 });
 const emergencyContactSchema = new mongoose_1.Schema({
-    name: { type: String, required: true },
-    relationship: { type: String, required: true },
-    phone: { type: String, required: true },
+    name: { type: String },
+    relationship: { type: String },
+    phone: { type: String },
 });
 exports.userSchema = new mongoose_1.Schema({
     name: {
@@ -29,7 +28,6 @@ exports.userSchema = new mongoose_1.Schema({
     },
     image: {
         type: String,
-        required: true,
     },
     role: {
         type: mongoose_1.Schema.Types.ObjectId,

@@ -88,6 +88,18 @@ class Service {
             yield model_1.User.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });
         });
     }
+    updateUserAddress(id, updatedData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.User.findByIdAndUpdate(id, { $set: { address: Object.assign({}, updatedData) } });
+        });
+    }
+    updateEmergencyContact(id, updatedData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.User.findByIdAndUpdate(id, {
+                $set: { emergencyContact: Object.assign({}, updatedData) },
+            });
+        });
+    }
     changePassword(userId, oldPassword, newPassword) {
         return __awaiter(this, void 0, void 0, function* () {
             const isExist = yield model_1.User.findById(userId);
