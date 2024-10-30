@@ -18,10 +18,15 @@ const ProfileCard = ({ user }: Props) => {
   return (
     <div className="flex items-center gap-4 p-4 border-b">
       <div className="relative">
-        <Avatar size={80} src={user?.image} alt="User Avatar" />
+        <Avatar
+          size={80}
+          className="ring-2"
+          src={user?.image}
+          alt="User Avatar"
+        />
         <FaCamera
           onClick={handleOpenModal}
-          className="absolute bottom-2 right-1/2 translate-x-1/2 translate-y-1/2 text-white bg-blue-600 p-1 text-2xl rounded-full cursor-pointer"
+          className="absolute bottom-1 right-1/2 translate-x-1/2 translate-y-1/2 text-white bg-blue-600 p-1 text-3xl rounded-full cursor-pointer"
         />
       </div>
       <div className="flex flex-col">

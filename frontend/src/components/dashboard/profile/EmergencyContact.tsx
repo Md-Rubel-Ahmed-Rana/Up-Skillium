@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useUpdateEmergencyContactMutation } from "@/features/user";
 import { IUser } from "@/types/user.type";
-import { Descriptions } from "antd/lib";
-import React from "react";
+import { Button, Descriptions, Input } from "antd/lib";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaEdit } from "react-icons/fa";
 
 type Props = {
@@ -8,12 +11,66 @@ type Props = {
 };
 
 const EmergencyContact = ({ user }: Props) => {
+  const [updateContact, { isLoading }] = useUpdateEmergencyContactMutation();
+  const [isEdit, setIsEdit] = useState(false);
+  const [newValues, setNewValues] = useState({
+    name: user?.emergencyContact?.name || "",
+    relationship: user?.emergencyContact?.relationship || "",
+    phone: user?.emergencyContact?.phone || "",
+  });
+
+  const handleInputChange = (field: string, value: any) => {
+    setNewValues((prevValues) => ({ ...prevValues, [field]: value }));
+  };
+
+  const handleUpdateInfo = async () => {
+    try {
+      const response: any = await updateContact({
+        ...newValues,
+        id: user?.id,
+      });
+      if (response?.data?.statusCode === 200) {
+        toast.success(
+          response?.data?.message || "Contact updated successfully"
+        );
+      } else {
+        toast.error(
+          response?.error?.message ||
+            response?.error?.data?.message ||
+            "Failed to update contact"
+        );
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "There was a server-side error occurred");
+    }
+    setIsEdit(false);
+  };
   return (
     <Descriptions
       title={
         <div className="flex items-center gap-2">
           <span>Emergency Contact</span>
-          <FaEdit className="cursor-pointer" />
+          {isEdit ? (
+            <>
+              <Button
+                disabled={isLoading}
+                onClick={handleUpdateInfo}
+                loading={isLoading}
+                iconPosition="end"
+                type="primary"
+              >
+                {isLoading ? "Loading" : "Save changes"}
+              </Button>
+              <Button disabled={isLoading} onClick={() => setIsEdit(false)}>
+                Cancel
+              </Button>
+            </>
+          ) : (
+            <FaEdit
+              onClick={() => setIsEdit(true)}
+              className="cursor-pointer"
+            />
+          )}
         </div>
       }
       column={{ xs: 1, sm: 1, md: 2 }}
@@ -21,13 +78,37 @@ const EmergencyContact = ({ user }: Props) => {
       className="mt-4 pb-4 border-b"
     >
       <Descriptions.Item label="Name">
-        {user?.emergencyContact?.name || "Empty"}
+        {isEdit ? (
+          <Input
+            type="text"
+            value={newValues.name}
+            onChange={(e) => handleInputChange("name", e.target.value)}
+          />
+        ) : (
+          <p> {user?.emergencyContact?.name || "Empty"}</p>
+        )}
       </Descriptions.Item>
       <Descriptions.Item label="Relationship">
-        {user?.emergencyContact?.relationship || "Empty"}
+        {isEdit ? (
+          <Input
+            type="text"
+            value={newValues.relationship}
+            onChange={(e) => handleInputChange("relationship", e.target.value)}
+          />
+        ) : (
+          <p> {user?.emergencyContact?.relationship || "Empty"}</p>
+        )}
       </Descriptions.Item>
       <Descriptions.Item label="Phone">
-        {user?.emergencyContact?.phone || "Empty"}
+        {isEdit ? (
+          <Input
+            type="text"
+            value={newValues.phone}
+            onChange={(e) => handleInputChange("phone", e.target.value)}
+          />
+        ) : (
+          <p> {user?.emergencyContact?.phone || "Empty"}</p>
+        )}
       </Descriptions.Item>
     </Descriptions>
   );
