@@ -48,6 +48,16 @@ class Controller extends RootController {
       data: null,
     });
   });
+  updateUserBasicInfo = this.catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id as unknown as Types.ObjectId;
+    await UserService.updateUserBasicInfo(id, req.body);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "User basic info updated successfully",
+      data: null,
+    });
+  });
 }
 
 export const UserController = new Controller();

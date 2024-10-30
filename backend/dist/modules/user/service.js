@@ -83,6 +83,11 @@ class Service {
             yield model_1.User.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });
         });
     }
+    updateUserBasicInfo(id, updatedData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.User.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });
+        });
+    }
     changePassword(userId, oldPassword, newPassword) {
         return __awaiter(this, void 0, void 0, function* () {
             const isExist = yield model_1.User.findById(userId);

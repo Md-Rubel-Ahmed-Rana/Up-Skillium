@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { User } from "./model";
-import { ICreateUser, IGetUser } from "./interface";
+import { ICreateUser, IGetUser, IUserBasicInfo } from "./interface";
 import { BcryptInstance } from "../../lib/bcrypt";
 import ApiError from "../../shared/apiError";
 import { RoleService } from "../role/service";
@@ -66,6 +66,12 @@ class Service {
   async updateUser(
     id: string,
     updatedData: Partial<ICreateUser>
+  ): Promise<void> {
+    await User.findByIdAndUpdate(id, { $set: { ...updatedData } });
+  }
+  async updateUserBasicInfo(
+    id: Types.ObjectId,
+    updatedData: IUserBasicInfo
   ): Promise<void> {
     await User.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }

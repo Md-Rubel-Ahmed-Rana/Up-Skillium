@@ -11,6 +11,8 @@ router.patch("/:id", UserController.updateUser);
 
 router.patch("/change-password/:userId", UserController.changePassword);
 
+router.patch("/update-basic-info/:id", UserController.updateUserBasicInfo);
+
 router.patch(
   "/change-profile-picture/:id",
   upload.single("file"),
