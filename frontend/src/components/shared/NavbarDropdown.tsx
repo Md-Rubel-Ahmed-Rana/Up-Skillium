@@ -13,7 +13,7 @@ const NavbarDropdown = () => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Link href="/profile">Profile</Link>,
+      label: <Link href="/dashboard/profile">Profile</Link>,
     },
     {
       key: "2",
@@ -21,7 +21,7 @@ const NavbarDropdown = () => {
     },
     {
       key: "3",
-      label: <Link href="/dashboards">Dashboard</Link>,
+      label: <Link href="/dashboard">Dashboard</Link>,
     },
     {
       key: "4",
@@ -39,7 +39,7 @@ const NavbarDropdown = () => {
       {user && user?.image ? (
         <img
           style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-          src="https://i.ibb.co.com/mGpJ6w7/user-Profile.jpg"
+          src={user?.image}
           alt="Profile"
           className="border-2 border-blue-600"
         />
