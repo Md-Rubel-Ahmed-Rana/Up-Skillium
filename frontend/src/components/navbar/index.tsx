@@ -18,14 +18,6 @@ const NavbarPage = () => {
 
   const navList = [
     {
-      name: "Home",
-      path: "/",
-    },
-    {
-      name: "Course Details",
-      path: "/courseDetails",
-    },
-    {
       name: "Courses",
       path: "/courses",
     },
@@ -69,7 +61,7 @@ const NavbarPage = () => {
                 <Link
                   key={list.name}
                   href={list.path}
-                  className="px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
+                  className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
                 >
                   {list.name}
                 </Link>
@@ -81,13 +73,13 @@ const NavbarPage = () => {
               <>
                 <Link
                   href={"/login"}
-                  className="px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
+                  className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
                 >
                   Login
                 </Link>
                 <Link
                   href={"/register"}
-                  className="px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
+                  className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
                 >
                   Register
                 </Link>
@@ -98,15 +90,45 @@ const NavbarPage = () => {
         {isOpen && (
           <div className="sm:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
+              {user?.id && (
+                <>
+                  <Link
+                    href={"/dashboard/profile"}
+                    className="block  text-sm font-medium"
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    href={"/dashboard"}
+                    className="block  text-sm font-medium"
+                  >
+                    Dashboard
+                  </Link>
+                </>
+              )}
+
               {navList.map((list) => (
                 <Link
                   key={list.name}
                   href={list.path}
-                  className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-700"
+                  className="block  text-sm font-medium"
                 >
                   {list.name}
                 </Link>
               ))}
+              {!user?.id && (
+                <>
+                  <Link href={"/login"} className="block  text-sm font-medium">
+                    Login
+                  </Link>
+                  <Link
+                    href={"/register"}
+                    className="block  text-sm font-medium"
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}
