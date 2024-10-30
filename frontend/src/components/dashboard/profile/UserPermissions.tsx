@@ -15,7 +15,10 @@ const UserPermissions = ({ user }: Props) => {
       bordered
       className="mt-4"
     >
-      <Descriptions.Item label="Permissions">
+      <Descriptions.Item
+        labelStyle={{ fontWeight: "bold" }}
+        label="Permissions"
+      >
         <ul className="list-disc list-inside">
           {user?.role?.permissions?.map((permission, index) => (
             <li key={index}>{makeOrganizePermission(permission)}</li>
