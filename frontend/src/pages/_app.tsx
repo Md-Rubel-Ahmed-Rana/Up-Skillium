@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Navbar />
       <Component {...pageProps} />;
       <Footer />
-      <Toaster />
+      <Toaster position="top-right" />
     </Provider>
   );
 }

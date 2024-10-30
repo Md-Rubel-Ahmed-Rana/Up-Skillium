@@ -7,6 +7,7 @@ const authApi = apiSlice.injectEndpoints({
         method: "GET",
         url: "/auth",
       }),
+      providesTags: ["user"],
     }),
     userLogin: builder.mutation({
       query: ({ email, password }: { email: string; password: string }) => ({
@@ -14,6 +15,7 @@ const authApi = apiSlice.injectEndpoints({
         url: "/auth/login",
         body: { email, password },
       }),
+      invalidatesTags: ["user"],
     }),
     userRegister: builder.mutation({
       query: ({
@@ -31,12 +33,14 @@ const authApi = apiSlice.injectEndpoints({
         url: "/auth/register",
         body: { name, email, role, password },
       }),
+      invalidatesTags: ["user"],
     }),
     logout: builder.mutation({
       query: () => ({
         method: "DELETE",
         url: "/auth/logout",
       }),
+      invalidatesTags: ["user"],
     }),
   }),
 });
