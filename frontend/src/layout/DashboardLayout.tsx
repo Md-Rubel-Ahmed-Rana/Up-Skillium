@@ -1,8 +1,8 @@
 import React, { ReactNode } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd/lib";
-const { Header, Content, Sider } = Layout;
+import { Layout, Menu } from "antd/lib";
+const { Content, Sider } = Layout;
 
 const siderStyle: React.CSSProperties = {
   overflow: "auto",
@@ -30,10 +30,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   sidebarItems = defaultItems,
   children,
 }) => {
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-
   return (
     <Layout hasSider>
       <Sider className="bg-white pt-20" style={siderStyle}>
@@ -44,20 +40,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           items={sidebarItems}
         />
       </Sider>
-      <Layout style={{ marginInlineStart: 200 }}>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+      <Layout style={{ marginInlineStart: 100 }}>
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
-          <div
-            style={{
-              padding: 24,
-              textAlign: "center",
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-            className="min-h-screen"
-          >
-            {children}
-          </div>
+          <div className="min-h-screen bg-white">{children}</div>
         </Content>
       </Layout>
     </Layout>
