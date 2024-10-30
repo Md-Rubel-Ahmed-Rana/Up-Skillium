@@ -45,3 +45,10 @@ export type IUser = {
   emergencyContact: IEmergencyContact;
   phoneNumber: string;
 };
+
+export type IUserBasicInfo = {
+  email: string;
+  phoneNumber: string;
+  dateOfBirth: Date;
+  gender: string;
+};
