@@ -5,12 +5,14 @@ import { Button, Descriptions, Input } from "antd/lib";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
 
 type Props = {
   user: IUser;
 };
 
 const EmergencyContact = ({ user }: Props) => {
+  const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [updateContact, { isLoading }] = useUpdateEmergencyContactMutation();
   const [isEdit, setIsEdit] = useState(false);
   const [newValues, setNewValues] = useState({
@@ -49,7 +51,9 @@ const EmergencyContact = ({ user }: Props) => {
     <Descriptions
       title={
         <div className="flex items-center gap-2">
-          <span>Emergency Contact</span>
+          <span className={!isLargeDevice && isEdit ? "hidden" : "block"}>
+            Emergency Contact
+          </span>
           {isEdit ? (
             <>
               <Button

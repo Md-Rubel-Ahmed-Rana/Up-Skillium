@@ -19,9 +19,16 @@ const Profile = () => {
   ];
 
   return (
-    <DashboardLayout sidebarItems={sidebarItems}>
-      <ProfileInfo />
-    </DashboardLayout>
+    <>
+      <div className="hidden lg:block">
+        <DashboardLayout sidebarItems={sidebarItems}>
+          <ProfileInfo />
+        </DashboardLayout>
+      </div>
+      <div className="block lg:hidden">
+        <ProfileInfo />
+      </div>
+    </>
   );
 };
 
