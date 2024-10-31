@@ -8,8 +8,7 @@ import InstructorCard from "./InstructorCard";
 import CourseInformation from "./CourseInformation";
 import StudentFeedback from "./StudentFeedback";
 
-const url =
-  "https://firebasestorage.googleapis.com/v0/b/up-skillium.appspot.com/o/up-skillium%2Fcourse-introductory-videos%2FShibir-jannati-dol.mp4?alt=media&token=138383d6-7d05-4579-a0a7-88de21fa291e";
+const url = "https://youtu.be/5Xy-t8k_M4A?si=zkSxI39XAy2xsBa6";
 
 const CourseBasicDetails = () => {
   const { query } = useRouter();
@@ -18,7 +17,7 @@ const CourseBasicDetails = () => {
   const course = data?.data as ICourse;
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-6 bg-gray-50 rounded-lg shadow-md">
+    <div className="lg:p-6 p-2 max-w-4xl mx-auto space-y-6 bg-gray-50 rounded-lg shadow-md">
       <IntroductoryVideoPlayer videoUrl={course?.introductoryVideo || url} />
 
       <CourseTitleCategoryCard

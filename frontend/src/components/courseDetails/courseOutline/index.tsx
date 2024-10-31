@@ -10,7 +10,7 @@ const CourseOutline = () => {
   const { data } = useGetCourseOutlineByCourseIdQuery({ courseId });
   const outline = data?.data as ICourseOutline;
   return (
-    <div>
+    <div className="p-2">
       <CourseCardForDetails course={outline?.course} />
       <OutlineModules modules={outline?.modules} />
     </div>

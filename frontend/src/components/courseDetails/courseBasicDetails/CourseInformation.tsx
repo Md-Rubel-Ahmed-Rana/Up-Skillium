@@ -18,14 +18,14 @@ const CourseInformation = ({ course }: Props) => {
           <Tag color="blue">{course?.level}</Tag>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex  items-center gap-2">
           <Text className="font-semibold text-lg text-gray-700">Duration:</Text>
           <Text className="text-gray-600">{course?.duration}</Text>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col lg:flex-row lg:items-center  gap-2">
           <Text className="font-semibold text-lg text-gray-700">Tags:</Text>
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2">
             {course?.tags?.map((tag) => (
               <Tag color="purple" key={tag}>
                 {tag}
@@ -34,12 +34,12 @@ const CourseInformation = ({ course }: Props) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-2">
           <Text className="font-semibold text-lg text-gray-700">
             Technologies:
           </Text>
-          <div className="flex space-x-2">
-            {["HTML", "CSS", "Javascript", "ReactJs"]?.map((tech) => (
+          <div className="flex flex-wrap gap-2">
+            {course?.technologies?.map((tech) => (
               <Tag color="geekblue" key={tech}>
                 {tech}
               </Tag>
