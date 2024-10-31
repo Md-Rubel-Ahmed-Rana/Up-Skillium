@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ICourse } from "@/types/course.type";
 import { Avatar, Button, Card, Rate, Typography, Image } from "antd/lib";
-import NextImage from "next/image";
+import Link from "next/link";
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -18,7 +18,7 @@ const CourseCard = ({ course }: Props) => {
       styles={{ body: { padding: "10px" } }}
       cover={
         course?.image ? (
-          <NextImage alt="course thumbnail" src={course?.image} />
+          <img alt="course thumbnail" src={course?.image} />
         ) : (
           <Image
             src="error"
@@ -30,13 +30,20 @@ const CourseCard = ({ course }: Props) => {
         )
       }
       actions={[
-        <Button
-          type="dashed"
-          className="w-[90%] bg-yellow-500 text-white"
+        <Link
+          href={`/courses/details/${course?.id}?courseId=${
+            course?.id
+          }&courseTitle=${course.title}&category=${
+            course?.category
+          }&description=${
+            course?.description
+          }&tags=${course?.tags?.toString()}`}
           key={"1"}
         >
-          See Details
-        </Button>,
+          <Button type="dashed" className="w-[90%] bg-yellow-500 text-white">
+            See Details
+          </Button>
+        </Link>,
         <Button type="primary" className="w-[90%]" key={"2"}>
           Buy Now
         </Button>,
