@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { CourseService } from "../course/service";
 import { IModule } from "./interface";
 import { Module } from "./model";
@@ -26,13 +27,13 @@ class Service {
 
     return modules;
   }
-  async getSingleModule(moduleId: string): Promise<IModule | null> {
+  async getSingleModule(moduleId: Types.ObjectId): Promise<IModule | null> {
     return await Module.findById(moduleId);
   }
-  async getModuleByCourseId(courseId: string): Promise<IModule[]> {
+  async getModuleByCourseId(courseId: Types.ObjectId): Promise<IModule[]> {
     return await Module.find({ courseId: courseId });
   }
-  async getFullClassByCourseId(courseId: string) {
+  async getFullClassByCourseId(courseId: Types.ObjectId) {
     const course = await CourseService.getSingleCourse(courseId);
 
     const modules = await Module.find({ course: courseId })
@@ -51,10 +52,13 @@ class Service {
 
     return { course, modules };
   }
-  async updateModule(id: string, updatedData: Partial<IModule>): Promise<void> {
+  async updateModule(
+    id: Types.ObjectId,
+    updatedData: Partial<IModule>
+  ): Promise<void> {
     await Module.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
-  async deleteModule(id: string): Promise<void> {
+  async deleteModule(id: Types.ObjectId): Promise<void> {
     await Module.findByIdAndDelete(id);
   }
 }

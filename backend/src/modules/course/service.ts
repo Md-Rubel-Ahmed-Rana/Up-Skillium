@@ -1,5 +1,7 @@
+import { Types } from "mongoose";
 import { ICourse } from "./interface";
 import { Course } from "./model";
+import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -57,7 +59,7 @@ class Service {
 
     return courses;
   }
-  async getSingleCourse(id: string): Promise<ICourse | null> {
+  async getSingleCourse(id: Types.ObjectId): Promise<ICourse | null> {
     return await Course.findById(id).populate([
       {
         path: "instructor",
@@ -76,11 +78,24 @@ class Service {
       },
     ]);
   }
-  async updateCourse(id: string, updatedData: Partial<ICourse>): Promise<void> {
+  async updateCourse(
+    id: Types.ObjectId,
+    updatedData: Partial<ICourse>
+  ): Promise<void> {
     await Course.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
-  async deleteCourse(id: string): Promise<void> {
+  async deleteCourse(id: Types.ObjectId): Promise<void> {
     await Course.findByIdAndDelete(id);
+  }
+  async updateCourseImage(id: Types.ObjectId, imageUrl: string) {
+    console.log({ imageUrl });
+    const course = await Course.findById(id);
+    console.log(course);
+    if (course && course?.image) {
+      console.log("Delete course image");
+      await FileUploadMiddleware.deleteSingle(course?.image);
+    }
+    await Course.findByIdAndUpdate(id, { $set: { image: imageUrl } });
   }
 }
 

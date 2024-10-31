@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import RootController from "../../shared/rootController";
 import { CourseService } from "./service";
+import { Types } from "mongoose";
 
 class Controller extends RootController {
   createCourse = this.catchAsync(async (req: Request, res: Response) => {
@@ -36,7 +37,7 @@ class Controller extends RootController {
     });
   });
   getSingleCourse = this.catchAsync(async (req: Request, res: Response) => {
-    const id = req.params.id;
+    const id = req.params.id as unknown as Types.ObjectId;
     const course = await CourseService.getSingleCourse(id);
     this.apiResponse(res, {
       statusCode: 200,
@@ -46,7 +47,7 @@ class Controller extends RootController {
     });
   });
   updateCourse = this.catchAsync(async (req: Request, res: Response) => {
-    const id = req.params.id;
+    const id = req.params.id as unknown as Types.ObjectId;
     await CourseService.updateCourse(id, req.body);
     this.apiResponse(res, {
       statusCode: 200,
@@ -56,12 +57,22 @@ class Controller extends RootController {
     });
   });
   deleteCourse = this.catchAsync(async (req: Request, res: Response) => {
-    const id = req.params.id;
+    const id = req.params.id as unknown as Types.ObjectId;
     await CourseService.deleteCourse(id);
     this.apiResponse(res, {
       statusCode: 200,
       success: true,
       message: "Course deleted successfully",
+      data: null,
+    });
+  });
+  updateCourseImage = this.catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id as unknown as Types.ObjectId;
+    await CourseService.updateCourseImage(id, req.url);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Course image changed successfully",
       data: null,
     });
   });

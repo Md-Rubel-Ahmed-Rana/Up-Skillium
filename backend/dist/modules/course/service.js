@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CourseService = void 0;
 const model_1 = require("./model");
+const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 class Service {
     createCourse(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -76,6 +77,18 @@ class Service {
     deleteCourse(id) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Course.findByIdAndDelete(id);
+        });
+    }
+    updateCourseImage(id, imageUrl) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log({ imageUrl });
+            const course = yield model_1.Course.findById(id);
+            console.log(course);
+            if (course && (course === null || course === void 0 ? void 0 : course.image)) {
+                console.log("Delete course image");
+                yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(course === null || course === void 0 ? void 0 : course.image);
+            }
+            yield model_1.Course.findByIdAndUpdate(id, { $set: { image: imageUrl } });
         });
     }
 }
