@@ -21,8 +21,7 @@ const CourseSearch = ({ setSearchValue }: Props) => {
       </h1>
       <p className="text-gray-500 text-center max-w-lg">
         Explore a variety of courses to gain new skills, enhance your knowledge,
-        and boost your career. Start searching to discover the perfect course
-        for you.
+        and boost your career. Start searching to discover the perfect course.
       </p>
       <Input
         type="search"
