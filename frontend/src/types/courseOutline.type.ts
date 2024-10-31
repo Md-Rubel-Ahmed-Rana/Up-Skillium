@@ -11,6 +11,11 @@ export type ICourseForOutline = {
   id: string;
   title: string;
   image: string;
+  price: {
+    original: number;
+    discount: number;
+    salePrice: number;
+  };
 };
 
 export type IModuleOutline = {
