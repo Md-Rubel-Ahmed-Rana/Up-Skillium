@@ -1,22 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetAllCoursesQuery } from "@/features/course";
-import CourseCard from "./CourseCard";
+import CoursesBanner from "./CourseBanner";
+import CourseContainer from "./CourseContainer";
+import { ICourse } from "@/types/course.type";
 
-const CourseContainer = () => {
+const Courses = () => {
   const { data } = useGetAllCoursesQuery({});
-  console.log(data)
-  const courses = data?.data;
+  const courses = (data?.data as ICourse[]) || [];
 
   return (
-    <div className="grid grid-cols-3 gap-7 mt-10">
-      {courses?.map((course: any) => (
-        <CourseCard key={course?.id} course={course} />
-      ))}
-    </div>
+    <>
+      <CoursesBanner />
+      <CourseContainer courses={courses} />
+    </>
   );
 };
 
-export default CourseContainer;
-
-
-
+export default Courses;
