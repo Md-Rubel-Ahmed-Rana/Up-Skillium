@@ -28,7 +28,13 @@ class Service {
     }
     getOutline(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield model_1.CourseOutline.findById(id);
+            const data = yield model_1.CourseOutline.findById(id).populate([
+                {
+                    path: "course",
+                    model: "Course",
+                    select: { title: 1, image: 1 },
+                },
+            ]);
             if (!data) {
                 throw new apiError_1.default(404, "Course outline was not found!");
             }
@@ -37,7 +43,13 @@ class Service {
     }
     getOutlineByCourse(courseId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield model_1.CourseOutline.findOne({ courseId: courseId });
+            const data = yield model_1.CourseOutline.findOne({ course: courseId }).populate([
+                {
+                    path: "course",
+                    model: "Course",
+                    select: { title: 1, image: 1 },
+                },
+            ]);
             if (!data) {
                 throw new apiError_1.default(404, "Course outline was not found!");
             }

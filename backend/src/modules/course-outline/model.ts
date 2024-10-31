@@ -11,8 +11,9 @@ const moduleSchema = new Schema<IModuleOutline>(
 
 const courseOutlineSchema = new Schema<ICourseOutline>(
   {
-    courseId: { type: Schema.Types.ObjectId, required: true, ref: "Course" },
+    course: { type: Schema.Types.ObjectId, required: true, ref: "Course" },
     description: { type: String, required: true },
+    technologies: [String],
     modules: [moduleSchema],
   },
   schemaOption

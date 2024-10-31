@@ -44,6 +44,13 @@ class Service {
     const skip = (page - 1) * limit;
 
     const courses = await Course.find(filterQuery)
+      .populate([
+        {
+          path: "instructor",
+          model: "User",
+          select: { name: 1, image: 1 },
+        },
+      ])
       .skip(skip)
       .limit(limit)
       .exec();
@@ -51,7 +58,23 @@ class Service {
     return courses;
   }
   async getSingleCourse(id: string): Promise<ICourse | null> {
-    return await Course.findById(id);
+    return await Course.findById(id).populate([
+      {
+        path: "instructor",
+        model: "User",
+        select: { name: 1, image: 1 },
+      },
+      {
+        path: "students",
+        model: "User",
+        select: { name: 1, image: 1 },
+      },
+      {
+        path: "reviews",
+        model: "User",
+        select: { name: 1, image: 1 },
+      },
+    ]);
   }
   async updateCourse(id: string, updatedData: Partial<ICourse>): Promise<void> {
     await Course.findByIdAndUpdate(id, { $set: { ...updatedData } });
