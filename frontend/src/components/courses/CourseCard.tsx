@@ -1,51 +1,72 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import dynamic from "next/dynamic";
+import { ICourse } from "@/types/course.type";
+import { Avatar, Button, Card, Rate, Typography } from "antd/lib";
 
-const Card = dynamic(() => import("antd").then((mod) => mod.Card), {
-  ssr: false,
-});
-const Space = dynamic(() => import("antd").then((mod) => mod.Space), {
-  ssr: false,
-});
-const Button = dynamic(() => import("antd").then((mod) => mod.Button), {
-  ssr: false,
-});
+const { Meta } = Card;
+const { Text } = Typography;
 
 type Props = {
-  course: any;
+  course: ICourse;
 };
 
 const CourseCard = ({ course }: Props) => {
   return (
-    <div className="mx-auto max-w-sm bg-gradient-to-br from-gray-50 via-slate-100 to-gray-200 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-      <Space direction="vertical" size={16} className="w-full">
-        <Card
-          title={course.title}
-          style={{
-            border: "1px solid #e0e0e0",
-            borderRadius: "8px",
-            overflow: "hidden",
-          }}
-          headStyle={{
-            backgroundColor: "#f9fafb",
-            fontSize: "1.25rem",
-            fontWeight: "bold",
-          }}
-          bodyStyle={{ padding: "1rem" }}
-          hoverable
-        >
-          <p className="text-gray-600 font-semibold text-sm">
-            {course.category}
-          </p>
-          <p className="text-gray-800 text-lg mt-2 mb-4">
-            {course.description}
-          </p>
-          <Button color="default" variant="solid">
-            Details
-          </Button>
-        </Card>
-      </Space>
-    </div>
+    <Card
+      cover={<img alt="course thumbnail" src={course?.image} />}
+      actions={[
+        <Button type="default" className="w-[95%]" key={"1"}>
+          See Outline
+        </Button>,
+        <Button type="primary" className="w-[95%]" key={"2"}>
+          Buy Now
+        </Button>,
+      ]}
+    >
+      <Meta
+        className="pb-3"
+        title={course?.title}
+        description={course?.description}
+      />
+      <div className="pt-4 border-t-2">
+        <Meta
+          className="border rounded-md p-2 text-xs flex items-center"
+          avatar={
+            <Avatar
+              size={40}
+              className="ring-1"
+              src={course?.instructor?.image}
+            />
+          }
+          title={course?.instructor?.name || "Unknown"}
+          description={course?.instructor?.bio || "Instructor"}
+        />
+      </div>
+      <div className="flex justify-between items-center mt-5">
+        <div className="flex flex-col items-center space-y-2">
+          <Rate allowHalf defaultValue={2.5} />
+          <span className="text-sm text-gray-500">
+            ({course?.ratings?.ratingCount || 0} Ratings)
+          </span>
+        </div>
+        <div className="flex flex-col font-semibold">
+          <div>
+            <Text>Original: </Text>
+            <Text delete type="warning">
+              ${course?.price?.original}
+            </Text>
+          </div>
+          <div>
+            <Text>Discount: </Text>
+            <Text type="danger"> -{course?.price?.discount}%</Text>
+          </div>
+          <div>
+            <Text>Sale Price: </Text>
+            <Text type="success"> ${course?.price?.salePrice}</Text>
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 };
 
