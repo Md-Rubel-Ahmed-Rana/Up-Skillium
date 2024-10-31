@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ICourse } from "@/types/course.type";
-import { Avatar, Button, Card, Rate, Typography } from "antd/lib";
+import { Avatar, Button, Card, Rate, Typography, Image } from "antd/lib";
+import NextImage from "next/image";
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -13,16 +14,33 @@ type Props = {
 const CourseCard = ({ course }: Props) => {
   return (
     <Card
-      cover={<img alt="course thumbnail" src={course?.image} />}
+      className="shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+      styles={{ body: { padding: "10px" } }}
+      cover={
+        course?.image ? (
+          <NextImage alt="course thumbnail" src={course?.image} />
+        ) : (
+          <Image
+            src="error"
+            height={200}
+            fallback="https://firebasestorage.googleapis.com/v0/b/up-skillium.appspot.com/o/up-skillium%2Fassets%2Ffallback-image.png?alt=media&token=c3cb9e52-a43e-4666-a534-216a99c60a88"
+            alt="fallback image"
+            preview={false}
+          />
+        )
+      }
       actions={[
-        <Button type="default" className="w-[95%]" key={"1"}>
-          See Outline
+        <Button
+          type="dashed"
+          className="w-[90%] bg-yellow-500 text-white"
+          key={"1"}
+        >
+          See Details
         </Button>,
-        <Button type="primary" className="w-[95%]" key={"2"}>
+        <Button type="primary" className="w-[90%]" key={"2"}>
           Buy Now
         </Button>,
       ]}
-      styles={{ body: { padding: "5px" } }}
     >
       <Meta
         className="pb-3"
@@ -40,7 +58,7 @@ const CourseCard = ({ course }: Props) => {
             />
           }
           title={course?.instructor?.name || "Unknown"}
-          description={course?.instructor?.bio || "Instructor"}
+          description="Instructor"
         />
       </div>
       <div className="flex justify-between items-center mt-5">
