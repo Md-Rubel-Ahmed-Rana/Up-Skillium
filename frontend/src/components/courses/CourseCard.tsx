@@ -22,13 +22,14 @@ const CourseCard = ({ course }: Props) => {
           Buy Now
         </Button>,
       ]}
+      styles={{ body: { padding: "5px" } }}
     >
       <Meta
         className="pb-3"
         title={course?.title}
         description={course?.description}
       />
-      <div className="pt-4 border-t-2">
+      <div className="pt-4 border-t">
         <Meta
           className="border rounded-md p-2 text-xs flex items-center"
           avatar={
