@@ -1,7 +1,6 @@
+import CourseDetails from "@/components/courseDetails";
 import PageMetadata from "@/utils/PageMetadata";
-import { Typography } from "antd/lib";
 import { useRouter } from "next/router";
-import React from "react";
 
 const CourseDetailsPage = () => {
   const { query } = useRouter();
@@ -12,8 +11,8 @@ const CourseDetailsPage = () => {
         description={(query?.description as string) || "course description"}
         keywords={query.tags as string}
       />
-      <div className="min-h-screen flex justify-center items-center">
-        <Typography.Title>{query?.courseTitle}</Typography.Title>
+      <div className="max-w-[1200px] mx-auto">
+        <CourseDetails />
       </div>
     </>
   );

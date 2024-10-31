@@ -20,6 +20,7 @@ export type ICourse = {
   description: string;
   image: string;
   tags: string[];
+  technologies: string[];
   category: string;
   level: string;
   duration: string;
