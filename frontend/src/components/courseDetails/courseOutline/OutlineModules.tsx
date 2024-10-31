@@ -7,7 +7,7 @@ type Props = {
 
 const OutlineModules = ({ modules }: Props) => {
   return (
-    <div className="p-8 bg-gray-50">
+    <div className="lg:p-8 mt-10 lg:mt-0 lg:bg-gray-50">
       <div className="space-y-6">
         <div className="text-center">
           <Typography.Title level={2} className="text-blue-600">
