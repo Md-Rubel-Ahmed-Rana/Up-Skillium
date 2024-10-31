@@ -34,6 +34,13 @@ class Service {
             }
             const skip = (page - 1) * limit;
             const courses = yield model_1.Course.find(filterQuery)
+                .populate([
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: { name: 1, image: 1 },
+                },
+            ])
                 .skip(skip)
                 .limit(limit)
                 .exec();
@@ -42,7 +49,23 @@ class Service {
     }
     getSingleCourse(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.Course.findById(id);
+            return yield model_1.Course.findById(id).populate([
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: { name: 1, image: 1 },
+                },
+                {
+                    path: "students",
+                    model: "User",
+                    select: { name: 1, image: 1 },
+                },
+                {
+                    path: "reviews",
+                    model: "User",
+                    select: { name: 1, image: 1 },
+                },
+            ]);
         });
     }
     updateCourse(id, updatedData) {

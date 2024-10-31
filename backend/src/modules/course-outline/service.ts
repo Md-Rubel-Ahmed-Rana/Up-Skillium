@@ -10,14 +10,26 @@ class Service {
     return await CourseOutline.find({});
   }
   async getOutline(id: string): Promise<ICourseOutline | null> {
-    const data = await CourseOutline.findById(id);
+    const data = await CourseOutline.findById(id).populate([
+      {
+        path: "course",
+        model: "Course",
+        select: { title: 1, image: 1 },
+      },
+    ]);
     if (!data) {
       throw new ApiError(404, "Course outline was not found!");
     }
     return data;
   }
   async getOutlineByCourse(courseId: string): Promise<ICourseOutline | null> {
-    const data = await CourseOutline.findOne({ courseId: courseId });
+    const data = await CourseOutline.findOne({ course: courseId }).populate([
+      {
+        path: "course",
+        model: "Course",
+        select: { title: 1, image: 1 },
+      },
+    ]);
     if (!data) {
       throw new ApiError(404, "Course outline was not found!");
     }

@@ -3,13 +3,14 @@ import { Types } from "mongoose";
 export type ICourse = {
   title: string;
   description: string;
+  image: string;
   price: {
     original: number;
     discount: number;
     salePrice: number;
   };
-  tags: string[]; // "hot", "new", "best sale", "popular"
-  category: string; // e.g., Web Design, Web Development, Graphic Design, etc.
+  tags: string[];
+  category: string;
   level: "beginner" | "intermediate" | "advanced";
   duration: string;
   instructor?: Types.ObjectId;

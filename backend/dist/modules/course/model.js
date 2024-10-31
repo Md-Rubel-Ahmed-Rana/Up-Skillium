@@ -9,6 +9,7 @@ const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 const courseSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
+    image: { type: String },
     price: {
         original: { type: Number, required: true },
         discount: { type: Number, required: true },
