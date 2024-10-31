@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { ModuleService } from "./service";
@@ -31,7 +32,7 @@ class Controller extends RootController {
     });
   });
   getSingleModule = this.catchAsync(async (req: Request, res: Response) => {
-    const id = req.params.id;
+    const id = req.params.id as unknown as Types.ObjectId;
     const data = await ModuleService.getSingleModule(id);
     this.apiResponse(res, {
       statusCode: 200,
@@ -41,7 +42,7 @@ class Controller extends RootController {
     });
   });
   getModuleByCourseId = this.catchAsync(async (req: Request, res: Response) => {
-    const courseId = req.params.courseId;
+    const courseId = req.params.courseId as unknown as Types.ObjectId;
     const data = await ModuleService.getModuleByCourseId(courseId);
     this.apiResponse(res, {
       statusCode: 200,
@@ -52,7 +53,7 @@ class Controller extends RootController {
   });
   getFullClassByCourseId = this.catchAsync(
     async (req: Request, res: Response) => {
-      const courseId = req.params.courseId;
+      const courseId = req.params.courseId as unknown as Types.ObjectId;
       const data = await ModuleService.getFullClassByCourseId(courseId);
       this.apiResponse(res, {
         statusCode: 200,
@@ -63,7 +64,7 @@ class Controller extends RootController {
     }
   );
   updateModule = this.catchAsync(async (req: Request, res: Response) => {
-    const id = req.params.id;
+    const id = req.params.id as unknown as Types.ObjectId;
     await ModuleService.updateModule(id, req.body);
     this.apiResponse(res, {
       statusCode: 200,
@@ -73,7 +74,7 @@ class Controller extends RootController {
     });
   });
   deleteModule = this.catchAsync(async (req: Request, res: Response) => {
-    const id = req.params.id;
+    const id = req.params.id as unknown as Types.ObjectId;
     await ModuleService.deleteModule(id);
     this.apiResponse(res, {
       statusCode: 200,
