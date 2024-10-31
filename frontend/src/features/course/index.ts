@@ -10,7 +10,17 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 0,
     }),
+    getSingleCourse: builder.query({
+      query: ({ id }: { id: string }) => ({
+        method: "GET",
+        url: `/course/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllCoursesQuery, useLazyGetAllCoursesQuery } = courseApi;
+export const {
+  useGetAllCoursesQuery,
+  useLazyGetAllCoursesQuery,
+  useGetSingleCourseQuery,
+} = courseApi;
