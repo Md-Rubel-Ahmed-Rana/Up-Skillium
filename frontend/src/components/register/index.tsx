@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import RegisterForm from "./RegisterForm";
 import Link from "next/link";
 
-const Register: React.FC = () => {
+const Register = () => {
   return (
     <div className="flex flex-col gap-5 justify-center items-center px-4 max-w-md mx-auto py-10">
       <div className="bg-gray-100 p-5 rounded-md flex flex-col gap-5 justify-center items-center w-full">

@@ -4,17 +4,6 @@ import type { MenuProps } from "antd";
 import { Layout, Menu } from "antd/lib";
 const { Content, Sider } = Layout;
 
-const siderStyle: React.CSSProperties = {
-  overflow: "auto",
-  height: "100vh",
-  position: "fixed",
-  insetInlineStart: 0,
-  top: 0,
-  bottom: 0,
-  scrollbarWidth: "thin",
-  scrollbarGutter: "stable",
-};
-
 const defaultItems: MenuProps["items"] = [FaUserCircle].map((icon, index) => ({
   key: String(index + 1),
   icon: React.createElement(icon),
@@ -31,8 +20,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
   children,
 }) => {
   return (
-    <Layout hasSider>
-      <Sider className="bg-white pt-20" style={siderStyle}>
+    <Layout style={{ padding: "0px", margin: "0px" }} hasSider>
+      <Sider style={{ padding: "0px", margin: "0px" }} className="bg-white">
         <Menu
           theme="light"
           mode="inline"
@@ -40,9 +29,9 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({
           items={sidebarItems}
         />
       </Sider>
-      <Layout style={{ marginInlineStart: 100 }}>
-        <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
-          <div className="min-h-screen bg-white">{children}</div>
+      <Layout style={{ padding: "0px", margin: "0px" }}>
+        <Content style={{ padding: "0px", margin: "0px" }}>
+          <div className="w-full h-full">{children}</div>
         </Content>
       </Layout>
     </Layout>
