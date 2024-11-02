@@ -1,6 +1,7 @@
 import Profile from "@/components/dashboard/profile";
+import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
-import React from "react";
+import React, { ReactElement } from "react";
 
 const ProfilePage = () => {
   return (
@@ -13,6 +14,10 @@ const ProfilePage = () => {
       <Profile />
     </>
   );
+};
+
+ProfilePage.getLayout = function (page: ReactElement) {
+  return <RootLayout>{page}</RootLayout>;
 };
 
 export default ProfilePage;

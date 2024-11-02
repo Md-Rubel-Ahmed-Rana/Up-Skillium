@@ -5,6 +5,7 @@ import { Button, Form, Input } from "antd/lib";
 import { useUserLoginMutation } from "@/features/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { MdEmail, MdLock } from "react-icons/md";
 
 type FieldType = {
   email: string;
@@ -15,7 +16,7 @@ const LoginForm: React.FC = () => {
   const [loginUser, { isLoading }] = useUserLoginMutation();
   const router = useRouter();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = async (data) => {
+  const handleLogin: FormProps<FieldType>["onFinish"] = async (data) => {
     try {
       const response: any = await loginUser(data);
       if (response?.data?.statusCode === 200) {
@@ -35,19 +36,24 @@ const LoginForm: React.FC = () => {
 
   return (
     <Form
-      name="basic"
+      name="User Login Form"
       initialValues={{ remember: true }}
-      onFinish={onFinish}
+      onFinish={handleLogin}
       autoFocus
       layout="vertical"
-      className="w-full font-semibold"
+      className="w-full"
     >
       <Form.Item<FieldType>
         label="Email"
         name="email"
         rules={[{ required: true, message: "Email is required" }]}
       >
-        <Input type="email" />
+        <Input
+          type="email"
+          size="large"
+          placeholder="Please enter your email"
+          prefix={<MdEmail />}
+        />
       </Form.Item>
 
       <Form.Item<FieldType>
@@ -55,7 +61,11 @@ const LoginForm: React.FC = () => {
         name="password"
         rules={[{ required: true, message: "Password is required" }]}
       >
-        <Input.Password />
+        <Input.Password
+          size="large"
+          placeholder="Please enter password"
+          prefix={<MdLock />}
+        />
       </Form.Item>
 
       <Form.Item>
@@ -66,6 +76,7 @@ const LoginForm: React.FC = () => {
           className="w-full"
           type="primary"
           htmlType="submit"
+          size="large"
         >
           {isLoading ? "Loading" : "Login"}
         </Button>

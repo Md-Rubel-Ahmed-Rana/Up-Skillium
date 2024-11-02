@@ -1,7 +1,9 @@
 import PageMetadata from "@/utils/PageMetadata";
-import Layout from "./HomePage/Layout";
+import RootLayout from "@/layout/RootLayout";
+import { ReactElement } from "react";
+import Home from "@/components/home";
 
-export default function Home() {
+const HomePage = () => {
   return (
     <>
       <PageMetadata
@@ -9,7 +11,13 @@ export default function Home() {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <Layout />
+      <Home />
     </>
   );
-}
+};
+
+HomePage.getLayout = function (page: ReactElement) {
+  return <RootLayout>{page}</RootLayout>;
+};
+
+export default HomePage;

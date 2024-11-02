@@ -2,7 +2,6 @@ type IAddress = {
   street: string;
   city: string;
   state: string;
-  postalCode: string;
   country: string;
 };
 
@@ -25,7 +24,6 @@ export type IUser = {
   email: string;
   role: IRole;
   dateOfBirth: Date;
-  password: string;
   gender: string;
   address: IAddress;
   emergencyContact: IEmergencyContact;

@@ -5,6 +5,8 @@ import { Button, Form, Input } from "antd/lib";
 import { useUserRegisterMutation } from "@/features/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { FaUserCircle } from "react-icons/fa";
+import { MdEmail, MdLock } from "react-icons/md";
 
 type FieldType = {
   name: string;
@@ -17,7 +19,7 @@ const RegisterForm: React.FC = () => {
   const [register, { isLoading }] = useUserRegisterMutation();
   const router = useRouter();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = async (data) => {
+  const handleRegister: FormProps<FieldType>["onFinish"] = async (data) => {
     try {
       data.role = "student";
       const response: any = await register(data);
@@ -38,26 +40,36 @@ const RegisterForm: React.FC = () => {
 
   return (
     <Form
-      name="basic"
+      name="User Register Form"
       initialValues={{ remember: true }}
-      onFinish={onFinish}
+      onFinish={handleRegister}
       autoFocus
       layout="vertical"
-      className="w-full font-semibold"
+      className="w-full"
     >
       <Form.Item<FieldType>
         label="Name"
         name="name"
         rules={[{ required: true, message: "Name is required" }]}
       >
-        <Input type="text" />
+        <Input
+          type="text"
+          size="large"
+          placeholder="Please enter your name"
+          prefix={<FaUserCircle />}
+        />
       </Form.Item>
       <Form.Item<FieldType>
         label="Email"
         name="email"
         rules={[{ required: true, message: "Email is required" }]}
       >
-        <Input type="email" />
+        <Input
+          type="email"
+          size="large"
+          placeholder="Please enter your email"
+          prefix={<MdEmail />}
+        />
       </Form.Item>
 
       <Form.Item<FieldType>
@@ -65,7 +77,11 @@ const RegisterForm: React.FC = () => {
         name="password"
         rules={[{ required: true, message: "Password is required" }]}
       >
-        <Input.Password />
+        <Input.Password
+          size="large"
+          placeholder="Please enter password"
+          prefix={<MdLock />}
+        />
       </Form.Item>
 
       <Form.Item>
@@ -76,8 +92,9 @@ const RegisterForm: React.FC = () => {
           className="w-full"
           type="primary"
           htmlType="submit"
+          size="large"
         >
-          {isLoading ? "Loading" : "Register"}
+          {isLoading ? "Loading" : "Create account"}
         </Button>
       </Form.Item>
     </Form>

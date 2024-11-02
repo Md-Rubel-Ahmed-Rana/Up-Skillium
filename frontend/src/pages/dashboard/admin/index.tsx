@@ -1,25 +1,25 @@
-import Login from "@/components/login";
+import AdminDashboard from "@/components/dashboard/admin";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
-const LoginPage = () => {
+const AdminDashboardPage = () => {
   return (
     <>
       <PageMetadata
-        title="Login - Up Skillium"
-        description="this is up skillium login page"
+        title="Dashboard - Admin - Up Skillium"
+        description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
       <div className="min-h-screen pt-20">
-        <Login />
+        <AdminDashboard />
       </div>
     </>
   );
 };
 
-LoginPage.getLayout = function (page: ReactElement) {
+AdminDashboardPage.getLayout = function (page: ReactElement) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export default LoginPage;
+export default AdminDashboardPage;
