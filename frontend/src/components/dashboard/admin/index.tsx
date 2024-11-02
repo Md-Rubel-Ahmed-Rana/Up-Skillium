@@ -1,6 +1,6 @@
 const AdminDashboard = () => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="min-h-screen h-full flex justify-center items-center overflow-y-auto">
       <h2 className="text-2xl font-semibold">This is admin dashboard</h2>
     </div>
   );
