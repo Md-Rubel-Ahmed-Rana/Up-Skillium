@@ -6,7 +6,5 @@ export type IModuleOutline = {
 
 export interface ICourseOutline {
   course: Types.ObjectId;
-  description: string;
-  technologies: string[];
   modules: IModuleOutline[];
 }

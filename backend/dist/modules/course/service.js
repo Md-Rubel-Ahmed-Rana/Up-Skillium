@@ -81,14 +81,22 @@ class Service {
     }
     updateCourseImage(id, imageUrl) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log({ imageUrl });
             const course = yield model_1.Course.findById(id);
-            console.log(course);
             if (course && (course === null || course === void 0 ? void 0 : course.image)) {
-                console.log("Delete course image");
                 yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(course === null || course === void 0 ? void 0 : course.image);
             }
             yield model_1.Course.findByIdAndUpdate(id, { $set: { image: imageUrl } });
+        });
+    }
+    updateCourseIntroductoryVideo(id, videoUrl) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const course = yield model_1.Course.findById(id);
+            if (course && (course === null || course === void 0 ? void 0 : course.introductoryVideo)) {
+                yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(course === null || course === void 0 ? void 0 : course.image);
+            }
+            yield model_1.Course.findByIdAndUpdate(id, {
+                $set: { introductoryVideo: videoUrl },
+            });
         });
     }
 }

@@ -11,8 +11,6 @@ const moduleSchema = new mongoose_1.Schema({
 }, schemaOption_1.default);
 const courseOutlineSchema = new mongoose_1.Schema({
     course: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: "Course" },
-    description: { type: String, required: true },
-    technologies: [String],
     modules: [moduleSchema],
 }, schemaOption_1.default);
 exports.CourseOutline = (0, mongoose_1.model)("CourseOutline", courseOutlineSchema);

@@ -12,6 +12,11 @@ const courseSchema = new Schema<ICourse>(
       discount: { type: Number, required: true },
       salePrice: { type: Number, required: true },
     },
+    technologies: [String],
+    introductoryVideo: {
+      type: String,
+      required: true,
+    },
     tags: { type: [String], required: true },
     category: { type: String, required: true },
     level: {
