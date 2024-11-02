@@ -5,12 +5,16 @@ import { MenuProps } from "antd";
 import { Avatar, Dropdown } from "antd/lib";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { useState } from "react";
 
 type Props = {
   dashboardRoute: string;
+  isToggleIcon: boolean;
 };
 
-const NavbarDropdown = ({ dashboardRoute }: Props) => {
+const NavbarDropdown = ({ dashboardRoute, isToggleIcon }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
 
@@ -39,18 +43,25 @@ const NavbarDropdown = ({ dashboardRoute }: Props) => {
       menu={{ items }}
       placement="bottomRight"
       arrow
+      onOpenChange={(open) => setIsOpen(open)}
     >
-      {user && user?.image ? (
-        <img
-          style={{ width: "50px", height: "50px", borderRadius: "50%" }}
-          src={user?.image}
-          alt="Profile"
-          className="border-2 border-blue-600"
-        />
+      {isToggleIcon ? (
+        <div> {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}</div>
       ) : (
-        <Avatar className="ring-2 bg-green-600">
-          {user?.name?.slice(0, 1).toUpperCase()}
-        </Avatar>
+        <div>
+          {user && user?.image ? (
+            <img
+              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+              src={user?.image}
+              alt="Profile"
+              className="border-2 border-blue-600"
+            />
+          ) : (
+            <Avatar className="ring-2 bg-green-600">
+              {user?.name?.slice(0, 1).toUpperCase()}
+            </Avatar>
+          )}
+        </div>
       )}
     </Dropdown>
   );

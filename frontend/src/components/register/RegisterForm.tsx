@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import type { FormProps } from "antd";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input } from "antd/lib";
 import { useUserRegisterMutation } from "@/features/auth";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
@@ -17,7 +16,7 @@ type FieldType = {
   password: string;
 };
 
-const RegisterForm: React.FC = () => {
+const RegisterForm = () => {
   const [register, { isLoading }] = useUserRegisterMutation();
   const router = useRouter();
 
