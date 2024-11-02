@@ -1,4 +1,5 @@
 import AdminDashboard from "@/components/dashboard/admin";
+import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
@@ -17,7 +18,11 @@ const AdminDashboardPage = () => {
 };
 
 AdminDashboardPage.getLayout = function (page: ReactElement) {
-  return <RootLayout>{page}</RootLayout>;
+  return (
+    <RootLayout>
+      <DashboardLayout>{page}</DashboardLayout>
+    </RootLayout>
+  );
 };
 
 export default AdminDashboardPage;
