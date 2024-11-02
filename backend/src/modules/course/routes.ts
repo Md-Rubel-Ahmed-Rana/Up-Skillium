@@ -22,4 +22,11 @@ router.patch(
   CourseController.updateCourseImage
 );
 
+router.patch(
+  "/change-course-introductory-video/:id",
+  upload.single("file"),
+  FileUploadMiddleware.singleFile("course-introductory-videos"),
+  CourseController.updateCourseIntroductoryVideo
+);
+
 export const CourseRoutes = router;

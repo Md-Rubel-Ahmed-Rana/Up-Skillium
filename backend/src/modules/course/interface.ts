@@ -10,7 +10,9 @@ export type ICourse = {
     salePrice: number;
   };
   tags: string[];
+  technologies: string[];
   category: string;
+  introductoryVideo: string;
   level: "beginner" | "intermediate" | "advanced";
   duration: string;
   instructor?: Types.ObjectId;

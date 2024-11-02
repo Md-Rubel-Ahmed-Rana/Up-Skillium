@@ -88,14 +88,20 @@ class Service {
     await Course.findByIdAndDelete(id);
   }
   async updateCourseImage(id: Types.ObjectId, imageUrl: string) {
-    console.log({ imageUrl });
     const course = await Course.findById(id);
-    console.log(course);
     if (course && course?.image) {
-      console.log("Delete course image");
       await FileUploadMiddleware.deleteSingle(course?.image);
     }
     await Course.findByIdAndUpdate(id, { $set: { image: imageUrl } });
+  }
+  async updateCourseIntroductoryVideo(id: Types.ObjectId, videoUrl: string) {
+    const course = await Course.findById(id);
+    if (course && course?.introductoryVideo) {
+      await FileUploadMiddleware.deleteSingle(course?.image);
+    }
+    await Course.findByIdAndUpdate(id, {
+      $set: { introductoryVideo: videoUrl },
+    });
   }
 }
 

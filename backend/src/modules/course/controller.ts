@@ -76,6 +76,18 @@ class Controller extends RootController {
       data: null,
     });
   });
+  updateCourseIntroductoryVideo = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const id = req.params.id as unknown as Types.ObjectId;
+      await CourseService.updateCourseIntroductoryVideo(id, req.url);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Course introductory video uploaded successfully",
+        data: null,
+      });
+    }
+  );
 }
 
 export const CourseController = new Controller();

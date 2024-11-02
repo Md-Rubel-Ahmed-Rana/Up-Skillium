@@ -15,4 +15,5 @@ router.get("/:id", controller_1.CourseController.getSingleCourse);
 router.patch("/:id", controller_1.CourseController.updateCourse);
 router.delete("/:id", controller_1.CourseController.deleteCourse);
 router.patch("/change-course-image/:id", multer_1.default.single("file"), fileUploaderMiddleware_1.FileUploadMiddleware.singleFile("course-thumbnail-images"), controller_1.CourseController.updateCourseImage);
+router.patch("/change-course-introductory-video/:id", multer_1.default.single("file"), fileUploaderMiddleware_1.FileUploadMiddleware.singleFile("course-introductory-videos"), controller_1.CourseController.updateCourseIntroductoryVideo);
 exports.CourseRoutes = router;
