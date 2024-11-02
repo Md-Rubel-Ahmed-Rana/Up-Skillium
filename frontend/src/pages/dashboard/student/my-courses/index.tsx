@@ -2,7 +2,7 @@ import RootLayout from "@/layout/RootLayout";
 import { ReactElement } from "react";
 
 const MyCoursesPage = () => {
-  return <div></div>;
+  return <div>This is student my course page</div>;
 };
 
 MyCoursesPage.getLayout = function (page: ReactElement) {

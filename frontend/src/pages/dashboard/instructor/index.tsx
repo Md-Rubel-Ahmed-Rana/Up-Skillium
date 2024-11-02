@@ -11,9 +11,7 @@ const InstructorDashboardPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <div className="min-h-screen pt-20">
-        <InstructorDashboard />
-      </div>
+      <InstructorDashboard />
     </>
   );
 };
