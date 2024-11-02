@@ -11,9 +11,7 @@ const RegisterPage = () => {
         description="this is up skillium register signup page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <div className="min-h-screen pt-20">
-        <Register />
-      </div>
+      <Register />
     </>
   );
 };

@@ -11,9 +11,7 @@ const LoginPage = () => {
         description="this is up skillium login page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <div className="min-h-screen pt-20">
-        <Login />
-      </div>
+      <Login />
     </>
   );
 };

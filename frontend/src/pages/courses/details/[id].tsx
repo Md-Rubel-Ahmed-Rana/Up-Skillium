@@ -13,9 +13,7 @@ const CourseDetailsPage = () => {
         description={(query?.description as string) || "course description"}
         keywords={query.tags as string}
       />
-      <div className="max-w-[1200px] mx-auto">
-        <CourseDetails />
-      </div>
+      <CourseDetails />
     </>
   );
 };

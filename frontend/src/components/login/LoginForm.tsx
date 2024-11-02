@@ -46,11 +46,16 @@ const LoginForm: React.FC = () => {
       <Form.Item<FieldType>
         label="Email"
         name="email"
-        rules={[{ required: true, message: "Email is required" }]}
+        rules={[
+          { required: true, message: "Email is required" },
+          { type: "email", message: "Enter a valid email" },
+        ]}
       >
         <Input
           type="email"
+          autoFocus
           size="large"
+          name="email"
           placeholder="Please enter your email"
           prefix={<MdEmail />}
         />
@@ -63,6 +68,7 @@ const LoginForm: React.FC = () => {
       >
         <Input.Password
           size="large"
+          name="password"
           placeholder="Please enter password"
           prefix={<MdLock />}
         />
