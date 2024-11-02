@@ -3,7 +3,7 @@ import CourseOutline from "./courseOutline";
 
 const CourseDetails = () => {
   return (
-    <div className="pt-20 flex lg:flex-row flex-col-reverse justify-between lg:gap-5 gap-20">
+    <div className="flex lg:flex-row flex-col-reverse justify-between lg:gap-5 gap-20 lg:p-5">
       <div className="w-full lg:w-2/3">
         <CourseBasicDetails />
       </div>
