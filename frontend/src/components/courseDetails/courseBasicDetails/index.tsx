@@ -8,8 +8,6 @@ import InstructorCard from "./InstructorCard";
 import CourseInformation from "./CourseInformation";
 import StudentFeedback from "./StudentFeedback";
 
-const url = "https://youtu.be/5Xy-t8k_M4A?si=zkSxI39XAy2xsBa6";
-
 const CourseBasicDetails = () => {
   const { query } = useRouter();
   const courseId = query?.courseId as string;
@@ -18,7 +16,7 @@ const CourseBasicDetails = () => {
 
   return (
     <div className="lg:p-6 p-2 max-w-4xl mx-auto space-y-6 bg-gray-50 rounded-lg shadow-md">
-      <IntroductoryVideoPlayer videoUrl={course?.introductoryVideo || url} />
+      <IntroductoryVideoPlayer videoUrl={course?.introductoryVideo} />
 
       <CourseTitleCategoryCard
         title={course?.title}

@@ -1,6 +1,5 @@
 export type ICourseOutline = {
   id: string;
-  description: string;
   course: ICourseForOutline;
   modules: IModuleOutline[];
   createdAt: Date;

@@ -6,7 +6,11 @@ import { Avatar, Dropdown } from "antd/lib";
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
-const NavbarDropdown = () => {
+type Props = {
+  dashboardRoute: string;
+};
+
+const NavbarDropdown = ({ dashboardRoute }: Props) => {
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
 
@@ -17,11 +21,11 @@ const NavbarDropdown = () => {
     },
     {
       key: "2",
-      label: <Link href="/my-courses">My Courses</Link>,
+      label: <Link href={dashboardRoute}>Dashboard</Link>,
     },
     {
       key: "3",
-      label: <Link href="/dashboard">Dashboard</Link>,
+      label: <Link href="/my-courses">My Courses</Link>,
     },
     {
       key: "4",

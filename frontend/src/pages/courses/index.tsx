@@ -1,5 +1,7 @@
 import Courses from "@/components/courses";
+import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
+import { ReactElement } from "react";
 
 const CoursesPage = () => {
   return (
@@ -12,6 +14,10 @@ const CoursesPage = () => {
       <Courses />
     </>
   );
+};
+
+CoursesPage.getLayout = function (page: ReactElement) {
+  return <RootLayout>{page}</RootLayout>;
 };
 
 export default CoursesPage;

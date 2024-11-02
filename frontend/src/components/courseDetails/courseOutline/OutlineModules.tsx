@@ -17,16 +17,25 @@ const OutlineModules = ({ modules }: Props) => {
             Dive into the modules covered in this course
           </Typography.Text>
         </div>
-        <ul className="flex flex-col gap-2">
-          {modules?.map((module, index) => (
-            <li
-              className="bg-white p-2 rounded-md font-serif text-xs"
-              key={module?.id}
-            >
-              {`Module-${index + 1} : ${module?.name}`}
-            </li>
-          ))}
-        </ul>
+        {modules?.length > 0 ? (
+          <ul className="flex flex-col gap-2">
+            {modules?.map((module, index) => (
+              <li
+                className="bg-white p-2 rounded-md font-serif text-xs"
+                key={module?.id}
+              >
+                {`Module-${index + 1} : ${module?.name}`}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div className="text-center">
+            <Typography.Text className="text-red-400 text-lg font-semibold text-center w-full">
+              Course outline has not been defined yet. It&apos;s coming very
+              soon!
+            </Typography.Text>
+          </div>
+        )}
       </div>
     </div>
   );
