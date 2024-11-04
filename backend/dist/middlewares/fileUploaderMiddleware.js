@@ -51,7 +51,7 @@ class FileUploader {
     }
     uploadCertificate(folderName, buffer, filename) {
         return __awaiter(this, void 0, void 0, function* () {
-            const filePath = `${rootFolder}/${folderName}/${Date.now()}_${filename}`;
+            const filePath = `${rootFolder}/${folderName}/${filename}`;
             const blob = firebase_1.firebaseBucket.file(filePath);
             const blobStream = blob.createWriteStream({
                 resumable: false,

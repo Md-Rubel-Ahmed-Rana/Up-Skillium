@@ -5,4 +5,12 @@ const router = Router();
 
 router.post("/create", CertificateController.createCertificate);
 
+router.get("/", CertificateController.getAllCertificate);
+
+router.get("/:id", CertificateController.getSingleCertificate);
+
+router.patch("/:id", CertificateController.updateCertificate);
+
+router.delete("/:id", CertificateController.deleteCertificate);
+
 export const CertificateRoutes = router;

@@ -5,4 +5,8 @@ const express_1 = require("express");
 const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/create", controller_1.CertificateController.createCertificate);
+router.get("/", controller_1.CertificateController.getAllCertificate);
+router.get("/:id", controller_1.CertificateController.getSingleCertificate);
+router.patch("/:id", controller_1.CertificateController.updateCertificate);
+router.delete("/:id", controller_1.CertificateController.deleteCertificate);
 exports.CertificateRoutes = router;

@@ -46,7 +46,7 @@ class FileUploader {
     buffer: Buffer,
     filename: string
   ) {
-    const filePath = `${rootFolder}/${folderName}/${Date.now()}_${filename}`;
+    const filePath = `${rootFolder}/${folderName}/${filename}`;
     const blob = firebaseBucket.file(filePath);
     const blobStream = blob.createWriteStream({
       resumable: false,
