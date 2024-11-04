@@ -27,6 +27,45 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.getAllCertificate = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.CertificateService.getAllCertificate();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Certificates fetched successfully",
+                data: data,
+            });
+        }));
+        this.getSingleCertificate = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            const data = yield service_1.CertificateService.getSingleCertificate(id);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Certificate fetched successfully",
+                data: data,
+            });
+        }));
+        this.updateCertificate = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.CertificateService.updateCertificate(id, req.url);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Certificate updated successfully",
+                data: null,
+            });
+        }));
+        this.deleteCertificate = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.CertificateService.deleteCertificate(id);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Certificate deleted successfully",
+                data: null,
+            });
+        }));
     }
 }
 exports.CertificateController = new Controller();
