@@ -50,14 +50,15 @@ class Service {
             ]);
         });
     }
-    updateCertificate(id, updateUrl) {
+    updateCertificate(id, updateData) {
         return __awaiter(this, void 0, void 0, function* () {
             const certificate = yield model_1.Certificate.findById(id);
             if (certificate && (certificate === null || certificate === void 0 ? void 0 : certificate.certificateUrl)) {
                 yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(certificate === null || certificate === void 0 ? void 0 : certificate.certificateUrl);
             }
+            const certificateUrl = yield service_1.PdfCreatorService.createCertificate(updateData);
             yield model_1.Certificate.findByIdAndUpdate(id, {
-                certificateUrl: updateUrl,
+                certificateUrl: certificateUrl,
             });
         });
     }
