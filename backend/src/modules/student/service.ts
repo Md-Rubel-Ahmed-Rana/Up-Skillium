@@ -11,6 +11,14 @@ class Service {
 
     await Student.create({ userId: userId, studentId: studentId });
   }
+  async addNewCourse(
+    studentObjectId: Types.ObjectId,
+    courseId: Types.ObjectId
+  ) {
+    await Student.findByIdAndUpdate(studentObjectId, {
+      $push: { coursesEnrolled: courseId },
+    });
+  }
 }
 
 export const StudentService = new Service();

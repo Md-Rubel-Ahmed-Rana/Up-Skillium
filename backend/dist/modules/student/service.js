@@ -25,5 +25,12 @@ class Service {
             yield model_1.Student.create({ userId: userId, studentId: studentId });
         });
     }
+    addNewCourse(studentObjectId, courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Student.findByIdAndUpdate(studentObjectId, {
+                $push: { coursesEnrolled: courseId },
+            });
+        });
+    }
 }
 exports.StudentService = new Service();
