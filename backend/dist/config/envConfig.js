@@ -43,5 +43,17 @@ const config = {
         client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
         universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN,
     },
+    certificate: {
+        ceoSignatureUrl: process.env.CEO_SIGNATURE_URL,
+        caoSignatureUrl: process.env.CAO_SIGNATURE_URL,
+        logoUrl: process.env.LOGO_URL,
+        sloganUrl: process.env.SLOGAN_IMAGE_URL,
+        badges: {
+            level1: process.env.BADGE_1_URL,
+            level2: process.env.BADGE_2_URL,
+            level3: process.env.BADGE_3_URL,
+            level4: process.env.BADGE_4_URL,
+        },
+    },
 };
 exports.default = config;
