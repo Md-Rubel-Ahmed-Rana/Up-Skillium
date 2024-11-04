@@ -12,7 +12,9 @@ const ProfilePage = () => {
         description="This is user profile page"
         keywords="up-skillium"
       />
-      <Profile />
+      <div className="max-w-[1400px] w-full mx-auto">
+        <Profile />
+      </div>
     </>
   );
 };

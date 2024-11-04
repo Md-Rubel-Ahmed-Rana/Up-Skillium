@@ -1,27 +1,14 @@
 import apiSlice from "../api/apiSlice";
 
 const studentApi = apiSlice.injectEndpoints({
-    endpoints : (builder) => ({
-        createStudent: builder.mutation({
-            query: ({name, email, password}) => ({
-                method: "POST",
-                url: "/student/create",
-                body: {
-                    user: {
-                         name,
-                         email,
-                         password,
-                        
-                    },
-                    role: 'student',
-                },
-            })
-        })
-    })
-})
+  endpoints: (builder) => ({
+    myCourses: builder.query({
+      query: ({ userId }: { userId: string }) => ({
+        method: "GET",
+        url: `/student/${userId}`,
+      }),
+    }),
+  }),
+});
 
-export const {
-useCreateStudentMutation
-  } = studentApi;
-  
-
+export const { useMyCoursesQuery } = studentApi;
