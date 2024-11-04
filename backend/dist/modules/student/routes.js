@@ -5,4 +5,5 @@ const express_1 = require("express");
 const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/create", controller_1.StudentController.createNewStudent);
+router.get("/:userId", controller_1.StudentController.getMyCourses);
 exports.StudentRoutes = router;

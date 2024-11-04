@@ -15,6 +15,11 @@ const studentSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-    coursesEnrolled: [mongoose_1.Schema.Types.ObjectId],
+    coursesEnrolled: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Course",
+        },
+    ],
 }, schemaOption_1.default);
 exports.Student = (0, mongoose_1.model)("Student", studentSchema);

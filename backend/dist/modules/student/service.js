@@ -32,5 +32,13 @@ class Service {
             });
         });
     }
+    getMyCourses(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield model_1.Student.findOne({ userId: userId })
+                .populate("coursesEnrolled", "title image")
+                .exec();
+            return data;
+        });
+    }
 }
 exports.StudentService = new Service();
