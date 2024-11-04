@@ -3,6 +3,7 @@ import { PdfCreatorService } from "../pdf-creator/service";
 import { ICertificate, IGetCertificate } from "./interface";
 import { Certificate } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
+import { IPdfCertificate } from "../pdf-creator/interface";
 
 class Service {
   async createCertificate(data: ICertificate) {
@@ -41,14 +42,17 @@ class Service {
   }
   async updateCertificate(
     id: Types.ObjectId,
-    updateUrl: string
+    updateData: IPdfCertificate
   ): Promise<void> {
     const certificate = await Certificate.findById(id);
     if (certificate && certificate?.certificateUrl) {
       await FileUploadMiddleware.deleteSingle(certificate?.certificateUrl);
     }
+    const certificateUrl = await PdfCreatorService.createCertificate(
+      updateData
+    );
     await Certificate.findByIdAndUpdate(id, {
-      certificateUrl: updateUrl,
+      certificateUrl: certificateUrl,
     });
   }
   async deleteCertificate(id: Types.ObjectId): Promise<void> {

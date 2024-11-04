@@ -36,7 +36,7 @@ class Controller extends RootController {
   );
   updateCertificate = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
-    await CertificateService.updateCertificate(id, req.url);
+    await CertificateService.updateCertificate(id, req.body);
     this.apiResponse(res, {
       statusCode: 200,
       success: true,
