@@ -12,7 +12,12 @@ const studentSchema = new Schema<INewStudent>(
       type: String,
       required: true,
     },
-    coursesEnrolled: [Schema.Types.ObjectId],
+    coursesEnrolled: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Course",
+      },
+    ],
   },
   schemaOption
 );

@@ -19,6 +19,13 @@ class Service {
       $push: { coursesEnrolled: courseId },
     });
   }
+  async getMyCourses(userId: Types.ObjectId) {
+    const data = await Student.findOne({ userId: userId })
+      .populate("coursesEnrolled", "title image")
+      .exec();
+
+    return data;
+  }
 }
 
 export const StudentService = new Service();
