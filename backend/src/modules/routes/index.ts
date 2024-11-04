@@ -12,6 +12,7 @@ import { UserRoutes } from "../user/routes";
 import { ModuleRoutes } from "../module/routes";
 import { LessonRoutes } from "../lesson/routes";
 import { QuizRoutes } from "../quiz/routes";
+import { CertificateRoutes } from "../certificate/routes";
 
 const router = Router();
 
@@ -40,5 +41,7 @@ router.use("/lesson", LessonRoutes);
 router.use("/quiz", QuizRoutes);
 
 router.use("/education", EducationRoutes);
+
+router.use("/certificate", CertificateRoutes);
 
 export const RootRoutes = router;

@@ -49,6 +49,34 @@ class FileUploader {
             blobStream.end(buffer);
         });
     }
+    uploadCertificate(folderName, buffer, filename) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const filePath = `${rootFolder}/${folderName}/${Date.now()}_${filename}`;
+            const blob = firebase_1.firebaseBucket.file(filePath);
+            const blobStream = blob.createWriteStream({
+                resumable: false,
+                contentType: "application/pdf",
+            });
+            return new Promise((resolve, reject) => {
+                blobStream.on("error", (err) => {
+                    reject(err);
+                });
+                blobStream.on("finish", () => __awaiter(this, void 0, void 0, function* () {
+                    try {
+                        const [url] = yield blob.getSignedUrl({
+                            action: "read",
+                            expires: "01-01-2030",
+                        });
+                        resolve(url);
+                    }
+                    catch (err) {
+                        reject(err);
+                    }
+                }));
+                blobStream.end(buffer);
+            });
+        });
+    }
     multipleFiles(folderName) {
         return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             if (!req.files || !Array.isArray(req.files)) {
