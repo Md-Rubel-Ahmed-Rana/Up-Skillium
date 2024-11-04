@@ -14,9 +14,9 @@ const ProfileInfo = () => {
   if (!user) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col items-center lg:p-4 lg:mt-10">
+    <div className="flex flex-col items-center lg:p-4">
       {/* User Profile Card */}
-      <Card className="w-full max-w-4xl mb-6   rounded-lg mt-10">
+      <Card className="w-full">
         <ProfileCard user={user} />
 
         {/* Basic Information */}

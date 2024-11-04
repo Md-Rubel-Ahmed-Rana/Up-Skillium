@@ -1,4 +1,5 @@
 import { Menu, MenuProps } from "antd/lib";
+import Link from "next/link";
 import React from "react";
 import {
   FaUserCircle,
@@ -16,12 +17,12 @@ const StudentSidebar = () => {
     {
       key: "1",
       icon: <FaUserCircle />,
-      label: "Profile",
+      label: <Link href={"/dashboard/profile"}>Profile</Link>,
     },
     {
       key: "2",
       icon: <FaBook />,
-      label: "My Courses",
+      label: <Link href={"/dashboard/student/my-courses"}>My Courses</Link>,
     },
     {
       key: "3",
@@ -58,7 +59,7 @@ const StudentSidebar = () => {
   return (
     <Menu
       theme="light"
-      mode="inline"
+      className="w-full min-h-screen h-full   mt-3"
       defaultSelectedKeys={["1"]}
       items={defaultItems}
     />

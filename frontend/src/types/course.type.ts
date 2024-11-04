@@ -38,3 +38,9 @@ export type ICourse = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type IMyCourse = {
+  id: string;
+  title: string;
+  image: string;
+};
