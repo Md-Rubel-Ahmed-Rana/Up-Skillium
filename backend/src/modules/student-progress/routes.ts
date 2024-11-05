@@ -12,4 +12,9 @@ router.get(
   StudentProgressController.getSingleCourseProgress
 );
 
+router.patch(
+  "/users/:userId/courses/:courseId/modules/:moduleId/lessons/:lessonId/complete",
+  StudentProgressController.completeLesson
+);
+
 export const StudentProgressRoutes = router;

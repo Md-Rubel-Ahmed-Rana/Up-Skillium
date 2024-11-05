@@ -9,7 +9,7 @@ export type ICourseForProgress = {
   course: Types.ObjectId;
   isCourseCompleted: boolean;
   completionPercentage?: number;
-  lastLessonCompleted: Types.ObjectId | null;
+  lastCompletedLesson: Types.ObjectId | null;
   modules: IModuleForProgress[];
 };
 
