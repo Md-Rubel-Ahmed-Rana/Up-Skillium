@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import "@/styles/globals.css";
+import "react-quill/dist/quill.snow.css";
 import store from "@/app/store";
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
