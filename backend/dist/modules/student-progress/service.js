@@ -1,0 +1,129 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.StudentProgressService = void 0;
+const service_1 = require("../module/service");
+const model_1 = require("./model");
+class Service {
+    createOrUpdateStudentProgress(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const existingProgress = yield model_1.StudentProgress.findOne({
+                user: data.userId,
+            });
+            const modules = yield service_1.ModuleService.getModulesLessonsByCourseId(data.courseId);
+            const reOrganizedModules = modules.map((module) => ({
+                module: module.id,
+                isModuleCompleted: false,
+                lessons: module.lessons.map((lessonId) => ({
+                    lesson: lessonId,
+                    isLessonCompleted: false,
+                })),
+            }));
+            if (existingProgress) {
+                const courseExists = (_a = existingProgress === null || existingProgress === void 0 ? void 0 : existingProgress.courses) === null || _a === void 0 ? void 0 : _a.some((course) => { var _a, _b; return ((_a = course === null || course === void 0 ? void 0 : course.course) === null || _a === void 0 ? void 0 : _a.toString()) === ((_b = data === null || data === void 0 ? void 0 : data.courseId) === null || _b === void 0 ? void 0 : _b.toString()); });
+                if (!courseExists) {
+                    (_b = existingProgress === null || existingProgress === void 0 ? void 0 : existingProgress.courses) === null || _b === void 0 ? void 0 : _b.push({
+                        course: data.courseId,
+                        isCourseCompleted: false,
+                        lastCompletedLesson: null,
+                        completionPercentage: 0,
+                        modules: reOrganizedModules,
+                    });
+                    yield existingProgress.save();
+                }
+            }
+            else {
+                const newCourseProgress = {
+                    user: data.userId,
+                    courses: [
+                        {
+                            course: data.courseId,
+                            isCourseCompleted: false,
+                            lastCompletedLesson: null,
+                            completionPercentage: 0,
+                            modules: reOrganizedModules,
+                        },
+                    ],
+                };
+                yield model_1.StudentProgress.create(newCourseProgress);
+            }
+        });
+    }
+    getStudentProgress(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return model_1.StudentProgress.findOne({ user: userId });
+        });
+    }
+    getSingleCourseProgress(userId, courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const progress = yield model_1.StudentProgress.findOne({
+                user: userId,
+                "courses.course": courseId,
+            }, {
+                "courses.$": 1,
+            })
+                .populate({
+                path: "courses.course",
+                model: "Course",
+                select: { title: 1 },
+            })
+                .populate({
+                path: "courses.modules.module",
+                model: "Module",
+                select: { title: 1 },
+            })
+                .populate({
+                path: "courses.modules.lessons.lesson",
+                model: "Lesson",
+                select: { title: 1, type: 1 },
+            })
+                .populate({
+                path: "courses.lastCompletedLesson",
+                model: "Lesson",
+            });
+            if (!progress) {
+                return null;
+            }
+            return progress.courses[0];
+        });
+    }
+    completeLesson(userId, courseId, moduleId, lessonId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c;
+            const progress = yield model_1.StudentProgress.findOne({
+                user: userId,
+                "courses.course": courseId,
+                "courses.modules.module": moduleId,
+                "courses.modules.lessons.lesson": lessonId,
+            });
+            if (!progress) {
+                throw new Error("Progress not found");
+            }
+            const course = (_a = progress === null || progress === void 0 ? void 0 : progress.courses) === null || _a === void 0 ? void 0 : _a.find((c) => c.course.equals(courseId));
+            if (!course)
+                return;
+            const module = (_b = course === null || course === void 0 ? void 0 : course.modules) === null || _b === void 0 ? void 0 : _b.find((m) => m.module.equals(moduleId));
+            if (!module)
+                return;
+            const lesson = (_c = module === null || module === void 0 ? void 0 : module.lessons) === null || _c === void 0 ? void 0 : _c.find((l) => l.lesson.equals(lessonId));
+            if (!lesson)
+                return;
+            lesson.isLessonCompleted = true;
+            if (module.lessons.every((l) => l.isLessonCompleted)) {
+                module.isModuleCompleted = true;
+            }
+            course.lastCompletedLesson = lessonId;
+            yield progress.save();
+        });
+    }
+}
+exports.StudentProgressService = new Service();
