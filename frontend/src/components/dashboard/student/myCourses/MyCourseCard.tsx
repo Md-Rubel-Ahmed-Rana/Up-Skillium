@@ -15,14 +15,19 @@ const MyCourseCard = ({ course }: Props) => {
       style={{ width: 300 }}
       cover={<img alt={course?.title} src={course?.image} />}
       actions={[
-        <Button variant="filled" type="primary" key={"1"}>
-          Continue classes
-        </Button>,
         <Link
-          href={`/courses/details/${course?.id}?courseId=${course?.id}&courseTitle=${course.title}`}
+          href={`/modules/classes/${course?.id}?courseId=${course?.id}&courseTitle=${course?.title}`}
           key={"1"}
         >
-          <Button key={"2"}>Course Outline</Button>,
+          <Button variant="filled" type="primary">
+            Continue classes
+          </Button>
+        </Link>,
+        <Link
+          href={`/courses/details/${course?.id}?courseId=${course?.id}&courseTitle=${course?.title}`}
+          key={"2"}
+        >
+          <Button>Course Outline</Button>,
         </Link>,
       ]}
     >
