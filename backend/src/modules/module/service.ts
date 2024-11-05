@@ -52,6 +52,10 @@ class Service {
 
     return { course, modules };
   }
+  async getModulesLessonsByCourseId(courseId: Types.ObjectId) {
+    const modules = await Module.find({ course: courseId }).sort({ serial: 1 });
+    return modules;
+  }
   async updateModule(
     id: Types.ObjectId,
     updatedData: Partial<IModule>

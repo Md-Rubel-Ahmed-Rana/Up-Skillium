@@ -14,6 +14,7 @@ import { LessonRoutes } from "../lesson/routes";
 import { QuizRoutes } from "../quiz/routes";
 import { CertificateRoutes } from "../certificate/routes";
 import { EnrollmentRoutes } from "../enrollment/routes";
+import { StudentProgressRoutes } from "../student-progress/routes";
 
 const router = Router();
 
@@ -46,5 +47,7 @@ router.use("/education", EducationRoutes);
 router.use("/certificate", CertificateRoutes);
 
 router.use("/enrollment", EnrollmentRoutes);
+
+router.use("/student-progress", StudentProgressRoutes);
 
 export const RootRoutes = router;
