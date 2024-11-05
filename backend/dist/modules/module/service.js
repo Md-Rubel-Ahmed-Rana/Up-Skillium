@@ -58,6 +58,12 @@ class Service {
             return { course, modules };
         });
     }
+    getModulesLessonsByCourseId(courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const modules = yield model_1.Module.find({ course: courseId }).sort({ serial: 1 });
+            return modules;
+        });
+    }
     updateModule(id, updatedData) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Module.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });
