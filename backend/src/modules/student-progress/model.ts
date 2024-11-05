@@ -56,7 +56,7 @@ const courseSchema = new Schema<ICourseForProgress>(
       type: Number,
       default: 0,
     },
-    lastLessonCompleted: {
+    lastCompletedLesson: {
       type: Schema.Types.ObjectId,
       ref: "Lesson",
     },

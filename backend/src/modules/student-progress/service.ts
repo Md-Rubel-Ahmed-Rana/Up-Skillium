@@ -33,7 +33,7 @@ class Service {
         existingProgress?.courses?.push({
           course: data.courseId,
           isCourseCompleted: false,
-          lastLessonCompleted: null,
+          lastCompletedLesson: null,
           completionPercentage: 0,
           modules: reOrganizedModules,
         });
@@ -46,7 +46,7 @@ class Service {
           {
             course: data.courseId,
             isCourseCompleted: false,
-            lastLessonCompleted: null,
+            lastCompletedLesson: null,
             completionPercentage: 0,
             modules: reOrganizedModules,
           },
@@ -85,6 +85,10 @@ class Service {
         path: "courses.modules.lessons.lesson",
         model: "Lesson",
         select: { title: 1, type: 1 },
+      })
+      .populate({
+        path: "courses.lastCompletedLesson",
+        model: "Lesson",
       });
 
     if (!progress) {
@@ -92,6 +96,41 @@ class Service {
     }
 
     return progress.courses[0];
+  }
+  async completeLesson(
+    userId: Types.ObjectId,
+    courseId: Types.ObjectId,
+    moduleId: Types.ObjectId,
+    lessonId: Types.ObjectId
+  ) {
+    const progress = await StudentProgress.findOne({
+      user: userId,
+      "courses.course": courseId,
+      "courses.modules.module": moduleId,
+      "courses.modules.lessons.lesson": lessonId,
+    });
+
+    if (!progress) {
+      throw new Error("Progress not found");
+    }
+
+    const course = progress?.courses?.find((c) => c.course.equals(courseId));
+    if (!course) return;
+
+    const module = course?.modules?.find((m) => m.module.equals(moduleId));
+    if (!module) return;
+
+    const lesson = module?.lessons?.find((l) => l.lesson.equals(lessonId));
+    if (!lesson) return;
+
+    lesson.isLessonCompleted = true;
+
+    if (module.lessons.every((l) => l.isLessonCompleted)) {
+      module.isModuleCompleted = true;
+    }
+
+    course.lastCompletedLesson = lessonId;
+    await progress.save();
   }
 }
 
