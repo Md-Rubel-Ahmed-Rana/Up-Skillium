@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
 import { Button } from "antd/lib";
 import toast from "react-hot-toast";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 type Props = {
   setIsSubmit: (value: boolean) => void;
