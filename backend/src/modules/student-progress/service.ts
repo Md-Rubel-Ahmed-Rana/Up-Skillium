@@ -9,29 +9,29 @@ class Service {
     courseId: Types.ObjectId;
   }): Promise<void> {
     const existingProgress = await StudentProgress.findOne({
-      userId: data.userId,
+      user: data.userId,
     });
 
     const modules = await ModuleService.getModulesLessonsByCourseId(
       data.courseId
     );
     const reOrganizedModules = modules.map((module: any) => ({
-      moduleId: module.id,
+      module: module.id,
       isModuleCompleted: false,
       lessons: module.lessons.map((lessonId: Types.ObjectId) => ({
-        lessonId,
+        lesson: lessonId,
         isLessonCompleted: false,
       })),
     }));
 
     if (existingProgress) {
       const courseExists = existingProgress?.courses?.some(
-        (course) => course?.courseId?.toString() === data?.courseId?.toString()
+        (course) => course?.course?.toString() === data?.courseId?.toString()
       );
 
       if (!courseExists) {
         existingProgress?.courses?.push({
-          courseId: data.courseId,
+          course: data.courseId,
           isCourseCompleted: false,
           lastLessonCompleted: null,
           completionPercentage: 0,
@@ -41,10 +41,10 @@ class Service {
       }
     } else {
       const newCourseProgress: IStudentProgress = {
-        userId: data.userId,
+        user: data.userId,
         courses: [
           {
-            courseId: data.courseId,
+            course: data.courseId,
             isCourseCompleted: false,
             lastLessonCompleted: null,
             completionPercentage: 0,
@@ -56,7 +56,7 @@ class Service {
     }
   }
   async getStudentProgress(userId: Types.ObjectId) {
-    return StudentProgress.findOne({ userId: userId });
+    return StudentProgress.findOne({ user: userId });
   }
   async getSingleCourseProgress(
     userId: Types.ObjectId,
@@ -64,19 +64,34 @@ class Service {
   ) {
     const progress = await StudentProgress.findOne(
       {
-        userId: userId,
-        "courses.courseId": courseId,
+        user: userId,
+        "courses.course": courseId,
       },
       {
         "courses.$": 1,
       }
-    );
+    )
+      .populate({
+        path: "courses.course",
+        model: "Course",
+        select: { title: 1 },
+      })
+      .populate({
+        path: "courses.modules.module",
+        model: "Module",
+        select: { title: 1 },
+      })
+      .populate({
+        path: "courses.modules.lessons.lesson",
+        model: "Lesson",
+        select: { title: 1, type: 1 },
+      });
 
     if (!progress) {
       return null;
     }
 
-    return progress?.courses[0];
+    return progress.courses[0];
   }
 }
 

@@ -9,7 +9,7 @@ import {
 
 const lessonSchema = new Schema<ILessonForProgress>(
   {
-    lessonId: {
+    lesson: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Lesson",
@@ -24,7 +24,7 @@ const lessonSchema = new Schema<ILessonForProgress>(
 
 const moduleSchema = new Schema<IModuleForProgress>(
   {
-    moduleId: {
+    module: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Module",
@@ -43,7 +43,7 @@ const moduleSchema = new Schema<IModuleForProgress>(
 
 const courseSchema = new Schema<ICourseForProgress>(
   {
-    courseId: {
+    course: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Course",
@@ -70,7 +70,7 @@ const courseSchema = new Schema<ICourseForProgress>(
 
 const studentProgressSchema = new Schema<IStudentProgress>(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
