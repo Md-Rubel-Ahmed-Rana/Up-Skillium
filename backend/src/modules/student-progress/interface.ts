@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
 
 export type IStudentProgress = {
-  userId: Types.ObjectId;
+  user: Types.ObjectId;
   courses: ICourseForProgress[];
 };
 
 export type ICourseForProgress = {
-  courseId: Types.ObjectId;
+  course: Types.ObjectId;
   isCourseCompleted: boolean;
   completionPercentage?: number;
   lastLessonCompleted: Types.ObjectId | null;
@@ -14,12 +14,12 @@ export type ICourseForProgress = {
 };
 
 export type IModuleForProgress = {
-  moduleId: Types.ObjectId;
+  module: Types.ObjectId;
   isModuleCompleted: boolean;
   lessons: ILessonForProgress[];
 };
 
 export type ILessonForProgress = {
-  lessonId: Types.ObjectId;
+  lesson: Types.ObjectId;
   isLessonCompleted: boolean;
 };
