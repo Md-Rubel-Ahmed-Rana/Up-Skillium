@@ -1,10 +1,16 @@
 import { model, Schema, Types } from "mongoose";
 import schemaOption from "../../utils/schemaOption";
+import {
+  ICourseForProgress,
+  ILessonForProgress,
+  IModuleForProgress,
+  IStudentProgress,
+} from "./interface";
 
-const lessonSchema = new Schema(
+const lessonSchema = new Schema<ILessonForProgress>(
   {
     lessonId: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "Lesson",
     },
@@ -16,10 +22,10 @@ const lessonSchema = new Schema(
   { _id: false }
 );
 
-const moduleSchema = new Schema(
+const moduleSchema = new Schema<IModuleForProgress>(
   {
     moduleId: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "Module",
     },
@@ -35,10 +41,10 @@ const moduleSchema = new Schema(
   { _id: false }
 );
 
-const courseSchema = new Schema(
+const courseSchema = new Schema<ICourseForProgress>(
   {
     courseId: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "Course",
     },
@@ -51,7 +57,7 @@ const courseSchema = new Schema(
       default: 0,
     },
     lastLessonCompleted: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: "Lesson",
     },
     modules: {
@@ -62,10 +68,10 @@ const courseSchema = new Schema(
   { _id: false }
 );
 
-const studentProgressSchema = new Schema(
+const studentProgressSchema = new Schema<IStudentProgress>(
   {
     userId: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
@@ -77,4 +83,7 @@ const studentProgressSchema = new Schema(
   schemaOption
 );
 
-export const StudentProgress = model("StudentProgress", studentProgressSchema);
+export const StudentProgress = model<IStudentProgress>(
+  "StudentProgress",
+  studentProgressSchema
+);
