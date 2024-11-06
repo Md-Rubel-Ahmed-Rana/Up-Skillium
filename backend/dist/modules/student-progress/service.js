@@ -122,7 +122,29 @@ class Service {
                 module.isModuleCompleted = true;
             }
             course.lastCompletedLesson = lessonId;
+            const progressData = yield this.getSingleCourseProgress(userId, courseId);
+            course.completionPercentage = yield this.calculateCourseCompletion(progressData);
             yield progress.save();
+        });
+    }
+    calculateCourseCompletion(progress) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            let totalLessons = 0;
+            let completedLessons = 0;
+            (_a = progress === null || progress === void 0 ? void 0 : progress.modules) === null || _a === void 0 ? void 0 : _a.forEach((module) => {
+                var _a;
+                (_a = module === null || module === void 0 ? void 0 : module.lessons) === null || _a === void 0 ? void 0 : _a.forEach((lesson) => {
+                    totalLessons++;
+                    if (lesson === null || lesson === void 0 ? void 0 : lesson.isLessonCompleted) {
+                        completedLessons++;
+                    }
+                });
+            });
+            const completionPercentage = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
+            progress.completionPercentage =
+                Math.round(completionPercentage * 100) / 100;
+            return progress.completionPercentage;
         });
     }
 }

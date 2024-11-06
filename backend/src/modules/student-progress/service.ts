@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
 import { ModuleService } from "../module/service";
 import { StudentProgress } from "./model";
-import { IStudentProgress } from "./interface";
+import { IProgressCalculate, IStudentProgress } from "./interface";
 
 class Service {
   async createOrUpdateStudentProgress(data: {
@@ -130,7 +130,34 @@ class Service {
     }
 
     course.lastCompletedLesson = lessonId;
+    const progressData = await this.getSingleCourseProgress(userId, courseId);
+    course.completionPercentage = await this.calculateCourseCompletion(
+      progressData as any
+    );
     await progress.save();
+  }
+  async calculateCourseCompletion(
+    progress: IProgressCalculate
+  ): Promise<number> {
+    let totalLessons = 0;
+    let completedLessons = 0;
+
+    progress?.modules?.forEach((module) => {
+      module?.lessons?.forEach((lesson) => {
+        totalLessons++;
+        if (lesson?.isLessonCompleted) {
+          completedLessons++;
+        }
+      });
+    });
+
+    const completionPercentage =
+      totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0;
+
+    progress.completionPercentage =
+      Math.round(completionPercentage * 100) / 100;
+
+    return progress.completionPercentage;
   }
 }
 
