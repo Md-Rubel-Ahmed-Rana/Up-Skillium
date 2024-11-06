@@ -1,4 +1,3 @@
-import { ILesson } from "@/types/lesson.type";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { FaClipboardList, FaBookOpen, FaQuestionCircle } from "react-icons/fa";
 import { ILessonProgress } from "@/types/studentProgress.type";
@@ -7,10 +6,10 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 
 type Props = {
   lesson: ILessonProgress;
-  setCurrentLesson: (lesson: ILesson) => void;
+  setLessonId: (lessonId: string) => void;
 };
 
-const Lesson = ({ lesson }: Props) => {
+const Lesson = ({ lesson, setLessonId }: Props) => {
   const renderIcon = () => {
     switch (lesson?.lesson?.type) {
       case "video":
@@ -27,7 +26,10 @@ const Lesson = ({ lesson }: Props) => {
   };
 
   return (
-    <div className="flex items-center justify-between  border p-2 rounded-md cursor-pointer group">
+    <div
+      onClick={() => setLessonId(lesson?.lesson?.id)}
+      className="flex items-center justify-between  border p-2 rounded-md cursor-pointer group"
+    >
       <div className="flex items-center space-x-2">
         {renderIcon()}
         <span className="group-hover:text-blue-400">

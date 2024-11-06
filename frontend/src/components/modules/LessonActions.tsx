@@ -7,10 +7,9 @@ type Props = {
 };
 
 const LessonActions = ({ lesson }: Props) => {
-  console.log(lesson);
-
   const handleActions = () => {
     toast.success("Feature is coming very soon.");
+    console.log(lesson);
   };
 
   return (
