@@ -1,15 +1,18 @@
 import { ILesson } from "@/types/lesson.type";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { FaClipboardList, FaBookOpen, FaQuestionCircle } from "react-icons/fa";
+import { ILessonProgress } from "@/types/studentProgress.type";
+import { MdLockOutline } from "react-icons/md";
+import { IoCheckmarkCircle } from "react-icons/io5";
 
 type Props = {
-  lesson: ILesson;
+  lesson: ILessonProgress;
   setCurrentLesson: (lesson: ILesson) => void;
 };
 
-const Lesson = ({ lesson, setCurrentLesson }: Props) => {
+const Lesson = ({ lesson }: Props) => {
   const renderIcon = () => {
-    switch (lesson?.type) {
+    switch (lesson?.lesson?.type) {
       case "video":
         return <MdOutlineOndemandVideo className="text-blue-500" />;
       case "instruction":
@@ -24,12 +27,18 @@ const Lesson = ({ lesson, setCurrentLesson }: Props) => {
   };
 
   return (
-    <div
-      onClick={() => setCurrentLesson(lesson)}
-      className="flex items-center space-x-2 border p-2 rounded-md cursor-pointer group"
-    >
-      {renderIcon()}
-      <span className="group-hover:text-blue-400">{lesson?.title}</span>
+    <div className="flex items-center justify-between  border p-2 rounded-md cursor-pointer group">
+      <div className="flex items-center space-x-2">
+        {renderIcon()}
+        <span className="group-hover:text-blue-400">
+          {lesson?.lesson?.title}
+        </span>
+      </div>
+      {lesson?.isLessonCompleted ? (
+        <IoCheckmarkCircle className="text-2xl text-green-500" />
+      ) : (
+        <MdLockOutline className="text-2xl text-red-400" />
+      )}
     </div>
   );
 };
