@@ -29,14 +29,22 @@ const ModuleList = ({ lessonId, setLessonId }: Props) => {
 
   const moduleList: CollapseProps["items"] = modules?.map((module, index) => ({
     key: module?.module?.id,
-    label: `Module-${index + 1} : ${module?.module?.title}`,
+    label: (
+      <div className="flex justify-between items-center">
+        <h4 className="font-semibold">
+          Module-{index + 1} : {module?.module?.title}
+        </h4>
+        <span>{module?.lessons?.length}</span>
+      </div>
+    ),
     children: (
       <div className="flex flex-col gap-2">
-        {module?.lessons?.map((lesson) => (
+        {module?.lessons?.map((lesson, index) => (
           <Lesson
             key={lesson?.lesson?.id}
             lesson={lesson}
             setLessonId={setLessonId}
+            index={index}
           />
         ))}
       </div>

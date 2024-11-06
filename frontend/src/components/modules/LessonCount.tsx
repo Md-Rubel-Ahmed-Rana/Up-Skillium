@@ -8,10 +8,10 @@ const LessonCount = ({ modules }: Props) => {
   let totalLessons = 0;
   let completedLessons = 0;
 
-  modules.forEach((module) => {
-    module.lessons.forEach((lesson) => {
+  modules?.forEach((module) => {
+    module?.lessons?.forEach((lesson) => {
       totalLessons += 1;
-      if (lesson.isLessonCompleted) {
+      if (lesson?.isLessonCompleted) {
         completedLessons += 1;
       }
     });
@@ -19,7 +19,7 @@ const LessonCount = ({ modules }: Props) => {
 
   return (
     <h2 className="text-md font-semibold">
-      Lesson: {completedLessons}/{totalLessons}
+      Completed lesson: {completedLessons}/{totalLessons}
     </h2>
   );
 };

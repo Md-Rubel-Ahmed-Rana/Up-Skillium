@@ -7,9 +7,10 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 type Props = {
   lesson: ILessonProgress;
   setLessonId: (lessonId: string) => void;
+  index: number;
 };
 
-const Lesson = ({ lesson, setLessonId }: Props) => {
+const Lesson = ({ lesson, setLessonId, index }: Props) => {
   const renderIcon = () => {
     switch (lesson?.lesson?.type) {
       case "video":
@@ -31,6 +32,7 @@ const Lesson = ({ lesson, setLessonId }: Props) => {
       className="flex items-center justify-between  border p-2 rounded-md cursor-pointer group"
     >
       <div className="flex items-center space-x-2">
+        <span className="text-lg">{index + 1}.</span>
         {renderIcon()}
         <span className="group-hover:text-blue-400">
           {lesson?.lesson?.title}
