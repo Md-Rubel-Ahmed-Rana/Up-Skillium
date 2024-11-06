@@ -1,7 +1,6 @@
 import { useRouter } from "next/router";
 import { Collapse, CollapseProps } from "antd/lib";
 import Lesson from "./Lesson";
-import { ILesson } from "@/types/lesson.type";
 import { IUser } from "@/types/user.type";
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useGetCourseProgressQuery } from "@/features/studentProgress";
@@ -10,11 +9,11 @@ import ShowCourseCompletedProgress from "./ShowCourseCompletedProgress";
 import LessonCount from "./LessonCount";
 
 type Props = {
-  setCurrentLesson: (lesson: ILesson) => void;
-  currentLesson: ILesson | null;
+  setLessonId: (lessonId: string) => void;
+  lessonId: string;
 };
 
-const ModuleList = ({ setCurrentLesson, currentLesson }: Props) => {
+const ModuleList = ({ lessonId, setLessonId }: Props) => {
   const { data: userData } = useGetLoggedInUserQuery({});
   const user = userData?.data as IUser;
   const { query } = useRouter();
@@ -37,7 +36,7 @@ const ModuleList = ({ setCurrentLesson, currentLesson }: Props) => {
           <Lesson
             key={lesson?.lesson?.id}
             lesson={lesson}
-            setCurrentLesson={setCurrentLesson}
+            setLessonId={setLessonId}
           />
         ))}
       </div>
@@ -52,10 +51,7 @@ const ModuleList = ({ setCurrentLesson, currentLesson }: Props) => {
         />
         <LessonCount modules={modules} />
       </div>
-      <Collapse
-        items={moduleList}
-        defaultActiveKey={[currentLesson?.module as string]}
-      />
+      <Collapse items={moduleList} defaultActiveKey={[lessonId]} />
     </div>
   );
 };

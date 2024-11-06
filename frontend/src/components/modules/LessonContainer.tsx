@@ -4,12 +4,15 @@ import ShowAssignment from "./ShowAssignment";
 import ShowQuizQuestions from "./ShowQuizQuestions";
 import ShowInstruction from "./ShowInstruction";
 import LessonActions from "./LessonActions";
+import { useGetSingleLessonQuery } from "@/features/lesson";
 
 type Props = {
-  lesson: ILesson | null;
+  lessonId: string;
 };
 
-const LessonContainer = ({ lesson }: Props) => {
+const LessonContainer = ({ lessonId }: Props) => {
+  const { data } = useGetSingleLessonQuery({ lessonId: lessonId });
+  const lesson = data?.data as ILesson;
   return (
     <div className="min-h-screen">
       <h2 className="text-2xl font-semibold mb-3">{lesson?.title}</h2>

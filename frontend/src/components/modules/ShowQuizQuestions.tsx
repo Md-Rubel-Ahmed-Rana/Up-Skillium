@@ -10,9 +10,7 @@ type Props = {
 const ShowQuizQuestions = ({ lesson }: Props) => {
   const questions = lesson?.quizQuestions;
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
   const [currentIndex, setCurrentIndex] = useState(0);
-
   const [question, setQuestion] = useState(questions[currentIndex]);
 
   const handleOptionClick = (option: string) => {
@@ -29,9 +27,9 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-xl font-semibold mb-4">{question.question}</h2>
+      <h2 className="text-xl font-semibold mb-4">{question?.question}</h2>
       <div className="space-y-3">
-        {question.options.map((option, index) => (
+        {question?.options?.map((option, index) => (
           <button
             key={index}
             onClick={() => handleOptionClick(option)}
