@@ -18,8 +18,8 @@ const LessonCount = ({ modules }: Props) => {
   });
 
   return (
-    <h2 className="text-md font-semibold">
-      Completed lesson: {completedLessons}/{totalLessons}
+    <h2 className="text-sm font-semibold">
+      Completed lessons: {completedLessons}/{totalLessons}
     </h2>
   );
 };

@@ -1,9 +1,5 @@
-import { useRouter } from "next/router";
 import { Collapse, CollapseProps } from "antd/lib";
 import Lesson from "./Lesson";
-import { IUser } from "@/types/user.type";
-import { useGetLoggedInUserQuery } from "@/features/auth";
-import { useGetCourseProgressQuery } from "@/features/studentProgress";
 import { ICourseProgress, IModuleProgress } from "@/types/studentProgress.type";
 import ShowCourseCompletedProgress from "./ShowCourseCompletedProgress";
 import LessonCount from "./LessonCount";
@@ -11,21 +7,11 @@ import LessonCount from "./LessonCount";
 type Props = {
   setLessonId: (lessonId: string) => void;
   lessonId: string;
+  course: ICourseProgress;
 };
 
-const ModuleList = ({ lessonId, setLessonId }: Props) => {
-  const { data: userData } = useGetLoggedInUserQuery({});
-  const user = userData?.data as IUser;
-  const { query } = useRouter();
-  const courseId = query?.id as string;
-  const { data: courseData } = useGetCourseProgressQuery({
-    userId: user?.id,
-    courseId: courseId,
-  });
-
-  const course = courseData?.data as ICourseProgress;
-
-  const modules = courseData?.data?.modules as IModuleProgress[];
+const ModuleList = ({ lessonId, setLessonId, course }: Props) => {
+  const modules = course?.modules as IModuleProgress[];
 
   const moduleList: CollapseProps["items"] = modules?.map((module, index) => ({
     key: module?.module?.id,
