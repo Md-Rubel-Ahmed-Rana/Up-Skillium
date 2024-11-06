@@ -23,3 +23,16 @@ export type ILessonForProgress = {
   lesson: Types.ObjectId;
   isLessonCompleted: boolean;
 };
+
+export type IProgressCalculate = {
+  completionPercentage: number;
+  modules: ModuleProgress[];
+};
+
+type ModuleProgress = {
+  lessons: LessonProgress[];
+};
+
+type LessonProgress = {
+  isLessonCompleted: boolean;
+};
