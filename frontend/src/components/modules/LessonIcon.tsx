@@ -5,18 +5,48 @@ import { ILessonProgress } from "@/types/studentProgress.type";
 
 type LessonIconProps = {
   type: ILessonProgress["lesson"]["type"];
+  currentLessonId: string;
+  lessonId: string;
 };
 
-const LessonIcon: React.FC<LessonIconProps> = ({ type }) => {
+const LessonIcon: React.FC<LessonIconProps> = ({
+  type,
+  currentLessonId,
+  lessonId,
+}) => {
   switch (type) {
     case "video":
-      return <MdOutlineOndemandVideo className="text-blue-500" />;
+      return (
+        <MdOutlineOndemandVideo
+          className={`${
+            currentLessonId === lessonId ? "text-white" : "text-blue-500"
+          } `}
+        />
+      );
     case "instruction":
-      return <FaBookOpen className="text-green-500" />;
+      return (
+        <FaBookOpen
+          className={`${
+            currentLessonId === lessonId ? "text-white" : "text-green-500"
+          } `}
+        />
+      );
     case "quiz":
-      return <FaQuestionCircle className="text-purple-500" />;
+      return (
+        <FaQuestionCircle
+          className={`${
+            currentLessonId === lessonId ? "text-white" : "text-purple-500"
+          } `}
+        />
+      );
     case "assignment":
-      return <FaClipboardList className="text-orange-500" />;
+      return (
+        <FaClipboardList
+          className={`${
+            currentLessonId === lessonId ? "text-white" : "text-orange-500"
+          } `}
+        />
+      );
     default:
       return null;
   }
