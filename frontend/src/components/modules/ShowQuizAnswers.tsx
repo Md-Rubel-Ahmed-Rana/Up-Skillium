@@ -18,18 +18,18 @@ const ShowQuizAnswers = ({ answers }: Props) => {
           <Card
             key={index}
             bordered={false}
-            className={`p-4 rounded-lg ${
+            className={`lg:p-4 rounded-lg ${
               answer.isCorrect
                 ? "bg-green-100 border-l-4 border-green-500"
                 : "bg-red-100 border-l-4 border-red-500"
             }`}
           >
             <Space direction="vertical" size="small" className="w-full">
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col lg:flex-row items-center gap-2">
                 <Text className="text-gray-800 font-medium">Question:</Text>
                 <Text className="text-gray-600">{answer.question}</Text>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col lg:flex-row items-center gap-2">
                 <Text className="text-gray-800 font-medium">Your Answer:</Text>
                 <Text
                   className={`${
@@ -40,7 +40,7 @@ const ShowQuizAnswers = ({ answers }: Props) => {
                 </Text>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col lg:flex-row items-center gap-2">
                 <Text className="text-gray-800 font-medium">
                   Correct Answer:
                 </Text>
