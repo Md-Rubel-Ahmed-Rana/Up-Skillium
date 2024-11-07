@@ -14,12 +14,12 @@ const ShowQuizAnswers = ({ answers }: Props) => {
         Quiz Answers
       </Title>
       <Space direction="vertical" size="large" className="w-full">
-        {answers.map((answer, index) => (
+        {answers?.map((answer, index) => (
           <Card
             key={index}
             bordered={false}
             className={`lg:p-4 rounded-lg ${
-              answer.isCorrect
+              answer?.isCorrect
                 ? "bg-green-100 border-l-4 border-green-500"
                 : "bg-red-100 border-l-4 border-red-500"
             }`}
@@ -27,16 +27,16 @@ const ShowQuizAnswers = ({ answers }: Props) => {
             <Space direction="vertical" size="small" className="w-full">
               <div className="flex flex-col lg:flex-row items-center gap-2">
                 <Text className="text-gray-800 font-medium">Question:</Text>
-                <Text className="text-gray-600">{answer.question}</Text>
+                <Text className="text-gray-600">{answer?.question}</Text>
               </div>
               <div className="flex flex-col lg:flex-row items-center gap-2">
                 <Text className="text-gray-800 font-medium">Your Answer:</Text>
                 <Text
                   className={`${
-                    answer.isCorrect ? "text-green-600" : "text-red-600"
+                    answer?.isCorrect ? "text-green-600" : "text-red-600"
                   } font-semibold`}
                 >
-                  {answer.givenAnswer}
+                  {answer?.givenAnswer}
                 </Text>
               </div>
 
@@ -45,7 +45,7 @@ const ShowQuizAnswers = ({ answers }: Props) => {
                   Correct Answer:
                 </Text>
                 <Text className="text-blue-600 font-semibold">
-                  {answer.correctAnswer}
+                  {answer?.correctAnswer}
                 </Text>
               </div>
             </Space>

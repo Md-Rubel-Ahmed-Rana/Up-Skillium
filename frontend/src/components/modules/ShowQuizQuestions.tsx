@@ -22,8 +22,6 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [question, setQuestion] = useState(questions[currentIndex]);
 
-  console.log({ lesson });
-
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
 
