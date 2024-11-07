@@ -24,6 +24,10 @@ export const lessonSchema = new Schema<ILesson>(
     content: {
       type: String,
     },
+    isSubmitted: {
+      type: Boolean,
+      default: false,
+    },
     videoUrl: {
       type: String,
     },

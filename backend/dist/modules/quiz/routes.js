@@ -10,5 +10,5 @@ router.get("/module/:moduleId", controller_1.QuizController.getQuizzesByModuleId
 router.get("/:id", controller_1.QuizController.getSingleQuiz);
 router.patch("/:id", controller_1.QuizController.updateQuiz);
 router.delete("/:id", controller_1.QuizController.deleteQuiz);
-router.post("/submit-quiz", controller_1.QuizController.checkAndCalculateQuizAnswers);
+router.post("/submit-quiz/:userId/:lessonId", controller_1.QuizController.checkAndCalculateQuizAnswers);
 exports.QuizRoutes = router;
