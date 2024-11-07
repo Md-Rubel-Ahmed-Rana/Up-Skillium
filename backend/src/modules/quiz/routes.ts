@@ -15,6 +15,9 @@ router.patch("/:id", QuizController.updateQuiz);
 
 router.delete("/:id", QuizController.deleteQuiz);
 
-router.post("/submit-quiz", QuizController.checkAndCalculateQuizAnswers);
+router.post(
+  "/submit-quiz/:userId/:lessonId",
+  QuizController.checkAndCalculateQuizAnswers
+);
 
 export const QuizRoutes = router;
