@@ -11,7 +11,6 @@ type Props = {
 };
 
 const LessonContainer = ({ lessonId }: Props) => {
-  console.log({ lessonId });
   const { data } = useGetSingleLessonQuery({ lessonId: lessonId });
   const lesson = data?.data as ILesson;
   return (

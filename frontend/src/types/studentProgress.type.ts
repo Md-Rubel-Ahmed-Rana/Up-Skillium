@@ -29,7 +29,7 @@ export type ILessonProgress = {
   isLessonCompleted: boolean;
 };
 
-type ILessonDetails = {
+export type ILessonDetails = {
   title: string;
   type: string;
   module: string;
