@@ -7,7 +7,7 @@ const apiSlice = createApi({
     baseUrl: baseApi,
     credentials: "include",
   }),
-  tagTypes: ["user"],
+  tagTypes: ["lesson", "module", "course", "user"],
   endpoints: () => ({}),
 });
 

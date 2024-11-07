@@ -1,39 +1,54 @@
-import { MdOutlineOndemandVideo } from "react-icons/md";
-import { FaClipboardList, FaBookOpen, FaQuestionCircle } from "react-icons/fa";
-import { ILessonProgress } from "@/types/studentProgress.type";
+import React from "react";
 import { MdLockOutline } from "react-icons/md";
 import { IoCheckmarkCircle } from "react-icons/io5";
+import LessonIcon from "./LessonIcon";
+import useLessonHandler from "@/hooks/useLessonHandler";
+import { ILessonDetails, ILessonProgress } from "@/types/studentProgress.type";
+import { useGetLoggedInUserQuery } from "@/features/auth";
+import { IUser } from "@/types/user.type";
 
 type Props = {
   lesson: ILessonProgress;
   setLessonId: (lessonId: string) => void;
   index: number;
+  courseId: string;
+  lessonId: string;
+  lessons: ILessonProgress[];
+  moduleId: string;
+  lastCompletedLesson: ILessonDetails;
 };
 
-const Lesson = ({ lesson, setLessonId, index }: Props) => {
-  const renderIcon = () => {
-    switch (lesson?.lesson?.type) {
-      case "video":
-        return <MdOutlineOndemandVideo className="text-blue-500" />;
-      case "instruction":
-        return <FaBookOpen className="text-green-500" />;
-      case "quiz":
-        return <FaQuestionCircle className="text-purple-500" />;
-      case "assignment":
-        return <FaClipboardList className="text-orange-500" />;
-      default:
-        return null;
-    }
-  };
+const Lesson: React.FC<Props> = ({
+  lesson,
+  setLessonId,
+  index,
+  courseId,
+  moduleId,
+  lessons,
+  lessonId,
+  lastCompletedLesson,
+}) => {
+  const { data } = useGetLoggedInUserQuery({});
+  const user = data?.data as IUser;
+
+  const { handleChangeLesson } = useLessonHandler({
+    lessons,
+    lessonId,
+    courseId,
+    moduleId,
+    user,
+    setLessonId,
+    lastCompletedLesson,
+  });
 
   return (
     <div
-      onClick={() => setLessonId(lesson?.lesson?.id)}
-      className="flex items-center justify-between  border p-2 rounded-md cursor-pointer group"
+      onClick={() => handleChangeLesson(lesson)}
+      className="flex items-center justify-between border p-2 rounded-md cursor-pointer group"
     >
       <div className="flex items-center space-x-2">
         <span className="text-lg">{index + 1}.</span>
-        {renderIcon()}
+        <LessonIcon type={lesson?.lesson?.type} />
         <span className="group-hover:text-blue-400">
           {lesson?.lesson?.title}
         </span>

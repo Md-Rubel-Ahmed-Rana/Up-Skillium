@@ -1,6 +1,10 @@
 import { Collapse, CollapseProps } from "antd/lib";
 import Lesson from "./Lesson";
-import { ICourseProgress, IModuleProgress } from "@/types/studentProgress.type";
+import {
+  ICourseProgress,
+  ILessonProgress,
+  IModuleProgress,
+} from "@/types/studentProgress.type";
 import ShowCourseCompletedProgress from "./ShowCourseCompletedProgress";
 import LessonCount from "./LessonCount";
 
@@ -12,6 +16,13 @@ type Props = {
 
 const ModuleList = ({ lessonId, setLessonId, course }: Props) => {
   const modules = course?.modules as IModuleProgress[];
+  const lessons: ILessonProgress[] = [];
+
+  modules?.forEach((module) => {
+    module?.lessons?.forEach((lesson) => {
+      lessons.push(lesson);
+    });
+  });
 
   const moduleList: CollapseProps["items"] = modules?.map((module, index) => ({
     key: module?.module?.id,
@@ -30,7 +41,12 @@ const ModuleList = ({ lessonId, setLessonId, course }: Props) => {
             key={lesson?.lesson?.id}
             lesson={lesson}
             setLessonId={setLessonId}
+            lessonId={lessonId}
             index={index}
+            courseId={course?.course?.id}
+            moduleId={module?.module?.id}
+            lessons={lessons}
+            lastCompletedLesson={course?.lastCompletedLesson}
           />
         ))}
       </div>
