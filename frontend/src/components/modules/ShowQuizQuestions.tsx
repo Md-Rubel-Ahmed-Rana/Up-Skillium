@@ -69,13 +69,18 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
       </div>
       <div className="text-right my-2 pt-4">
         {currentIndex === questions?.length - 1 ? (
-          <Button onClick={handleSubmitQuiz} type="primary">
+          <Button
+            disabled={!selectedOption}
+            onClick={handleSubmitQuiz}
+            type="primary"
+          >
             Submit
           </Button>
         ) : (
           <Button
             onClick={() => setCurrentIndex(currentIndex + 1)}
             type="primary"
+            disabled={!selectedOption}
           >
             Go Next
           </Button>
