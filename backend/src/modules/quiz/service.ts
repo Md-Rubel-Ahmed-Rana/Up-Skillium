@@ -46,6 +46,56 @@ class Service {
   async deleteQuiz(id: Types.ObjectId): Promise<void> {
     await Quiz.findByIdAndDelete(id);
   }
+  async checkAndCalculateQuizAnswers(
+    givenAnswers: { id: string; answer: string }[]
+  ) {
+    const totalQuiz = givenAnswers.length;
+    let correctAnswers = 0;
+    let wrongAnswers = 0;
+
+    const modifiedQuizAnswers: {
+      question: string;
+      givenAnswer: string;
+      correctAnswer: string;
+      isCorrect: boolean;
+    }[] = [];
+
+    const quizIds = givenAnswers.map((answer) => answer.id);
+
+    const findQuizzes = await Quiz.find({ _id: { $in: quizIds } });
+
+    const quizMap = new Map(
+      findQuizzes.map((quiz) => [quiz?._id.toString(), quiz])
+    );
+
+    for (const givenAnswer of givenAnswers) {
+      const quiz = quizMap.get(givenAnswer?.id);
+
+      if (quiz) {
+        const isCorrect = quiz.correctAnswer === givenAnswer.answer;
+
+        if (isCorrect) {
+          correctAnswers++;
+        } else {
+          wrongAnswers++;
+        }
+
+        modifiedQuizAnswers.push({
+          question: quiz.question,
+          givenAnswer: givenAnswer.answer,
+          correctAnswer: quiz.correctAnswer,
+          isCorrect,
+        });
+      }
+    }
+
+    return {
+      totalQuiz,
+      correctAnswers,
+      wrongAnswers,
+      modifiedQuizAnswers,
+    };
+  }
 }
 
 export const QuizService = new Service();

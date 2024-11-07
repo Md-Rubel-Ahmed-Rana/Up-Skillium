@@ -48,5 +48,40 @@ class Service {
             yield model_1.Quiz.findByIdAndDelete(id);
         });
     }
+    checkAndCalculateQuizAnswers(givenAnswers) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const totalQuiz = givenAnswers.length;
+            let correctAnswers = 0;
+            let wrongAnswers = 0;
+            const modifiedQuizAnswers = [];
+            const quizIds = givenAnswers.map((answer) => answer.id);
+            const findQuizzes = yield model_1.Quiz.find({ _id: { $in: quizIds } });
+            const quizMap = new Map(findQuizzes.map((quiz) => [quiz === null || quiz === void 0 ? void 0 : quiz._id.toString(), quiz]));
+            for (const givenAnswer of givenAnswers) {
+                const quiz = quizMap.get(givenAnswer === null || givenAnswer === void 0 ? void 0 : givenAnswer.id);
+                if (quiz) {
+                    const isCorrect = quiz.correctAnswer === givenAnswer.answer;
+                    if (isCorrect) {
+                        correctAnswers++;
+                    }
+                    else {
+                        wrongAnswers++;
+                    }
+                    modifiedQuizAnswers.push({
+                        question: quiz.question,
+                        givenAnswer: givenAnswer.answer,
+                        correctAnswer: quiz.correctAnswer,
+                        isCorrect,
+                    });
+                }
+            }
+            return {
+                totalQuiz,
+                correctAnswers,
+                wrongAnswers,
+                modifiedQuizAnswers,
+            };
+        });
+    }
 }
 exports.QuizService = new Service();

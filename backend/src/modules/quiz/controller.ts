@@ -77,6 +77,17 @@ class Controller extends RootController {
       data: null,
     });
   });
+  checkAndCalculateQuizAnswers = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const data = await QuizService.checkAndCalculateQuizAnswers(req.body);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Quiz calculated successfully",
+        data: data,
+      });
+    }
+  );
 }
 
 export const QuizController = new Controller();
