@@ -6,6 +6,7 @@ export type ILesson = {
   serial: number;
   title: string;
   type: string;
+  isSubmitted: boolean;
   module: string;
   content: string;
   videoLength: number;
