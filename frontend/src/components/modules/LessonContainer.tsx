@@ -5,12 +5,15 @@ import ShowQuizQuestions from "./ShowQuizQuestions";
 import ShowInstruction from "./ShowInstruction";
 import LessonActions from "./LessonActions";
 import { useGetSingleLessonQuery } from "@/features/lesson";
+import { ILessonProgress } from "@/types/studentProgress.type";
 
 type Props = {
   lessonId: string;
+  setLessonId: (lessonId: string) => void;
+  lessons: ILessonProgress[];
 };
 
-const LessonContainer = ({ lessonId }: Props) => {
+const LessonContainer = ({ lessonId, setLessonId, lessons }: Props) => {
   const { data } = useGetSingleLessonQuery({ lessonId: lessonId });
   const lesson = data?.data as ILesson;
   return (
@@ -22,7 +25,11 @@ const LessonContainer = ({ lessonId }: Props) => {
       {lesson?.type === "assignment" && <ShowAssignment lesson={lesson} />}
       {lesson?.type === "quiz" && <ShowQuizQuestions lesson={lesson} />}
       {lesson?.type === "instruction" && <ShowInstruction lesson={lesson} />}
-      <LessonActions lesson={lesson as ILesson} />
+      <LessonActions
+        lessonId={lessonId}
+        setLessonId={setLessonId}
+        lessons={lessons}
+      />
     </div>
   );
 };

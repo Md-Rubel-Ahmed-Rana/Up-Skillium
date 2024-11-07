@@ -1,21 +1,32 @@
-import { ILesson } from "@/types/lesson.type";
+import { ILessonProgress } from "@/types/studentProgress.type";
 import { Button } from "antd/lib";
-import toast from "react-hot-toast";
 
 type Props = {
-  lesson: ILesson;
+  lessons: ILessonProgress[];
+  setLessonId: (lessonId: string) => void;
+  lessonId: string;
 };
 
-const LessonActions = ({ lesson }: Props) => {
-  const handleActions = () => {
-    toast.success("Feature is coming very soon.");
-    console.log(lesson);
+const LessonActions = ({ lessons, lessonId, setLessonId }: Props) => {
+  const handlePreviousLesson = () => {
+    const previousLessonIndex = lessons.findIndex(
+      (ls) => ls?.lesson?.id === lessonId
+    );
+    const previousLesson = lessons[previousLessonIndex - 1];
+    setLessonId(previousLesson?.lesson?.id);
+  };
+  const handleNextLesson = () => {
+    const currentLessonIndex = lessons.findIndex(
+      (ls) => ls?.lesson?.id === lessonId
+    );
+    const nextLesson = lessons[currentLessonIndex + 1];
+    setLessonId(nextLesson?.lesson?.id);
   };
 
   return (
     <div className="flex items-center lg:justify-end justify-between gap-2 mt-3">
-      <Button onClick={handleActions}>Previous</Button>
-      <Button onClick={handleActions} className="px-8" type="primary">
+      <Button onClick={handlePreviousLesson}>Previous</Button>
+      <Button onClick={handleNextLesson} className="px-8" type="primary">
         Next
       </Button>
     </div>
