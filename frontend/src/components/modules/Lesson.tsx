@@ -21,11 +21,11 @@ type Props = {
 const Lesson: React.FC<Props> = ({
   lesson,
   setLessonId,
+  lessonId,
   index,
   courseId,
   moduleId,
   lessons,
-  lessonId,
   lastCompletedLesson,
 }) => {
   const { data } = useGetLoggedInUserQuery({});
