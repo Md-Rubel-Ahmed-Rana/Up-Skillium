@@ -19,5 +19,10 @@ class Service {
             yield service_1.LessonService.quizLessonMarkAsSubmitted(data === null || data === void 0 ? void 0 : data.lessonId);
         });
     }
+    getSubmittedQuizResultByLessonId(lessonId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return model_1.QuizSubmission.findOne({ lessonId });
+        });
+    }
 }
 exports.QuizSubmissionService = new Service();
