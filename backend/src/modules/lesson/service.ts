@@ -46,6 +46,10 @@ class Service {
       .limit(limit)
       .exec();
   }
+
+  async quizLessonMarkAsSubmitted(lessonId: Types.ObjectId) {
+    await Lesson.findByIdAndUpdate(lessonId, { $set: { isSubmitted: true } });
+  }
 }
 
 export const LessonService = new Service();

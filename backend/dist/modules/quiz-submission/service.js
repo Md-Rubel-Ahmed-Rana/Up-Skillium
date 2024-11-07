@@ -10,11 +10,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuizSubmissionService = void 0;
+const service_1 = require("../lesson/service");
 const model_1 = require("./model");
 class Service {
     submitQuiz(data) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.QuizSubmission.create(data);
+            yield service_1.LessonService.quizLessonMarkAsSubmitted(data === null || data === void 0 ? void 0 : data.lessonId);
         });
     }
 }
