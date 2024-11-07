@@ -41,22 +41,50 @@ const Lesson: React.FC<Props> = ({
     lastCompletedLesson,
   });
 
+  const currentLessonId = lessonId || lastCompletedLesson?.id;
+
   return (
     <div
       onClick={() => handleChangeLesson(lesson)}
-      className="flex items-center justify-between border p-2 rounded-md cursor-pointer group"
+      className={`${
+        currentLessonId === lesson?.lesson?.id
+          ? "bg-blue-500 text-white hover:bg-blue-700"
+          : ""
+      }  flex items-center justify-between border p-2 rounded-md cursor-pointer group`}
     >
       <div className="flex items-center space-x-2">
         <span className="text-lg">{index + 1}.</span>
-        <LessonIcon type={lesson?.lesson?.type} />
-        <span className="group-hover:text-blue-400">
+        <LessonIcon
+          type={lesson?.lesson?.type}
+          currentLessonId={currentLessonId}
+          lessonId={lesson?.lesson?.id}
+        />
+        <span
+          className={`${
+            currentLessonId === lesson?.lesson?.id
+              ? "group-hover:text-white "
+              : "group-hover:text-blue-400"
+          }`}
+        >
           {lesson?.lesson?.title}
         </span>
       </div>
       {lesson?.isLessonCompleted ? (
-        <IoCheckmarkCircle className="text-2xl text-green-500" />
+        <IoCheckmarkCircle
+          className={`text-2xl ${
+            currentLessonId === lesson?.lesson?.id
+              ? "text-white"
+              : "text-green-400"
+          }`}
+        />
       ) : (
-        <MdLockOutline className="text-2xl text-red-400" />
+        <MdLockOutline
+          className={`text-2xl ${
+            currentLessonId === lesson?.lesson?.id
+              ? "text-white"
+              : "text-red-400"
+          }`}
+        />
       )}
     </div>
   );

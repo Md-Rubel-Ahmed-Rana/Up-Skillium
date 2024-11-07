@@ -61,7 +61,10 @@ const ModuleList = ({ lessonId, setLessonId, course }: Props) => {
         />
         <LessonCount modules={modules} />
       </div>
-      <Collapse items={moduleList} defaultActiveKey={[lessonId]} />
+      <Collapse
+        items={moduleList}
+        defaultActiveKey={[course?.lastCompletedLesson?.module]}
+      />
     </div>
   );
 };
