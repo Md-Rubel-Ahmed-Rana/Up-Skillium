@@ -2,6 +2,7 @@ import { ILesson } from "@/types/lesson.type";
 import { useEffect, useState } from "react";
 import { Button } from "antd/lib";
 import toast from "react-hot-toast";
+import ShowQuizResult from "./ShowQuizResult";
 
 type Props = {
   lesson: ILesson;
@@ -20,6 +21,8 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [question, setQuestion] = useState(questions[currentIndex]);
+
+  console.log({ lesson });
 
   const handleSelectOption = (option: string) => {
     setSelectedOption(option);
@@ -53,40 +56,46 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
   }, [currentIndex, questions, selectedAnswers, question?.id]);
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-xl font-semibold mb-4">{question?.question}</h2>
-      <div className="flex flex-col justify-start items-start space-y-3 text-center">
-        {question?.options?.map((option, index) => (
-          <Button
-            key={index}
-            type={`${selectedOption === option ? "primary" : "default"}`}
-            onClick={() => handleSelectOption(option)}
-            className={`w-full flex justify-start items-start`}
-          >
-            {option}
-          </Button>
-        ))}
-      </div>
-      <div className="text-right my-2 pt-4">
-        {currentIndex === questions?.length - 1 ? (
-          <Button
-            disabled={!selectedOption}
-            onClick={handleSubmitQuiz}
-            type="primary"
-          >
-            Submit
-          </Button>
-        ) : (
-          <Button
-            onClick={() => setCurrentIndex(currentIndex + 1)}
-            type="primary"
-            disabled={!selectedOption}
-          >
-            Go Next
-          </Button>
-        )}
-      </div>
-    </div>
+    <>
+      {lesson?.isSubmitted ? (
+        <ShowQuizResult lessonId={lesson?.id} />
+      ) : (
+        <div className="bg-white shadow-md rounded-lg p-6">
+          <h2 className="text-xl font-semibold mb-4">{question?.question}</h2>
+          <div className="flex flex-col justify-start items-start space-y-3 text-center">
+            {question?.options?.map((option, index) => (
+              <Button
+                key={index}
+                type={`${selectedOption === option ? "primary" : "default"}`}
+                onClick={() => handleSelectOption(option)}
+                className={`w-full flex justify-start items-start`}
+              >
+                {option}
+              </Button>
+            ))}
+          </div>
+          <div className="text-right my-2 pt-4">
+            {currentIndex === questions?.length - 1 ? (
+              <Button
+                disabled={!selectedOption}
+                onClick={handleSubmitQuiz}
+                type="primary"
+              >
+                Submit
+              </Button>
+            ) : (
+              <Button
+                onClick={() => setCurrentIndex(currentIndex + 1)}
+                type="primary"
+                disabled={!selectedOption}
+              >
+                Go Next
+              </Button>
+            )}
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
