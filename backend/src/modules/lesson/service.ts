@@ -24,7 +24,12 @@ class Service {
   }
 
   async getLessonById(id: string): Promise<ILesson | null> {
-    return await Lesson.findById(id).populate("quizQuestions").exec();
+    return await Lesson.findById(id)
+      .populate({
+        path: "quizQuestions",
+        select: "-correctAnswer",
+      })
+      .exec();
   }
 
   async updateLesson(id: string, data: Partial<ILesson>): Promise<void> {
