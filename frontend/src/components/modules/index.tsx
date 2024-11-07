@@ -33,8 +33,8 @@ const ModulesClasses = () => {
   });
 
   return (
-    <div className="flex justify-between gap-5 mt-5 min-h-screen p-2">
-      <div className="w-4/12 hidden lg:block">
+    <div className="flex flex-col-reverse lg:flex-row justify-between lg:gap-5 gap-20 mt-5 min-h-screen p-2">
+      <div className="w-full lg:w-4/12">
         <ModuleList
           setLessonId={setLessonId}
           lessonId={lessonId}
