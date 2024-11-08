@@ -8,4 +8,9 @@ router.post(
   AssignmentSubmissionController.submit
 );
 
+router.get(
+  "/by-lesson/:userId/:lessonId",
+  AssignmentSubmissionController.getAssignmentSubmissionByLessonId
+);
+
 export const AssignmentSubmissionRoutes = router;

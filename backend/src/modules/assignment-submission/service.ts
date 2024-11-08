@@ -20,6 +20,15 @@ class Service {
     );
     return result;
   }
+  async getAssignmentSubmissionByLessonId(
+    userId: Types.ObjectId,
+    lessonId: Types.ObjectId
+  ) {
+    return await AssignmentSubmission.findOne({
+      userId: userId,
+      lessonId: lessonId,
+    });
+  }
 }
 
 export const AssignmentSubmissionService = new Service();
