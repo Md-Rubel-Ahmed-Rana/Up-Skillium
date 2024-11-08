@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.QuizService = void 0;
 const service_1 = require("../lesson/service");
 const model_1 = require("./model");
-const service_2 = require("../quiz-submission/service");
 class Service {
     createQuiz(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -49,7 +48,7 @@ class Service {
             yield model_1.Quiz.findByIdAndDelete(id);
         });
     }
-    checkAndCalculateQuizAnswers(userId, lessonId, givenAnswers) {
+    checkAndCalculateQuizAnswers(givenAnswers) {
         return __awaiter(this, void 0, void 0, function* () {
             const totalQuiz = givenAnswers.length;
             let correctAnswers = 0;
@@ -76,15 +75,6 @@ class Service {
                     });
                 }
             }
-            // send necessary submission result to save
-            yield service_2.QuizSubmissionService.submitQuiz({
-                userId,
-                lessonId,
-                correctAnswers,
-                totalQuiz,
-                wrongAnswers,
-                modifiedQuizAnswers,
-            });
             return {
                 totalQuiz,
                 correctAnswers,

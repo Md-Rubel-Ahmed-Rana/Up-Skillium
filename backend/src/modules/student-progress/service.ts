@@ -55,9 +55,11 @@ class Service {
       await StudentProgress.create(newCourseProgress);
     }
   }
+
   async getStudentProgress(userId: Types.ObjectId) {
     return StudentProgress.findOne({ user: userId });
   }
+
   async getSingleCourseProgress(
     userId: Types.ObjectId,
     courseId: Types.ObjectId
@@ -97,6 +99,7 @@ class Service {
 
     return progress.courses[0];
   }
+
   async completeLesson(
     userId: Types.ObjectId,
     courseId: Types.ObjectId,
@@ -136,6 +139,7 @@ class Service {
     );
     await progress.save();
   }
+
   async calculateCourseCompletion(
     progress: IProgressCalculate
   ): Promise<number> {
@@ -158,6 +162,71 @@ class Service {
       Math.round(completionPercentage * 100) / 100;
 
     return progress.completionPercentage;
+  }
+
+  async assignmentLessonMarkAsSubmitted(
+    userId: Types.ObjectId,
+    courseId: Types.ObjectId,
+    moduleId: Types.ObjectId,
+    lessonId: Types.ObjectId
+  ) {
+    await StudentProgress.updateOne(
+      {
+        user: userId,
+        "courses.course": courseId,
+        "courses.modules.module": moduleId,
+        "courses.modules.lessons.lesson": lessonId,
+      },
+      {
+        $set: {
+          "courses.$[course].modules.$[module].lessons.$[lesson].isAssignmentSubmitted":
+            true,
+        },
+      },
+      {
+        arrayFilters: [
+          { "course.course": courseId },
+          { "module.module": moduleId },
+          { "lesson.lesson": lessonId },
+        ],
+      }
+    );
+  }
+
+  async quizLessonMarkAsSubmitted(
+    userId: Types.ObjectId,
+    courseId: Types.ObjectId,
+    moduleId: Types.ObjectId,
+    lessonId: Types.ObjectId
+  ) {
+    const lesson = await StudentProgress.findOne({
+      user: userId,
+      "courses.course": courseId,
+      "courses.modules.module": moduleId,
+      "courses.modules.lessons.lesson": lessonId,
+    });
+    console.log({ lesson });
+    await StudentProgress.updateOne(
+      {
+        user: userId,
+        "courses.course": courseId,
+        "courses.modules.module": moduleId,
+        "courses.modules.lessons.lesson": lessonId,
+      },
+      {
+        $set: {
+          "courses.$[course].modules.$[module].lessons.$[lesson].isQuizSubmitted":
+            true,
+        },
+      },
+      {
+        arrayFilters: [
+          { "course.course": courseId },
+          { "module.module": moduleId },
+          { "lesson.lesson": lessonId },
+        ],
+      }
+    );
   }
 }
 

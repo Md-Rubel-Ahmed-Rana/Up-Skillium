@@ -1,12 +1,26 @@
 import { Types } from "mongoose";
-import { LessonService } from "../lesson/service";
-import { IQuizSubmission } from "./interface";
+import { IQuizSubmission, IQuizSubmitData } from "./interface";
 import { QuizSubmission } from "./model";
+import { StudentProgressService } from "../student-progress/service";
+import { QuizService } from "../quiz/service";
 
 class Service {
-  async submitQuiz(data: IQuizSubmission) {
-    await QuizSubmission.create(data);
-    await LessonService.quizLessonMarkAsSubmitted(data?.lessonId);
+  async submitQuiz(
+    userId: Types.ObjectId,
+    courseId: Types.ObjectId,
+    moduleId: Types.ObjectId,
+    lessonId: Types.ObjectId,
+    data: IQuizSubmitData[]
+  ) {
+    const result = await QuizService.checkAndCalculateQuizAnswers(data);
+    const newData: IQuizSubmission = { ...result, userId, lessonId };
+    await QuizSubmission.create(newData);
+    await StudentProgressService.quizLessonMarkAsSubmitted(
+      userId,
+      courseId,
+      moduleId,
+      lessonId
+    );
   }
   async getSubmittedQuizResultByLessonId(
     lessonId: Types.ObjectId

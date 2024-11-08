@@ -53,10 +53,5 @@ class Service {
                 .exec();
         });
     }
-    quizLessonMarkAsSubmitted(lessonId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield model_1.Lesson.findByIdAndUpdate(lessonId, { $set: { isSubmitted: true } });
-        });
-    }
 }
 exports.LessonService = new Service();

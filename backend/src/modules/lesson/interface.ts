@@ -9,5 +9,4 @@ export type ILesson = {
   content?: string;
   quizQuestions?: Types.ObjectId[];
   serial: number;
-  isSubmitted: boolean;
 };

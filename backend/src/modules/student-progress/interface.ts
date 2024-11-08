@@ -22,6 +22,8 @@ export type IModuleForProgress = {
 export type ILessonForProgress = {
   lesson: Types.ObjectId;
   isLessonCompleted: boolean;
+  isAssignmentSubmitted: boolean;
+  isQuizSubmitted: boolean;
 };
 
 export type IProgressCalculate = {

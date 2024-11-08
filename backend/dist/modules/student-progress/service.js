@@ -147,5 +147,52 @@ class Service {
             return progress.completionPercentage;
         });
     }
+    assignmentLessonMarkAsSubmitted(userId, courseId, moduleId, lessonId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.StudentProgress.updateOne({
+                user: userId,
+                "courses.course": courseId,
+                "courses.modules.module": moduleId,
+                "courses.modules.lessons.lesson": lessonId,
+            }, {
+                $set: {
+                    "courses.$[course].modules.$[module].lessons.$[lesson].isAssignmentSubmitted": true,
+                },
+            }, {
+                arrayFilters: [
+                    { "course.course": courseId },
+                    { "module.module": moduleId },
+                    { "lesson.lesson": lessonId },
+                ],
+            });
+        });
+    }
+    quizLessonMarkAsSubmitted(userId, courseId, moduleId, lessonId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lesson = yield model_1.StudentProgress.findOne({
+                user: userId,
+                "courses.course": courseId,
+                "courses.modules.module": moduleId,
+                "courses.modules.lessons.lesson": lessonId,
+            });
+            console.log({ lesson });
+            yield model_1.StudentProgress.updateOne({
+                user: userId,
+                "courses.course": courseId,
+                "courses.modules.module": moduleId,
+                "courses.modules.lessons.lesson": lessonId,
+            }, {
+                $set: {
+                    "courses.$[course].modules.$[module].lessons.$[lesson].isQuizSubmitted": true,
+                },
+            }, {
+                arrayFilters: [
+                    { "course.course": courseId },
+                    { "module.module": moduleId },
+                    { "lesson.lesson": lessonId },
+                ],
+            });
+        });
+    }
 }
 exports.StudentProgressService = new Service();

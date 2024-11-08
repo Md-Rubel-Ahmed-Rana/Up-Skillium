@@ -9,23 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.QuizSubmissionService = void 0;
-const model_1 = require("./model");
+exports.AssignmentSubmissionService = void 0;
 const service_1 = require("../student-progress/service");
-const service_2 = require("../quiz/service");
+const model_1 = require("./model");
 class Service {
-    submitQuiz(userId, courseId, moduleId, lessonId, data) {
+    submit(userId, courseId, moduleId, lessonId, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield service_2.QuizService.checkAndCalculateQuizAnswers(data);
-            const newData = Object.assign(Object.assign({}, result), { userId, lessonId });
-            yield model_1.QuizSubmission.create(newData);
-            yield service_1.StudentProgressService.quizLessonMarkAsSubmitted(userId, courseId, moduleId, lessonId);
-        });
-    }
-    getSubmittedQuizResultByLessonId(lessonId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return model_1.QuizSubmission.findOne({ lessonId });
+            const result = yield model_1.AssignmentSubmission.create(data);
+            yield service_1.StudentProgressService.assignmentLessonMarkAsSubmitted(userId, courseId, moduleId, lessonId);
+            return result;
         });
     }
 }
-exports.QuizSubmissionService = new Service();
+exports.AssignmentSubmissionService = new Service();

@@ -16,6 +16,14 @@ const lessonSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    isAssignmentSubmitted: {
+        type: Boolean,
+        default: false,
+    },
+    isQuizSubmitted: {
+        type: Boolean,
+        default: false,
+    },
 }, { _id: false });
 const moduleSchema = new mongoose_1.Schema({
     module: {
