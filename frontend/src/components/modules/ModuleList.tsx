@@ -7,6 +7,7 @@ import {
 } from "@/types/studentProgress.type";
 import ShowCourseCompletedProgress from "./ShowCourseCompletedProgress";
 import LessonCount from "./LessonCount";
+import LessonSearch from "./LessonSearch";
 
 type Props = {
   setLessonId: (lessonId: string) => void;
@@ -55,12 +56,13 @@ const ModuleList = ({ lessonId, setLessonId, course }: Props) => {
 
   return (
     <div className="h-[90%] border rounded-lg overflow-y-auto">
-      <div className="flex justify-between bg-green-600 text-white items-center p-2">
+      <div className="flex justify-between bg-green-600 text-white items-center px-2 py-3">
         <ShowCourseCompletedProgress
           percentage={course?.completionPercentage}
         />
         <LessonCount modules={modules} />
       </div>
+      <LessonSearch lessons={lessons} setLessonId={setLessonId} />
       <Collapse
         items={moduleList}
         defaultActiveKey={[course?.lastCompletedLesson?.module]}
