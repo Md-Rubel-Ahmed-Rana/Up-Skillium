@@ -4,15 +4,11 @@ import { ICertificateSchema } from "./interface";
 
 const certificateSchema = new Schema<ICertificateSchema>(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       required: true,
     },
     course: { type: Schema.Types.ObjectId, required: true, ref: "Course" },
-    studentId: {
-      type: String,
-      required: true,
-    },
     certificateUrl: {
       type: String,
       required: true,

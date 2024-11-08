@@ -13,7 +13,7 @@ class Service {
     const schemaData = { ...data.schema, certificateUrl: certificateUrl };
     await Certificate.create(schemaData);
   }
-  async getAllCertificate(): Promise<IGetCertificate[]> {
+  async getAllCertificate(): Promise<any> {
     const data = await Certificate.find({}).populate([
       {
         path: "user",
@@ -26,9 +26,7 @@ class Service {
     ]);
     return data;
   }
-  async getSingleCertificate(
-    id: Types.ObjectId
-  ): Promise<IGetCertificate | null> {
+  async getSingleCertificate(id: Types.ObjectId): Promise<any> {
     return await Certificate.findById(id).populate([
       {
         path: "user",
@@ -39,6 +37,12 @@ class Service {
         model: "Course",
       },
     ]);
+  }
+  async getCertificateByUserId(userId: Types.ObjectId) {
+    return await Certificate.find({ userId: userId }).populate(
+      "course",
+      "title"
+    );
   }
   async updateCertificate(
     id: Types.ObjectId,
