@@ -1,24 +1,66 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Button } from "antd/lib";
-import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
+import { ILesson } from "@/types/lesson.type";
+import { useGetLoggedInUserQuery } from "@/features/auth";
+import { IUser } from "@/types/user.type";
+import { useRouter } from "next/router";
+import { useSubmitAssignmentMutation } from "@/features/assignmentSubmission";
+import toast from "react-hot-toast";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 type Props = {
   setIsSubmit: (value: boolean) => void;
+  lesson: ILesson;
 };
 
-const AssignmentSubmitForm = ({ setIsSubmit }: Props) => {
+const AssignmentSubmitForm = ({ setIsSubmit, lesson }: Props) => {
+  const { data: userData } = useGetLoggedInUserQuery({});
+  const user = userData?.data as IUser;
+  const { query } = useRouter();
+  const courseId = query?.id as string;
   const [content, setContent] = useState("");
+  const [submitAssignment, { isLoading }] = useSubmitAssignmentMutation();
 
   const handleContentChange = (value: string) => {
     setContent(value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Submitted Content:", content);
-    toast.success("Feature coming very soon!");
+    const formData = {
+      submission: {
+        content: content,
+      },
+      lessonId: lesson?.id,
+      userId: user?.id,
+    };
+
+    try {
+      const result: any = await submitAssignment({
+        formData,
+        userId: user?.id,
+        courseId,
+        moduleId: lesson?.module,
+        lessonId: lesson?.id,
+      });
+      if (result?.data?.statusCode === 201) {
+        toast.success(
+          result?.data?.message || "Assignment submitted successfully!"
+        );
+      } else {
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            "Something went wrong to submit assignment"
+        );
+      }
+    } catch (error: any) {
+      toast.error(
+        `Something went wrong to submit assignment. error: ${error?.message}`
+      );
+    }
   };
 
   return (
@@ -57,6 +99,7 @@ const AssignmentSubmitForm = ({ setIsSubmit }: Props) => {
             className="px-10"
             type="default"
             size="large"
+            disabled={isLoading}
           >
             Cancel
           </Button>
@@ -65,8 +108,11 @@ const AssignmentSubmitForm = ({ setIsSubmit }: Props) => {
             className="px-10"
             type="primary"
             size="large"
+            disabled={isLoading}
+            loading={isLoading}
+            iconPosition="end"
           >
-            Submit
+            {isLoading ? "Submitting..." : "Submit"}
           </Button>
         </div>
       </form>
