@@ -50,6 +50,11 @@ class Service {
             ]);
         });
     }
+    getCertificateByUserId(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.Certificate.find({ userId: userId }).populate("course", "title");
+        });
+    }
     updateCertificate(id, updateData) {
         return __awaiter(this, void 0, void 0, function* () {
             const certificate = yield model_1.Certificate.findById(id);

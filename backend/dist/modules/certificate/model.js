@@ -7,15 +7,11 @@ exports.Certificate = void 0;
 const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 const certificateSchema = new mongoose_1.Schema({
-    user: {
+    userId: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
     },
     course: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: "Course" },
-    studentId: {
-        type: String,
-        required: true,
-    },
     certificateUrl: {
         type: String,
         required: true,
