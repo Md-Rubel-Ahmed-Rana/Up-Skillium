@@ -6,6 +6,7 @@ import ShowQuizResult from "./ShowQuizResult";
 
 type Props = {
   lesson: ILesson;
+  isQuizSubmitted: boolean;
 };
 
 type ISelectedAnswers = {
@@ -13,7 +14,7 @@ type ISelectedAnswers = {
   answer: string;
 };
 
-const ShowQuizQuestions = ({ lesson }: Props) => {
+const ShowQuizQuestions = ({ lesson, isQuizSubmitted }: Props) => {
   const questions = lesson?.quizQuestions;
   const [selectedAnswers, setSelectedAnswers] = useState<ISelectedAnswers[]>(
     []
@@ -55,7 +56,7 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
 
   return (
     <>
-      {lesson?.isSubmitted ? (
+      {isQuizSubmitted ? (
         <ShowQuizResult lessonId={lesson?.id} />
       ) : (
         <div className="bg-white shadow-md rounded-lg p-6">

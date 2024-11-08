@@ -16,6 +16,7 @@ type Props = {
 const LessonContainer = ({ lessonId, setLessonId, lessons }: Props) => {
   const { data } = useGetSingleLessonQuery({ lessonId: lessonId });
   const lesson = data?.data as ILesson;
+  const findCurrentLesson = lessons.find((ls) => ls?.lesson?.id === lessonId);
   return (
     <div className="min-h-screen">
       <h2 className="text-2xl font-semibold mb-3">{lesson?.title}</h2>
@@ -23,7 +24,12 @@ const LessonContainer = ({ lessonId, setLessonId, lessons }: Props) => {
         <LessonVideoPlayer videoUrl={lesson?.videoUrl} />
       )}
       {lesson?.type === "assignment" && <ShowAssignment lesson={lesson} />}
-      {lesson?.type === "quiz" && <ShowQuizQuestions lesson={lesson} />}
+      {lesson?.type === "quiz" && (
+        <ShowQuizQuestions
+          lesson={lesson}
+          isQuizSubmitted={findCurrentLesson?.isQuizSubmitted as boolean}
+        />
+      )}
       {lesson?.type === "instruction" && <ShowInstruction lesson={lesson} />}
       <LessonActions
         lessonId={lessonId}
