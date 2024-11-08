@@ -23,6 +23,23 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getAssignmentSubmissionByLessonId = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const userId = req.params.userId as unknown as Types.ObjectId;
+      const lessonId = req.params.lessonId as unknown as Types.ObjectId;
+      const data =
+        await AssignmentSubmissionService.getAssignmentSubmissionByLessonId(
+          userId,
+          lessonId
+        );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Assignment submission retrieved successfully",
+        data: data,
+      });
+    }
+  );
 }
 
 export const AssignmentSubmissionController = new Controller();
