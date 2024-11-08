@@ -27,6 +27,8 @@ export type ILessonProgress = {
     id: string;
   };
   isLessonCompleted: boolean;
+  isAssignmentSubmitted: boolean;
+  isQuizSubmitted: boolean;
 };
 
 export type ILessonDetails = {
