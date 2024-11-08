@@ -12,8 +12,8 @@ const ShowAssignment = ({ lesson, isAssignmentSubmitted }: Props) => {
   const [isSubmit, setIsSubmit] = useState(false);
   return (
     <>
-      {!isAssignmentSubmitted ? (
-        <ShowAssignmentResult />
+      {isAssignmentSubmitted ? (
+        <ShowAssignmentResult lessonId={lesson?.id} />
       ) : (
         <div className="p-6 bg-gray-50 rounded-lg shadow-md">
           {isSubmit ? (

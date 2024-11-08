@@ -25,7 +25,14 @@ const assignmentSubmissionApi = apiSlice.injectEndpoints({
         body: formData,
       }),
     }),
+    getSubmittedAssignment: builder.query({
+      query: ({ userId, lessonId }: { userId: string; lessonId: string }) => ({
+        method: "GET",
+        url: `/assignment-submission/by-lesson/${userId}/${lessonId}`,
+      }),
+    }),
   }),
 });
 
-export const { useSubmitAssignmentMutation } = assignmentSubmissionApi;
+export const { useSubmitAssignmentMutation, useGetSubmittedAssignmentQuery } =
+  assignmentSubmissionApi;
