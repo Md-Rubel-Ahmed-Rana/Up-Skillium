@@ -8,11 +8,10 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { useState } from "react";
 
 type Props = {
-  dashboardRoute: string;
   isToggleIcon: boolean;
 };
 
-const NavbarDropdown = ({ dashboardRoute, isToggleIcon }: Props) => {
+const NavbarDropdown = ({ isToggleIcon }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
@@ -24,11 +23,11 @@ const NavbarDropdown = ({ dashboardRoute, isToggleIcon }: Props) => {
     },
     {
       key: "2",
-      label: <Link href={dashboardRoute}>Dashboard</Link>,
+      label: <Link href={"/dashboard"}>Dashboard</Link>,
     },
     {
       key: "3",
-      label: <Link href="/my-courses">My Courses</Link>,
+      label: <Link href="/dashboard/my-courses">My Courses</Link>,
     },
     {
       key: "4",

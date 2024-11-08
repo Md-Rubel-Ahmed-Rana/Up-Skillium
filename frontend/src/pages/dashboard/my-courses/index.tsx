@@ -1,23 +1,23 @@
-import AdminDashboard from "@/components/dashboard/admin";
+import MyCoursePageRenderer from "@/components/dashboard/my-courses";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
-const AdminDashboardPage = () => {
+const MyCoursesPage = () => {
   return (
     <>
       <PageMetadata
-        title="Dashboard - Admin - Up Skillium"
+        title="My Courses - Up Skillium"
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <AdminDashboard />
+      <MyCoursePageRenderer />
     </>
   );
 };
 
-AdminDashboardPage.getLayout = function (page: ReactElement) {
+MyCoursesPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
       <DashboardLayout>{page}</DashboardLayout>
@@ -25,4 +25,4 @@ AdminDashboardPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default AdminDashboardPage;
+export default MyCoursesPage;
