@@ -31,6 +31,26 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.getAssignmentSubmissionByLessonId = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.userId;
+            const lessonId = req.params.lessonId;
+            const data = yield service_1.AssignmentSubmissionService.getAssignmentSubmissionByLessonId(userId, lessonId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Assignment submission retrieved successfully",
+                data: data,
+            });
+        }));
+        this.updateAssignmentReview = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield service_1.AssignmentSubmissionService.updateAssignmentReview(req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Assignment reviewed retrieved successfully",
+                data: null,
+            });
+        }));
     }
 }
 exports.AssignmentSubmissionController = new Controller();
