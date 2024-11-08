@@ -40,6 +40,17 @@ class Controller extends RootController {
       });
     }
   );
+  updateAssignmentReview = this.catchAsync(
+    async (req: Request, res: Response) => {
+      await AssignmentSubmissionService.updateAssignmentReview(req.body);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Assignment reviewed retrieved successfully",
+        data: null,
+      });
+    }
+  );
 }
 
 export const AssignmentSubmissionController = new Controller();

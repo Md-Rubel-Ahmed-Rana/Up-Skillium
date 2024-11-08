@@ -29,6 +29,15 @@ class Service {
       lessonId: lessonId,
     });
   }
+  async updateAssignmentReview(data: IAssignmentSubmission): Promise<void> {
+    await AssignmentSubmission.findOneAndUpdate(
+      {
+        userId: data.userId,
+        lessonId: data.lessonId,
+      },
+      { $set: { ...data } }
+    );
+  }
 }
 
 export const AssignmentSubmissionService = new Service();

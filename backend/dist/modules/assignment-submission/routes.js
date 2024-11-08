@@ -5,4 +5,6 @@ const express_1 = require("express");
 const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/submit/:userId/:courseId/:moduleId/:lessonId", controller_1.AssignmentSubmissionController.submit);
+router.get("/by-lesson/:userId/:lessonId", controller_1.AssignmentSubmissionController.getAssignmentSubmissionByLessonId);
+router.patch("/review", controller_1.AssignmentSubmissionController.updateAssignmentReview);
 exports.AssignmentSubmissionRoutes = router;

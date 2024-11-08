@@ -20,5 +20,21 @@ class Service {
             return result;
         });
     }
+    getAssignmentSubmissionByLessonId(userId, lessonId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.AssignmentSubmission.findOne({
+                userId: userId,
+                lessonId: lessonId,
+            });
+        });
+    }
+    updateAssignmentReview(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.AssignmentSubmission.findOneAndUpdate({
+                userId: data.userId,
+                lessonId: data.lessonId,
+            }, { $set: Object.assign({}, data) });
+        });
+    }
 }
 exports.AssignmentSubmissionService = new Service();

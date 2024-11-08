@@ -13,4 +13,6 @@ router.get(
   AssignmentSubmissionController.getAssignmentSubmissionByLessonId
 );
 
+router.patch("/review", AssignmentSubmissionController.updateAssignmentReview);
+
 export const AssignmentSubmissionRoutes = router;
