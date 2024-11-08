@@ -23,7 +23,14 @@ const LessonContainer = ({ lessonId, setLessonId, lessons }: Props) => {
       {lesson?.type === "video" && (
         <LessonVideoPlayer videoUrl={lesson?.videoUrl} />
       )}
-      {lesson?.type === "assignment" && <ShowAssignment lesson={lesson} />}
+      {lesson?.type === "assignment" && (
+        <ShowAssignment
+          lesson={lesson}
+          isAssignmentSubmitted={
+            findCurrentLesson?.isAssignmentSubmitted as boolean
+          }
+        />
+      )}
       {lesson?.type === "quiz" && (
         <ShowQuizQuestions
           lesson={lesson}
