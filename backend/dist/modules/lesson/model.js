@@ -36,10 +36,6 @@ exports.lessonSchema = new mongoose_1.Schema({
     content: {
         type: String,
     },
-    isSubmitted: {
-        type: Boolean,
-        default: false,
-    },
     videoUrl: {
         type: String,
     },

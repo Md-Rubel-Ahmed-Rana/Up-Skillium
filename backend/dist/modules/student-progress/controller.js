@@ -61,6 +61,32 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.assignmentLessonMarkAsSubmitted = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.userId;
+            const courseId = req.params.courseId;
+            const moduleId = req.params.moduleId;
+            const lessonId = req.params.lessonId;
+            yield service_1.StudentProgressService.assignmentLessonMarkAsSubmitted(userId, courseId, moduleId, lessonId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Assignment lesson marked as submitted!",
+                data: null,
+            });
+        }));
+        this.quizLessonMarkAsSubmitted = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.userId;
+            const courseId = req.params.courseId;
+            const moduleId = req.params.moduleId;
+            const lessonId = req.params.lessonId;
+            yield service_1.StudentProgressService.quizLessonMarkAsSubmitted(userId, courseId, moduleId, lessonId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Quiz lesson marked as submitted!",
+                data: null,
+            });
+        }));
     }
 }
 exports.StudentProgressController = new Controller();

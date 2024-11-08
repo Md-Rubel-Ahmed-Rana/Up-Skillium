@@ -18,6 +18,14 @@ const lessonSchema = new Schema<ILessonForProgress>(
       type: Boolean,
       default: false,
     },
+    isAssignmentSubmitted: {
+      type: Boolean,
+      default: false,
+    },
+    isQuizSubmitted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { _id: false }
 );

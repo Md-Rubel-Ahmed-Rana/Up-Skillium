@@ -4,7 +4,7 @@ import schemaOption from "../../utils/schemaOption";
 
 const submissionSchema = new Schema({
   content: { type: String, required: true },
-  file: { type: String, required: true },
+  file: { type: String },
 });
 
 const assignmentSubmissionSchema = new Schema<IAssignmentSubmission>(
@@ -12,8 +12,8 @@ const assignmentSubmissionSchema = new Schema<IAssignmentSubmission>(
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     lessonId: { type: Schema.Types.ObjectId, ref: "Lesson", required: true },
     status: { type: String, enum: ["pending", "checked"], default: "pending" },
-    fullMark: { type: Number, required: true },
-    yourMark: { type: Number, required: true },
+    fullMark: { type: Number },
+    yourMark: { type: Number },
     submission: { type: submissionSchema, required: true },
     submittedAt: { type: Date, default: Date.now },
     checkedAt: { type: Date },

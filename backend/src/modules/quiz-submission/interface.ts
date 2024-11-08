@@ -9,6 +9,11 @@ export type IQuizSubmission = {
   modifiedQuizAnswers: IModifiedAnswer[];
 };
 
+export type IQuizSubmitData = {
+  id: string;
+  answer: string;
+};
+
 export type IModifiedAnswer = {
   question: string;
   givenAnswer: string;

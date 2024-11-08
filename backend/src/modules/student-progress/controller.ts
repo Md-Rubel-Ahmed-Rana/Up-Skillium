@@ -59,6 +59,46 @@ class Controller extends RootController {
       data: null,
     });
   });
+  assignmentLessonMarkAsSubmitted = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const userId = req.params.userId as unknown as Types.ObjectId;
+      const courseId = req.params.courseId as unknown as Types.ObjectId;
+      const moduleId = req.params.moduleId as unknown as Types.ObjectId;
+      const lessonId = req.params.lessonId as unknown as Types.ObjectId;
+      await StudentProgressService.assignmentLessonMarkAsSubmitted(
+        userId,
+        courseId,
+        moduleId,
+        lessonId
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Assignment lesson marked as submitted!",
+        data: null,
+      });
+    }
+  );
+  quizLessonMarkAsSubmitted = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const userId = req.params.userId as unknown as Types.ObjectId;
+      const courseId = req.params.courseId as unknown as Types.ObjectId;
+      const moduleId = req.params.moduleId as unknown as Types.ObjectId;
+      const lessonId = req.params.lessonId as unknown as Types.ObjectId;
+      await StudentProgressService.quizLessonMarkAsSubmitted(
+        userId,
+        courseId,
+        moduleId,
+        lessonId
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Quiz lesson marked as submitted!",
+        data: null,
+      });
+    }
+  );
 }
 
 export const StudentProgressController = new Controller();

@@ -78,17 +78,6 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
-        this.checkAndCalculateQuizAnswers = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const userId = req.params.userId;
-            const lessonId = req.params.lessonId;
-            const data = yield service_1.QuizService.checkAndCalculateQuizAnswers(userId, lessonId, req.body);
-            this.apiResponse(res, {
-                statusCode: 200,
-                success: true,
-                message: "Quiz calculated successfully",
-                data: data,
-            });
-        }));
     }
 }
 exports.QuizController = new Controller();

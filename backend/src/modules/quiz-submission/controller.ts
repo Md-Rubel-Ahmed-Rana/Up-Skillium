@@ -18,6 +18,25 @@ class Controller extends RootController {
       });
     }
   );
+  submitQuiz = this.catchAsync(async (req: Request, res: Response) => {
+    const userId = req.params.userId as unknown as Types.ObjectId;
+    const courseId = req.params.courseId as unknown as Types.ObjectId;
+    const moduleId = req.params.moduleId as unknown as Types.ObjectId;
+    const lessonId = req.params.lessonId as unknown as Types.ObjectId;
+    const data = await QuizSubmissionService.submitQuiz(
+      userId,
+      courseId,
+      moduleId,
+      lessonId,
+      req.body
+    );
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Quiz submitted successfully",
+      data: data,
+    });
+  });
 }
 
 export const QuizSubmissionController = new Controller();

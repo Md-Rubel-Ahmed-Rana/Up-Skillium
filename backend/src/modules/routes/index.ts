@@ -16,6 +16,7 @@ import { CertificateRoutes } from "../certificate/routes";
 import { EnrollmentRoutes } from "../enrollment/routes";
 import { StudentProgressRoutes } from "../student-progress/routes";
 import { QuizSubmissionRoutes } from "../quiz-submission/routes";
+import { AssignmentSubmissionRoutes } from "../assignment-submission/routes";
 
 const router = Router();
 
@@ -52,5 +53,7 @@ router.use("/enrollment", EnrollmentRoutes);
 router.use("/student-progress", StudentProgressRoutes);
 
 router.use("/quiz-submission", QuizSubmissionRoutes);
+
+router.use("/assignment-submission", AssignmentSubmissionRoutes);
 
 export const RootRoutes = router;

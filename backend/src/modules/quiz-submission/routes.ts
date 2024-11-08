@@ -8,4 +8,9 @@ router.get(
   QuizSubmissionController.getSubmittedQuizResultByLessonId
 );
 
+router.post(
+  "/submit/:userId/:courseId/:moduleId/:lessonId",
+  QuizSubmissionController.submitQuiz
+);
+
 export const QuizSubmissionRoutes = router;

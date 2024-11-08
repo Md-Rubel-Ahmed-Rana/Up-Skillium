@@ -48,8 +48,6 @@ class Service {
     await Quiz.findByIdAndDelete(id);
   }
   async checkAndCalculateQuizAnswers(
-    userId: Types.ObjectId,
-    lessonId: Types.ObjectId,
     givenAnswers: { id: string; answer: string }[]
   ) {
     const totalQuiz = givenAnswers.length;
@@ -91,17 +89,6 @@ class Service {
         });
       }
     }
-
-    // send necessary submission result to save
-    await QuizSubmissionService.submitQuiz({
-      userId,
-      lessonId,
-      correctAnswers,
-      totalQuiz,
-      wrongAnswers,
-      modifiedQuizAnswers,
-    });
-
     return {
       totalQuiz,
       correctAnswers,
