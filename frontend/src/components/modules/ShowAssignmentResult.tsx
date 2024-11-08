@@ -3,6 +3,7 @@ import { useGetLoggedInUserQuery } from "@/features/auth";
 import { IAssignmentSubmission } from "@/types/assignmentSubmission.type";
 import { IUser } from "@/types/user.type";
 import { Card, Typography, Result, Button } from "antd/lib";
+import { useState } from "react";
 import { AiOutlineCheckCircle, AiOutlineClockCircle } from "react-icons/ai";
 
 type Props = {
@@ -13,6 +14,7 @@ const { Title } = Typography;
 
 const ShowAssignmentResult = ({ lessonId }: Props) => {
   const { data: userData } = useGetLoggedInUserQuery({});
+  const [showFeedback, setShowFeedback] = useState(false);
   const user = userData?.data as IUser;
   const { data } = useGetSubmittedAssignmentQuery({
     userId: user?.id,
@@ -51,11 +53,21 @@ const ShowAssignmentResult = ({ lessonId }: Props) => {
           View Submission
         </Button>
         {assignment?.status === "checked" && (
-          <Button type="default" className="bg-gray-100 hover:bg-gray-200">
-            View Feedback
+          <Button
+            onClick={() => setShowFeedback((prev) => !prev)}
+            type="default"
+            className="bg-gray-100 hover:bg-gray-200"
+          >
+            {`${showFeedback ? "Hide" : "View"} Feedback`}
           </Button>
         )}
       </div>
+      {showFeedback && (
+        <div
+          className="mt-5 shadow-md p-2"
+          dangerouslySetInnerHTML={{ __html: assignment?.feedback }}
+        />
+      )}
     </Card>
   );
 };
