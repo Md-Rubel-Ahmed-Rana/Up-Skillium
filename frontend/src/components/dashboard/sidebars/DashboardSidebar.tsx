@@ -8,7 +8,7 @@ const DashboardSidebar = () => {
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
   return (
-    <div className="lg:block hidden">
+    <div>
       {user?.role?.role === "student" && <StudentSidebar />}
       {user?.role?.role === "admin" && <AdminSidebar />}
       {user?.role?.role === "instructor" && <InstructorSidebar />}

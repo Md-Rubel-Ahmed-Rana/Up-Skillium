@@ -1,3 +1,4 @@
+import LogoutButton from "@/components/shared/LogoutButton";
 import { Menu, MenuProps } from "antd/lib";
 import Link from "next/link";
 import React from "react";
@@ -22,37 +23,37 @@ const StudentSidebar = () => {
     {
       key: "2",
       icon: <FaBook />,
-      label: <Link href={"/dashboard/student/my-courses"}>My Courses</Link>,
+      label: <Link href={"/dashboard/my-courses"}>My Courses</Link>,
     },
     {
       key: "3",
       icon: <FaVideo />,
-      label: "Live Classes",
+      label: <Link href={"/dashboard/live-lasses"}>Live Classes</Link>,
     },
     {
       key: "4",
       icon: <FaCertificate />,
-      label: "Certificates",
+      label: <Link href={"/dashboard/certificates"}>Certificates</Link>,
     },
     {
       key: "5",
       icon: <FaChartLine />,
-      label: "Progress",
+      label: <Link href={"/dashboard/progress"}>Progress</Link>,
     },
     {
       key: "6",
       icon: <FaCommentDots />,
-      label: "Discussions",
+      label: <Link href={"/dashboard/discussions"}>Discussions</Link>,
     },
     {
       key: "7",
       icon: <FaCog />,
-      label: "Settings",
+      label: <Link href={"/dashboard/settings"}>Settings</Link>,
     },
     {
       key: "8",
       icon: <FaSignOutAlt />,
-      label: "Logout",
+      label: <LogoutButton />,
     },
   ];
 
