@@ -5,6 +5,7 @@ import { IUser } from "@/types/user.type";
 import { Card, Typography, Result, Button } from "antd/lib";
 import { useState } from "react";
 import { AiOutlineCheckCircle, AiOutlineClockCircle } from "react-icons/ai";
+import ShowAssignmentSubmissionModal from "./ShowAssignmentSubmissionModal";
 
 type Props = {
   lessonId: string;
@@ -15,6 +16,7 @@ const { Title } = Typography;
 const ShowAssignmentResult = ({ lessonId }: Props) => {
   const { data: userData } = useGetLoggedInUserQuery({});
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showSubmission, setShowSubmission] = useState(false);
   const user = userData?.data as IUser;
   const { data } = useGetSubmittedAssignmentQuery({
     userId: user?.id,
@@ -49,7 +51,11 @@ const ShowAssignmentResult = ({ lessonId }: Props) => {
       />
 
       <div className="flex justify-center items-center gap-4 mt-4">
-        <Button type="primary" className="bg-blue-500 hover:bg-blue-600">
+        <Button
+          onClick={() => setShowSubmission(true)}
+          type="primary"
+          className="bg-blue-500 hover:bg-blue-600"
+        >
           View Submission
         </Button>
         {assignment?.status === "checked" && (
@@ -68,6 +74,11 @@ const ShowAssignmentResult = ({ lessonId }: Props) => {
           dangerouslySetInnerHTML={{ __html: assignment?.feedback }}
         />
       )}
+      <ShowAssignmentSubmissionModal
+        open={showSubmission}
+        setOpen={setShowSubmission}
+        submission={assignment.submission}
+      />
     </Card>
   );
 };
