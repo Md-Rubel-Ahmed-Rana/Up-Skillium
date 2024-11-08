@@ -29,12 +29,12 @@ const ShowAssignmentSubmissionModal = ({
       >
         <div className="bg-gray-100 p-6 rounded-md h-full">
           <Paragraph>
-            <div dangerouslySetInnerHTML={{ __html: submission.content }} />
+            <div dangerouslySetInnerHTML={{ __html: submission?.content }} />
           </Paragraph>
-          {submission.file && (
+          {submission?.file && (
             <Text>
               <a
-                href={submission.file}
+                href={submission?.file}
                 target="_blank"
                 rel="noopener noreferrer"
               >

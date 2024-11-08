@@ -77,7 +77,7 @@ const ShowAssignmentResult = ({ lessonId }: Props) => {
       <ShowAssignmentSubmissionModal
         open={showSubmission}
         setOpen={setShowSubmission}
-        submission={assignment.submission}
+        submission={assignment?.submission}
       />
     </Card>
   );
