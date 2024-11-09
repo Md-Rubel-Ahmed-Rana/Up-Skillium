@@ -1,5 +1,5 @@
 import { Divider } from "antd/lib";
-import ProfileCardSkeleton from "../ProfileCard";
+import ProfileCardSkeleton from "./ProfileCard";
 import InfoContainer from "./InfoContainer";
 
 const ProfileSkeleton = () => {
