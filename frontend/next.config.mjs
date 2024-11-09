@@ -16,6 +16,12 @@ const nextConfig = {
       {
         hostname: "lh3.googleusercontent.com",
       },
+      {
+        hostname: "os.alipayobjects.com",
+      },
+      {
+        hostname: "ibb.co.com",
+      },
     ],
   },
 };
