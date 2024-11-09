@@ -1,6 +1,7 @@
 import { ICourse } from "@/types/course.type";
 import CourseCard from "./CourseCard";
 import { BiError } from "react-icons/bi";
+import CourseSkeleton from "@/skeletons/CourseSkeleton";
 
 type Props = {
   courses: ICourse[];
@@ -11,9 +12,7 @@ const CourseContainer = ({ courses, isLoading }: Props) => {
   return (
     <div className="max-w-[1200px] w-full mx-auto p-2">
       {isLoading ? (
-        <div className="flex justify-center items-center w-full text-center">
-          <p className="text-center">Searching courses...</p>
-        </div>
+        <CourseSkeleton />
       ) : (
         <>
           {courses?.length > 0 ? (
