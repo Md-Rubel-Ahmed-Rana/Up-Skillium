@@ -6,31 +6,36 @@ import BasicInformation from "./BasicInformation";
 import UserAddress from "./UserAddress";
 import EmergencyContact from "./EmergencyContact";
 import UserPermissions from "./UserPermissions";
+import ProfileSkeleton from "@/skeletons/profile";
 
 const ProfileInfo = () => {
-  const { data } = useGetLoggedInUserQuery({});
+  const { data, isLoading } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
 
-  if (!user) return <div>Loading...</div>;
-
   return (
-    <div className="flex flex-col items-center lg:p-4">
-      {/* User Profile Card */}
-      <Card className="w-full">
-        <ProfileCard user={user} />
+    <>
+      {isLoading ? (
+        <ProfileSkeleton />
+      ) : (
+        <div className="flex flex-col items-center lg:p-4">
+          {/* User Profile Card */}
+          <Card className="w-full">
+            <ProfileCard user={user} />
 
-        {/* Basic Information */}
-        <BasicInformation user={user} />
+            {/* Basic Information */}
+            <BasicInformation user={user} />
 
-        {/* Address Information */}
-        <UserAddress user={user} />
-        {/* Emergency Contact Information */}
-        <EmergencyContact user={user} />
+            {/* Address Information */}
+            <UserAddress user={user} />
+            {/* Emergency Contact Information */}
+            <EmergencyContact user={user} />
 
-        {/* Permissions */}
-        <UserPermissions user={user} />
-      </Card>
-    </div>
+            {/* Permissions */}
+            <UserPermissions user={user} />
+          </Card>
+        </div>
+      )}
+    </>
   );
 };
 
