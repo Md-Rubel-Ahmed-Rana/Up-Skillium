@@ -46,7 +46,7 @@ const PopularSectionTitle = () => {
   }, []);
 
   return (
-    <div className="text-center py-4">
+    <div className="text-center py-4 mt-16">
       <h2 ref={titleRef} className="text-6xl font-bold text-gray-800">
        Upskillium Popular Section
       </h2>
