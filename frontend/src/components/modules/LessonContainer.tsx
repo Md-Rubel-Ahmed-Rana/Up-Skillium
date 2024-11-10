@@ -7,7 +7,7 @@ import ShowInstruction from "./ShowInstruction";
 import LessonActions from "./LessonActions";
 import { useGetSingleLessonQuery } from "@/features/lesson";
 import { ILessonProgress } from "@/types/studentProgress.type";
-import SingleLessonSkeleton from "@/skeletons/SingleLessonSkeleton";
+import SingleLessonSkeleton from "@/skeletons/singleLessonSkeleton";
 
 type Props = {
   lessonId: string;

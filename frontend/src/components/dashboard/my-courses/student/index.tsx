@@ -3,7 +3,7 @@ import { useMyCoursesQuery } from "@/features/student";
 import { IMyCourse } from "@/types/course.type";
 import { IUser } from "@/types/user.type";
 import MyCourseCard from "./MyCourseCard";
-import MyCourseSkeleton from "@/skeletons/CourseSkeleton";
+import MyCourseSkeleton from "@/skeletons/courseSkeleton";
 
 const MyCourses = () => {
   const { data } = useGetLoggedInUserQuery({});

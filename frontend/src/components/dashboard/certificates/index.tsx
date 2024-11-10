@@ -1,6 +1,6 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useGetStudentCertificatesQuery } from "@/features/certificate";
-import CertificateSkeleton from "@/skeletons/CertificateSkeleton";
+import CertificateSkeleton from "@/skeletons/certificateSkeleton";
 import { IGetCertificate } from "@/types/certificate.type";
 import { IUser } from "@/types/user.type";
 import { Button, Typography } from "antd/lib";

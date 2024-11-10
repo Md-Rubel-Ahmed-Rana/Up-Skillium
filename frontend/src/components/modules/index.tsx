@@ -10,6 +10,7 @@ import {
   ILessonProgress,
   IModuleProgress,
 } from "@/types/studentProgress.type";
+import ModuleListSkeleton from "@/skeletons/moduleListSkeleton";
 
 const ModulesClasses = () => {
   const [lessonId, setLessonId] = useState<string>("");
@@ -17,7 +18,7 @@ const ModulesClasses = () => {
   const user = userData?.data as IUser;
   const { query } = useRouter();
   const courseId = query?.id as string;
-  const { data: courseData } = useGetCourseProgressQuery({
+  const { data: courseData, isLoading } = useGetCourseProgressQuery({
     userId: user?.id,
     courseId: courseId,
   });
@@ -35,11 +36,15 @@ const ModulesClasses = () => {
   return (
     <div className="flex flex-col-reverse lg:flex-row justify-between lg:gap-5 gap-20 mt-5 min-h-screen p-2">
       <div className="w-full lg:w-4/12">
-        <ModuleList
-          setLessonId={setLessonId}
-          lessonId={lessonId}
-          course={course}
-        />
+        {!isLoading ? (
+          <ModuleListSkeleton />
+        ) : (
+          <ModuleList
+            setLessonId={setLessonId}
+            lessonId={lessonId}
+            course={course}
+          />
+        )}
       </div>
       <div className="lg:w-8/12 w-full">
         <LessonContainer
