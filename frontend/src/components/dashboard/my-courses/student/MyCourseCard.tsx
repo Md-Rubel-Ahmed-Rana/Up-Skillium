@@ -14,17 +14,18 @@ type Props = {
 const MyCourseCard = ({ course }: Props) => {
   const isCompleted = course?.completionPercentage === 100;
 
+  const routePath = `/classes/course/${course?.course?.id}/module/${
+    course?.lastCompletedLesson?.module
+  }/lesson/${course?.lastCompletedLesson?.id}/${makeLessonTitleAsParamsUrl(
+    course?.lastCompletedLesson?.title
+  )}`;
+
   return (
     <Card
       style={{ width: 300 }}
       cover={<img alt={course?.course?.title} src={course?.course?.image} />}
       actions={[
-        <Link
-          href={`/classes/${course?.course?.id}/${
-            course?.lastCompletedLesson?.id
-          }/${makeLessonTitleAsParamsUrl(course?.lastCompletedLesson?.title)}`}
-          key={"1"}
-        >
+        <Link href={routePath} key={"1"}>
           <Button type="primary">Continue Classes</Button>
         </Link>,
         <Link

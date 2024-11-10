@@ -26,7 +26,10 @@ const LessonViewContainer = () => {
 
   modules?.forEach((module) => {
     module?.lessons?.forEach((lesson) => {
-      lessons.push(lesson);
+      lessons.push({
+        ...lesson,
+        lesson: { ...lesson?.lesson, module: module?.module?.id },
+      });
     });
   });
   const findCurrentLesson = lessons.find((ls) => ls?.lesson?.id === lessonId);

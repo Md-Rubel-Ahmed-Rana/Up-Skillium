@@ -5,14 +5,14 @@ import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 
-const ModuleLessonViewPage = () => {
+const CourseModuleLessonPage = () => {
   const { query } = useRouter();
   const lessonTitle = query?.lessonTitle as string;
 
   return (
     <>
       <PageMetadata
-        title={`${capitalizeLessonTitle(lessonTitle) || "Lesson Title"}`}
+        title={`${capitalizeLessonTitle(lessonTitle) || "Lesson"}`}
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
@@ -21,8 +21,8 @@ const ModuleLessonViewPage = () => {
   );
 };
 
-export default ModuleLessonViewPage;
+export default CourseModuleLessonPage;
 
-ModuleLessonViewPage.getLayout = function (page: ReactElement) {
+CourseModuleLessonPage.getLayout = function (page: ReactElement) {
   return <RootLayout>{page}</RootLayout>;
 };
