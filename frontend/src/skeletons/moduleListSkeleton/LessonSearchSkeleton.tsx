@@ -2,7 +2,7 @@ import { Skeleton } from "antd/lib";
 
 const LessonSearchSkeleton = () => {
   return (
-    <div className="flex justify-center items-center p-2">
+    <div className="flex justify-center border rounded-md items-center p-2">
       <Skeleton.Input
         active
         size="large"
