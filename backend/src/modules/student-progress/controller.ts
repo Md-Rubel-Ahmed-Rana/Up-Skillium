@@ -41,6 +41,18 @@ class Controller extends RootController {
       });
     }
   );
+  getAllCourseProgress = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const userId = req.params.userId as unknown as Types.ObjectId;
+      const data = await StudentProgressService.getAllCourseProgress(userId);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Courses progress retrieved successfully",
+        data: data,
+      });
+    }
+  );
   completeLesson = this.catchAsync(async (req: Request, res: Response) => {
     const userId = req.params.userId as unknown as Types.ObjectId;
     const courseId = req.params.courseId as unknown as Types.ObjectId;

@@ -7,6 +7,8 @@ router.post("/create", StudentProgressController.createStudentProgress);
 
 router.get("/student/:userId", StudentProgressController.getStudentProgress);
 
+router.get("/courses/:userId", StudentProgressController.getAllCourseProgress);
+
 router.get(
   "/course/:userId/:courseId",
   StudentProgressController.getSingleCourseProgress

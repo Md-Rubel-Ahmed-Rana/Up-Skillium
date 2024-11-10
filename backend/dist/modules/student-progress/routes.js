@@ -6,6 +6,7 @@ const express_1 = require("express");
 const router = (0, express_1.Router)();
 router.post("/create", controller_1.StudentProgressController.createStudentProgress);
 router.get("/student/:userId", controller_1.StudentProgressController.getStudentProgress);
+router.get("/courses/:userId", controller_1.StudentProgressController.getAllCourseProgress);
 router.get("/course/:userId/:courseId", controller_1.StudentProgressController.getSingleCourseProgress);
 router.patch("/users/:userId/courses/:courseId/modules/:moduleId/lessons/:lessonId/complete", controller_1.StudentProgressController.completeLesson);
 exports.StudentProgressRoutes = router;
