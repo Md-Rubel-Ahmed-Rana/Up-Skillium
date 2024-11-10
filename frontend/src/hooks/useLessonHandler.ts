@@ -1,31 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// useLessonHandler.ts
 import { ILessonDetails, ILessonProgress } from "@/types/studentProgress.type";
 import { useLessonMarkAsCompleteMutation } from "@/features/studentProgress";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { IUser } from "@/types/user.type";
+import { useRouter } from "next/router";
+import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
 
 type LessonHandlerProps = {
   lessons: ILessonProgress[];
-  lessonId: string;
   courseId: string;
   moduleId: string;
   user: IUser;
   lastCompletedLesson: ILessonDetails;
-  setLessonId: (lessonId: string) => void;
 };
 
 const useLessonHandler = ({
   lessons,
-  lessonId,
-  courseId,
   moduleId,
   user,
-  setLessonId,
   lastCompletedLesson,
 }: LessonHandlerProps) => {
   const [lessonMarkAsComplete] = useLessonMarkAsCompleteMutation();
+  const { query, push } = useRouter();
+  const lessonId = query?.lessonId as string;
+  const courseId = query?.courseId as string;
 
   const handleChangeLesson = async (lesson: ILessonProgress) => {
     const currentLessonIndex = lessons.findIndex(
@@ -45,12 +44,29 @@ const useLessonHandler = ({
       targetLessonIndex <= currentLessonIndex ||
       targetLesson?.isLessonCompleted
     ) {
-      setLessonId(lesson?.lesson?.id);
+      push(
+        `/classes/${courseId}?lessonId=${
+          lesson?.lesson?.id
+        }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`
+      );
+      push(
+        `/classes/${courseId}?lessonId=${
+          lesson?.lesson?.id
+        }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`
+      );
     } else if (targetLessonIndex === nextLessonIndex) {
-      setLessonId(lesson?.lesson?.id);
+      push(
+        `/classes/${courseId}?lessonId=${
+          lesson?.lesson?.id
+        }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`
+      );
       await handleMarkNextLessonAsComplete(lesson);
     } else if (lastCompletedLessonIndex + 1 === targetLessonIndex) {
-      setLessonId(lesson?.lesson?.id);
+      push(
+        `/classes/${courseId}?lessonId=${
+          lesson?.lesson?.id
+        }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`
+      );
       await handleMarkNextLessonAsComplete(lesson);
     } else {
       Swal.fire({

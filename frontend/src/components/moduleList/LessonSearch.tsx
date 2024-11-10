@@ -1,14 +1,17 @@
 import { ILessonProgress } from "@/types/studentProgress.type";
+import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
 import { Button, Input, Dropdown, MenuProps } from "antd/lib";
+import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 type Props = {
   lessons: ILessonProgress[];
-  setLessonId: (lessonId: string) => void;
 };
 
-const LessonSearch = ({ lessons, setLessonId }: Props) => {
+const LessonSearch = ({ lessons }: Props) => {
+  const { query, push } = useRouter();
+  const courseId = query?.courseId as string;
   const allLessons: { id: string; title: string }[] = lessons.map((ls) => ({
     id: ls?.lesson?.id,
     title: ls?.lesson?.title,
@@ -37,8 +40,12 @@ const LessonSearch = ({ lessons, setLessonId }: Props) => {
   const handleFocus = () => setDropdownVisible(true);
   const handleBlur = () => setDropdownVisible(false);
 
-  const handleSelectLesson = (lessonId: string) => {
-    setLessonId(lessonId);
+  const handleSelectLesson = (lesson: { id: string; title: string }) => {
+    push(
+      `/classes/${courseId}?lessonId=${
+        lesson?.id
+      }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.title)}`
+    );
     setDropdownVisible(false);
   };
 
@@ -48,7 +55,7 @@ const LessonSearch = ({ lessons, setLessonId }: Props) => {
           key: lesson?.id,
           label: (
             <Button
-              onMouseDown={() => handleSelectLesson(lesson?.id)}
+              onMouseDown={() => handleSelectLesson(lesson)}
               className="w-full flex justify-start items-start"
               type="default"
               size="large"

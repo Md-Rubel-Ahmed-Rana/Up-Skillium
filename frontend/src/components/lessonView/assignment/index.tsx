@@ -1,7 +1,7 @@
 import { ILesson } from "@/types/lesson.type";
 import { useState } from "react";
-import AssignmentSubmitForm from "./AssignmentSubmitForm";
 import ShowAssignmentResult from "./ShowAssignmentResult";
+import AssignmentSubmitForm from "./AssignmentSubmitForm";
 
 type Props = {
   lesson: ILesson;

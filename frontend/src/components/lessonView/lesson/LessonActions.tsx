@@ -1,26 +1,39 @@
 import { ILessonProgress } from "@/types/studentProgress.type";
+import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
 import { Button } from "antd/lib";
+import { useRouter } from "next/router";
 
 type Props = {
   lessons: ILessonProgress[];
-  setLessonId: (lessonId: string) => void;
-  lessonId: string;
 };
 
-const LessonActions = ({ lessons, lessonId, setLessonId }: Props) => {
+const LessonActions = ({ lessons }: Props) => {
+  const { query, push } = useRouter();
+  const lessonId = query?.lessonId as string;
+  const courseId = query?.courseId as string;
   const handlePreviousLesson = () => {
     const previousLessonIndex = lessons.findIndex(
       (ls) => ls?.lesson?.id === lessonId
     );
     const previousLesson = lessons[previousLessonIndex - 1];
-    setLessonId(previousLesson?.lesson?.id);
+    push(
+      `/classes/${courseId}?lessonId=${
+        previousLesson?.lesson?.id
+      }&lessonTitle=${makeLessonTitleAsParamsUrl(
+        previousLesson?.lesson?.title
+      )}`
+    );
   };
   const handleNextLesson = () => {
     const currentLessonIndex = lessons.findIndex(
       (ls) => ls?.lesson?.id === lessonId
     );
     const nextLesson = lessons[currentLessonIndex + 1];
-    setLessonId(nextLesson?.lesson?.id);
+    push(
+      `/classes/${courseId}?lessonId=${
+        nextLesson?.lesson?.id
+      }&lessonTitle=${makeLessonTitleAsParamsUrl(nextLesson?.lesson?.title)}`
+    );
   };
 
   return (
