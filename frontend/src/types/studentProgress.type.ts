@@ -24,6 +24,7 @@ export type IModuleProgress = {
 export type ILessonProgress = {
   lesson: {
     title: string;
+    module: string;
     type: string;
     id: string;
   };

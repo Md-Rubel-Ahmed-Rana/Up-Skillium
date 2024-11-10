@@ -40,33 +40,21 @@ const useLessonHandler = ({
     const lastCompletedLessonIndex = lessons.findIndex(
       (ls) => ls?.lesson?.id === lastCompletedLesson?.id
     );
+
+    const routePath = `/classes/course/${courseId}/module/${moduleId}/lesson/${
+      lesson?.lesson?.id
+    }/${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`;
+
     if (
       targetLessonIndex <= currentLessonIndex ||
       targetLesson?.isLessonCompleted
     ) {
-      push(
-        `/classes/${courseId}?lessonId=${
-          lesson?.lesson?.id
-        }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`
-      );
-      push(
-        `/classes/${courseId}?lessonId=${
-          lesson?.lesson?.id
-        }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`
-      );
+      push(routePath);
     } else if (targetLessonIndex === nextLessonIndex) {
-      push(
-        `/classes/${courseId}?lessonId=${
-          lesson?.lesson?.id
-        }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`
-      );
+      push(routePath);
       await handleMarkNextLessonAsComplete(lesson);
     } else if (lastCompletedLessonIndex + 1 === targetLessonIndex) {
-      push(
-        `/classes/${courseId}?lessonId=${
-          lesson?.lesson?.id
-        }&lessonTitle=${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`
-      );
+      push(routePath);
       await handleMarkNextLessonAsComplete(lesson);
     } else {
       Swal.fire({
