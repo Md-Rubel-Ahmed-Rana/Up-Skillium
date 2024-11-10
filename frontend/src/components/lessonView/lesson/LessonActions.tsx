@@ -1,6 +1,6 @@
 import { ILessonProgress } from "@/types/studentProgress.type";
 import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
-import { Button } from "antd";
+import { Button } from "antd/lib";
 import { useRouter } from "next/router";
 
 type Props = {
