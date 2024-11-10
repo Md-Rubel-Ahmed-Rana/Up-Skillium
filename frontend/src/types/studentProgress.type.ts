@@ -2,6 +2,7 @@ import { IQuizQuestion } from "./quiz.type";
 
 export type ICourseProgress = {
   course: {
+    image: string;
     title: string;
     id: string;
   };

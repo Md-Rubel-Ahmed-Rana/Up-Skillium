@@ -10,6 +10,13 @@ const studentProgressApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["lesson", "module", "course"] as any,
     }),
+    getStudentMyCourses: builder.query({
+      query: ({ userId }: { userId: string }) => ({
+        method: "GET",
+        url: `/student-progress/courses/${userId}`,
+      }),
+      providesTags: ["lesson", "module", "course"] as any,
+    }),
     lessonMarkAsComplete: builder.mutation({
       query: ({
         userId,
@@ -30,5 +37,8 @@ const studentProgressApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetCourseProgressQuery, useLessonMarkAsCompleteMutation } =
-  studentProgressApi;
+export const {
+  useGetCourseProgressQuery,
+  useLessonMarkAsCompleteMutation,
+  useGetStudentMyCoursesQuery,
+} = studentProgressApi;

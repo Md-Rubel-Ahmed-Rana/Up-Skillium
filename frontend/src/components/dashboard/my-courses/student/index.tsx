@@ -1,19 +1,18 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
-import { useMyCoursesQuery } from "@/features/student";
-import { IMyCourse } from "@/types/course.type";
 import { IUser } from "@/types/user.type";
 import MyCourseCard from "./MyCourseCard";
 import MyCourseSkeleton from "@/skeletons/courseSkeleton";
+import { useGetStudentMyCoursesQuery } from "@/features/studentProgress";
+import { ICourseProgress } from "@/types/studentProgress.type";
 
 const MyCourses = () => {
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
-  const { data: courseData, isLoading } = useMyCoursesQuery({
+  const { data: coursesData, isLoading } = useGetStudentMyCoursesQuery({
     userId: user?.id,
   });
-  const courses =
-    ((courseData?.data?.courses ||
-      courseData?.data?.coursesEnrolled) as IMyCourse[]) || [];
+  const courses = (coursesData?.data as ICourseProgress[]) || [];
+
   return (
     <>
       {isLoading ? (
@@ -21,7 +20,7 @@ const MyCourses = () => {
       ) : (
         <div className="mt-5">
           {courses?.map((course) => (
-            <MyCourseCard key={course?.id} course={course} />
+            <MyCourseCard key={course?.course?.id} course={course} />
           ))}
         </div>
       )}
