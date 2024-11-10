@@ -100,6 +100,33 @@ class Service {
     return progress.courses[0];
   }
 
+  async getAllCourseProgress(userId: Types.ObjectId) {
+    const progress = await StudentProgress.findOne({
+      user: userId,
+    })
+      .populate({
+        path: "courses.course",
+        model: "Course",
+        select: { title: 1, image: 1 },
+      })
+      .populate({
+        path: "courses.lastCompletedLesson",
+        model: "Lesson",
+      })
+      .select({
+        "courses.course": 1,
+        "courses.isCourseCompleted": 1,
+        "courses.completionPercentage": 1,
+        "courses.lastCompletedLesson": 1,
+      });
+
+    if (!progress) {
+      return null;
+    }
+
+    return progress.courses;
+  }
+
   async completeLesson(
     userId: Types.ObjectId,
     courseId: Types.ObjectId,

@@ -96,6 +96,32 @@ class Service {
             return progress.courses[0];
         });
     }
+    getAllCourseProgress(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const progress = yield model_1.StudentProgress.findOne({
+                user: userId,
+            })
+                .populate({
+                path: "courses.course",
+                model: "Course",
+                select: { title: 1, image: 1 },
+            })
+                .populate({
+                path: "courses.lastCompletedLesson",
+                model: "Lesson",
+            })
+                .select({
+                "courses.course": 1,
+                "courses.isCourseCompleted": 1,
+                "courses.completionPercentage": 1,
+                "courses.lastCompletedLesson": 1,
+            });
+            if (!progress) {
+                return null;
+            }
+            return progress.courses;
+        });
+    }
     completeLesson(userId, courseId, moduleId, lessonId) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c;
