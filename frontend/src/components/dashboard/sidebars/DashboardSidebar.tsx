@@ -3,7 +3,7 @@ import { IUser } from "@/types/user.type";
 import StudentSidebar from "./StudentSidebar";
 import AdminSidebar from "./AdminSidebar";
 import InstructorSidebar from "./InstructorSidebar";
-import DashboardSidebarSkeleton from "@/skeletons/DashboardSidebarSkeleton";
+import DashboardSidebarSkeleton from "@/skeletons/dashboardSidebarSkeleton";
 
 const DashboardSidebar = () => {
   const { data, isLoading } = useGetLoggedInUserQuery({});
