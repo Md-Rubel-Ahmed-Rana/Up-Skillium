@@ -16,7 +16,8 @@ const MyCourseCard = ({ course }: Props) => {
       cover={<img alt={course?.title} src={course?.image} />}
       actions={[
         <Link
-          href={`/modules/classes/${course?.id}?courseId=${course?.id}&courseTitle=${course?.title}`}
+          // href={`/modules/classes/${course?.id}?courseId=${course?.id}&courseTitle=${course?.title}`}
+          href={`/classes/${course?.id}`}
           key={"1"}
         >
           <Button variant="filled" type="primary">
