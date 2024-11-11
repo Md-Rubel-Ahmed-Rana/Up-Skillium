@@ -1,4 +1,5 @@
-import { StudentService } from "../student/service";
+import { Types } from "mongoose";
+import { StudentProgressService } from "../student-progress/service";
 import { IEnrollment } from "./interface";
 import { Enrollment } from "./model";
 
@@ -7,7 +8,7 @@ class Service {
     await Enrollment.create(data);
   }
 
-  async getEnrollmentById(id: string): Promise<IEnrollment | null> {
+  async getEnrollmentById(id: Types.ObjectId): Promise<IEnrollment | null> {
     return await Enrollment.findById(id)
       .populate("userId", "name email")
       .populate("courseId", "title description")
@@ -21,11 +22,34 @@ class Service {
     await Enrollment.findByIdAndUpdate(id, data);
   }
 
+  async getSuccessEnrollmentForStudent(
+    userId: Types.ObjectId
+  ): Promise<IEnrollment[]> {
+    const data = await Enrollment.find({ userId: userId, status: "success" });
+    return data;
+  }
+
+  async getOrderEnrollmentHistoryForStudent(
+    userId: Types.ObjectId
+  ): Promise<IEnrollment[]> {
+    const data = await Enrollment.find({ userId: userId });
+    return data;
+  }
+
   async updateStatusAsSuccessByWebhook(sessionId: string): Promise<void> {
-    await Enrollment.updateOne(
-      { paymentSessionId: sessionId },
-      { $set: { status: "success" } }
-    );
+    const enrollment = await Enrollment.findOne({
+      paymentSessionId: sessionId,
+    });
+    if (enrollment) {
+      await Enrollment.updateOne(
+        { paymentSessionId: sessionId },
+        { $set: { status: "success" } }
+      );
+      await StudentProgressService.createOrUpdateStudentProgress({
+        userId: enrollment?.userId,
+        courseId: enrollment?.courseId,
+      });
+    }
   }
 
   async deleteEnrollment(id: string): Promise<void> {
@@ -78,13 +102,12 @@ class Service {
     const filter = {
       $or: [
         { "userId.name": { $regex: searchQuery, $options: "i" } },
-        { "courseId.title": { $regex: searchQuery, $options: "i" } },
+        { courseName: { $regex: searchQuery, $options: "i" } },
       ],
     };
 
     const enrollments = await Enrollment.find(filter)
       .populate("userId", "name email")
-      .populate("courseId", "title description")
       .skip(skip)
       .limit(limit)
       .exec();

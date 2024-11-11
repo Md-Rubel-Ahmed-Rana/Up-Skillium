@@ -9,5 +9,7 @@ router.get("/:id", controller_1.EnrollmentController.getEnrollmentById);
 router.patch("/:id", controller_1.EnrollmentController.updateEnrollment);
 router.delete("/:id", controller_1.EnrollmentController.deleteEnrollment);
 router.get("/", controller_1.EnrollmentController.getEnrollments);
+router.get("/student/:userId", controller_1.EnrollmentController.getSuccessEnrollmentForStudent);
+router.get("/order-history/:userId", controller_1.EnrollmentController.getOrderEnrollmentHistoryForStudent);
 router.get("/search", controller_1.EnrollmentController.searchEnrollments);
 exports.EnrollmentRoutes = router;

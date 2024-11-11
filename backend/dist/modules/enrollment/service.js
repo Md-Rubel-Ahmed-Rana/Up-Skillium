@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnrollmentService = void 0;
+const service_1 = require("../student-progress/service");
 const model_1 = require("./model");
 class Service {
     createEnrollment(data) {
@@ -30,9 +31,30 @@ class Service {
             yield model_1.Enrollment.findByIdAndUpdate(id, data);
         });
     }
+    getSuccessEnrollmentForStudent(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield model_1.Enrollment.find({ userId: userId, status: "success" });
+            return data;
+        });
+    }
+    getOrderEnrollmentHistoryForStudent(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield model_1.Enrollment.find({ userId: userId });
+            return data;
+        });
+    }
     updateStatusAsSuccessByWebhook(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success" } });
+            const enrollment = yield model_1.Enrollment.findOne({
+                paymentSessionId: sessionId,
+            });
+            if (enrollment) {
+                yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success" } });
+                yield service_1.StudentProgressService.createOrUpdateStudentProgress({
+                    userId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.userId,
+                    courseId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.courseId,
+                });
+            }
         });
     }
     deleteEnrollment(id) {
@@ -66,12 +88,11 @@ class Service {
             const filter = {
                 $or: [
                     { "userId.name": { $regex: searchQuery, $options: "i" } },
-                    { "courseId.title": { $regex: searchQuery, $options: "i" } },
+                    { courseName: { $regex: searchQuery, $options: "i" } },
                 ],
             };
             const enrollments = yield model_1.Enrollment.find(filter)
                 .populate("userId", "name email")
-                .populate("courseId", "title description")
                 .skip(skip)
                 .limit(limit)
                 .exec();
