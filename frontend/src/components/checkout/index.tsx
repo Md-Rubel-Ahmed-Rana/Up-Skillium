@@ -1,17 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { useGetSingleCourseQuery } from "@/features/course";
 import { ICourse } from "@/types/course.type";
-import {
-  Button,
-  Radio,
-  RadioChangeEvent,
-  Typography,
-  Divider,
-  Tag,
-} from "antd/lib";
+import { Radio, RadioChangeEvent, Typography, Divider, Tag } from "antd/lib";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FaStripeS, FaPaypal } from "react-icons/fa";
+import CheckoutButton from "./CheckoutButton";
 
 const { Title, Text } = Typography;
 
@@ -25,8 +19,6 @@ const Checkout = () => {
   const handleSelectPaymentMethod = (e: RadioChangeEvent) => {
     setPaymentMethod(e.target.value);
   };
-
-  console.log(paymentMethod);
 
   if (!course) return <div>Loading...</div>;
 
@@ -110,14 +102,12 @@ const Checkout = () => {
               </p>
             )}
           </div>
-          <Button
-            disabled={paymentMethod === "paypal"}
-            type="primary"
-            block
-            size="large"
-          >
-            Checkout
-          </Button>
+          <CheckoutButton
+            paymentMethod={paymentMethod}
+            courseId={course?.id}
+            courseName={course?.title}
+            price={course?.price?.salePrice}
+          />
         </div>
       </div>
     </div>
