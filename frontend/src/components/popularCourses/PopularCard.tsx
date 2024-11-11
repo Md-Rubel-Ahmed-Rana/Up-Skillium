@@ -17,21 +17,20 @@ const PopularCard = ({ course }: Props) => {
   useEffect(() => {
     if (!cardRef.current) return;
 
-    
     gsap.to(cardRef.current, {
-      y: 20, 
-      x: 40,
-      duration: 2, 
+      y: 20,
+      x: 20,
+      duration: 2,
       ease: "power1.inOut",
-      repeat: -1, 
-      yoyo: true, 
+      repeat: -1,
+      yoyo: true,
     });
   }, []);
 
   const handleMouseEnter = () => {
     if (cardRef.current) {
       gsap.to(cardRef.current, {
-        scale: 1.2, 
+        scale: 1.2,
         duration: 0.3,
         ease: "power1.out",
       });
@@ -41,7 +40,7 @@ const PopularCard = ({ course }: Props) => {
   const handleMouseLeave = () => {
     if (cardRef.current) {
       gsap.to(cardRef.current, {
-        scale: 1, 
+        scale: 1,
         duration: 0.3,
         ease: "power1.out",
       });
@@ -69,7 +68,13 @@ const PopularCard = ({ course }: Props) => {
       }
       actions={[
         <Link
-          href={`/courses/details/${course?.id}?courseId=${course?.id}&courseTitle=${course.title}&category=${course?.category}&description=${course?.description}&tags=${course?.tags?.toString()}`}
+          href={`/courses/details/${course?.id}?courseId=${
+            course?.id
+          }&courseTitle=${course.title}&category=${
+            course?.category
+          }&description=${
+            course?.description
+          }&tags=${course?.tags?.toString()}`}
           key={"1"}
         >
           <Button type="dashed" className="w-[90%] bg-yellow-500 text-white">
