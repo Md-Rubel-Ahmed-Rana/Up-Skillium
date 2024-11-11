@@ -12,20 +12,31 @@ const EnrollmentSchema = new mongoose_1.Schema({
         ref: "User",
         required: true,
     },
-    studentObjectId: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: "Student",
-        required: true,
-    },
     courseId: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Course",
         required: true,
     },
-    enrollmentDate: {
-        type: Date,
-        default: Date.now,
+    courseName: {
+        type: String,
         required: true,
+    },
+    price: {
+        type: Number,
+        required: true,
+    },
+    paymentSessionId: {
+        type: String,
+        required: true,
+    },
+    paymentSessionUrl: {
+        type: String,
+        required: true,
+    },
+    status: {
+        type: String,
+        enum: ["success", "failed"],
+        default: "failed",
     },
 }, schemaOption_1.default);
 exports.Enrollment = (0, mongoose_1.model)("Enrollment", EnrollmentSchema);

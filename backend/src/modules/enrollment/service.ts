@@ -3,9 +3,8 @@ import { IEnrollment } from "./interface";
 import { Enrollment } from "./model";
 
 class Service {
-  async createEnrollment(data: IEnrollment): Promise<void> {
+  async createEnrollment(data: IEnrollment | IEnrollment[]): Promise<void> {
     await Enrollment.create(data);
-    await StudentService.addNewCourse(data.studentObjectId, data.courseId);
   }
 
   async getEnrollmentById(id: string): Promise<IEnrollment | null> {
@@ -20,6 +19,13 @@ class Service {
     data: Partial<IEnrollment>
   ): Promise<void> {
     await Enrollment.findByIdAndUpdate(id, data);
+  }
+
+  async updateStatusAsSuccessByWebhook(sessionId: string): Promise<void> {
+    await Enrollment.updateOne(
+      { paymentSessionId: sessionId },
+      { $set: { status: "success" } }
+    );
   }
 
   async deleteEnrollment(id: string): Promise<void> {

@@ -1,11 +1,9 @@
 import { Types } from "mongoose";
 
-export type IEnrollment = {
+export type IStripeCheckout = {
   userId: Types.ObjectId;
   courseId: Types.ObjectId;
   courseName: string;
   price: number;
-  status?: "success" | "failed";
-  paymentSessionId: string;
-  paymentSessionUrl: string;
+  quantity: number;
 };

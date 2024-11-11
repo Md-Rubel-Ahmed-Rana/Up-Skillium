@@ -9,20 +9,31 @@ const EnrollmentSchema = new Schema<IEnrollment & Document>(
       ref: "User",
       required: true,
     },
-    studentObjectId: {
-      type: Schema.Types.ObjectId,
-      ref: "Student",
-      required: true,
-    },
     courseId: {
       type: Schema.Types.ObjectId,
       ref: "Course",
       required: true,
     },
-    enrollmentDate: {
-      type: Date,
-      default: Date.now,
+    courseName: {
+      type: String,
       required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    paymentSessionId: {
+      type: String,
+      required: true,
+    },
+    paymentSessionUrl: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["success", "failed"],
+      default: "failed",
     },
   },
   schemaOption

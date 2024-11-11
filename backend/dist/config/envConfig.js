@@ -55,5 +55,11 @@ const config = {
             level4: process.env.BADGE_4_URL,
         },
     },
+    stripe: {
+        secretKey: process.env.STRIPE_SECRET_KEY,
+        publicKey: process.env.STRIPE_PUBLISH_KEY,
+        successUrl: process.env.SUCCESS_URL,
+        cancelUrl: process.env.CANCEL_URL,
+    },
 };
 exports.default = config;

@@ -10,13 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnrollmentService = void 0;
-const service_1 = require("../student/service");
 const model_1 = require("./model");
 class Service {
     createEnrollment(data) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Enrollment.create(data);
-            yield service_1.StudentService.addNewCourse(data.studentObjectId, data.courseId);
         });
     }
     getEnrollmentById(id) {
@@ -30,6 +28,11 @@ class Service {
     updateEnrollment(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Enrollment.findByIdAndUpdate(id, data);
+        });
+    }
+    updateStatusAsSuccessByWebhook(sessionId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success" } });
         });
     }
     deleteEnrollment(id) {
