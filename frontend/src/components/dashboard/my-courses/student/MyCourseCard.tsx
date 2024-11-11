@@ -3,6 +3,8 @@ import { ICourseProgress } from "@/types/studentProgress.type";
 import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
 import { Button, Card, Progress } from "antd/lib";
 import { FaRegCheckCircle } from "react-icons/fa";
+import { RxCrossCircled } from "react-icons/rx";
+
 import Link from "next/link";
 
 const { Meta } = Card;
@@ -22,8 +24,16 @@ const MyCourseCard = ({ course }: Props) => {
 
   return (
     <Card
-      style={{ width: 300 }}
-      cover={<img alt={course?.course?.title} src={course?.course?.image} />}
+      cover={
+        <img
+          className="max-h-40 h-full"
+          alt={course?.course?.title}
+          src={
+            course?.course?.image ||
+            "https://firebasestorage.googleapis.com/v0/b/up-skillium.appspot.com/o/up-skillium%2Fassets%2Ffallback-image.png?alt=media&token=c3cb9e52-a43e-4666-a534-216a99c60a88"
+          }
+        />
+      }
       actions={[
         <Link href={routePath} key={"1"}>
           <Button type="primary">Continue Classes</Button>
@@ -35,19 +45,25 @@ const MyCourseCard = ({ course }: Props) => {
           <Button>Course Outline</Button>
         </Link>,
       ]}
+      className="shadow-md flex flex-col justify-between"
     >
       <Meta title={course?.course?.title} />
 
       <div className="mt-3">
         <Progress
           percent={course?.completionPercentage}
-          size={[250, 15]}
+          size={["100%", 15]}
           status={isCompleted ? "success" : "active"}
         />
-        {isCompleted && (
+        {isCompleted ? (
           <div className="flex items-center justify-center text-green-600 mt-2">
             <FaRegCheckCircle className="mr-2 text-xl" />
-            <span className="text-xl font-semibold">Course Completed</span>
+            <Meta description="Course Completed" />
+          </div>
+        ) : (
+          <div className="flex items-center justify-center text-yellow-500 mt-2">
+            <RxCrossCircled className="mr-2 text-xl" />
+            <Meta description="Course Not Completed" />
           </div>
         )}
       </div>
