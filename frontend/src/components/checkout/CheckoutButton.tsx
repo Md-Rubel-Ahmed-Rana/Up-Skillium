@@ -34,7 +34,7 @@ const CheckoutButton = ({
         {
           courseId,
           courseName,
-          price,
+          price: Math.ceil(price),
           quantity: 1,
           userId: user?.id,
         },
