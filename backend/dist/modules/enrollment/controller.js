@@ -38,7 +38,7 @@ class Controller extends rootController_1.default {
             });
         }));
         this.getSuccessEnrollmentForStudent = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const userId = req.params.id;
+            const userId = req.params.userId;
             const enrollment = yield service_1.EnrollmentService.getSuccessEnrollmentForStudent(userId);
             this.apiResponse(res, {
                 statusCode: 200,
@@ -48,7 +48,7 @@ class Controller extends rootController_1.default {
             });
         }));
         this.getOrderEnrollmentHistoryForStudent = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const userId = req.params.id;
+            const userId = req.params.userId;
             const enrollment = yield service_1.EnrollmentService.getOrderEnrollmentHistoryForStudent(userId);
             this.apiResponse(res, {
                 statusCode: 200,

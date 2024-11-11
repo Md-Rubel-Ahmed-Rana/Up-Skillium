@@ -26,7 +26,7 @@ class Controller extends RootController {
   });
   getSuccessEnrollmentForStudent = this.catchAsync(
     async (req: Request, res: Response) => {
-      const userId = req.params.id as unknown as Types.ObjectId;
+      const userId = req.params.userId as unknown as Types.ObjectId;
       const enrollment = await EnrollmentService.getSuccessEnrollmentForStudent(
         userId
       );
@@ -40,7 +40,7 @@ class Controller extends RootController {
   );
   getOrderEnrollmentHistoryForStudent = this.catchAsync(
     async (req: Request, res: Response) => {
-      const userId = req.params.id as unknown as Types.ObjectId;
+      const userId = req.params.userId as unknown as Types.ObjectId;
       const enrollment =
         await EnrollmentService.getOrderEnrollmentHistoryForStudent(userId);
       this.apiResponse(res, {

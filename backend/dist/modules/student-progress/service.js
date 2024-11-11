@@ -15,7 +15,7 @@ const model_1 = require("./model");
 class Service {
     createOrUpdateStudentProgress(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
+            var _a, _b, _c;
             const existingProgress = yield model_1.StudentProgress.findOne({
                 user: data.userId,
             });
@@ -28,13 +28,15 @@ class Service {
                     isLessonCompleted: false,
                 })),
             }));
+            const firstModule = reOrganizedModules[0];
+            const firstLessonId = ((_a = firstModule === null || firstModule === void 0 ? void 0 : firstModule.lessons[0]) === null || _a === void 0 ? void 0 : _a.lesson) || null;
             if (existingProgress) {
-                const courseExists = (_a = existingProgress === null || existingProgress === void 0 ? void 0 : existingProgress.courses) === null || _a === void 0 ? void 0 : _a.some((course) => { var _a, _b; return ((_a = course === null || course === void 0 ? void 0 : course.course) === null || _a === void 0 ? void 0 : _a.toString()) === ((_b = data === null || data === void 0 ? void 0 : data.courseId) === null || _b === void 0 ? void 0 : _b.toString()); });
+                const courseExists = (_b = existingProgress === null || existingProgress === void 0 ? void 0 : existingProgress.courses) === null || _b === void 0 ? void 0 : _b.some((course) => { var _a, _b; return ((_a = course === null || course === void 0 ? void 0 : course.course) === null || _a === void 0 ? void 0 : _a.toString()) === ((_b = data === null || data === void 0 ? void 0 : data.courseId) === null || _b === void 0 ? void 0 : _b.toString()); });
                 if (!courseExists) {
-                    (_b = existingProgress === null || existingProgress === void 0 ? void 0 : existingProgress.courses) === null || _b === void 0 ? void 0 : _b.push({
+                    (_c = existingProgress === null || existingProgress === void 0 ? void 0 : existingProgress.courses) === null || _c === void 0 ? void 0 : _c.push({
                         course: data.courseId,
                         isCourseCompleted: false,
-                        lastCompletedLesson: null,
+                        lastCompletedLesson: firstLessonId,
                         completionPercentage: 0,
                         modules: reOrganizedModules,
                     });
@@ -48,7 +50,7 @@ class Service {
                         {
                             course: data.courseId,
                             isCourseCompleted: false,
-                            lastCompletedLesson: null,
+                            lastCompletedLesson: firstLessonId,
                             completionPercentage: 0,
                             modules: reOrganizedModules,
                         },
@@ -201,7 +203,6 @@ class Service {
                 "courses.modules.module": moduleId,
                 "courses.modules.lessons.lesson": lessonId,
             });
-            console.log({ lesson });
             yield model_1.StudentProgress.updateOne({
                 user: userId,
                 "courses.course": courseId,
