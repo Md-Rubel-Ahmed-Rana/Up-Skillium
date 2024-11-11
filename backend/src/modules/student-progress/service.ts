@@ -24,6 +24,9 @@ class Service {
       })),
     }));
 
+    const firstModule = reOrganizedModules[0];
+    const firstLessonId = firstModule?.lessons[0]?.lesson || null;
+
     if (existingProgress) {
       const courseExists = existingProgress?.courses?.some(
         (course) => course?.course?.toString() === data?.courseId?.toString()
@@ -33,7 +36,7 @@ class Service {
         existingProgress?.courses?.push({
           course: data.courseId,
           isCourseCompleted: false,
-          lastCompletedLesson: null,
+          lastCompletedLesson: firstLessonId,
           completionPercentage: 0,
           modules: reOrganizedModules,
         });
@@ -46,7 +49,7 @@ class Service {
           {
             course: data.courseId,
             isCourseCompleted: false,
-            lastCompletedLesson: null,
+            lastCompletedLesson: firstLessonId,
             completionPercentage: 0,
             modules: reOrganizedModules,
           },
@@ -232,7 +235,6 @@ class Service {
       "courses.modules.module": moduleId,
       "courses.modules.lessons.lesson": lessonId,
     });
-    console.log({ lesson });
     await StudentProgress.updateOne(
       {
         user: userId,
