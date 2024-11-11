@@ -4,15 +4,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import {
+  FaTachometerAlt,
   FaUserCircle,
   FaBook,
   FaVideo,
-  FaCertificate,
-  FaCog,
   FaChartLine,
   FaCommentDots,
+  FaCertificate,
+  FaShoppingCart,
+  FaClipboardList,
+  FaCog,
   FaSignOutAlt,
-  FaTachometerAlt,
 } from "react-icons/fa";
 
 const StudentSidebar = () => {
@@ -23,10 +25,12 @@ const StudentSidebar = () => {
     "/dashboard/profile": "1",
     "/dashboard/my-courses": "2",
     "/dashboard/live-classes": "3",
-    "/dashboard/certificates": "4",
-    "/dashboard/progress": "5",
-    "/dashboard/discussions": "6",
-    "/dashboard/settings": "7",
+    "/dashboard/enrollments": "4",
+    "/dashboard/order-history": "5",
+    "/dashboard/progress": "6",
+    "/dashboard/discussions": "7",
+    "/dashboard/certificates": "8",
+    "/dashboard/settings": "9",
   };
 
   const selectedKey = pathToKeyMap[router.pathname] || "1";
@@ -45,11 +49,7 @@ const StudentSidebar = () => {
     {
       key: "2",
       icon: <FaBook />,
-      label: (
-        <Link className="" href={"/dashboard/my-courses"}>
-          My Courses
-        </Link>
-      ),
+      label: <Link href={"/dashboard/my-courses"}>My Courses</Link>,
     },
     {
       key: "3",
@@ -59,25 +59,35 @@ const StudentSidebar = () => {
     {
       key: "4",
       icon: <FaCertificate />,
-      label: <Link href={"/dashboard/certificates"}>Certificates</Link>,
+      label: <Link href={"/dashboard/enrollments"}>Enrollments</Link>,
     },
     {
       key: "5",
+      icon: <FaShoppingCart />,
+      label: <Link href={"/dashboard/order-history"}>Order History</Link>,
+    },
+    {
+      key: "6",
       icon: <FaChartLine />,
       label: <Link href={"/dashboard/progress"}>Progress</Link>,
     },
     {
-      key: "6",
+      key: "7",
       icon: <FaCommentDots />,
       label: <Link href={"/dashboard/discussions"}>Discussions</Link>,
     },
     {
-      key: "7",
+      key: "8",
+      icon: <FaClipboardList />,
+      label: <Link href={"/dashboard/certificates"}>Certificates</Link>,
+    },
+    {
+      key: "9",
       icon: <FaCog />,
       label: <Link href={"/dashboard/settings"}>Settings</Link>,
     },
     {
-      key: "8",
+      key: "10",
       icon: <FaSignOutAlt />,
       label: <LogoutButton />,
     },
