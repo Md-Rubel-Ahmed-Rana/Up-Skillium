@@ -35,7 +35,18 @@ const OrderHistories = () => {
     price: <h2 className="font-semibold lg:text-lg">{enroll?.price}</h2>,
     orderedOn: new Date(enroll?.createdAt)?.toLocaleDateString(),
     status: enroll?.status,
-    action: <Button type="primary">Download Invoice</Button>,
+    action:
+      enroll?.status === "success" ? (
+        <Button type="primary">Download Invoice</Button>
+      ) : (
+        <Button
+          onClick={() => window.location.replace(enroll?.paymentSessionUrl)}
+          className="bg-yellow-600 text-white"
+          type="default"
+        >
+          Complete Payment
+        </Button>
+      ),
   }));
 
   const columns: TableProps<TableDataType>["columns"] = [

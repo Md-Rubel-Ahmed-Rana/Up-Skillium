@@ -13,7 +13,6 @@ import {
   FaCertificate,
   FaShoppingCart,
   FaClipboardList,
-  FaCog,
   FaSignOutAlt,
 } from "react-icons/fa";
 
@@ -30,7 +29,6 @@ const StudentSidebar = () => {
     "/dashboard/progress": "6",
     "/dashboard/discussions": "7",
     "/dashboard/certificates": "8",
-    "/dashboard/settings": "9",
   };
 
   const selectedKey = pathToKeyMap[router.pathname] || "1";
@@ -83,11 +81,6 @@ const StudentSidebar = () => {
     },
     {
       key: "9",
-      icon: <FaCog />,
-      label: <Link href={"/dashboard/settings"}>Settings</Link>,
-    },
-    {
-      key: "10",
       icon: <FaSignOutAlt />,
       label: <LogoutButton />,
     },
