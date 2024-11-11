@@ -44,9 +44,18 @@ const CourseCard = ({ course }: Props) => {
             See Details
           </Button>
         </Link>,
-        <Button type="primary" className="w-[90%]" key={"2"}>
-          Buy Now
-        </Button>,
+        <Link
+          href={`/checkout/${course?.id}?courseId=${course?.id}&courseName=${
+            course.title
+          }&category=${course?.category}&description=${
+            course?.description
+          }&tags=${course?.tags?.toString()}`}
+          key={"1"}
+        >
+          <Button type="primary" className="w-[90%]" key={"2"}>
+            Buy Now
+          </Button>
+        </Link>,
       ]}
     >
       <Meta
