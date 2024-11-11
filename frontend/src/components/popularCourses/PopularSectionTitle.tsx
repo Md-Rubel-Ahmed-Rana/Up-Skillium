@@ -20,26 +20,28 @@ const PopularSectionTitle = () => {
     const titleChildren = titleRef.current?.children;
 
     if (titleChildren) {
-     
       gsap.to(titleChildren, {
         color: () => gsap.utils.random(colors),
         duration: 1,
-        repeat: -1,  
-        yoyo: true, 
-        stagger: 0.1,  
+        repeat: -1,
+        yoyo: true,
+        stagger: 0.1,
         ease: "none",
       });
     }
   }, []);
 
   return (
-    <div className="text-center py-4 mt-16">
-      <h2 ref={titleRef} className="text-6xl font-extrabold font-serif text-gray-800">
+    <div className="text-center py-4 mt-8 md:mt-16">
+      <h2
+        ref={titleRef}
+        className="text-3xl md:text-5xl lg:text-6xl font-extrabold font-serif text-gray-800"
+      >
         Upskillium Popular Courses
       </h2>
       <p
         ref={introTextRef}
-        className="text-lg text-gray-600 mt-6 max-w-2xl mx-auto font-black font-serif"
+        className="text-sm md:text-lg text-gray-600 mt-4 md:mt-6 max-w-full md:max-w-2xl mx-auto font-black font-serif"
       >
         Upskillium aims to empower students with skills for the future. Dive
         into an interactive journey where programming and freelancing come

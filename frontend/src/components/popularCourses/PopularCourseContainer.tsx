@@ -9,7 +9,7 @@ const PopularCourseContainer = () => {
   console.log(courses);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-6 px-2 md:px-4 lg:px-8">
       {courses?.map((course) => (
         <PopularCard key={course.id} course={course} />
       ))}
