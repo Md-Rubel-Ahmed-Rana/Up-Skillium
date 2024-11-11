@@ -17,42 +17,29 @@ const PopularSectionTitle = () => {
     });
 
     const colors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#F3FF33"];
+    const titleChildren = titleRef.current?.children;
 
-    gsap.timeline().fromTo(
-      titleRef.current?.children,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
+    if (titleChildren) {
+     
+      gsap.to(titleChildren, {
+        color: () => gsap.utils.random(colors),
         duration: 1,
-        stagger: 0.1,
-        color: gsap.utils.wrap(colors),
-        ease: "back.out(1.7)",
-      }
-    );
-
-    // Introductory text animation
-    gsap.fromTo(
-      introTextRef.current,
-      { opacity: 0, x: -50 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 1.5,
-        delay: 1.5,
-        ease: "power2.out",
-      }
-    );
+        repeat: -1,  
+        yoyo: true, 
+        stagger: 0.1,  
+        ease: "none",
+      });
+    }
   }, []);
 
   return (
     <div className="text-center py-4 mt-16">
-      <h2 ref={titleRef} className="text-6xl font-bold text-gray-800">
-       Upskillium Popular Section
+      <h2 ref={titleRef} className="text-6xl font-extrabold font-serif text-gray-800">
+        Upskillium Popular Courses
       </h2>
       <p
         ref={introTextRef}
-        className="text-lg text-gray-600 mt-6 max-w-2xl mx-auto"
+        className="text-lg text-gray-600 mt-6 max-w-2xl mx-auto font-black font-serif"
       >
         Upskillium aims to empower students with skills for the future. Dive
         into an interactive journey where programming and freelancing come
