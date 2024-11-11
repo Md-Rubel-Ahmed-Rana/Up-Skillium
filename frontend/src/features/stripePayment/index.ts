@@ -4,7 +4,7 @@ import apiSlice from "../api/apiSlice";
 const stripePaymentApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     makeStripeCheckout: builder.mutation({
-      query: (data: ICheckout) => ({
+      query: (data: ICheckout[]) => ({
         method: "POST",
         url: `/stripe/checkout`,
         body: data,
