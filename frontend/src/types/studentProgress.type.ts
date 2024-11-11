@@ -2,6 +2,7 @@ import { IQuizQuestion } from "./quiz.type";
 
 export type ICourseProgress = {
   course: {
+    image: string;
     title: string;
     id: string;
   };
@@ -23,6 +24,7 @@ export type IModuleProgress = {
 export type ILessonProgress = {
   lesson: {
     title: string;
+    module: string;
     type: string;
     id: string;
   };
