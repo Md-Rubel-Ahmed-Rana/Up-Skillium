@@ -28,11 +28,32 @@ class Controller extends rootController_1.default {
             });
         }));
         this.getEnrollmentById = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const enrollment = yield service_1.EnrollmentService.getEnrollmentById(req.params.id);
+            const id = req.params.id;
+            const enrollment = yield service_1.EnrollmentService.getEnrollmentById(id);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
                 message: "Enrollment retrieved successfully",
+                data: enrollment,
+            });
+        }));
+        this.getSuccessEnrollmentForStudent = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.id;
+            const enrollment = yield service_1.EnrollmentService.getSuccessEnrollmentForStudent(userId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Enrollments retrieved successfully",
+                data: enrollment,
+            });
+        }));
+        this.getOrderEnrollmentHistoryForStudent = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.id;
+            const enrollment = yield service_1.EnrollmentService.getOrderEnrollmentHistoryForStudent(userId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Order history retrieved successfully",
                 data: enrollment,
             });
         }));

@@ -1,6 +1,7 @@
 import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { EnrollmentService } from "./service";
+import { Types } from "mongoose";
 
 class Controller extends RootController {
   createEnrollment = this.catchAsync(async (req: Request, res: Response) => {
@@ -14,7 +15,8 @@ class Controller extends RootController {
   });
 
   getEnrollmentById = this.catchAsync(async (req: Request, res: Response) => {
-    const enrollment = await EnrollmentService.getEnrollmentById(req.params.id);
+    const id = req.params.id as unknown as Types.ObjectId;
+    const enrollment = await EnrollmentService.getEnrollmentById(id);
     this.apiResponse(res, {
       statusCode: 200,
       success: true,
@@ -22,6 +24,33 @@ class Controller extends RootController {
       data: enrollment,
     });
   });
+  getSuccessEnrollmentForStudent = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const userId = req.params.id as unknown as Types.ObjectId;
+      const enrollment = await EnrollmentService.getSuccessEnrollmentForStudent(
+        userId
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Enrollments retrieved successfully",
+        data: enrollment,
+      });
+    }
+  );
+  getOrderEnrollmentHistoryForStudent = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const userId = req.params.id as unknown as Types.ObjectId;
+      const enrollment =
+        await EnrollmentService.getOrderEnrollmentHistoryForStudent(userId);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Order history retrieved successfully",
+        data: enrollment,
+      });
+    }
+  );
 
   updateEnrollment = this.catchAsync(async (req: Request, res: Response) => {
     await EnrollmentService.updateEnrollment(req.params.id, req.body);

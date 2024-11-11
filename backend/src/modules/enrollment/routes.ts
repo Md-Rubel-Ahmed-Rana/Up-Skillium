@@ -13,6 +13,16 @@ router.delete("/:id", EnrollmentController.deleteEnrollment);
 
 router.get("/", EnrollmentController.getEnrollments);
 
+router.get(
+  "/student/:userId",
+  EnrollmentController.getSuccessEnrollmentForStudent
+);
+
+router.get(
+  "/order-history/:userId",
+  EnrollmentController.getOrderEnrollmentHistoryForStudent
+);
+
 router.get("/search", EnrollmentController.searchEnrollments);
 
 export const EnrollmentRoutes = router;
