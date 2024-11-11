@@ -14,7 +14,7 @@ const Checkout = () => {
 
   return (
     <>
-      {!isLoading ? (
+      {isLoading ? (
         <CheckoutSkeleton />
       ) : (
         <div className="lg:flex lg:h-screen justify-center items-center mb-20 lg:-mt-10">

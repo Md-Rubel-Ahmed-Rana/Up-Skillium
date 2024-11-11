@@ -22,7 +22,7 @@ const PriceDetails = ({ price }: Props) => {
       </div>
       <div className="flex justify-between font-semibold text-lg">
         <Text>Total:</Text>
-        <Text>${price?.salePrice?.toFixed(2)}</Text>
+        <Text>${Math.ceil(price?.salePrice)}</Text>
       </div>
     </div>
   );

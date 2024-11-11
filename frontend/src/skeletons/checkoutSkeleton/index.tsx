@@ -1,10 +1,15 @@
-import { Skeleton } from "antd/lib";
+import CourseInfoSkeleton from "./CourseInfoSkeleton";
+import PriceDetailSkeleton from "./PriceDetailSkeleton";
 
 const CheckoutSkeleton = () => {
   return (
-    <div className="lg:flex lg:h-screen lg:w-2/3 w-full mx-auto justify-center items-center mb-20 lg:-mt-10">
-      <Skeleton />
-    </div>
+    <section className="min-h-screen flex justify-center items-center">
+      <div className="w-full lg:w-2/3 mx-auto flex flex-col lg:flex-row lg:justify-between bg-slate-100 shadow-md rounded-md p-5 ">
+        <CourseInfoSkeleton />
+        <div className="w-4 h-4 border-2" />
+        <PriceDetailSkeleton />
+      </div>
+    </section>
   );
 };
 
