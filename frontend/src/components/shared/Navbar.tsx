@@ -45,7 +45,7 @@ const Navbar = () => {
               >
                 Courses
               </Link>
-              {user && user?.id && (
+              {user && user?.id && user?.role?.role !== "admin" && (
                 <Link
                   href={"/dashboard/my-courses"}
                   className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"
