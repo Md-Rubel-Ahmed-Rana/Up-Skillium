@@ -12,7 +12,11 @@ const CourseImage = ({ courseId, image }: Props) => {
   return (
     <>
       <div className="w-full  rounded-lg p-2 ring-1">
-        <img src={image} alt="course thumbnail" className="w-full rounded-md" />
+        <img
+          src={image}
+          alt="course thumbnail"
+          className="w-full h-[87%] rounded-md"
+        />
         <Button
           onClick={() => setIsImageChange(true)}
           size="large"

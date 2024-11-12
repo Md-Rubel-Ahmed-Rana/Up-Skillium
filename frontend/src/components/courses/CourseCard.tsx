@@ -19,7 +19,11 @@ const CourseCard = ({ course }: Props) => {
       styles={{ body: { padding: "10px" } }}
       cover={
         course?.image ? (
-          <img alt="course thumbnail" src={course?.image} />
+          <img
+            alt="course thumbnail"
+            src={course?.image}
+            className="h-[200px]"
+          />
         ) : (
           <Image
             src="error"
