@@ -54,6 +54,14 @@ const TagsTechnologies = ({
     setIsEdit(false);
   };
 
+  const handleEdit = () => {
+    setNewValues({
+      tags: [...tags],
+      technologies: [...technologies],
+    });
+    setIsEdit(true);
+  };
+
   return (
     <Descriptions
       title={
@@ -63,12 +71,7 @@ const TagsTechnologies = ({
           </span>
           {isEdit ? (
             <>
-              <Button
-                iconPosition="end"
-                type="primary"
-                onClick={handleSave}
-                className="bg-green-500 text-white"
-              >
+              <Button iconPosition="end" type="primary" onClick={handleSave}>
                 Save Changes
               </Button>
               <Button
@@ -81,10 +84,7 @@ const TagsTechnologies = ({
               </Button>
             </>
           ) : (
-            <FaEdit
-              onClick={() => setIsEdit(true)}
-              className="cursor-pointer"
-            />
+            <FaEdit onClick={handleEdit} className="cursor-pointer" />
           )}
         </div>
       }

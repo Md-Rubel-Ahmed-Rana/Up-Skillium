@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import CourseImage from "./courseImage";
 import IntroVideoPlayer from "./introVideo";
 import { Divider } from "antd/lib";
-import TitleDescCategoryLevel from "./titleDescCategoryLevel";
+import CourseBasicInformation from "./courseBasicInformation";
 import CoursePriceDetails from "./priceDetails";
 import TagsTechnologies from "./tagsTechnologies";
 import CourseInstructor from "./courseInstructor";
@@ -29,7 +29,7 @@ const DashboardCourseDetails = () => {
       <CourseInstructor instructor={course?.instructor} />
       <Divider />
       {/* course title, description, category, status, duration and  level  */}
-      <TitleDescCategoryLevel course={course} />
+      <CourseBasicInformation course={course} />
       <Divider />
       {/* course prices  */}
       <CoursePriceDetails
