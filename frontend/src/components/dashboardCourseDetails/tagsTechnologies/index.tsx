@@ -86,7 +86,7 @@ const TagsTechnologies = ({ courseId, tags, technologies }: Props) => {
       }
       column={1}
       bordered
-      className="mt-4 pb-4 border-b"
+      className="mt-4 pb-4"
     >
       <Descriptions.Item label="Tags">
         {isEdit ? (

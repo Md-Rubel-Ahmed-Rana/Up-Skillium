@@ -98,7 +98,7 @@ const CoursePriceDetails = ({
       }
       column={3}
       bordered
-      className="mt-4 pb-4 border-b"
+      className="mt-4 pb-4"
     >
       <Descriptions.Item label="Original Price $" span={isLargeDevice ? 1 : 3}>
         {isEdit ? (

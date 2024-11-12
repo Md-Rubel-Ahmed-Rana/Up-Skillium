@@ -7,6 +7,7 @@ import { Divider } from "antd/lib";
 import TitleDescCategoryLevel from "./titleDescCategoryLevel";
 import CoursePriceDetails from "./priceDetails";
 import TagsTechnologies from "./tagsTechnologies";
+import CourseInstructor from "./courseInstructor";
 
 const DashboardCourseDetails = () => {
   const { query } = useRouter();
@@ -23,6 +24,9 @@ const DashboardCourseDetails = () => {
           videoUrl={course?.introductoryVideo}
         />
       </div>
+      <Divider />
+      {/* course instructor info  */}
+      <CourseInstructor instructor={course?.instructor} />
       <Divider />
       {/* course title, description, category, status, duration and  level  */}
       <TitleDescCategoryLevel course={course} />
