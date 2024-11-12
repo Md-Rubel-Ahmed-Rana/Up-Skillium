@@ -27,6 +27,14 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["course"] as any,
     }),
+    updateCourseIntroVideo: builder.mutation({
+      query: ({ courseId, video }: { courseId: string; video: FormData }) => ({
+        method: "PATCH",
+        url: `/course/change-course-introductory-video/${courseId}`,
+        body: video,
+      }),
+      invalidatesTags: ["course"] as any,
+    }),
   }),
 });
 
@@ -35,4 +43,5 @@ export const {
   useLazyGetAllCoursesQuery,
   useGetSingleCourseQuery,
   useUpdateCourseImageMutation,
+  useUpdateCourseIntroVideoMutation,
 } = courseApi;

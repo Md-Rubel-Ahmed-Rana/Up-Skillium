@@ -12,7 +12,7 @@ const IntroVideoPlayer = ({ courseId, videoUrl }: Props) => {
   const [isUpdateVideo, setIsUpdateVideo] = useState(false);
   return (
     <div className="w-full rounded-lg overflow-hidden p-2 ring-1">
-      <div className="relative pb-[53%]">
+      <div className="relative pb-[58%]">
         <ReactPlayer
           url={videoUrl}
           width="100%"
