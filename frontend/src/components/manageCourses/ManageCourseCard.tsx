@@ -30,53 +30,38 @@ const ManageCourseCard = ({ course }: Props) => {
       }
       actions={[
         <Link
-          href={`/courses/details/${course?.id}?courseId=${
-            course?.id
-          }&courseTitle=${course.title}&category=${
-            course?.category
-          }&description=${
-            course?.description
-          }&tags=${course?.tags?.toString()}`}
+          href={`/dashboard/course/modules-lessons/${course?.id}?courseTitle=${course?.title}&category=${course?.category}&description=${course?.description}`}
           key={"1"}
         >
-          <Button type="dashed" className="w-[90%] bg-yellow-500 text-white">
+          <Button
+            type="default"
+            className="w-[90%] bg-yellow-500 hover:bg-yellow-600 text-white"
+          >
             Classes
           </Button>
         </Link>,
         <Link
-          href={`/checkout/${course?.id}?courseId=${course?.id}&courseName=${
-            course.title
-          }&category=${course?.category}&description=${
-            course?.description
-          }&tags=${course?.tags?.toString()}`}
-          key={"1"}
+          href={`/dashboard/course/outlines/${course?.id}?courseTitle=${course?.title}&category=${course?.category}&description=${course?.description}`}
+          key={"2"}
         >
-          <Button
-            className="w-[90%] bg-green-500 text-white"
-            type="primary"
-            key={"2"}
-          >
+          <Button className="w-[90%] bg-green-500 text-white" type="default">
             Outlines
           </Button>
         </Link>,
         <Link
-          href={`/checkout/${course?.id}?courseId=${course?.id}&courseName=${
-            course.title
-          }&category=${course?.category}&description=${
-            course?.description
-          }&tags=${course?.tags?.toString()}`}
-          key={"1"}
+          href={`/dashboard/course/details/${course?.id}?courseTitle=${course?.title}&category=${course?.category}&description=${course?.description}`}
+          key={"3"}
         >
-          <Button type="primary" className="w-[90%]" key={"2"}>
+          <Button type="primary" className="w-[90%]">
             Details
           </Button>
         </Link>,
       ]}
     >
+      <Meta className="pb-3" title={course?.title} />
       <Meta
         className="pb-3"
-        title={course?.title}
-        description={course?.description}
+        title={`Status: ${course?.status.toUpperCase()}`}
       />
     </Card>
   );
