@@ -12,7 +12,7 @@ const LayoutSwitcher = ({ viewMode, setViewMode }: Props) => {
   };
 
   return (
-    <div className="flex items-center gap-3 mb-4">
+    <div className="flex items-center gap-3 mb-4 px-2">
       <h6 className="text-lg font-semibold mb-2">View as: </h6>
       <Radio.Group
         defaultValue={viewMode}
