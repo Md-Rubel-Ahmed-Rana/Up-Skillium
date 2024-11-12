@@ -9,7 +9,6 @@ type Props = {
 };
 const CourseImage = ({ courseId, image }: Props) => {
   const [isImageChange, setIsImageChange] = useState(false);
-  console.log(courseId);
   return (
     <>
       <div className="w-full  rounded-lg p-2 ring-1">
