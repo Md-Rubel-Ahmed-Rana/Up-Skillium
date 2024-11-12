@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ICourseBasicInfo } from "@/types/course.type";
+import { ICourseBasicInfo, IPriceUpdate } from "@/types/course.type";
 import apiSlice from "../api/apiSlice";
 
 const courseApi = apiSlice.injectEndpoints({
@@ -50,6 +50,20 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["course"] as any,
     }),
+    updateCoursePrice: builder.mutation({
+      query: ({
+        courseId,
+        data,
+      }: {
+        courseId: string;
+        data: IPriceUpdate;
+      }) => ({
+        method: "PATCH",
+        url: `/course//update-price/${courseId}`,
+        body: data,
+      }),
+      invalidatesTags: ["course"] as any,
+    }),
   }),
 });
 
@@ -60,4 +74,5 @@ export const {
   useUpdateCourseImageMutation,
   useUpdateCourseIntroVideoMutation,
   useUpdateCourseBasicInfoMutation,
+  useUpdateCoursePriceMutation,
 } = courseApi;

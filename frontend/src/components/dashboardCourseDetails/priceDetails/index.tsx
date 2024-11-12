@@ -3,6 +3,8 @@ import { useMediaQuery } from "react-responsive";
 import { Button, Descriptions, Input, message } from "antd/lib";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import { useUpdateCoursePriceMutation } from "@/features/course";
+import toast from "react-hot-toast";
 
 type Props = {
   courseId: string;
@@ -19,6 +21,7 @@ const CoursePriceDetails = ({
 }: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [isEdit, setIsEdit] = useState(false);
+  const [updatePrice, { isLoading }] = useUpdateCoursePriceMutation();
   const [newValues, setNewValues] = useState({
     original: original || 0,
     discount: discount || 0,
@@ -51,11 +54,29 @@ const CoursePriceDetails = ({
     }
   };
 
-  const handleSave = () => {
-    console.log(courseId);
-    console.log("Updated Values: ", newValues);
-    setIsEdit(false);
-    message.success("Price details updated successfully!");
+  const handleUpdateCoursePrice = async () => {
+    try {
+      const result: any = await updatePrice({
+        courseId: courseId,
+        data: newValues,
+      });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result.data.message || "Course price updated successfully!"
+        );
+      } else {
+        toast.error(
+          result?.data?.error?.message ||
+            result?.error?.data?.message ||
+            result?.error?.message ||
+            "Failed to update course price"
+        );
+      }
+      setIsEdit(false);
+    } catch (error: any) {
+      setIsEdit(false);
+      toast.error(`Failed to update course price. Error: ${error?.message}`);
+    }
   };
 
   const handleEdit = () => {
@@ -77,14 +98,17 @@ const CoursePriceDetails = ({
           {isEdit ? (
             <>
               <Button
+                loading={isLoading}
+                disabled={isLoading}
                 iconPosition="end"
                 size="small"
                 type="primary"
-                onClick={handleSave}
+                onClick={handleUpdateCoursePrice}
               >
-                Save Changes
+                {isLoading ? "Saving..." : "Save Changes"}
               </Button>
               <Button
+                disabled={isLoading}
                 size="small"
                 onClick={() => {
                   setIsEdit(false);
