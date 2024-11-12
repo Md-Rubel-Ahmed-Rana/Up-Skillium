@@ -5,11 +5,15 @@ import { FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa";
 
 type Props = {
   courseId: string;
-  tags: string[];
-  technologies: string[];
+  tags?: string[];
+  technologies?: string[];
 };
 
-const TagsTechnologies = ({ courseId, tags, technologies }: Props) => {
+const TagsTechnologies = ({
+  courseId,
+  tags = [],
+  technologies = [],
+}: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [isEdit, setIsEdit] = useState(false);
   const [newValues, setNewValues] = useState({
@@ -20,14 +24,14 @@ const TagsTechnologies = ({ courseId, tags, technologies }: Props) => {
   const handleAdd = (field: "tags" | "technologies") => {
     setNewValues((prev) => ({
       ...prev,
-      [field]: [...prev[field], ""], // Add an empty string for new input
+      [field]: [...prev[field], ""],
     }));
   };
 
   const handleRemove = (field: "tags" | "technologies", index: number) => {
     setNewValues((prev) => ({
       ...prev,
-      [field]: prev[field].filter((_, i) => i !== index),
+      [field]: prev[field]?.filter((_, i) => i !== index),
     }));
   };
 
@@ -69,7 +73,7 @@ const TagsTechnologies = ({ courseId, tags, technologies }: Props) => {
               </Button>
               <Button
                 onClick={() => {
-                  setNewValues({ tags, technologies }); // Reset to original values
+                  setNewValues({ tags, technologies });
                   setIsEdit(false);
                 }}
               >
@@ -91,7 +95,7 @@ const TagsTechnologies = ({ courseId, tags, technologies }: Props) => {
       <Descriptions.Item label="Tags">
         {isEdit ? (
           <div className="space-y-2">
-            {newValues.tags.map((tag, index) => (
+            {newValues?.tags?.map((tag, index) => (
               <div key={index} className="flex items-center gap-2">
                 <Input
                   value={tag}
@@ -114,7 +118,7 @@ const TagsTechnologies = ({ courseId, tags, technologies }: Props) => {
           </div>
         ) : (
           <div className="flex flex-wrap gap-2">
-            {tags.map((tag, index) => (
+            {tags?.map((tag, index) => (
               <Tag color="blue" key={index}>
                 {tag}
               </Tag>
@@ -126,7 +130,7 @@ const TagsTechnologies = ({ courseId, tags, technologies }: Props) => {
       <Descriptions.Item label="Technologies">
         {isEdit ? (
           <div className="space-y-2">
-            {newValues.technologies.map((tech, index) => (
+            {newValues?.technologies?.map((tech, index) => (
               <div key={index} className="flex items-center gap-2">
                 <Input
                   value={tech}
@@ -151,7 +155,7 @@ const TagsTechnologies = ({ courseId, tags, technologies }: Props) => {
           </div>
         ) : (
           <div className="flex flex-wrap gap-2">
-            {technologies.map((tech, index) => (
+            {technologies?.map((tech, index) => (
               <Tag color="green" key={index}>
                 {tech}
               </Tag>
