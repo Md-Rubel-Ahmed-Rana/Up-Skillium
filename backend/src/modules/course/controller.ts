@@ -88,6 +88,53 @@ class Controller extends RootController {
       });
     }
   );
+  updateCourseBasicInfo = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const id = req.params.id as unknown as Types.ObjectId;
+      await CourseService.updateCourseBasicInfo(id, req.body);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Course  basic info updated successfully",
+        data: null,
+      });
+    }
+  );
+  updateCoursePrice = this.catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id as unknown as Types.ObjectId;
+    await CourseService.updateCoursePrice(id, req.body);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Course price updated successfully",
+      data: null,
+    });
+  });
+  updateCourseTagsTechnologies = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const id = req.params.id as unknown as Types.ObjectId;
+      await CourseService.updateCourseTagsTechnologies(id, req.body);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Course tags and technologies updated successfully",
+        data: null,
+      });
+    }
+  );
+  updateCourseInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const courseId = req.params.courseId as unknown as Types.ObjectId;
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      await CourseService.updateCourseInstructor(courseId, instructorId);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Course instructor updated successfully",
+        data: null,
+      });
+    }
+  );
 }
 
 export const CourseController = new Controller();

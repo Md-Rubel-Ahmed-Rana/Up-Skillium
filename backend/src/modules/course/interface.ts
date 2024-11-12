@@ -24,3 +24,22 @@ export type ICourse = {
   reviews?: Types.ObjectId[];
   status?: "draft" | "published" | "archived";
 };
+
+export type ICourseBasicInfo = {
+  title: string;
+  category: string;
+  level: string;
+  status: string;
+  duration: string;
+  description: string;
+};
+
+export type IPriceUpdate = {
+  original: number;
+  discount: number;
+  salePrice: number;
+};
+export type ICourseTagsTechsUpdate = {
+  tags: string[];
+  technologies: string[];
+};

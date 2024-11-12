@@ -79,6 +79,41 @@ class Service {
             yield model_1.Course.findByIdAndDelete(id);
         });
     }
+    updateCourseBasicInfo(courseId, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Course.findByIdAndUpdate(courseId, {
+                $set: {
+                    title: data === null || data === void 0 ? void 0 : data.title,
+                    category: data === null || data === void 0 ? void 0 : data.category,
+                    description: data === null || data === void 0 ? void 0 : data.description,
+                    duration: data === null || data === void 0 ? void 0 : data.duration,
+                    level: data === null || data === void 0 ? void 0 : data.level,
+                    status: data === null || data === void 0 ? void 0 : data.status,
+                },
+            });
+        });
+    }
+    updateCoursePrice(courseId, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Course.findByIdAndUpdate(courseId, {
+                $set: { price: Object.assign({}, data) },
+            });
+        });
+    }
+    updateCourseTagsTechnologies(courseId, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Course.findByIdAndUpdate(courseId, {
+                $set: { tags: data === null || data === void 0 ? void 0 : data.tags, technologies: data === null || data === void 0 ? void 0 : data.technologies },
+            });
+        });
+    }
+    updateCourseInstructor(courseId, instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Course.findByIdAndUpdate(courseId, {
+                $set: { instructor: instructorId },
+            });
+        });
+    }
     updateCourseImage(id, imageUrl) {
         return __awaiter(this, void 0, void 0, function* () {
             const course = yield model_1.Course.findById(id);
@@ -92,7 +127,7 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const course = yield model_1.Course.findById(id);
             if (course && (course === null || course === void 0 ? void 0 : course.introductoryVideo)) {
-                yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(course === null || course === void 0 ? void 0 : course.image);
+                yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(course === null || course === void 0 ? void 0 : course.introductoryVideo);
             }
             yield model_1.Course.findByIdAndUpdate(id, {
                 $set: { introductoryVideo: videoUrl },
