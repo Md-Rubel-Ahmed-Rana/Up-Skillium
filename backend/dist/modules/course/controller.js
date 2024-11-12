@@ -92,6 +92,47 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.updateCourseBasicInfo = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.CourseService.updateCourseBasicInfo(id, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Course  basic info updated successfully",
+                data: null,
+            });
+        }));
+        this.updateCoursePrice = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.CourseService.updateCoursePrice(id, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Course price updated successfully",
+                data: null,
+            });
+        }));
+        this.updateCourseTagsTechnologies = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.CourseService.updateCourseTagsTechnologies(id, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Course tags and technologies updated successfully",
+                data: null,
+            });
+        }));
+        this.updateCourseInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const courseId = req.params.courseId;
+            const instructorId = req.params.instructorId;
+            yield service_1.CourseService.updateCourseInstructor(courseId, instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Course instructor updated successfully",
+                data: null,
+            });
+        }));
     }
 }
 exports.CourseController = new Controller();

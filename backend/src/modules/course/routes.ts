@@ -11,9 +11,21 @@ router.get("/", CourseController.getCourses);
 
 router.get("/:id", CourseController.getSingleCourse);
 
-router.patch("/:id", CourseController.updateCourse);
-
 router.delete("/:id", CourseController.deleteCourse);
+
+router.patch("/update-basic-info/:id", CourseController.updateCourseBasicInfo);
+
+router.patch("/update-price/:id", CourseController.updateCoursePrice);
+
+router.patch(
+  "/update-tags-techs/:id",
+  CourseController.updateCourseTagsTechnologies
+);
+
+router.patch(
+  "/update-instructor/:courseId/:instructorId",
+  CourseController.updateCourseInstructor
+);
 
 router.patch(
   "/change-course-image/:id",

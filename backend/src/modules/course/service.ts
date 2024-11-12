@@ -1,5 +1,10 @@
 import { Types } from "mongoose";
-import { ICourse } from "./interface";
+import {
+  ICourse,
+  ICourseBasicInfo,
+  ICourseTagsTechsUpdate,
+  IPriceUpdate,
+} from "./interface";
 import { Course } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 
@@ -87,6 +92,42 @@ class Service {
   async deleteCourse(id: Types.ObjectId): Promise<void> {
     await Course.findByIdAndDelete(id);
   }
+  async updateCourseBasicInfo(
+    courseId: Types.ObjectId,
+    data: ICourseBasicInfo
+  ) {
+    await Course.findByIdAndUpdate(courseId, {
+      $set: {
+        title: data?.title,
+        category: data?.category,
+        description: data?.description,
+        duration: data?.duration,
+        level: data?.level,
+        status: data?.status,
+      },
+    });
+  }
+  async updateCoursePrice(courseId: Types.ObjectId, data: IPriceUpdate) {
+    await Course.findByIdAndUpdate(courseId, {
+      $set: { price: { ...data } },
+    });
+  }
+  async updateCourseTagsTechnologies(
+    courseId: Types.ObjectId,
+    data: ICourseTagsTechsUpdate
+  ) {
+    await Course.findByIdAndUpdate(courseId, {
+      $set: { tags: data?.tags, technologies: data?.technologies },
+    });
+  }
+  async updateCourseInstructor(
+    courseId: Types.ObjectId,
+    instructorId: Types.ObjectId
+  ) {
+    await Course.findByIdAndUpdate(courseId, {
+      $set: { instructor: instructorId },
+    });
+  }
   async updateCourseImage(id: Types.ObjectId, imageUrl: string) {
     const course = await Course.findById(id);
     if (course && course?.image) {
@@ -97,7 +138,7 @@ class Service {
   async updateCourseIntroductoryVideo(id: Types.ObjectId, videoUrl: string) {
     const course = await Course.findById(id);
     if (course && course?.introductoryVideo) {
-      await FileUploadMiddleware.deleteSingle(course?.image);
+      await FileUploadMiddleware.deleteSingle(course?.introductoryVideo);
     }
     await Course.findByIdAndUpdate(id, {
       $set: { introductoryVideo: videoUrl },
