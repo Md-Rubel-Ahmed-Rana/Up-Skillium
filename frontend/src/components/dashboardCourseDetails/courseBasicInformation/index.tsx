@@ -60,7 +60,7 @@ const CourseBasicInformation = ({ course }: Props) => {
       setIsEdit(false);
     } catch (error: any) {
       setIsEdit(false);
-      toast.error(`Failed to update course image. Error: ${error?.message}`);
+      toast.error(`Failed to update course info. Error: ${error?.message}`);
     }
   };
 
@@ -81,7 +81,7 @@ const CourseBasicInformation = ({ course }: Props) => {
                 size="small"
                 type="primary"
               >
-                Save changes
+                {isLoading ? "Saving..." : "Save Changes"}
               </Button>
               <Button
                 disabled={isLoading}
