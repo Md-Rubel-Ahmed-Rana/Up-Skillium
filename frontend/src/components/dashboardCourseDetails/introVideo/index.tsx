@@ -1,5 +1,7 @@
 import { Button } from "antd/lib";
+import { useState } from "react";
 import ReactPlayer from "react-player";
+import IntroVideoUpdate from "./IntroVideoUpdate";
 
 type Props = {
   courseId: string;
@@ -7,7 +9,7 @@ type Props = {
 };
 
 const IntroVideoPlayer = ({ courseId, videoUrl }: Props) => {
-  console.log(courseId);
+  const [isUpdateVideo, setIsUpdateVideo] = useState(false);
   return (
     <div className="w-full rounded-lg overflow-hidden p-2 ring-1">
       <div className="relative pb-[53%]">
@@ -19,9 +21,21 @@ const IntroVideoPlayer = ({ courseId, videoUrl }: Props) => {
           className="absolute object-cover top-0 left-0 rounded-lg overflow-hidden shadow-lg"
         />
       </div>
-      <Button size="large" type="primary" className="w-full mt-2">
+      <Button
+        onClick={() => setIsUpdateVideo(true)}
+        size="large"
+        type="primary"
+        className="w-full mt-2"
+      >
         Change Video
       </Button>
+      {isUpdateVideo && (
+        <IntroVideoUpdate
+          courseId={courseId}
+          open={isUpdateVideo}
+          setOpen={setIsUpdateVideo}
+        />
+      )}
     </div>
   );
 };

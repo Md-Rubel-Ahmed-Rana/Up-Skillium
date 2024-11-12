@@ -71,10 +71,16 @@ const TagsTechnologies = ({
           </span>
           {isEdit ? (
             <>
-              <Button iconPosition="end" type="primary" onClick={handleSave}>
+              <Button
+                size="small"
+                iconPosition="end"
+                type="primary"
+                onClick={handleSave}
+              >
                 Save Changes
               </Button>
               <Button
+                size="small"
                 onClick={() => {
                   setNewValues({ tags, technologies });
                   setIsEdit(false);

@@ -45,10 +45,12 @@ const CourseBasicInformation = ({ course }: Props) => {
           </span>
           {isEdit ? (
             <>
-              <Button iconPosition="end" type="primary">
+              <Button size="small" iconPosition="end" type="primary">
                 Save changes
               </Button>
-              <Button onClick={() => setIsEdit(false)}>Cancel</Button>
+              <Button size="small" onClick={() => setIsEdit(false)}>
+                Cancel
+              </Button>
             </>
           ) : (
             <FaEdit onClick={handleEdit} className="cursor-pointer" />

@@ -76,10 +76,16 @@ const CoursePriceDetails = ({
           </span>
           {isEdit ? (
             <>
-              <Button iconPosition="end" type="primary" onClick={handleSave}>
+              <Button
+                iconPosition="end"
+                size="small"
+                type="primary"
+                onClick={handleSave}
+              >
                 Save Changes
               </Button>
               <Button
+                size="small"
                 onClick={() => {
                   setIsEdit(false);
                   setNewValues({
