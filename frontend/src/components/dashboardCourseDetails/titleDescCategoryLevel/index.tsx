@@ -48,7 +48,7 @@ const TitleDescCategoryLevel = ({ course }: Props) => {
       }
       column={2}
       bordered
-      className="mt-4 pb-4 border-b"
+      className="mt-4 pb-4"
     >
       <Descriptions.Item label="Title" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
