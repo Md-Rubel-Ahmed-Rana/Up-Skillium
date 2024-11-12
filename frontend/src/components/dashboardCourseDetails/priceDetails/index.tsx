@@ -58,6 +58,15 @@ const CoursePriceDetails = ({
     message.success("Price details updated successfully!");
   };
 
+  const handleEdit = () => {
+    setNewValues({
+      original: original || 0,
+      discount: discount || 0,
+      salePrice: salePrice || original - (original * discount) / 100,
+    });
+    setIsEdit(true);
+  };
+
   return (
     <Descriptions
       title={
@@ -67,12 +76,7 @@ const CoursePriceDetails = ({
           </span>
           {isEdit ? (
             <>
-              <Button
-                iconPosition="end"
-                type="primary"
-                onClick={handleSave}
-                className="bg-green-500 text-white"
-              >
+              <Button iconPosition="end" type="primary" onClick={handleSave}>
                 Save Changes
               </Button>
               <Button
@@ -89,10 +93,7 @@ const CoursePriceDetails = ({
               </Button>
             </>
           ) : (
-            <FaEdit
-              onClick={() => setIsEdit(true)}
-              className="cursor-pointer"
-            />
+            <FaEdit onClick={handleEdit} className="cursor-pointer" />
           )}
         </div>
       }

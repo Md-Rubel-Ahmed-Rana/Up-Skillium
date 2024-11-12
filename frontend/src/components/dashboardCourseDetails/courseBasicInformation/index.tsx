@@ -9,7 +9,7 @@ type Props = {
   course: ICourse;
 };
 
-const TitleDescCategoryLevel = ({ course }: Props) => {
+const CourseBasicInformation = ({ course }: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [isEdit, setIsEdit] = useState(false);
   const [newValues, setNewValues] = useState({
@@ -24,12 +24,24 @@ const TitleDescCategoryLevel = ({ course }: Props) => {
     setNewValues((prevValues) => ({ ...prevValues, [field]: value }));
   };
 
+  const handleEdit = () => {
+    setNewValues({
+      title: course?.title,
+      category: course?.category,
+      level: course?.level,
+      status: course?.status,
+      duration: course?.duration,
+      description: course?.description,
+    });
+    setIsEdit(true);
+  };
+
   return (
     <Descriptions
       title={
         <div className="flex items-center gap-2">
           <span className={!isLargeDevice && isEdit ? "hidden" : "block"}>
-            Title, Category, Level, Description
+            Course Basic Information
           </span>
           {isEdit ? (
             <>
@@ -39,10 +51,7 @@ const TitleDescCategoryLevel = ({ course }: Props) => {
               <Button onClick={() => setIsEdit(false)}>Cancel</Button>
             </>
           ) : (
-            <FaEdit
-              onClick={() => setIsEdit(true)}
-              className="cursor-pointer"
-            />
+            <FaEdit onClick={handleEdit} className="cursor-pointer" />
           )}
         </div>
       }
@@ -124,4 +133,4 @@ const TitleDescCategoryLevel = ({ course }: Props) => {
   );
 };
 
-export default TitleDescCategoryLevel;
+export default CourseBasicInformation;
