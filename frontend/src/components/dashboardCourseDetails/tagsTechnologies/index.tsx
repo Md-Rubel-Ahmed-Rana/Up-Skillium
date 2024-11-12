@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMediaQuery } from "react-responsive";
-import { Button, Descriptions, Input, Tag, message } from "antd/lib";
+import { Button, Descriptions, Input, Tag } from "antd/lib";
 import { useState } from "react";
 import { FaEdit, FaPlusCircle, FaTrashAlt } from "react-icons/fa";
+import { useUpdateCourseTagsTechsMutation } from "@/features/course";
+import toast from "react-hot-toast";
 
 type Props = {
   courseId: string;
@@ -16,6 +19,7 @@ const TagsTechnologies = ({
 }: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [isEdit, setIsEdit] = useState(false);
+  const [updateTagsTechs, { isLoading }] = useUpdateCourseTagsTechsMutation();
   const [newValues, setNewValues] = useState({
     tags: [...tags],
     technologies: [...technologies],
@@ -47,11 +51,31 @@ const TagsTechnologies = ({
     });
   };
 
-  const handleSave = () => {
-    console.log(courseId);
-    console.log("Updated Tags & Technologies:", newValues);
-    message.success("Tags and technologies updated successfully!");
-    setIsEdit(false);
+  const handleUpdateTagsTechs = async () => {
+    try {
+      const result: any = await updateTagsTechs({
+        courseId: courseId,
+        data: newValues,
+      });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result?.data?.message || "Course tags & techs updated successfully!"
+        );
+      } else {
+        toast.error(
+          result?.data?.error?.message ||
+            result?.error?.data?.message ||
+            result?.error?.message ||
+            "Failed to update course tags & techs"
+        );
+      }
+      setIsEdit(false);
+    } catch (error: any) {
+      setIsEdit(false);
+      toast.error(
+        `Failed to update course tags & techs. Error: ${error?.message}`
+      );
+    }
   };
 
   const handleEdit = () => {
@@ -74,12 +98,15 @@ const TagsTechnologies = ({
               <Button
                 size="small"
                 iconPosition="end"
+                disabled={isLoading}
+                loading={isLoading}
                 type="primary"
-                onClick={handleSave}
+                onClick={handleUpdateTagsTechs}
               >
-                Save Changes
+                {isLoading ? "Saving..." : "Save Changes"}
               </Button>
               <Button
+                disabled={isLoading}
                 size="small"
                 onClick={() => {
                   setNewValues({ tags, technologies });
