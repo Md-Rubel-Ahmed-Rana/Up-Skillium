@@ -5,6 +5,7 @@ import CourseImage from "./courseImage";
 import IntroVideoPlayer from "./introVideo";
 import { Divider } from "antd/lib";
 import TitleDescCategoryLevel from "./titleDescCategoryLevel";
+import CoursePriceDetails from "./priceDetails";
 
 /*
 export type ICourse = {
@@ -47,6 +48,13 @@ const DashboardCourseDetails = () => {
       </div>
       <Divider />
       <TitleDescCategoryLevel course={course} />
+      <Divider />
+      <CoursePriceDetails
+        courseId={course?.id}
+        discount={course?.price?.discount}
+        salePrice={course?.price?.salePrice}
+        original={course?.price?.original}
+      />
     </div>
   );
 };
