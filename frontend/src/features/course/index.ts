@@ -3,7 +3,7 @@ import apiSlice from "../api/apiSlice";
 const courseApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllCourses: builder.query({
-      query: ({ searchText = "" }:{searchText: string}) => ({
+      query: ({ searchText = "" }: { searchText?: string }) => ({
         method: "GET",
         url: `/course`,
         params: { searchText },
