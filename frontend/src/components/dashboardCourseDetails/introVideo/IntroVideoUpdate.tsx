@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
+import { useUpdateCourseIntroVideoMutation } from "@/features/course";
 import { Modal, Upload } from "antd/lib";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa";
 
 type Props = {
@@ -12,6 +15,7 @@ type Props = {
 const IntroVideoUpdate = ({ courseId, open, setOpen }: Props) => {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [newVideo, setNewVideo] = useState<File | null>(null);
+  const [updateVideo, { isLoading }] = useUpdateCourseIntroVideoMutation();
 
   const handleFileChange = (file: File) => {
     setNewVideo(file);
@@ -25,8 +29,32 @@ const IntroVideoUpdate = ({ courseId, open, setOpen }: Props) => {
 
   const handleClose = () => setOpen(false);
 
-  const handleUpdateVideo = () => {
-    console.log("Video File:", newVideo, "Course ID:", courseId);
+  const handleUpdateVideo = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("file", newVideo as File);
+      const result: any = await updateVideo({
+        courseId: courseId,
+        video: formData,
+      });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result.data.message || "Course intro video updated successfully!"
+        );
+        handleClose();
+      } else {
+        toast.error(
+          result?.data?.error?.message ||
+            result?.error?.data?.message ||
+            result?.error?.message ||
+            "Failed to update course image"
+        );
+      }
+    } catch (error: any) {
+      toast.error(
+        `Failed to update course intro video . Error: ${error?.message}`
+      );
+    }
   };
 
   return (
@@ -37,6 +65,11 @@ const IntroVideoUpdate = ({ courseId, open, setOpen }: Props) => {
       onCancel={handleClose}
       okText="Update Video"
       className="max-w-72 w-full"
+      confirmLoading={isLoading}
+      maskClosable={!isLoading}
+      closable={!isLoading}
+      okButtonProps={{ disabled: isLoading }}
+      cancelButtonProps={{ disabled: isLoading }}
       classNames={{ footer: "flex justify-between" }}
     >
       <div className="border-2 border-dotted rounded-md cursor-pointer flex justify-center items-center h-40 w-full">
