@@ -16,6 +16,8 @@ const TitleDescCategoryLevel = ({ course }: Props) => {
     title: course?.title || "",
     category: course?.category || "",
     level: course?.level || "",
+    status: course?.status || "",
+    duration: course?.duration || "",
     description: course?.description || "",
   });
   const handleInputChange = (field: string, value: any) => {
@@ -77,6 +79,32 @@ const TitleDescCategoryLevel = ({ course }: Props) => {
           />
         ) : course?.level ? (
           <div className="flex items-center gap-2">{course?.level}</div>
+        ) : (
+          "Empty"
+        )}
+      </Descriptions.Item>
+      <Descriptions.Item label="Status" span={isLargeDevice ? 1 : 2}>
+        {isEdit ? (
+          <Input
+            type="text"
+            value={newValues.status}
+            onChange={(e) => handleInputChange("status", e.target.value)}
+          />
+        ) : course?.status ? (
+          <div className="flex items-center gap-2">{course?.status}</div>
+        ) : (
+          "Empty"
+        )}
+      </Descriptions.Item>
+      <Descriptions.Item label="Duration" span={isLargeDevice ? 1 : 2}>
+        {isEdit ? (
+          <Input
+            type="text"
+            value={newValues.duration}
+            onChange={(e) => handleInputChange("duration", e.target.value)}
+          />
+        ) : course?.duration ? (
+          <div className="flex items-center gap-2">{course?.duration}</div>
         ) : (
           "Empty"
         )}

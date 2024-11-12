@@ -6,30 +6,7 @@ import IntroVideoPlayer from "./introVideo";
 import { Divider } from "antd/lib";
 import TitleDescCategoryLevel from "./titleDescCategoryLevel";
 import CoursePriceDetails from "./priceDetails";
-
-/*
-export type ICourse = {
-  id: string;
-  title: string;
-  category: string;
-  description: string;
-  level: string;
-  price: {
-    original: number;
-    discount: number;
-    salePrice: number;
-  };
-  tags: string[];
-  technologies: string[];
-  duration: string;
-  instructor: IInstructor;
-  students: IUser[];
-  reviews: IReview[];
-  status: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
-*/
+import TagsTechnologies from "./tagsTechnologies";
 
 const DashboardCourseDetails = () => {
   const { query } = useRouter();
@@ -39,7 +16,7 @@ const DashboardCourseDetails = () => {
   return (
     <div className="p-2 mt-3">
       {/* course image and intro video  */}
-      <div className="flex justify-between gap-2">
+      <div className="flex flex-col lg:flex-row justify-between gap-2">
         <CourseImage courseId={course?.id} image={course?.image} />
         <IntroVideoPlayer
           courseId={course?.id}
@@ -47,13 +24,22 @@ const DashboardCourseDetails = () => {
         />
       </div>
       <Divider />
+      {/* course title, description, category, status, duration and  level  */}
       <TitleDescCategoryLevel course={course} />
       <Divider />
+      {/* course prices  */}
       <CoursePriceDetails
         courseId={course?.id}
         discount={course?.price?.discount}
         salePrice={course?.price?.salePrice}
         original={course?.price?.original}
+      />
+      <Divider />
+      {/* course tags and technologies  */}
+      <TagsTechnologies
+        courseId={course?.id}
+        tags={course?.tags}
+        technologies={course?.technologies}
       />
     </div>
   );

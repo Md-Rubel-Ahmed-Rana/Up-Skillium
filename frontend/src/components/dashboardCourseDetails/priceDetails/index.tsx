@@ -100,7 +100,7 @@ const CoursePriceDetails = ({
       bordered
       className="mt-4 pb-4 border-b"
     >
-      <Descriptions.Item label="Original Price $" span={isLargeDevice ? 1 : 2}>
+      <Descriptions.Item label="Original Price $" span={isLargeDevice ? 1 : 3}>
         {isEdit ? (
           <Input
             type="number"
@@ -113,7 +113,7 @@ const CoursePriceDetails = ({
         )}
       </Descriptions.Item>
 
-      <Descriptions.Item label="Discount %" span={isLargeDevice ? 1 : 2}>
+      <Descriptions.Item label="Discount %" span={isLargeDevice ? 1 : 3}>
         {isEdit ? (
           <Input
             type="number"
@@ -127,7 +127,7 @@ const CoursePriceDetails = ({
         )}
       </Descriptions.Item>
 
-      <Descriptions.Item label="Sale Price $" span={isLargeDevice ? 1 : 2}>
+      <Descriptions.Item label="Sale Price $" span={isLargeDevice ? 1 : 3}>
         {isEdit ? (
           <Input type="text" value={newValues.salePrice} readOnly disabled />
         ) : (
