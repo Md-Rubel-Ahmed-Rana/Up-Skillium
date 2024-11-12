@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useUpdateCourseBasicInfoMutation } from "@/features/course";
 import { ICourse } from "@/types/course.type";
 import { Button, Descriptions, Input } from "antd/lib";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { FaEdit } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 
@@ -12,6 +14,7 @@ type Props = {
 const CourseBasicInformation = ({ course }: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [isEdit, setIsEdit] = useState(false);
+  const [updateBasicInfo, { isLoading }] = useUpdateCourseBasicInfoMutation();
   const [newValues, setNewValues] = useState({
     title: course?.title || "",
     category: course?.category || "",
@@ -36,6 +39,31 @@ const CourseBasicInformation = ({ course }: Props) => {
     setIsEdit(true);
   };
 
+  const handleUpdateBasicInfo = async () => {
+    try {
+      const result: any = await updateBasicInfo({
+        courseId: course?.id,
+        data: newValues,
+      });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result.data.message || "Course basic info updated successfully!"
+        );
+      } else {
+        toast.error(
+          result?.data?.error?.message ||
+            result?.error?.data?.message ||
+            result?.error?.message ||
+            "Failed to update course info"
+        );
+      }
+      setIsEdit(false);
+    } catch (error: any) {
+      setIsEdit(false);
+      toast.error(`Failed to update course image. Error: ${error?.message}`);
+    }
+  };
+
   return (
     <Descriptions
       title={
@@ -45,10 +73,21 @@ const CourseBasicInformation = ({ course }: Props) => {
           </span>
           {isEdit ? (
             <>
-              <Button size="small" iconPosition="end" type="primary">
+              <Button
+                disabled={isLoading}
+                loading={isLoading}
+                iconPosition="end"
+                onClick={handleUpdateBasicInfo}
+                size="small"
+                type="primary"
+              >
                 Save changes
               </Button>
-              <Button size="small" onClick={() => setIsEdit(false)}>
+              <Button
+                disabled={isLoading}
+                size="small"
+                onClick={() => setIsEdit(false)}
+              >
                 Cancel
               </Button>
             </>
@@ -63,7 +102,11 @@ const CourseBasicInformation = ({ course }: Props) => {
     >
       <Descriptions.Item label="Title" span={isLargeDevice ? 1 : 2}>
         {isEdit ? (
-          <Input type="text" value={newValues.title} />
+          <Input
+            type="text"
+            value={newValues.title}
+            onChange={(e) => handleInputChange("title", e.target.value)}
+          />
         ) : (
           <div className="flex items-center gap-2">{course?.title}</div>
         )}
