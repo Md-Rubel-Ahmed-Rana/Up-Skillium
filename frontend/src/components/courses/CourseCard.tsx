@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { fallbackImageUrl } from "@/constants/fallback";
 import { ICourse } from "@/types/course.type";
 import { Avatar, Button, Card, Rate, Typography, Image } from "antd/lib";
 import Link from "next/link";
@@ -23,9 +24,9 @@ const CourseCard = ({ course }: Props) => {
           <Image
             src="error"
             height={200}
-            fallback="https://firebasestorage.googleapis.com/v0/b/up-skillium.appspot.com/o/up-skillium%2Fassets%2Ffallback-image.png?alt=media&token=c3cb9e52-a43e-4666-a534-216a99c60a88"
-            alt="fallback image"
+            fallback={fallbackImageUrl}
             preview={false}
+            alt="Placeholder Image"
           />
         )
       }
