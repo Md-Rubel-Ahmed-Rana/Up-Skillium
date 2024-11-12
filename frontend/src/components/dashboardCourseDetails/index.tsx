@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import CourseImage from "./courseImage";
 import IntroVideoPlayer from "./introVideo";
 import { Divider } from "antd/lib";
+import TitleDescCategoryLevel from "./titleDescCategoryLevel";
 
 /*
 export type ICourse = {
@@ -45,6 +46,7 @@ const DashboardCourseDetails = () => {
         />
       </div>
       <Divider />
+      <TitleDescCategoryLevel course={course} />
     </div>
   );
 };
