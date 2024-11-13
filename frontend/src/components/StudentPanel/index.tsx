@@ -1,14 +1,13 @@
-import React from 'react';
-import StudentPanelContainer from './StudentPanelContainer';
-import StudentPanelTitle from './StudentPanelTitle';
+import StudentPanelContainer from "./StudentPanelContainer";
+import StudentPanelTitle from "./StudentPanelTitle";
 
 const StudentPanel = () => {
-    return (
-        <div>
-            <StudentPanelTitle />
-            <StudentPanelContainer />
-        </div>
-    );
+  return (
+    <div>
+      <StudentPanelTitle />
+      <StudentPanelContainer />
+    </div>
+  );
 };
 
 export default StudentPanel;
