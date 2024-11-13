@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { fallbackImageUrl } from "@/constants/fallback";
 import { ICourse } from "@/types/course.type";
 import { Avatar, Button, Card, Rate, Typography, Image } from "antd/lib";
 import Link from "next/link";
@@ -18,14 +19,18 @@ const CourseCard = ({ course }: Props) => {
       styles={{ body: { padding: "10px" } }}
       cover={
         course?.image ? (
-          <img alt="course thumbnail" src={course?.image} />
+          <img
+            alt="course thumbnail"
+            src={course?.image}
+            className="h-[200px]"
+          />
         ) : (
           <Image
             src="error"
             height={200}
-            fallback="https://firebasestorage.googleapis.com/v0/b/up-skillium.appspot.com/o/up-skillium%2Fassets%2Ffallback-image.png?alt=media&token=c3cb9e52-a43e-4666-a534-216a99c60a88"
-            alt="fallback image"
+            fallback={fallbackImageUrl}
             preview={false}
+            alt="Placeholder Image"
           />
         )
       }
@@ -44,9 +49,18 @@ const CourseCard = ({ course }: Props) => {
             See Details
           </Button>
         </Link>,
-        <Button type="primary" className="w-[90%]" key={"2"}>
-          Buy Now
-        </Button>,
+        <Link
+          href={`/checkout/${course?.id}?courseId=${course?.id}&courseName=${
+            course.title
+          }&category=${course?.category}&description=${
+            course?.description
+          }&tags=${course?.tags?.toString()}`}
+          key={"1"}
+        >
+          <Button type="primary" className="w-[90%]" key={"2"}>
+            Buy Now
+          </Button>
+        </Link>,
       ]}
     >
       <Meta

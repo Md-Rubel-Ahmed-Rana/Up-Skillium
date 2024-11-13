@@ -31,6 +31,10 @@ const NavbarDropdown = ({ isToggleIcon }: Props) => {
     },
     {
       key: "4",
+      label: <Link href={"/courses"}>Courses</Link>,
+    },
+    {
+      key: "5",
       label: <LogoutButton />,
     },
   ];
