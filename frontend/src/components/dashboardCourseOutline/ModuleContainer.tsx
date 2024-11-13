@@ -1,66 +1,65 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { FiMove } from "react-icons/fi";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import ModuleItem from "./ModuleItem";
 import { IModuleOutline } from "@/types/courseOutline.type";
-import ModuleDeleteButton from "./ModuleDeleteButton";
-import ModuleEditButton from "./ModuleEditButton";
+import { useEffect, useState } from "react";
+import handleCourseOutlineDragEndDrop from "@/utils/handleCourseOutlineDragEndDrop";
 
 type Props = {
   modules: IModuleOutline[];
+  courseId: string;
 };
 
-const ModuleContainer = ({ modules }: Props) => {
-  const [moduleList, setModuleList] = useState<IModuleOutline[]>(modules);
+const ModuleContainer = ({ modules: initialModules, courseId }: Props) => {
+  const [modules, setModules] = useState<IModuleOutline[]>(initialModules);
 
   const handleDragEnd = (result: any) => {
-    if (!result.destination) return;
+    const { source, destination } = result;
+    if (!destination || source.index === destination.index) return;
 
-    const reorderedModules = Array.from(moduleList);
-    const [removed] = reorderedModules.splice(result.source.index, 1);
-    reorderedModules.splice(result.destination.index, 0, removed);
+    // find the source and destination item then update local state
+    const updatedModules = Array.from(modules);
+    const [movedItem] = updatedModules.splice(source.index, 1);
+    updatedModules.splice(destination.index, 0, movedItem);
+    setModules(updatedModules);
 
-    setModuleList(reorderedModules);
+    // organize/make source and destination item to send server/api call
+    const droppedData = handleCourseOutlineDragEndDrop(
+      source?.index,
+      destination?.index,
+      initialModules
+    );
+    console.log(droppedData);
   };
 
+  useEffect(() => {
+    setModules(initialModules);
+  }, [initialModules]);
+
   return (
-    <div className="p-4 bg-gray-100 rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">Module List</h2>
-      <DragDropContext onDragEnd={handleDragEnd}>
-        <Droppable droppableId="modules">
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="p-4 bg-gray-100 rounded-lg shadow-md">
+        <h2 className="text-lg font-semibold mb-4">Module List</h2>
+        <Droppable droppableId={courseId}>
           {(provided) => (
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
               className="space-y-3"
             >
-              {moduleList.map((module, index) => (
+              {modules?.map((module, index) => (
                 <Draggable
-                  key={module?.id}
-                  draggableId={module?.id}
+                  key={module?.id.toString()}
+                  draggableId={module?.id.toString()}
                   index={index}
                 >
                   {(provided) => (
-                    <div
-                      {...provided.draggableProps}
-                      ref={provided.innerRef}
-                      className="p-3 bg-white rounded-lg shadow flex items-center justify-between"
-                    >
-                      <div className="flex items-center space-x-2">
-                        <span>Module-{index + 1}: </span>
-                        <span>{module?.name}</span>
-                      </div>
-                      <div className="space-x-2 flex items-center">
-                        {/* Drag Handle Icon */}
-                        <div {...provided.dragHandleProps}>
-                          <FiMove
-                            className="cursor-grab text-gray-500"
-                            size={20}
-                          />
-                        </div>
-                        <ModuleEditButton module={module} />
-                        <ModuleDeleteButton module={module} />
-                      </div>
+                    <div ref={provided.innerRef} {...provided.draggableProps}>
+                      <ModuleItem
+                        module={module}
+                        index={index}
+                        dragHandleProps={provided.dragHandleProps}
+                      />
                     </div>
                   )}
                 </Draggable>
@@ -69,8 +68,8 @@ const ModuleContainer = ({ modules }: Props) => {
             </div>
           )}
         </Droppable>
-      </DragDropContext>
-    </div>
+      </div>
+    </DragDropContext>
   );
 };
 
