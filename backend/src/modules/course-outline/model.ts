@@ -5,6 +5,7 @@ import schemaOption from "../../utils/schemaOption";
 const moduleSchema = new Schema<IModuleOutline>(
   {
     name: { type: String, required: true },
+    serial: { type: Number, required: true },
   },
   schemaOption
 );
