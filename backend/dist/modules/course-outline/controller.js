@@ -23,7 +23,7 @@ class Controller extends rootController_1.default {
             this.apiResponse(res, {
                 statusCode: 201,
                 success: true,
-                message: "Course outline created successful",
+                message: "Course outline created successfully",
                 data: null,
             });
         }));
@@ -32,7 +32,7 @@ class Controller extends rootController_1.default {
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
-                message: "Course outlines fetched successful",
+                message: "Course outlines fetched successfully",
                 data: data,
             });
         }));
@@ -42,7 +42,7 @@ class Controller extends rootController_1.default {
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
-                message: "Course outline fetched successful",
+                message: "Course outline fetched successfully",
                 data: data,
             });
         }));
@@ -52,7 +52,7 @@ class Controller extends rootController_1.default {
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
-                message: "Course outline fetched successful",
+                message: "Course outline fetched successfully",
                 data: data,
             });
         }));
@@ -62,7 +62,7 @@ class Controller extends rootController_1.default {
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
-                message: "Course outline fetched successful",
+                message: "Course outline fetched successfully",
                 data: null,
             });
         }));
@@ -72,7 +72,39 @@ class Controller extends rootController_1.default {
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
-                message: "Course outline fetched successful",
+                message: "Course outline fetched successfully",
+                data: null,
+            });
+        }));
+        this.updateModuleSerialNumberFromDragDrop = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const courseId = req.params.courseId;
+            yield service_1.CourseOutlineService.updateModuleSerialNumberFromDragDrop(courseId, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Modules serial updated successfully",
+                data: null,
+            });
+        }));
+        this.updateModuleName = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const courseId = req.params.courseId;
+            const moduleId = req.params.moduleId;
+            yield service_1.CourseOutlineService.updateModuleName(courseId, moduleId, req.body.name);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Module name updated successfully",
+                data: null,
+            });
+        }));
+        this.deleteModule = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const courseId = req.params.courseId;
+            const moduleId = req.params.moduleId;
+            yield service_1.CourseOutlineService.deleteModule(courseId, moduleId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Module deleted successfully",
                 data: null,
             });
         }));

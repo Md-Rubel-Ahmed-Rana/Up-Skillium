@@ -23,7 +23,17 @@ class Service {
     }
     getOutlines() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.CourseOutline.find({});
+            const outlines = yield model_1.CourseOutline.find({}).populate([
+                {
+                    path: "course",
+                    model: "Course",
+                    select: { title: 1, image: 1 },
+                },
+            ]);
+            return outlines.map((outline) => {
+                outline.modules = outline.modules.sort((a, b) => a.serial - b.serial);
+                return outline;
+            });
         });
     }
     getOutline(id) {
@@ -38,6 +48,7 @@ class Service {
             if (!data) {
                 throw new apiError_1.default(404, "Course outline was not found!");
             }
+            data.modules = data.modules.sort((a, b) => a.serial - b.serial);
             return data;
         });
     }
@@ -53,6 +64,7 @@ class Service {
             if (!data) {
                 throw new apiError_1.default(404, "Course outline was not found!");
             }
+            data.modules = data.modules.sort((a, b) => a.serial - b.serial);
             return data;
         });
     }
@@ -64,6 +76,56 @@ class Service {
     deleteOutline(id) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.CourseOutline.findByIdAndDelete(id);
+        });
+    }
+    updateModuleSerialNumberFromDragDrop(courseId, data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const outline = yield model_1.CourseOutline.findOne({ course: courseId });
+            if (!outline) {
+                throw new Error("Course outline not found");
+            }
+            const modules = outline.modules;
+            const updatedModules = modules.map((module) => {
+                var _a, _b;
+                if ((module === null || module === void 0 ? void 0 : module.id) === ((_a = data === null || data === void 0 ? void 0 : data.sourceObject) === null || _a === void 0 ? void 0 : _a.moduleId)) {
+                    return {
+                        id: module === null || module === void 0 ? void 0 : module.id,
+                        name: module === null || module === void 0 ? void 0 : module.name,
+                        serial: data.destinationObject.serialNumber,
+                    };
+                }
+                if ((module === null || module === void 0 ? void 0 : module.id) === ((_b = data === null || data === void 0 ? void 0 : data.destinationObject) === null || _b === void 0 ? void 0 : _b.moduleId)) {
+                    return {
+                        id: module === null || module === void 0 ? void 0 : module.id,
+                        name: module === null || module === void 0 ? void 0 : module.name,
+                        serial: data.sourceObject.serialNumber,
+                    };
+                }
+                return module;
+            });
+            outline.modules = updatedModules;
+            yield outline.save();
+        });
+    }
+    deleteModule(courseId, moduleId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.CourseOutline.updateOne({ course: courseId }, { $pull: { modules: { _id: moduleId } } });
+        });
+    }
+    updateModuleName(courseId, moduleId, updatedName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const outline = yield model_1.CourseOutline.findOne({
+                course: courseId,
+            });
+            if (!outline) {
+                throw new Error("Course outline or module not found");
+            }
+            const module = outline === null || outline === void 0 ? void 0 : outline.modules.find((mod) => (mod === null || mod === void 0 ? void 0 : mod.id) === moduleId);
+            if (!module) {
+                throw new Error("Module not found");
+            }
+            module.name = updatedName;
+            yield outline.save();
         });
     }
 }
