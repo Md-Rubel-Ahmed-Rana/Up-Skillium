@@ -16,7 +16,10 @@ const DashboardCourseOutlines = () => {
       <h2 className="text-xl font-semibold text-center my-2 text-gray-600">
         {outline?.course?.title}
       </h2>
-      <ModuleContainer modules={outline?.modules} />
+      <ModuleContainer
+        modules={outline?.modules}
+        courseId={outline?.course?.id}
+      />
     </div>
   );
 };
