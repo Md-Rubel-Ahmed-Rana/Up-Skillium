@@ -1,7 +1,8 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
-const PopularSectionTitle = () => {
+const StudentPanelTitle: React.FC = () => {
   const titleRef = useRef<HTMLHeadingElement | null>(null);
   const introTextRef = useRef<HTMLParagraphElement | null>(null);
 
@@ -32,21 +33,23 @@ const PopularSectionTitle = () => {
   }, []);
 
   return (
-    <div className="text-center py-4 mt-8 md:mt-16">
+    <div className="text-center py-10">
       <h2
         ref={titleRef}
-        className="text-3xl md:text-5xl lg:text-6xl font-extrabold font-serif text-gray-800"
+        className="text-3xl md:text-6xl font-semibold mb-4"
       >
-        Upskillium Popular Courses
+        Upskillium's Student Panel
       </h2>
       <p
         ref={introTextRef}
-        className="text-sm md:text-lg text-gray-600 mt-4 md:mt-6 max-w-full md:max-w-2xl mx-auto font-black font-serif"
+        className="text-lg md:text-xl text-gray-600 mx-auto max-w-2xl"
       >
-      Upskillium equips students with skills for a competitive future through hands-on training and real-world projects.
+        Here you can manage your courses, track your progress, and connect with
+        fellow students. Start your journey towards success with all the tools
+        you need at your fingertips.
       </p>
     </div>
   );
 };
 
-export default PopularSectionTitle;
+export default StudentPanelTitle;
