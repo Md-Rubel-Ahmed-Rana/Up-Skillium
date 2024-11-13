@@ -9,7 +9,7 @@ const DashboardCourseOutlines = () => {
   const { data } = useGetCourseOutlineByCourseIdQuery({ courseId });
   const outline = data?.data as ICourseOutline;
   return (
-    <div>
+    <div className="pb-20">
       <h1 className="text-2xl font-semibold text-center mt-3">
         Outline of the Course
       </h1>

@@ -38,7 +38,7 @@ const ModuleContainer = ({ modules: initialModules, courseId }: Props) => {
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className="p-4 bg-gray-100 rounded-lg shadow-md">
+      <div className="lg:p-4 p-2 bg-gray-100 rounded-lg shadow-md">
         <h2 className="text-lg font-semibold mb-4">Module List</h2>
         <Droppable droppableId={courseId}>
           {(provided) => (
