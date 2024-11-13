@@ -1,24 +1,22 @@
-import { IModuleOutline } from "@/types/courseOutline.type";
-
-type IDragEnd = {
-  sourceObject: { sourceIndex: number; moduleId: string };
-  destinationObject: {
-    destinationIndex: number;
-    moduleId: string;
-  };
-};
+import {
+  ICourseOutlineModuleSerialUpdate,
+  IModuleOutline,
+} from "@/types/courseOutline.type";
 
 const handleCourseOutlineDragEndDrop = (
   sourceIndex: number,
   destinationIndex: number,
   modules: IModuleOutline[]
-): IDragEnd => {
+): ICourseOutlineModuleSerialUpdate => {
   const sourceItem = modules[sourceIndex];
-  const sourceObject = { sourceIndex, moduleId: sourceItem?.id };
+  const sourceObject = {
+    serialNumber: sourceIndex + 1,
+    moduleId: sourceItem?.id,
+  };
 
   const destinationItem = modules[destinationIndex];
   const destinationObject = {
-    destinationIndex,
+    serialNumber: destinationIndex + 1,
     moduleId: destinationItem?.id,
   };
   return { sourceObject, destinationObject };
