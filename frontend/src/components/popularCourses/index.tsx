@@ -3,7 +3,7 @@ import PopularSectionTitle from "./PopularSectionTitle";
 
 const PopularCourses = () => {
   return (
-    <div className="w-[1200px] mx-auto">
+    <div>
       <PopularSectionTitle />
       <PopularCourseContainer />
     </div>
