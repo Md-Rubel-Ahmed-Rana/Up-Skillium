@@ -33,15 +33,8 @@ const StudentPanelTitle: React.FC = () => {
   }, []);
 
   return (
-<<<<<<< HEAD
-    <div className="text-center py-10 mt-16">
-=======
     <div className="text-center py-10">
->>>>>>> a19bbf668be6f796b6792a87e140555536f09235
-      <h2
-        ref={titleRef}
-        className="text-3xl md:text-6xl font-semibold mb-4"
-      >
+      <h2 ref={titleRef} className="text-3xl md:text-6xl font-semibold mb-4">
         Upskillium's Student Panel
       </h2>
       <p
