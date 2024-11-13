@@ -81,6 +81,35 @@ class Service {
 
     await outline.save();
   }
+  async deleteModule(courseId: Types.ObjectId, moduleId: Types.ObjectId) {
+    await CourseOutline.updateOne(
+      { course: courseId },
+      { $pull: { modules: { _id: moduleId } } }
+    );
+  }
+
+  async updateModuleName(
+    courseId: Types.ObjectId,
+    moduleId: Types.ObjectId,
+    updatedName: string
+  ) {
+    const outline = await CourseOutline.findOne({
+      course: courseId,
+    });
+
+    if (!outline) {
+      throw new Error("Course outline or module not found");
+    }
+
+    const module = outline?.modules.find((mod) => mod?.id === moduleId);
+    if (!module) {
+      throw new Error("Module not found");
+    }
+
+    module.name = updatedName;
+
+    await outline.save();
+  }
 }
 
 export const CourseOutlineService = new Service();
