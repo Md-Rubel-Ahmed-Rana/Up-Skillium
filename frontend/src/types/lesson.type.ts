@@ -5,7 +5,7 @@ export type ILesson = {
   quizQuestions: IQuizQuestion[];
   serial: number;
   title: string;
-  type: string;
+  type: "assignment" | "instruction" | "quiz" | "video";
   module: string;
   content: string;
   videoLength: number;

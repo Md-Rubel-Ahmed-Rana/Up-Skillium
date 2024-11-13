@@ -8,6 +8,7 @@ import CourseBasicInformation from "./courseBasicInformation";
 import CoursePriceDetails from "./priceDetails";
 import TagsTechnologies from "./tagsTechnologies";
 import CourseInstructor from "./courseInstructor";
+import CourseDropDownList from "./CourseDropDownList";
 
 const DashboardCourseDetails = () => {
   const { query } = useRouter();
@@ -16,6 +17,11 @@ const DashboardCourseDetails = () => {
   const course = data?.data as ICourse;
   return (
     <div className="p-2 mt-3">
+      <div className="flex flex-col gap-2 justify-center items-center my-4">
+        <h1 className="text-3xl font-semibold">Course Details</h1>
+        <CourseDropDownList />
+        <h2 className="text-lg font-semibold text-gray-600">{course?.title}</h2>
+      </div>
       {/* course image and intro video  */}
       <div className="flex flex-col lg:flex-row justify-between gap-2">
         <CourseImage courseId={course?.id} image={course?.image} />
