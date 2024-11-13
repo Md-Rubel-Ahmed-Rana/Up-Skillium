@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Button } from "antd/lib";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { FiMove } from "react-icons/fi";
 import { IModuleOutline } from "@/types/courseOutline.type";
-import ModuleEditModal from "../courseDetails/courseOutline/ModuleEditModal";
+import ModuleDeleteButton from "./ModuleDeleteButton";
+import ModuleEditButton from "./ModuleEditButton";
 
 type Props = {
   modules: IModuleOutline[];
@@ -12,10 +12,6 @@ type Props = {
 
 const ModuleContainer = ({ modules }: Props) => {
   const [moduleList, setModuleList] = useState<IModuleOutline[]>(modules);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editableModule, setEditableModule] = useState<IModuleOutline | null>(
-    null
-  );
 
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -25,16 +21,6 @@ const ModuleContainer = ({ modules }: Props) => {
     reorderedModules.splice(result.destination.index, 0, removed);
 
     setModuleList(reorderedModules);
-  };
-
-  const handleEditModule = (module: IModuleOutline) => {
-    setEditableModule(module);
-    setIsModalOpen(true);
-  };
-
-  // Delete a module
-  const handleDelete = (id: string) => {
-    setModuleList((prev) => prev.filter((mod) => mod.id !== id));
   };
 
   return (
@@ -72,21 +58,8 @@ const ModuleContainer = ({ modules }: Props) => {
                             size={20}
                           />
                         </div>
-                        <Button
-                          size="small"
-                          type="link"
-                          onClick={() => handleEditModule(module)}
-                        >
-                          Edit
-                        </Button>
-                        <Button
-                          size="small"
-                          type="link"
-                          danger
-                          onClick={() => handleDelete(module?.id)}
-                        >
-                          Delete
-                        </Button>
+                        <ModuleEditButton module={module} />
+                        <ModuleDeleteButton module={module} />
                       </div>
                     </div>
                   )}
@@ -97,11 +70,6 @@ const ModuleContainer = ({ modules }: Props) => {
           )}
         </Droppable>
       </DragDropContext>
-      <ModuleEditModal
-        module={editableModule as IModuleOutline}
-        open={isModalOpen}
-        setOpen={setIsModalOpen}
-      />
     </div>
   );
 };
