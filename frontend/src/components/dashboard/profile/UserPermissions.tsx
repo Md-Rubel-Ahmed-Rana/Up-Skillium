@@ -12,7 +12,7 @@ const UserPermissions = ({ user }: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   return (
     <Descriptions
-      title={`Permissions as ${user.role.role.toUpperCase()}`}
+      title={`Permissions as ${user?.role?.role?.toUpperCase()}`}
       bordered={isLargeDevice}
       className="mt-4"
     >
