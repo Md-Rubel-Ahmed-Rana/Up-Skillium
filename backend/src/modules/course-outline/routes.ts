@@ -11,6 +11,11 @@ router.get("/:id", CourseOutlineController.getOutline);
 
 router.get("/by-course/:courseId", CourseOutlineController.getOutlineByCourse);
 
+router.patch(
+  "/update-module-serial/:courseId",
+  CourseOutlineController.updateModuleSerialNumberFromDragDrop
+);
+
 router.patch("/:id", CourseOutlineController.updateOutline);
 
 router.delete("/:id", CourseOutlineController.deleteOutline);

@@ -1,6 +1,7 @@
 import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { CourseOutlineService } from "./service";
+import { Types } from "mongoose";
 
 class Controller extends RootController {
   createOutline = this.catchAsync(async (req: Request, res: Response) => {
@@ -61,6 +62,21 @@ class Controller extends RootController {
       data: null,
     });
   });
+  updateModuleSerialNumberFromDragDrop = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const courseId = req.params.courseId as unknown as Types.ObjectId;
+      await CourseOutlineService.updateModuleSerialNumberFromDragDrop(
+        courseId,
+        req.body
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Modules serial updated successful",
+        data: null,
+      });
+    }
+  );
 }
 
 export const CourseOutlineController = new Controller();
