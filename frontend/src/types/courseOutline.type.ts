@@ -20,6 +20,7 @@ export type ICourseForOutline = {
 export type IModuleOutline = {
   id: string;
   name: string;
+  serial: number;
 };
 
 export type ICourseOutlineModuleSerialUpdate = {

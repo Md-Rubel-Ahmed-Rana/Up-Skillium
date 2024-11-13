@@ -1,9 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ModuleItem from "./ModuleItem";
-import { IModuleOutline } from "@/types/courseOutline.type";
+import {
+  ICourseOutlineModuleSerialUpdate,
+  IModuleOutline,
+} from "@/types/courseOutline.type";
 import { useEffect, useState } from "react";
 import handleCourseOutlineDragEndDrop from "@/utils/handleCourseOutlineDragEndDrop";
+import { useUpdateCourseOutlineModuleSerialMutation } from "@/features/courseOutline";
+import toast from "react-hot-toast";
 
 type Props = {
   modules: IModuleOutline[];
@@ -12,8 +17,9 @@ type Props = {
 
 const ModuleContainer = ({ modules: initialModules, courseId }: Props) => {
   const [modules, setModules] = useState<IModuleOutline[]>(initialModules);
+  const [updateSerial] = useUpdateCourseOutlineModuleSerialMutation();
 
-  const handleDragEnd = (result: any) => {
+  const handleDragEnd = async (result: any) => {
     const { source, destination } = result;
     if (!destination || source.index === destination.index) return;
 
@@ -29,7 +35,29 @@ const ModuleContainer = ({ modules: initialModules, courseId }: Props) => {
       destination?.index,
       initialModules
     );
-    console.log(droppedData);
+    await handleUpdateModuleSerialNumber(droppedData);
+  };
+
+  const handleUpdateModuleSerialNumber = async (
+    data: ICourseOutlineModuleSerialUpdate
+  ) => {
+    try {
+      const result: any = await updateSerial({ courseId, data });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result?.data?.message || "Modules serial updated successfully!"
+        );
+      } else {
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            result?.data?.error?.message ||
+            "Failed to update modules serial."
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to update modules serial. Error: ${error?.message}`);
+    }
   };
 
   useEffect(() => {
