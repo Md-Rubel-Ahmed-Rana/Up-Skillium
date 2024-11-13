@@ -16,6 +16,16 @@ router.patch(
   CourseOutlineController.updateModuleSerialNumberFromDragDrop
 );
 
+router.patch(
+  "/update-module-name/:courseId/:moduleId",
+  CourseOutlineController.updateModuleName
+);
+
+router.delete(
+  "/delete-module/:courseId/:moduleId",
+  CourseOutlineController.deleteModule
+);
+
 router.patch("/:id", CourseOutlineController.updateOutline);
 
 router.delete("/:id", CourseOutlineController.deleteOutline);
