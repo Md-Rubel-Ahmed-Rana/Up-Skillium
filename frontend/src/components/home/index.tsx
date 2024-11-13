@@ -1,4 +1,5 @@
 import PopularCourse from "../popularCourses";
+import StudentFacilities from "../StudentFacilities";
 import StudentPanel from "../StudentPanel";
 import Banner from "./Banner";
 
@@ -7,6 +8,7 @@ const Home = () => {
     <div>
       <Banner />
       <PopularCourse />
+      <StudentFacilities />
       <StudentPanel />
     </div>
   );

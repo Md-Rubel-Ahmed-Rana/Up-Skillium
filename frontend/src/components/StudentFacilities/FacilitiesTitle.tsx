@@ -1,13 +1,12 @@
-/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
-const StudentPanelTitle: React.FC = () => {
+const FacilitiesTitle = () => {
   const titleRef = useRef<HTMLHeadingElement | null>(null);
-  const introTextRef = useRef<HTMLParagraphElement | null>(null);
+  const descriptionRef = useRef<HTMLParagraphElement | null>(null);
 
   useEffect(() => {
-    if (!titleRef.current || !introTextRef.current) return;
+    if (!titleRef.current || !descriptionRef.current) return;
 
     const letters = titleRef.current.textContent?.split("") || [];
     titleRef.current.innerHTML = "";
@@ -33,23 +32,21 @@ const StudentPanelTitle: React.FC = () => {
   }, []);
 
   return (
-    <div className="text-center py-10 mt-16">
+    <div className="text-center py-4 mt-48 md:mt-16">
       <h2
         ref={titleRef}
-        className="text-3xl md:text-6xl font-semibold mb-4"
+        className="text-3xl md:text-5xl lg:text-6xl font-extrabold font-serif text-gray-800"
       >
-        Upskillium's Student Panel
+        Our Top Facilities
       </h2>
       <p
-        ref={introTextRef}
-        className="text-lg md:text-xl text-gray-600 mx-auto max-w-2xl"
+        ref={descriptionRef}
+        className="text-sm md:text-lg text-gray-600 mt-4 md:mt-6 max-w-full md:max-w-2xl mx-auto font-black font-serif"
       >
-        Here you can manage your courses, track your progress, and connect with
-        fellow students. Start your journey towards success with all the tools
-        you need at your fingertips.
+        Discover the exceptional facilities we offer, equipped with cutting-edge resources to support your educational journey and empower your success.
       </p>
     </div>
   );
 };
 
-export default StudentPanelTitle;
+export default FacilitiesTitle;
