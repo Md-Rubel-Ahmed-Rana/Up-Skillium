@@ -1,5 +1,10 @@
+import { Types } from "mongoose";
 import ApiError from "../../shared/apiError";
-import { ICourseOutline } from "./interface";
+import {
+  ICourseOutline,
+  IModuleOutline,
+  IModuleSerialUpdate,
+} from "./interface";
 import { CourseOutline } from "./model";
 
 class Service {
@@ -43,6 +48,38 @@ class Service {
   }
   async deleteOutline(id: string): Promise<void> {
     await CourseOutline.findByIdAndDelete(id);
+  }
+  async updateModuleSerialNumberFromDragDrop(
+    courseId: Types.ObjectId,
+    data: IModuleSerialUpdate
+  ) {
+    const outline = await CourseOutline.findOne({ course: courseId });
+    if (!outline) {
+      throw new Error("Course outline not found");
+    }
+
+    const modules = outline.modules as IModuleOutline[];
+
+    const updatedModules = modules.map((module) => {
+      if (module?.id === data?.sourceObject?.moduleId) {
+        return {
+          id: module?.id,
+          name: module?.name,
+          serial: data.destinationObject.serialNumber,
+        };
+      }
+      if (module?.id === data?.destinationObject?.moduleId) {
+        return {
+          id: module?.id,
+          name: module?.name,
+          serial: data.sourceObject.serialNumber,
+        };
+      }
+      return module;
+    });
+    outline.modules = updatedModules;
+
+    await outline.save();
   }
 }
 
