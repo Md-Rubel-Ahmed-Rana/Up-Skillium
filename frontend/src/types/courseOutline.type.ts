@@ -21,3 +21,14 @@ export type IModuleOutline = {
   id: string;
   name: string;
 };
+
+export type ICourseOutlineModuleSerialUpdate = {
+  sourceObject: {
+    serialNumber: number;
+    moduleId: string;
+  };
+  destinationObject: {
+    serialNumber: number;
+    moduleId: string;
+  };
+};
