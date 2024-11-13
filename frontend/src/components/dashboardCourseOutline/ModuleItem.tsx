@@ -19,6 +19,10 @@ const ModuleItem = ({ module, index, dragHandleProps }: Props) => {
         </span>
       </div>
       <div className="space-x-2 mt-2 lg:mt-0 flex items-center">
+        <p className="flex items-center gap-2">
+          <span>Serial: </span>
+          <span>{module?.serial}</span>
+        </p>
         <div {...dragHandleProps}>
           <FiMove className="cursor-grab text-gray-500" size={20} />
         </div>
