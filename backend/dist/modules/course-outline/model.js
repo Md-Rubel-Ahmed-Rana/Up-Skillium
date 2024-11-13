@@ -8,6 +8,7 @@ const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 const moduleSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
+    serial: { type: Number, required: true },
 }, schemaOption_1.default);
 const courseOutlineSchema = new mongoose_1.Schema({
     course: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: "Course" },

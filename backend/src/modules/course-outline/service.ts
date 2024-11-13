@@ -8,12 +8,24 @@ import {
 import { CourseOutline } from "./model";
 
 class Service {
-  async createOutline(data: ICourseOutline): Promise<void> {
+  async createOutline(data: ICourseOutline | ICourseOutline[]): Promise<void> {
     await CourseOutline.create(data);
   }
   async getOutlines(): Promise<ICourseOutline[]> {
-    return await CourseOutline.find({});
+    const outlines = await CourseOutline.find({}).populate([
+      {
+        path: "course",
+        model: "Course",
+        select: { title: 1, image: 1 },
+      },
+    ]);
+
+    return outlines.map((outline) => {
+      outline.modules = outline.modules.sort((a, b) => a.serial - b.serial);
+      return outline;
+    });
   }
+
   async getOutline(id: string): Promise<ICourseOutline | null> {
     const data = await CourseOutline.findById(id).populate([
       {
@@ -25,6 +37,7 @@ class Service {
     if (!data) {
       throw new ApiError(404, "Course outline was not found!");
     }
+    data.modules = data.modules.sort((a, b) => a.serial - b.serial);
     return data;
   }
   async getOutlineByCourse(courseId: string): Promise<ICourseOutline | null> {
@@ -35,11 +48,16 @@ class Service {
         select: { title: 1, image: 1 },
       },
     ]);
+
     if (!data) {
       throw new ApiError(404, "Course outline was not found!");
     }
+
+    data.modules = data.modules.sort((a, b) => a.serial - b.serial);
+
     return data;
   }
+
   async updateOutline(
     id: string,
     updatedData: Partial<ICourseOutline>
