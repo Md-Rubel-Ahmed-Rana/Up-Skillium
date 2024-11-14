@@ -69,6 +69,12 @@ class Service {
             ]);
         });
     }
+    getCoursesByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const courses = yield model_1.Course.find({ instructor: instructorId });
+            return courses;
+        });
+    }
     updateCourse(id, updatedData) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Course.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });

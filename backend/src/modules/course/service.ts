@@ -83,6 +83,10 @@ class Service {
       },
     ]);
   }
+  async getCoursesByInstructor(instructorId: Types.ObjectId) {
+    const courses = await Course.find({ instructor: instructorId });
+    return courses;
+  }
   async updateCourse(
     id: Types.ObjectId,
     updatedData: Partial<ICourse>

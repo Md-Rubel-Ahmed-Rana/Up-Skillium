@@ -52,6 +52,16 @@ class Controller extends rootController_1.default {
                 data: course,
             });
         }));
+        this.getCoursesByInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const instructorId = req.params.instructorId;
+            const course = yield service_1.CourseService.getCoursesByInstructor(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Courses fetched successfully",
+                data: course,
+            });
+        }));
         this.updateCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             yield service_1.CourseService.updateCourse(id, req.body);
