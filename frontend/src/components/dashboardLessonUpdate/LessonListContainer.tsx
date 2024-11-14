@@ -2,6 +2,7 @@ import { useGetAllLessonsQuery } from "@/features/lesson";
 import { ILesson } from "@/types/lesson.type";
 import LessonItem from "./LessonItem";
 import { Divider } from "antd/lib";
+import LessonSearchContainer from "./LessonSearchContainer";
 
 const LessonListContainer = () => {
   const { data } = useGetAllLessonsQuery({});
@@ -11,6 +12,7 @@ const LessonListContainer = () => {
       <h3 className="text-lg font-semibold text-center">
         Select lesson to update
       </h3>
+      <LessonSearchContainer />
       <Divider className="my-2" />
       <ul className="flex flex-col gap-2">
         {lessons?.map((lesson) => (
