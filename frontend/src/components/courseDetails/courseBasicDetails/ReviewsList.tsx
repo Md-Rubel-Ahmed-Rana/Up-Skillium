@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { IReview } from "@/types/course.type";
 import { List, Typography } from "antd/lib";
 

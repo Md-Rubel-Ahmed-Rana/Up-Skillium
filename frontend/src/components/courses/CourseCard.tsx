@@ -1,8 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { fallbackImageUrl } from "@/constants/fallback";
 import { ICourse } from "@/types/course.type";
-import { Avatar, Button, Card, Rate, Typography, Image } from "antd/lib";
+import { Avatar, Button, Card, Image, Rate, Typography } from "antd/lib";
 import Link from "next/link";
 import CheckoutRedirectButton from "./CheckoutRedirectButton";
 

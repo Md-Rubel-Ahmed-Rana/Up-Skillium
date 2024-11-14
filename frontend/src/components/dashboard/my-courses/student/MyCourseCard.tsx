@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { ICourseProgress } from "@/types/studentProgress.type";
 import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
 import { Button, Card, Progress } from "antd/lib";

@@ -1,8 +1,8 @@
-import { ILesson } from "@/types/lesson.type";
-import { FiTrash } from "react-icons/fi";
-import { message, Modal, Spin } from "antd";
-import { useState } from "react";
 import { useDeleteLessonMutation } from "@/features/lesson";
+import { ILesson } from "@/types/lesson.type";
+import { message, Modal, Spin } from "antd/lib";
+import { useState } from "react";
+import { FiTrash } from "react-icons/fi";
 
 type Props = {
   lesson: ILesson;

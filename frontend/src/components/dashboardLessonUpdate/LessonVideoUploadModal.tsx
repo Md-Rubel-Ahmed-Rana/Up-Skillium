@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { useUploadLessonVideoMutation } from "@/features/lesson";
 import { Modal, Upload } from "antd/lib";
 import { useState } from "react";

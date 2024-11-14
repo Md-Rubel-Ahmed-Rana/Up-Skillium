@@ -1,7 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 import { Button } from "antd/lib";
-import UpdateCourseImage from "./UpdateCourseImage";
 import { useState } from "react";
+import UpdateCourseImage from "./UpdateCourseImage";
 
 type Props = {
   courseId: string;

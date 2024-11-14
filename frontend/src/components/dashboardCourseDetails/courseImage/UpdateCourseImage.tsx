@@ -1,6 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import { useUpdateCourseImageMutation } from "@/features/course";
-import { Modal, Upload, Spin } from "antd/lib";
+import { Modal, Spin, Upload } from "antd/lib";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa";

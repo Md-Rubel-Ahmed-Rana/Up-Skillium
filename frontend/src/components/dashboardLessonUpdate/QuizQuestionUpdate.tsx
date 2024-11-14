@@ -1,5 +1,5 @@
-import { Form, Input, Button, Space, Collapse } from "antd/lib";
 import { IQuizQuestion } from "@/types/quiz.type";
+import { Button, Collapse, Form, Input, Space } from "antd/lib";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -19,7 +19,7 @@ const QuizQuestionUpdate = ({ questions }: Props) => {
   };
 
   return (
-    <div className="p-4 shadow-md rounded-md">
+    <div className="lg:p-4 p-2 shadow-md rounded-md">
       <h2 className="font-semibold text-2xl mb-4">Edit Quiz</h2>
       <Form
         form={form}
@@ -148,7 +148,7 @@ const QuizQuestionUpdate = ({ questions }: Props) => {
             </>
           )}
         </Form.List>
-        <Button type="primary" htmlType="submit" className="mt-6">
+        <Button type="primary" htmlType="submit" className="mt-6 w-full">
           Save Changes
         </Button>
       </Form>

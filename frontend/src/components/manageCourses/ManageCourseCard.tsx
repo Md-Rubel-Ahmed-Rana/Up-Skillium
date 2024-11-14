@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { fallbackImageUrl } from "@/constants/fallback";
 import { ICourse } from "@/types/course.type";
 import { Button, Card, Image } from "antd/lib";

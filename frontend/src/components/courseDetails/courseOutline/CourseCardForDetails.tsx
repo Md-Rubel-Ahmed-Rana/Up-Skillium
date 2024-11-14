@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import CheckoutRedirectButton from "@/components/courses/CheckoutRedirectButton";
 import { ICourseForOutline } from "@/types/courseOutline.type";
 import { Card, Typography } from "antd/lib";

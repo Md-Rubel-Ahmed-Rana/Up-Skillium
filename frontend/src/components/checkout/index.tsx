@@ -1,10 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 import { useGetSingleCourseQuery } from "@/features/course";
+import CheckoutSkeleton from "@/skeletons/checkoutSkeleton";
 import { ICourse } from "@/types/course.type";
 import { useRouter } from "next/router";
 import BasicCourseInfo from "./BasicCourseInfo";
 import CheckoutDetails from "./CheckoutDetails";
-import CheckoutSkeleton from "@/skeletons/checkoutSkeleton";
 
 const Checkout = () => {
   const { query } = useRouter();

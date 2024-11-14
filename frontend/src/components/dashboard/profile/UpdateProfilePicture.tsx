@@ -1,6 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
 import { Button, Modal, Upload, UploadProps } from "antd/lib";
+import React, { useState } from "react";
 import { GoPlus } from "react-icons/go";
 import ProfilePictureChangeButton from "./ProfilePictureChangeButton";
 
