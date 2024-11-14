@@ -31,7 +31,9 @@ const DashboardLessonUpdate = () => {
                 <VideoLessonUpdate lesson={lesson} />
               )}
               {lesson?.type === "assignment" && <AssignmentLessonUpdate />}
-              {lesson?.type === "instruction" && <InstructionLessonUpdate />}
+              {lesson?.type === "instruction" && (
+                <InstructionLessonUpdate lesson={lesson} />
+              )}
               {lesson?.type === "quiz" && <QuizLessonUpdate />}
             </div>
             <div className="w-1/3 pb-40">
