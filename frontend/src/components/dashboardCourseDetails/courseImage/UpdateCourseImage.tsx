@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 import { useUpdateCourseImageMutation } from "@/features/course";
 import { Modal, Upload, Spin } from "antd/lib";

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IUser } from "@/types/user.type";
 import { Button, Descriptions, Input, DatePicker, Select } from "antd/lib";
 import React, { useState } from "react";

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useChangeProfilePictureMutation } from "@/features/user";
 import { IUser } from "@/types/user.type";

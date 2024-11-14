@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd/lib";

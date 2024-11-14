@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { ICourse } from "@/types/course.type";
 import { Button, Card, Image } from "antd/lib";
 import Link from "next/link";
@@ -82,11 +82,18 @@ const PopularCard = ({ course }: Props) => {
           }&tags=${course?.tags?.toString()}`}
           key={"1"}
         >
-          <Button type="dashed" className="w-full text-xs md:text-sm lg:text-base bg-yellow-500 text-white">
+          <Button
+            type="dashed"
+            className="w-full text-xs md:text-sm lg:text-base bg-yellow-500 text-white"
+          >
             See Details
           </Button>
         </Link>,
-        <Button type="primary" className="w-full text-xs md:text-sm lg:text-base" key={"2"}>
+        <Button
+          type="primary"
+          className="w-full text-xs md:text-sm lg:text-base"
+          key={"2"}
+        >
           Buy Now
         </Button>,
       ]}

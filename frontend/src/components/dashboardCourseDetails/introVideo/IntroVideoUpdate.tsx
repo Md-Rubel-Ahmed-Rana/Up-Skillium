@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 import { useUpdateCourseIntroVideoMutation } from "@/features/course";
 import { Modal, Upload } from "antd/lib";

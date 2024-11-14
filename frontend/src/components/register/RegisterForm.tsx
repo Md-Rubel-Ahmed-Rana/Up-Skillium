@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd/lib";
 import { useUserRegisterMutation } from "@/features/auth";

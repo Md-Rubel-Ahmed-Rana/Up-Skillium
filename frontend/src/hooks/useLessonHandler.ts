@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ILessonDetails, ILessonProgress } from "@/types/studentProgress.type";
 import { useLessonMarkAsCompleteMutation } from "@/features/studentProgress";
 import Swal from "sweetalert2";

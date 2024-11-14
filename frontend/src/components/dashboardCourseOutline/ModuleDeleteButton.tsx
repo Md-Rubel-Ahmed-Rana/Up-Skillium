@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Modal, Button } from "antd/lib";
 import { IModuleOutline } from "@/types/courseOutline.type";
 import { useState } from "react";
