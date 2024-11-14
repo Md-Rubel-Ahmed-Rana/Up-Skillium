@@ -22,7 +22,7 @@ const DashboardLessonUpdate = () => {
         </div>
       ) : (
         <>
-          <h1 className="text-2xl font-semibold text-center my-2">
+          <h1 className="text-2xl font-semibold text-center my-4">
             Update lesson: {lesson?.title}
           </h1>
           <div className="flex gap-2">

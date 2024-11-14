@@ -17,7 +17,19 @@ const lessonApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["lesson"] as any,
     }),
+    uploadLessonVideo: builder.mutation({
+      query: ({ video }: { video: FormData }) => ({
+        method: "POST",
+        url: `/lesson/upload-video`,
+        body: video,
+      }),
+      invalidatesTags: ["lesson"] as any,
+    }),
   }),
 });
 
-export const { useGetSingleLessonQuery, useGetAllLessonsQuery } = lessonApi;
+export const {
+  useGetSingleLessonQuery,
+  useGetAllLessonsQuery,
+  useUploadLessonVideoMutation,
+} = lessonApi;
