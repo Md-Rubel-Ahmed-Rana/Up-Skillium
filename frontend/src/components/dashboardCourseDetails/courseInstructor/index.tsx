@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { IInstructor } from "@/types/course.type";
 import { Descriptions } from "antd/lib";
 import { useMediaQuery } from "react-responsive";

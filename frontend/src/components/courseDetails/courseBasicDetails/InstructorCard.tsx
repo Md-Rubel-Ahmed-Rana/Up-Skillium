@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { IInstructor } from "@/types/course.type";
 import { Card, Typography } from "antd/lib";
 

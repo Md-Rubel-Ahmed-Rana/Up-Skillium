@@ -1,9 +1,9 @@
-import { ILesson } from "@/types/lesson.type";
-import { Form, Input, Button, Divider } from "antd/lib";
-import { useEffect, useState } from "react";
 import { useUpdateLessonMutation } from "@/features/lesson";
-import toast from "react-hot-toast";
+import { ILesson } from "@/types/lesson.type";
+import { Button, Divider, Form, Input } from "antd/lib";
 import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import QuizQuestionUpdate from "./QuizQuestionUpdate";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -62,7 +62,7 @@ const QuizLessonUpdate = ({ lesson }: Props) => {
   }, [lesson, form]);
 
   return (
-    <div className="space-y-4 border p-4 rounded-md">
+    <div className="space-y-4 border lg:p-4 rounded-md">
       <Form
         form={form}
         onFinish={handleUpdateVideoLesson}

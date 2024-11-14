@@ -1,6 +1,6 @@
 import { useGetAllLessonsQuery } from "@/features/lesson";
 import { ILesson } from "@/types/lesson.type";
-import { Button, Input, Dropdown, MenuProps } from "antd/lib";
+import { Button, Dropdown, Input, MenuProps } from "antd/lib";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { IoSearch } from "react-icons/io5";

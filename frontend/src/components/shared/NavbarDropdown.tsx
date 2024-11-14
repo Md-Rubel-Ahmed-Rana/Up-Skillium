@@ -1,11 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { IUser } from "@/types/user.type";
 import { Avatar, Dropdown, MenuProps } from "antd/lib";
 import Link from "next/link";
-import LogoutButton from "./LogoutButton";
-import { FaBars, FaTimes } from "react-icons/fa";
 import { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import LogoutButton from "./LogoutButton";
 
 type Props = {
   isToggleIcon: boolean;

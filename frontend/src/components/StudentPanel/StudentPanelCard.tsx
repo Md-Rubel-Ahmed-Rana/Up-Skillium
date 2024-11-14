@@ -1,7 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
-import React from "react";
 import { Card } from "antd/lib";
 import gsap from "gsap";
+import React from "react";
 import { Student } from "./students";
 const { Meta } = Card;
 

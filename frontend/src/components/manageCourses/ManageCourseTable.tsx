@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { ICourse } from "@/types/course.type";
 import { Button, Table, TableProps } from "antd/lib";
 import Link from "next/link";

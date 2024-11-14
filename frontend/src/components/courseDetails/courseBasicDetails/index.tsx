@@ -1,11 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 import { useGetSingleCourseQuery } from "@/features/course";
-import IntroductoryVideoPlayer from "./IntroductoryVideoPlayer";
-import { useRouter } from "next/router";
 import { ICourse } from "@/types/course.type";
+import { useRouter } from "next/router";
+import CourseInformation from "./CourseInformation";
 import CourseTitleCategoryCard from "./CourseTitleCategoryCard";
 import InstructorCard from "./InstructorCard";
-import CourseInformation from "./CourseInformation";
+import IntroductoryVideoPlayer from "./IntroductoryVideoPlayer";
 import StudentFeedback from "./StudentFeedback";
 
 const CourseBasicDetails = () => {

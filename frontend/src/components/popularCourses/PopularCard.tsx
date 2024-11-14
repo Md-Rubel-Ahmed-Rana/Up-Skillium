@@ -1,10 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-
 import { ICourse } from "@/types/course.type";
 import { Button, Card, Image } from "antd/lib";
-import Link from "next/link";
-import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
+import Link from "next/link";
+import { useEffect, useRef } from "react";
 
 const { Meta } = Card;
 type Props = {
