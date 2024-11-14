@@ -12,6 +12,7 @@ const router = (0, express_1.Router)();
 router.post("/create", controller_1.CourseController.createCourse);
 router.get("/", controller_1.CourseController.getCourses);
 router.get("/:id", controller_1.CourseController.getSingleCourse);
+router.get("/instructor/:instructorId", controller_1.CourseController.getCoursesByInstructor);
 router.delete("/:id", controller_1.CourseController.deleteCourse);
 router.patch("/update-basic-info/:id", controller_1.CourseController.updateCourseBasicInfo);
 router.patch("/update-price/:id", controller_1.CourseController.updateCoursePrice);

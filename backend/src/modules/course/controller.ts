@@ -46,6 +46,18 @@ class Controller extends RootController {
       data: course,
     });
   });
+  getCoursesByInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      const course = await CourseService.getCoursesByInstructor(instructorId);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Courses fetched successfully",
+        data: course,
+      });
+    }
+  );
   updateCourse = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await CourseService.updateCourse(id, req.body);

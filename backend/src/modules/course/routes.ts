@@ -11,6 +11,11 @@ router.get("/", CourseController.getCourses);
 
 router.get("/:id", CourseController.getSingleCourse);
 
+router.get(
+  "/instructor/:instructorId",
+  CourseController.getCoursesByInstructor
+);
+
 router.delete("/:id", CourseController.deleteCourse);
 
 router.patch("/update-basic-info/:id", CourseController.updateCourseBasicInfo);
