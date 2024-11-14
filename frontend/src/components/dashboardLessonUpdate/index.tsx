@@ -36,7 +36,7 @@ const DashboardLessonUpdate = () => {
               {lesson?.type === "instruction" && (
                 <InstructionLessonUpdate lesson={lesson} />
               )}
-              {lesson?.type === "quiz" && <QuizLessonUpdate />}
+              {lesson?.type === "quiz" && <QuizLessonUpdate lesson={lesson} />}
             </div>
             <div className="w-1/3 pb-40">
               <LessonListContainer />
