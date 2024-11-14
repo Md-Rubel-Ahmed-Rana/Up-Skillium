@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ILesson } from "@/types/lesson.type";
 import apiSlice from "../api/apiSlice";
 
 const lessonApi = apiSlice.injectEndpoints({
@@ -19,9 +20,17 @@ const lessonApi = apiSlice.injectEndpoints({
     }),
     uploadLessonVideo: builder.mutation({
       query: ({ video }: { video: FormData }) => ({
-        method: "POST",
+        method: "PATCH",
         url: `/lesson/upload-video`,
         body: video,
+      }),
+      invalidatesTags: ["lesson"] as any,
+    }),
+    updateLesson: builder.mutation({
+      query: ({ lessonId, data }: { lessonId: string; data: ILesson }) => ({
+        method: "PATCH",
+        url: `/lesson/${lessonId}`,
+        body: data,
       }),
       invalidatesTags: ["lesson"] as any,
     }),
@@ -32,4 +41,5 @@ export const {
   useGetSingleLessonQuery,
   useGetAllLessonsQuery,
   useUploadLessonVideoMutation,
+  useUpdateLessonMutation,
 } = lessonApi;

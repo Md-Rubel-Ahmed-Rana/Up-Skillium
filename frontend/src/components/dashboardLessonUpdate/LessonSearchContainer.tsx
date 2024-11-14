@@ -36,7 +36,7 @@ const LessonSearchContainer = () => {
   };
 
   const items: MenuProps["items"] =
-    filteredLessons.length > 0
+    filteredLessons?.length > 0
       ? filteredLessons.map((lesson) => ({
           key: lesson?.id,
           label: (
