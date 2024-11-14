@@ -5,6 +5,12 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
+const stripHtmlTags = (html: string) => {
+  if (!html) return "";
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+};
+
 const LessonSearchContainer = () => {
   const { data } = useGetAllLessonsQuery({});
   const router = useRouter();
@@ -18,9 +24,14 @@ const LessonSearchContainer = () => {
       setSearchText(text);
       if (text) {
         setFilteredLessons(
-          lessons.filter((lesson) =>
-            lesson.title.toLowerCase().includes(text.toLowerCase())
-          )
+          lessons?.filter((lesson) => {
+            const sanitizedContent = stripHtmlTags(lesson?.content || "");
+            return (
+              lesson?.title.toLowerCase().includes(text.toLowerCase()) ||
+              lesson?.type.toLowerCase().includes(text.toLowerCase()) ||
+              sanitizedContent.toLowerCase().includes(text.toLowerCase())
+            );
+          })
         );
       } else {
         setFilteredLessons(lessons);
