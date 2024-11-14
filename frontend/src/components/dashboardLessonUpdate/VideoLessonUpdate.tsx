@@ -11,14 +11,17 @@ const VideoLessonUpdate = ({ lesson }: Props) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ILesson>();
+  } = useForm<ILesson>({ defaultValues: {} });
 
   const onSubmit = (data: ILesson) => {
     console.log(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 border p-4 rounded-md"
+    >
       {/* Title */}
       <div>
         <label htmlFor="title" className="block mb-1 text-sm font-medium">
@@ -30,7 +33,7 @@ const VideoLessonUpdate = ({ lesson }: Props) => {
           {...register("title", { required: "Title is required" })}
           placeholder="Enter lesson title"
           className="w-full"
-          value={lesson?.title}
+          defaultValue={lesson?.title}
         />
         {errors.title && (
           <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
@@ -51,7 +54,7 @@ const VideoLessonUpdate = ({ lesson }: Props) => {
           })}
           placeholder="Enter lesson serial"
           className="w-full"
-          value={lesson?.serial}
+          defaultValue={lesson?.serial}
         />
         {errors.serial && (
           <p className="text-red-500 text-sm mt-1">{errors.serial.message}</p>
@@ -68,7 +71,7 @@ const VideoLessonUpdate = ({ lesson }: Props) => {
           {...register("videoUrl", { required: "Video URL is required" })}
           placeholder="Enter video URL"
           className="w-full"
-          value={lesson?.videoUrl}
+          defaultValue={lesson?.videoUrl}
         />
         {errors.videoUrl && (
           <p className="text-red-500 text-sm mt-1">{errors.videoUrl.message}</p>
@@ -89,7 +92,7 @@ const VideoLessonUpdate = ({ lesson }: Props) => {
           })}
           placeholder="Enter video length in seconds"
           className="w-full"
-          value={lesson?.videoLength}
+          defaultValue={lesson?.videoLength}
         />
         {errors.videoLength && (
           <p className="text-red-500 text-sm mt-1">
