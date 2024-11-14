@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import CheckoutRedirectButton from "@/components/courses/CheckoutRedirectButton";
 import { ICourseForOutline } from "@/types/courseOutline.type";
-import { Button, Card, Typography } from "antd/lib";
+import { Card, Typography } from "antd/lib";
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -16,7 +17,7 @@ const CourseCardForDetails = ({ course }: Props) => {
       actions={[
         <div
           key="price-section"
-          className="w-11/12 flex flex-col items-center space-y-2"
+          className="w-11/12 flex flex-col justify-center mx-auto items-center space-y-2"
         >
           <div className="flex justify-between w-11/12 items-center">
             <div className="flex items-center gap-2">
@@ -36,9 +37,15 @@ const CourseCardForDetails = ({ course }: Props) => {
               </Text>
             </div>
           </div>
-          <Button size="large" type="primary" className="w-11/12">
-            Purchase Now
-          </Button>
+          <div className="w-full flex justify-center items-center">
+            <CheckoutRedirectButton
+              course={course}
+              buttonText="Purchase Now"
+              key={"1"}
+              buttonSize="large"
+              styles="w-full"
+            />
+          </div>
         </div>,
       ]}
     >

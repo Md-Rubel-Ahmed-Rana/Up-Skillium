@@ -4,6 +4,7 @@ import { fallbackImageUrl } from "@/constants/fallback";
 import { ICourse } from "@/types/course.type";
 import { Avatar, Button, Card, Rate, Typography, Image } from "antd/lib";
 import Link from "next/link";
+import CheckoutRedirectButton from "./CheckoutRedirectButton";
 
 const { Meta } = Card;
 const { Text } = Typography;
@@ -49,18 +50,13 @@ const CourseCard = ({ course }: Props) => {
             See Details
           </Button>
         </Link>,
-        <Link
-          href={`/checkout/${course?.id}?courseId=${course?.id}&courseName=${
-            course.title
-          }&category=${course?.category}&description=${
-            course?.description
-          }&tags=${course?.tags?.toString()}`}
+        <CheckoutRedirectButton
+          course={course}
+          buttonText="Buy Now"
           key={"1"}
-        >
-          <Button type="primary" className="w-[90%]" key={"2"}>
-            Buy Now
-          </Button>
-        </Link>,
+          buttonSize="middle"
+          styles="w-[90%]"
+        />,
       ]}
     >
       <Meta
