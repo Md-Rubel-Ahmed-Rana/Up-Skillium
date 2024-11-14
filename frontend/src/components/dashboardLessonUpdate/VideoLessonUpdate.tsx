@@ -1,115 +1,89 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ILesson } from "@/types/lesson.type";
-import { useForm } from "react-hook-form";
-import { Button, Input } from "antd/lib";
+import { Form, Input, Button } from "antd/lib";
+import { useEffect } from "react";
 
 type Props = {
   lesson: ILesson;
 };
 
 const VideoLessonUpdate = ({ lesson }: Props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<ILesson>({ defaultValues: {} });
+  const [form] = Form.useForm();
 
-  const onSubmit = (data: ILesson) => {
-    console.log(data);
+  const handleUpdateVideoLesson = (values: any) => {
+    console.log("Updated Data:", values);
   };
 
+  useEffect(() => {
+    if (lesson) {
+      form.setFieldsValue({
+        title: lesson.title,
+        serial: lesson.serial,
+        videoUrl: lesson.videoUrl,
+        videoLength: lesson.videoLength,
+      });
+    }
+  }, [lesson, form]);
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
+    <Form
+      form={form}
+      onFinish={handleUpdateVideoLesson}
+      layout="vertical"
       className="space-y-4 border p-4 rounded-md"
     >
-      {/* Title */}
-      <div>
-        <label htmlFor="title" className="block mb-1 text-sm font-medium">
-          Lesson Title
-        </label>
-        <Input
-          id="title"
-          type="text"
-          {...register("title", { required: "Title is required" })}
-          placeholder="Enter lesson title"
-          className="w-full"
-          defaultValue={lesson?.title}
-        />
-        {errors.title && (
-          <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>
-        )}
-      </div>
-
-      {/* Serial */}
-      <div>
-        <label htmlFor="serial" className="block mb-1 text-sm font-medium">
-          Serial
-        </label>
-        <Input
-          id="serial"
-          type="number"
-          {...register("serial", {
-            required: "Serial is required",
-            valueAsNumber: true,
-          })}
-          placeholder="Enter lesson serial"
-          className="w-full"
-          defaultValue={lesson?.serial}
-        />
-        {errors.serial && (
-          <p className="text-red-500 text-sm mt-1">{errors.serial.message}</p>
-        )}
-      </div>
-
-      {/* Video URL */}
-      <div>
-        <label htmlFor="videoUrl" className="block mb-1 text-sm font-medium">
-          Video URL
-        </label>
-        <Input.TextArea
-          id="videoUrl"
-          {...register("videoUrl", { required: "Video URL is required" })}
-          placeholder="Enter video URL"
-          className="w-full"
-          defaultValue={lesson?.videoUrl}
-        />
-        {errors.videoUrl && (
-          <p className="text-red-500 text-sm mt-1">{errors.videoUrl.message}</p>
-        )}
-      </div>
-
-      {/* Video Length */}
-      <div>
-        <label htmlFor="videoLength" className="block mb-1 text-sm font-medium">
-          Video Length (minutes)
-        </label>
-        <Input
-          id="videoLength"
-          type="number"
-          {...register("videoLength", {
-            required: "Video length is required",
-            valueAsNumber: true,
-          })}
-          placeholder="Enter video length in seconds"
-          className="w-full"
-          defaultValue={lesson?.videoLength}
-        />
-        {errors.videoLength && (
-          <p className="text-red-500 text-sm mt-1">
-            {errors.videoLength.message}
-          </p>
-        )}
-      </div>
-
-      <Button
-        type="primary"
-        htmlType="submit"
-        disabled={isSubmitting}
-        className="w-full mt-4"
+      <Form.Item
+        label="Lesson Title"
+        name="title"
+        rules={[{ required: true, message: "Title is required" }]}
       >
-        {isSubmitting ? "Updating..." : "Update Lesson"}
-      </Button>
-    </form>
+        <Input placeholder="Enter lesson title" />
+      </Form.Item>
+
+      <Form.Item
+        label="Serial"
+        name="serial"
+        rules={[
+          { required: true, message: "Serial is required" },
+          {
+            type: "number",
+            message: "Serial must be a number",
+            transform: (value) => Number(value),
+          },
+        ]}
+      >
+        <Input type="number" placeholder="Enter lesson serial" />
+      </Form.Item>
+
+      <Form.Item
+        label="Video URL"
+        name="videoUrl"
+        rules={[{ required: true, message: "Video URL is required" }]}
+      >
+        <Input.TextArea placeholder="Enter video URL" />
+      </Form.Item>
+
+      <Form.Item
+        label="Video Length (seconds)"
+        name="videoLength"
+        rules={[
+          { required: true, message: "Video length is required" },
+          {
+            type: "number",
+            message: "Video length must be a number",
+            transform: (value) => Number(value),
+          },
+        ]}
+      >
+        <Input type="number" placeholder="Enter video length in seconds" />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" className="w-full">
+          Update Lesson
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 
