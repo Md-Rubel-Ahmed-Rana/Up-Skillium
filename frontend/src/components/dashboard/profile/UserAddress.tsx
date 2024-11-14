@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useUpdateUserAddressMutation } from "@/features/user";
 import { IUser } from "@/types/user.type";
 import { Button, Descriptions, Input } from "antd/lib";

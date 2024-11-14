@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useMakeStripeCheckoutMutation } from "@/features/stripePayment";
 import { ICheckout } from "@/types/checkout.type";

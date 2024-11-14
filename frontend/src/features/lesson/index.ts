@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ILesson } from "@/types/lesson.type";
 import apiSlice from "../api/apiSlice";
 

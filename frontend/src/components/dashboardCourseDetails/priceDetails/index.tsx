@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMediaQuery } from "react-responsive";
 import { Button, Descriptions, Input, message } from "antd/lib";
 import { useState } from "react";

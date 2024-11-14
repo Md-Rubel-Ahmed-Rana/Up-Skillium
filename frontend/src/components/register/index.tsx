@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import RegisterForm from "./RegisterForm";
 import Link from "next/link";
 

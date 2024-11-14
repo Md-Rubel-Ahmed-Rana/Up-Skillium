@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import ModuleItem from "./ModuleItem";
 import {

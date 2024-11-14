@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { IModuleOutline } from "@/types/courseOutline.type";
 import { FiMove } from "react-icons/fi";
 import ModuleEditButton from "./ModuleEditButton";

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import { Button, Modal, Upload, UploadProps } from "antd/lib";

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { fallbackImageUrl } from "@/constants/fallback";
 import { ICourse } from "@/types/course.type";
 import { Avatar, Button, Card, Rate, Typography, Image } from "antd/lib";

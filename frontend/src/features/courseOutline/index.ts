@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ICourseOutlineModuleSerialUpdate } from "@/types/courseOutline.type";
 import apiSlice from "../api/apiSlice";
 

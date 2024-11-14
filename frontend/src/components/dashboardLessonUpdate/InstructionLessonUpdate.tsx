@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ILesson } from "@/types/lesson.type";
 import { Form, Input, Button } from "antd/lib";
 import { useEffect, useState } from "react";

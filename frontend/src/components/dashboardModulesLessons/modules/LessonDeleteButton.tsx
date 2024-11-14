@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ILesson } from "@/types/lesson.type";
 import { FiTrash } from "react-icons/fi";
 import { message, Modal, Spin } from "antd";

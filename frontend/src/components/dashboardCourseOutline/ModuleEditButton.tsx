@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useUpdateModuleNameMutation } from "@/features/courseOutline";
 import { IModuleOutline } from "@/types/courseOutline.type";
 import { Button, Input, Modal } from "antd/lib";

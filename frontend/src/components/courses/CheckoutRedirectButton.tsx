@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "antd/lib";
 import Link from "next/link";
 

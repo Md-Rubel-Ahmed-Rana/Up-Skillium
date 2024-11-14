@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useLogoutMutation } from "@/features/auth";
 import { Button, Typography } from "antd/lib";
 import toast from "react-hot-toast";

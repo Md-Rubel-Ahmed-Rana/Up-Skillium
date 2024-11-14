@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useUpdateCourseBasicInfoMutation } from "@/features/course";
 import { ICourse } from "@/types/course.type";
 import { Button, Descriptions, Input } from "antd/lib";

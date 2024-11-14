@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import apiSlice from "../api/apiSlice";
 
 const studentProgressApi = apiSlice.injectEndpoints({
