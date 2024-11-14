@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ILesson } from "@/types/lesson.type";
 import { Form, Input, Button } from "antd/lib";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import LessonVideoUploadModal from "./LessonVideoUploadModal";
 
 type Props = {
   lesson: ILesson;
@@ -9,6 +10,9 @@ type Props = {
 
 const VideoLessonUpdate = ({ lesson }: Props) => {
   const [form] = Form.useForm();
+  const [uploadVideo, setUploadVideo] = useState(false);
+  const [newVideoUrl, setNewVideoUrl] = useState("");
+  console.log(newVideoUrl);
 
   const handleUpdateVideoLesson = (values: any) => {
     console.log("Updated Data:", values);
@@ -63,8 +67,15 @@ const VideoLessonUpdate = ({ lesson }: Props) => {
         <Input.TextArea placeholder="Enter video URL" />
       </Form.Item>
 
+      <Button onClick={() => setUploadVideo(true)}>Change video</Button>
+      <LessonVideoUploadModal
+        open={uploadVideo}
+        setOpen={setUploadVideo}
+        setVideoUrl={setNewVideoUrl}
+      />
+
       <Form.Item
-        label="Video Length (seconds)"
+        label="Video Length (Minutes)"
         name="videoLength"
         rules={[
           { required: true, message: "Video length is required" },
