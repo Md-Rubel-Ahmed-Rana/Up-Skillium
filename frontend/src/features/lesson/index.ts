@@ -34,6 +34,13 @@ const lessonApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["lesson"] as any,
     }),
+    deleteLesson: builder.mutation({
+      query: ({ lessonId }: { lessonId: string }) => ({
+        method: "DELETE",
+        url: `/lesson/${lessonId}`,
+      }),
+      invalidatesTags: ["lesson"] as any,
+    }),
   }),
 });
 
@@ -42,4 +49,5 @@ export const {
   useGetAllLessonsQuery,
   useUploadLessonVideoMutation,
   useUpdateLessonMutation,
+  useDeleteLessonMutation,
 } = lessonApi;

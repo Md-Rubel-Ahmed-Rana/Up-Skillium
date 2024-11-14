@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import apiSlice from "../api/apiSlice";
 
 const moduleApi = apiSlice.injectEndpoints({
@@ -7,6 +8,7 @@ const moduleApi = apiSlice.injectEndpoints({
         method: "GET",
         url: `/module/classes/${courseId}`,
       }),
+      providesTags: ["lesson"] as any,
     }),
   }),
 });
