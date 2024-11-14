@@ -1,10 +1,11 @@
 import { ILesson } from "@/types/lesson.type";
-import { FiEdit, FiTrash } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import LessonVideo from "./video";
 import LessonIntro from "./introduction";
 import LessonAssignment from "./assignment";
 import LessonQuiz from "./quiz";
 import Link from "next/link";
+import LessonDeleteButton from "./LessonDeleteButton";
 
 type Props = {
   lesson: ILesson;
@@ -25,12 +26,7 @@ const LessonItem = ({ lesson }: Props) => {
           >
             <FiEdit size={16} />
           </Link>
-          <button
-            className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
-            onClick={() => alert(`Delete lesson: ${lesson?.title}`)}
-          >
-            <FiTrash size={16} />
-          </button>
+          <LessonDeleteButton lesson={lesson} />
         </div>
       </div>
 
