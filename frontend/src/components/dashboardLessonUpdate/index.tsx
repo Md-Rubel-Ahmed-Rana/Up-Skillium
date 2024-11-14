@@ -30,7 +30,9 @@ const DashboardLessonUpdate = () => {
               {lesson?.type === "video" && (
                 <VideoLessonUpdate lesson={lesson} />
               )}
-              {lesson?.type === "assignment" && <AssignmentLessonUpdate />}
+              {lesson?.type === "assignment" && (
+                <AssignmentLessonUpdate lesson={lesson} />
+              )}
               {lesson?.type === "instruction" && (
                 <InstructionLessonUpdate lesson={lesson} />
               )}
