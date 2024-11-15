@@ -3,19 +3,22 @@ import { Menu, MenuProps } from "antd/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
-  FaUserCircle,
-  FaChalkboardTeacher,
   FaBook,
-  FaUsers,
-  FaChartBar,
   FaCertificate,
-  FaComments,
-  FaSignOutAlt,
-  FaPlusCircle,
-  FaVideo,
-  FaCog,
+  FaChalkboardTeacher,
+  FaChartBar,
   FaChartLine,
+  FaCog,
+  FaComments,
+  FaPlusCircle,
+  FaSignOutAlt,
+  FaUserCircle,
+  FaUsers,
+  FaVideo,
 } from "react-icons/fa";
+
+import { GiTeacher } from "react-icons/gi";
+import { PiChalkboardTeacherLight } from "react-icons/pi";
 
 const AdminSidebar = () => {
   const router = useRouter();
@@ -48,10 +51,24 @@ const AdminSidebar = () => {
     },
     {
       key: "2",
-      icon: <FaChalkboardTeacher />,
-      label: (
-        <Link href={"/dashboard/manage-instructors"}>Manage Instructors</Link>
-      ),
+      icon: <GiTeacher />,
+      label: "Manage Instructors",
+      children: [
+        {
+          key: "2-1",
+          icon: <FaChalkboardTeacher />,
+          label: (
+            <Link href={"/dashboard/manage-instructors"}>Instructors list</Link>
+          ),
+        },
+        {
+          key: "2-2",
+          icon: <PiChalkboardTeacherLight />,
+          label: (
+            <Link href={"/dashboard/create-instructor"}>Create Instructor</Link>
+          ),
+        },
+      ],
     },
     {
       key: "3",
@@ -132,6 +149,7 @@ const AdminSidebar = () => {
   return (
     <Menu
       theme="light"
+      mode="inline"
       className="w-full lg:min-h-screen h-full mt-3 flex lg:flex-col flex-row overflow-x-auto lg:overflow-visible space-x-3 lg:space-x-0"
       defaultSelectedKeys={[selectedKey]}
       items={adminItems}
