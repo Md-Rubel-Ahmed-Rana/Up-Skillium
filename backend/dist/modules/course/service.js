@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CourseService = void 0;
 const model_1 = require("./model");
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
+const service_1 = require("../instructor/service");
 class Service {
     createCourse(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -115,9 +116,12 @@ class Service {
     }
     updateCourseInstructor(courseId, instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
+            const course = yield model_1.Course.findById(courseId);
+            yield service_1.InstructorService.resignInstructorFromCourse(course === null || course === void 0 ? void 0 : course.instructor, courseId);
             yield model_1.Course.findByIdAndUpdate(courseId, {
                 $set: { instructor: instructorId },
             });
+            yield service_1.InstructorService.assignCourseToInstructor(instructorId, courseId);
         });
     }
     updateCourseImage(id, imageUrl) {

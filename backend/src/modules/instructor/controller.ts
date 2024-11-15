@@ -12,6 +12,15 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getAllInstructors = this.catchAsync(async (req: Request, res: Response) => {
+    const data = await InstructorService.getAllInstructors();
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Instructors retrieved successfully",
+      data: data,
+    });
+  });
 }
 
 export const InstructorController = new Controller();

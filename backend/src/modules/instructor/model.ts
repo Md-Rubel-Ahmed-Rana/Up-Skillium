@@ -6,13 +6,8 @@ const instructorSchema = new Schema<IInstructor>(
   {
     bio: { type: String },
     teacherId: { type: String, required: true },
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     courses: [{ type: Schema.Types.ObjectId, ref: "Course" }],
-    socialLinks: {
-      linkedin: { type: String },
-      twitter: { type: String },
-      website: { type: String },
-    },
     ratings: {
       averageRating: { type: Number, default: 0 },
       totalReviews: { type: Number, default: 0 },
