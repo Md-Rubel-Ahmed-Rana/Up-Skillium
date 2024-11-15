@@ -1,11 +1,11 @@
-import React from 'react';
+import MyClassesItems from "./MyClassesItems";
 
 const MyClasses = () => {
-    return (
-        <div>
-          this is classes items
-        </div>
-    );
+  return (
+    <div>
+      <MyClassesItems />
+    </div>
+  );
 };
 
 export default MyClasses;
