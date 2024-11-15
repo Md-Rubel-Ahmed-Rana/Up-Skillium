@@ -38,7 +38,7 @@ class Controller extends rootController_1.default {
             });
         }));
         this.getLessonById = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
+            const id = req.params.id;
             const lesson = yield service_1.LessonService.getLessonById(id);
             this.apiResponse(res, {
                 statusCode: 200,
@@ -47,8 +47,18 @@ class Controller extends rootController_1.default {
                 data: lesson,
             });
         }));
+        this.getLessonByIdWithQuizCorrectAnswer = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const lessonId = req.params.lessonId;
+            const lesson = yield service_1.LessonService.getLessonByIdWithQuizCorrectAnswer(lessonId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Lesson fetched with quiz correct answer successfully",
+                data: lesson,
+            });
+        }));
         this.updateLesson = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
+            const id = req.params.id;
             yield service_1.LessonService.updateLesson(id, req.body);
             this.apiResponse(res, {
                 statusCode: 200,
@@ -68,7 +78,7 @@ class Controller extends rootController_1.default {
             });
         }));
         this.deleteLesson = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { id } = req.params;
+            const id = req.params.id;
             yield service_1.LessonService.deleteLesson(id);
             this.apiResponse(res, {
                 statusCode: 200,
