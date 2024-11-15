@@ -9,6 +9,11 @@ router.get("/", LessonController.getAllLessons);
 
 router.get("/:id", LessonController.getLessonById);
 
+router.get(
+  "/quiz-correct-answer/:lessonId",
+  LessonController.getLessonByIdWithQuizCorrectAnswer
+);
+
 router.patch("/:id", LessonController.updateLesson);
 
 router.patch(

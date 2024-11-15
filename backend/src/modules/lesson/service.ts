@@ -25,7 +25,7 @@ class Service {
     return await Lesson.find(searchQuery).skip(skip).limit(limit).exec();
   }
 
-  async getLessonById(id: string): Promise<ILesson | null> {
+  async getLessonById(id: Types.ObjectId): Promise<ILesson | null> {
     return await Lesson.findById(id)
       .populate({
         path: "quizQuestions",
@@ -33,12 +33,24 @@ class Service {
       })
       .exec();
   }
+  async getLessonByIdWithQuizCorrectAnswer(
+    id: Types.ObjectId
+  ): Promise<ILesson | null> {
+    return await Lesson.findById(id)
+      .populate({
+        path: "quizQuestions",
+      })
+      .exec();
+  }
 
-  async updateLesson(id: string, data: Partial<ILesson>): Promise<void> {
+  async updateLesson(
+    id: Types.ObjectId,
+    data: Partial<ILesson>
+  ): Promise<void> {
     await Lesson.findByIdAndUpdate(id, { ...data }).exec();
   }
 
-  async deleteLesson(id: string): Promise<void> {
+  async deleteLesson(id: Types.ObjectId): Promise<void> {
     await Lesson.findByIdAndDelete(id).exec();
   }
 

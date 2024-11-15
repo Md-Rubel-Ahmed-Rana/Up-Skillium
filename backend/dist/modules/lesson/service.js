@@ -36,6 +36,15 @@ class Service {
                 .exec();
         });
     }
+    getLessonByIdWithQuizCorrectAnswer(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.Lesson.findById(id)
+                .populate({
+                path: "quizQuestions",
+            })
+                .exec();
+        });
+    }
     updateLesson(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Lesson.findByIdAndUpdate(id, Object.assign({}, data)).exec();

@@ -7,6 +7,7 @@ const router = (0, express_1.Router)();
 router.post("/create", controller_1.LessonController.createLesson);
 router.get("/", controller_1.LessonController.getAllLessons);
 router.get("/:id", controller_1.LessonController.getLessonById);
+router.get("/quiz-correct-answer/:lessonId", controller_1.LessonController.getLessonByIdWithQuizCorrectAnswer);
 router.patch("/:id", controller_1.LessonController.updateLesson);
 router.patch("/update-quizzes/:lessonId", controller_1.LessonController.updateQuizzesInLesson);
 router.delete("/:id", controller_1.LessonController.deleteLesson);
