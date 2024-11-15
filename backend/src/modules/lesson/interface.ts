@@ -10,3 +10,11 @@ export type ILesson = {
   quizQuestions?: Types.ObjectId[];
   serial: number;
 };
+
+export type IQuizUpdateOnLesson = {
+  id: Types.ObjectId;
+  module: Types.ObjectId;
+  question: string;
+  options: string[];
+  correctAnswer: string;
+};

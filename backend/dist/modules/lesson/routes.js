@@ -8,6 +8,7 @@ router.post("/create", controller_1.LessonController.createLesson);
 router.get("/", controller_1.LessonController.getAllLessons);
 router.get("/:id", controller_1.LessonController.getLessonById);
 router.patch("/:id", controller_1.LessonController.updateLesson);
+router.patch("/update-quizzes/:lessonId", controller_1.LessonController.updateQuizzesInLesson);
 router.delete("/:id", controller_1.LessonController.deleteLesson);
 router.get("/module/:moduleId", controller_1.LessonController.getLessonsByModule);
 exports.LessonRoutes = router;
