@@ -1,6 +1,7 @@
+import { useUpdateLessonQuizQuestionsMutation } from "@/features/lesson";
 import { IQuizQuestion } from "@/types/quiz.type";
 import { Button, Collapse, Form, Input, Space } from "antd/lib";
-import { useState } from "react";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
 const { Panel } = Collapse;
@@ -11,11 +12,49 @@ type Props = {
 
 const QuizQuestionUpdate = ({ questions }: Props) => {
   const [form] = Form.useForm();
-  const [currentQuestions, setCurrentQuestions] = useState(questions);
+  const { query } = useRouter();
+  const lessonId = query?.lessonId as string;
+  const [updateQuestions, { isLoading }] =
+    useUpdateLessonQuizQuestionsMutation();
 
-  const handleFinish = (updatedQuestions: { questions: IQuizQuestion[] }) => {
-    setCurrentQuestions(updatedQuestions.questions);
-    toast.success("Questions will be updated");
+  const handleFinish = async (updatedQuestions: {
+    questions: IQuizQuestion[];
+  }) => {
+    const allQuestions = updatedQuestions.questions;
+    const oldQuizzes: IQuizQuestion[] = [];
+    const newQuizzes: IQuizQuestion[] = [];
+
+    allQuestions.forEach((question) => {
+      if (question?.id) {
+        oldQuizzes.push(question);
+      } else {
+        newQuizzes.push({ ...question, module: allQuestions[0]?.module });
+      }
+    });
+
+    const finalQuestions: IQuizQuestion[] = oldQuizzes.concat(newQuizzes);
+
+    await handleUpdateQuestions(finalQuestions);
+  };
+
+  const handleUpdateQuestions = async (quizzes: IQuizQuestion[]) => {
+    try {
+      const result: any = await updateQuestions({ lessonId, quizzes });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result?.data?.message || "Quiz questions updated successfully!"
+        );
+      } else {
+        toast.error(
+          result?.error?.message ||
+            result?.data?.error?.message ||
+            result?.error?.data?.message ||
+            "Failed to update quiz questions"
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to update quiz. Error: ${error?.message}`);
+    }
   };
 
   return (
@@ -24,7 +63,7 @@ const QuizQuestionUpdate = ({ questions }: Props) => {
       <Form
         form={form}
         onFinish={handleFinish}
-        initialValues={{ questions: currentQuestions }}
+        initialValues={{ questions: questions }}
         layout="vertical"
       >
         <Form.List name="questions">
@@ -36,6 +75,7 @@ const QuizQuestionUpdate = ({ questions }: Props) => {
                     key={key}
                     header={`Question ${key + 1}`}
                     className="!rounded-lg !mb-4"
+                    forceRender
                   >
                     <Form.Item
                       {...restField}
@@ -148,8 +188,16 @@ const QuizQuestionUpdate = ({ questions }: Props) => {
             </>
           )}
         </Form.List>
-        <Button type="primary" htmlType="submit" className="mt-6 w-full">
-          Save Changes
+        <Button
+          size="large"
+          type="primary"
+          htmlType="submit"
+          className="mt-6 w-full"
+          loading={isLoading}
+          disabled={isLoading}
+          iconPosition="end"
+        >
+          {isLoading ? "Saving..." : "Save Changes"}
         </Button>
       </Form>
     </div>

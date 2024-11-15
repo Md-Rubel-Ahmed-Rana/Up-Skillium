@@ -1,4 +1,5 @@
 import { ILesson } from "@/types/lesson.type";
+import { IQuizQuestion } from "@/types/quiz.type";
 import apiSlice from "../api/apiSlice";
 
 const lessonApi = apiSlice.injectEndpoints({
@@ -14,6 +15,13 @@ const lessonApi = apiSlice.injectEndpoints({
       query: ({ lessonId }: { lessonId: string }) => ({
         method: "GET",
         url: `/lesson/${lessonId}`,
+      }),
+      providesTags: ["lesson"] as any,
+    }),
+    getSingleLessonWithQuizCorrectAnswer: builder.query({
+      query: ({ lessonId }: { lessonId: string }) => ({
+        method: "GET",
+        url: `/lesson/quiz-correct-answer/${lessonId}`,
       }),
       providesTags: ["lesson"] as any,
     }),
@@ -33,6 +41,20 @@ const lessonApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["lesson"] as any,
     }),
+    updateLessonQuizQuestions: builder.mutation({
+      query: ({
+        lessonId,
+        quizzes,
+      }: {
+        lessonId: string;
+        quizzes: IQuizQuestion[];
+      }) => ({
+        method: "PATCH",
+        url: `/lesson/update-quizzes/${lessonId}`,
+        body: quizzes,
+      }),
+      invalidatesTags: ["lesson"] as any,
+    }),
     deleteLesson: builder.mutation({
       query: ({ lessonId }: { lessonId: string }) => ({
         method: "DELETE",
@@ -49,4 +71,6 @@ export const {
   useUploadLessonVideoMutation,
   useUpdateLessonMutation,
   useDeleteLessonMutation,
+  useUpdateLessonQuizQuestionsMutation,
+  useGetSingleLessonWithQuizCorrectAnswerQuery,
 } = lessonApi;
