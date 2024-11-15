@@ -10,7 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LessonService = void 0;
+const service_1 = require("../quiz/service");
 const model_1 = require("./model");
+const mongoose_1 = require("mongoose");
 class Service {
     createLesson(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -42,6 +44,27 @@ class Service {
     deleteLesson(id) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Lesson.findByIdAndDelete(id).exec();
+        });
+    }
+    updateQuizzesInLesson(lessonId, quizzes) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const newQuizzes = [];
+            const oldQuizzes = [];
+            quizzes.forEach((quiz) => {
+                if (quiz === null || quiz === void 0 ? void 0 : quiz.id) {
+                    oldQuizzes.push(quiz);
+                }
+                else {
+                    newQuizzes.push(quiz);
+                }
+            });
+            yield service_1.QuizService.updateManyQuizzes(oldQuizzes);
+            const oldQuizIds = oldQuizzes.map((quiz) => new mongoose_1.Types.ObjectId(quiz === null || quiz === void 0 ? void 0 : quiz.id));
+            const newQuizIds = yield service_1.QuizService.createNewQuizFromLessonUpdate(newQuizzes);
+            const finalQuizIds = oldQuizIds.concat(newQuizIds);
+            yield model_1.Lesson.findByIdAndUpdate(lessonId, {
+                $set: { quizQuestions: finalQuizIds },
+            });
         });
     }
     getLessonsByModule(moduleId_1) {

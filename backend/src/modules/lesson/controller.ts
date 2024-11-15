@@ -51,6 +51,18 @@ class Controller extends RootController {
       data: null,
     });
   });
+  updateQuizzesInLesson = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const lessonId = req.params.lessonId as unknown as Types.ObjectId;
+      await LessonService.updateQuizzesInLesson(lessonId, req.body);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Lesson quizzes updated successfully",
+        data: null,
+      });
+    }
+  );
 
   deleteLesson = this.catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;

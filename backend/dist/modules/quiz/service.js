@@ -83,5 +83,22 @@ class Service {
             };
         });
     }
+    updateManyQuizzes(quizzes) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const operations = quizzes.map((quiz) => ({
+                updateOne: {
+                    filter: { _id: quiz.id },
+                    update: { $set: quiz },
+                },
+            }));
+            yield model_1.Quiz.bulkWrite(operations);
+        });
+    }
+    createNewQuizFromLessonUpdate(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const newQuizzes = yield model_1.Quiz.create(data);
+            return newQuizzes.map((quiz) => quiz === null || quiz === void 0 ? void 0 : quiz._id);
+        });
+    }
 }
 exports.QuizService = new Service();

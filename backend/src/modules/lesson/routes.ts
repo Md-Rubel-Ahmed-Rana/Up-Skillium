@@ -11,6 +11,11 @@ router.get("/:id", LessonController.getLessonById);
 
 router.patch("/:id", LessonController.updateLesson);
 
+router.patch(
+  "/update-quizzes/:lessonId",
+  LessonController.updateQuizzesInLesson
+);
+
 router.delete("/:id", LessonController.deleteLesson);
 
 router.get("/module/:moduleId", LessonController.getLessonsByModule);

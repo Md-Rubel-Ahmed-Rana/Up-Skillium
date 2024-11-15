@@ -2,7 +2,7 @@ import { Types } from "mongoose";
 import { LessonService } from "../lesson/service";
 import { INewQuiz, IQuizQuestion } from "./interface";
 import { Quiz } from "./model";
-import { QuizSubmissionService } from "../quiz-submission/service";
+import { IQuizUpdateOnLesson } from "../lesson/interface";
 
 class Service {
   async createQuiz(data: INewQuiz): Promise<void> {
@@ -95,6 +95,22 @@ class Service {
       wrongAnswers,
       modifiedQuizAnswers,
     };
+  }
+  async updateManyQuizzes(quizzes: IQuizUpdateOnLesson[]) {
+    const operations = quizzes.map((quiz) => ({
+      updateOne: {
+        filter: { _id: quiz.id },
+        update: { $set: quiz },
+      },
+    }));
+
+    await Quiz.bulkWrite(operations);
+  }
+  async createNewQuizFromLessonUpdate(
+    data: IQuizUpdateOnLesson[]
+  ): Promise<Types.ObjectId[]> {
+    const newQuizzes = await Quiz.create(data);
+    return newQuizzes.map((quiz) => quiz?._id);
   }
 }
 

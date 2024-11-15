@@ -1,4 +1,6 @@
-import { ILesson } from "./interface";
+import { IQuizQuestion } from "../quiz/interface";
+import { QuizService } from "../quiz/service";
+import { ILesson, IQuizUpdateOnLesson } from "./interface";
 import { Lesson } from "./model";
 import { Types } from "mongoose";
 
@@ -38,6 +40,31 @@ class Service {
 
   async deleteLesson(id: string): Promise<void> {
     await Lesson.findByIdAndDelete(id).exec();
+  }
+
+  async updateQuizzesInLesson(
+    lessonId: Types.ObjectId,
+    quizzes: IQuizUpdateOnLesson[]
+  ) {
+    const newQuizzes: IQuizUpdateOnLesson[] = [];
+    const oldQuizzes: IQuizUpdateOnLesson[] = [];
+    quizzes.forEach((quiz) => {
+      if (quiz?.id) {
+        oldQuizzes.push(quiz);
+      } else {
+        newQuizzes.push(quiz);
+      }
+    });
+
+    await QuizService.updateManyQuizzes(oldQuizzes);
+    const oldQuizIds = oldQuizzes.map((quiz) => new Types.ObjectId(quiz?.id));
+    const newQuizIds = await QuizService.createNewQuizFromLessonUpdate(
+      newQuizzes
+    );
+    const finalQuizIds = oldQuizIds.concat(newQuizIds);
+    await Lesson.findByIdAndUpdate(lessonId, {
+      $set: { quizQuestions: finalQuizIds },
+    });
   }
 
   async getLessonsByModule(

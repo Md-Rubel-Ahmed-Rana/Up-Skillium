@@ -57,6 +57,16 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.updateQuizzesInLesson = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const lessonId = req.params.lessonId;
+            yield service_1.LessonService.updateQuizzesInLesson(lessonId, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Lesson quizzes updated successfully",
+                data: null,
+            });
+        }));
         this.deleteLesson = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             yield service_1.LessonService.deleteLesson(id);
