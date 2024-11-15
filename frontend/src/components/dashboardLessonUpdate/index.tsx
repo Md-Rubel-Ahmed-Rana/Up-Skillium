@@ -1,4 +1,4 @@
-import { useGetSingleLessonQuery } from "@/features/lesson";
+import { useGetSingleLessonWithQuizCorrectAnswerQuery } from "@/features/lesson";
 import { ILesson } from "@/types/lesson.type";
 import { useRouter } from "next/router";
 import AssignmentLessonUpdate from "./AssignmentLessonUpdate";
@@ -10,7 +10,7 @@ import VideoLessonUpdate from "./VideoLessonUpdate";
 const DashboardLessonUpdate = () => {
   const { query } = useRouter();
   const lessonId = query?.lessonId as string;
-  const { data, isLoading } = useGetSingleLessonQuery({
+  const { data, isLoading } = useGetSingleLessonWithQuizCorrectAnswerQuery({
     lessonId,
   });
   const lesson = data?.data as ILesson;
