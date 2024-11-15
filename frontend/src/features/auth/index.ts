@@ -33,7 +33,7 @@ const authApi = apiSlice.injectEndpoints({
         url: "/auth/register",
         body: { name, email, role, password },
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "instructor"],
     }),
     logout: builder.mutation({
       query: () => ({
