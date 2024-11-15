@@ -7,6 +7,7 @@ import {
 } from "./interface";
 import { Course } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
+import { InstructorService } from "../instructor/service";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -128,9 +129,17 @@ class Service {
     courseId: Types.ObjectId,
     instructorId: Types.ObjectId
   ) {
+    const course = await Course.findById(courseId);
+
+    await InstructorService.resignInstructorFromCourse(
+      course?.instructor as Types.ObjectId,
+      courseId
+    );
+
     await Course.findByIdAndUpdate(courseId, {
       $set: { instructor: instructorId },
     });
+    await InstructorService.assignCourseToInstructor(instructorId, courseId);
   }
   async updateCourseImage(id: Types.ObjectId, imageUrl: string) {
     const course = await Course.findById(id);

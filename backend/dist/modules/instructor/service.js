@@ -25,5 +25,36 @@ class Service {
             yield model_1.Instructor.create({ userId: userId, teacherId });
         });
     }
+    getAllInstructors() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const instructors = yield model_1.Instructor.find({}).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { name: 1, email: 1 },
+                },
+                {
+                    path: "courses",
+                    model: "Course",
+                    select: { title: 1, image: 1, category: 1 },
+                },
+            ]);
+            return instructors;
+        });
+    }
+    assignCourseToInstructor(userId, courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Instructor.findOneAndUpdate({ user: userId }, {
+                $push: { courses: courseId },
+            });
+        });
+    }
+    resignInstructorFromCourse(userId, courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Instructor.findOneAndUpdate({ user: userId }, {
+                $pull: { courses: courseId },
+            });
+        });
+    }
 }
 exports.InstructorService = new Service();
