@@ -23,6 +23,15 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["course"] as any,
     }),
+
+    getInstructorCourses: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/course/instructor/${instructorId}`,
+      }),
+      providesTags: ["course"] as any,
+    }),
+
     updateCourseImage: builder.mutation({
       query: ({ courseId, image }: { courseId: string; image: FormData }) => ({
         method: "PATCH",
@@ -93,4 +102,5 @@ export const {
   useUpdateCourseBasicInfoMutation,
   useUpdateCoursePriceMutation,
   useUpdateCourseTagsTechsMutation,
+  useGetInstructorCoursesQuery,
 } = courseApi;
