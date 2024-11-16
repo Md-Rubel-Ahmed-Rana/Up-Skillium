@@ -20,9 +20,9 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
   const handleFormSubmit = async (values: any) => {
     const formData: ICreateCertificate = {
       certificatePdfData: {
-        studentName: values.studentName,
-        courseName: values.courseName,
-        technologies: values.technologies,
+        studentName: values?.studentName,
+        courseName: values?.courseName,
+        technologies: values?.technologies?.split(","),
         score: values?.score,
       },
       schema: {
@@ -31,12 +31,12 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
       },
     };
     console.log(formData);
-    // await handleCreateCertificate(formData);
+    await handleCreateCertificate(formData);
   };
 
   const handleCreateCertificate = async (data: ICreateCertificate) => {
     try {
-      const result: any = await createCertificate(data);
+      const result: any = await createCertificate({ data });
       if (result?.data?.statusCode === 201) {
         toast.success(
           result?.data?.message || "Certificate created successfully!"

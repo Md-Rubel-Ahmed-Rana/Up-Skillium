@@ -7,7 +7,6 @@ const ManageCertificates = () => {
   const { data, isLoading } = useGetAllCertificatesQuery({});
   const certificates = data?.data as ICertificate[];
 
-  // Define table columns
   const columns = [
     {
       title: "Student",
@@ -15,8 +14,8 @@ const ManageCertificates = () => {
       key: "user",
       render: (user: ICertificate["user"]) => (
         <div className="flex items-center space-x-3">
-          <Avatar src={user.image} alt={user.name} />
-          <span>{user.name}</span>
+          <Avatar src={user?.image} alt={user?.name} />
+          <span>{user?.name}</span>
         </div>
       ),
     },
@@ -27,11 +26,11 @@ const ManageCertificates = () => {
       render: (course: ICertificate["course"]) => (
         <div className="flex items-center space-x-3">
           <img
-            src={course.image}
-            alt={course.title}
+            src={course?.image}
+            alt={course?.title}
             className="w-10 h-10 object-cover rounded-md"
           />
-          <span>{course.title}</span>
+          <span>{course?.title}</span>
         </div>
       ),
     },
@@ -82,7 +81,7 @@ const ManageCertificates = () => {
       <Table
         columns={columns}
         dataSource={certificates}
-        rowKey={(record) => record.id}
+        rowKey={(record) => record?.id}
         loading={isLoading}
         className="shadow-md border rounded-lg"
       />

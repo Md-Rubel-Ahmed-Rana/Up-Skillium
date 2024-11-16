@@ -25,12 +25,12 @@ const certificateApi = apiSlice.injectEndpoints({
       providesTags: ["certificates"] as any,
     }),
     createCertificate: builder.mutation({
-      query: (data: ICreateCertificate) => ({
+      query: ({ data }: { data: ICreateCertificate }) => ({
         method: "POST",
         url: `/certificate/create`,
         body: data,
       }),
-      providesTags: ["certificates"] as any,
+      invalidatesTags: ["certificates"] as any,
     }),
   }),
 });
