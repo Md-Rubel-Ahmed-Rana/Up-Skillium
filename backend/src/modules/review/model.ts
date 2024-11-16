@@ -12,6 +12,12 @@ const reviewSchema = new Schema<IReview>(
     reviewTo: {
       type: Schema.Types.ObjectId,
       required: true,
+      refPath: "reviewToModel",
+    },
+    reviewToModel: {
+      type: String,
+      required: true,
+      enum: ["User", "Course"],
     },
     feedback: {
       type: String,
@@ -25,4 +31,4 @@ const reviewSchema = new Schema<IReview>(
   schemaOption
 );
 
-export const Review = model("Review", reviewSchema);
+export const Review = model<IReview>("Review", reviewSchema);
