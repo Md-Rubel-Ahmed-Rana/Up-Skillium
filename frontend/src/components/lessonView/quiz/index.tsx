@@ -1,6 +1,6 @@
 import { ILesson } from "@/types/lesson.type";
-import { useEffect, useState } from "react";
 import { Button } from "antd/lib";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ShowQuizResult from "./ShowQuizResult";
 
@@ -43,7 +43,6 @@ const ShowQuizQuestions = ({ lesson, isQuizSubmitted }: Props) => {
 
   const handleSubmitQuiz = () => {
     toast.success("Quiz submitted");
-    console.log("Selected Answers:", selectedAnswers);
   };
 
   useEffect(() => {

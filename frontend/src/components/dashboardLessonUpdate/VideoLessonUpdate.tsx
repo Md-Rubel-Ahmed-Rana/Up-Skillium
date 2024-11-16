@@ -1,9 +1,9 @@
-import { ILesson } from "@/types/lesson.type";
-import { Form, Input, Button } from "antd/lib";
-import { useEffect, useState } from "react";
-import LessonVideoUploadModal from "./LessonVideoUploadModal";
 import { useUpdateLessonMutation } from "@/features/lesson";
+import { ILesson } from "@/types/lesson.type";
+import { Button, Form, Input } from "antd/lib";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import LessonVideoUploadModal from "./LessonVideoUploadModal";
 
 type Props = {
   lesson: ILesson;
@@ -14,7 +14,6 @@ const VideoLessonUpdate = ({ lesson }: Props) => {
   const [uploadVideo, setUploadVideo] = useState(false);
   const [newVideoUrl, setNewVideoUrl] = useState("");
   const [updateLesson, { isLoading }] = useUpdateLessonMutation();
-  console.log(newVideoUrl);
 
   const handleUpdateVideoLesson = async (values: ILesson) => {
     const newData: ILesson = {

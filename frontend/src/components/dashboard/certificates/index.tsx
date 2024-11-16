@@ -1,7 +1,7 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useGetStudentCertificatesQuery } from "@/features/certificate";
 import CertificateSkeleton from "@/skeletons/certificateSkeleton";
-import { IGetCertificate } from "@/types/certificate.type";
+import { ICertificate } from "@/types/certificate.type";
 import { IUser } from "@/types/user.type";
 import { Button, Table, TableProps } from "antd/lib";
 import { PiCertificateFill } from "react-icons/pi";
@@ -21,7 +21,7 @@ const StudentCertificates = () => {
   const { data, isLoading } = useGetStudentCertificatesQuery({
     userId: user?.id,
   });
-  const certificates = data?.data as IGetCertificate[];
+  const certificates = data?.data as ICertificate[];
 
   const tableDataCourse: TableDataType[] = certificates?.map((ct) => ({
     id: ct?.id,
