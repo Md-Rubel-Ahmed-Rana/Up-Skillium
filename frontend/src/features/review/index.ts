@@ -23,7 +23,18 @@ const reviewApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["feedback"],
     }),
+    deleteFeedback: builder.mutation({
+      query: ({ id }: { id: string }) => ({
+        method: "DELETE",
+        url: `/review/${id}`,
+      }),
+      invalidatesTags: ["feedback"],
+    }),
   }),
 });
 
-export const { useGetAllReviewsQuery, useUpdateFeedbackMutation } = reviewApi;
+export const {
+  useGetAllReviewsQuery,
+  useUpdateFeedbackMutation,
+  useDeleteFeedbackMutation,
+} = reviewApi;
