@@ -8,10 +8,21 @@ import {
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons/lib";
 
 import { Button, Space, Table, Tooltip } from "antd/lib";
+import { useState } from "react";
+import FeedbackEditModal from "./FeedbackEditModal";
 
 const FeedbackReviews = () => {
   const { data } = useGetAllReviewsQuery({});
   const feedbacks = data?.data as IReview[];
+  const [isEditFeedback, setIsEditFeedback] = useState(false);
+  const [editableFeedback, setEditableFeedback] = useState<IReview | null>(
+    null
+  );
+
+  const handleEditFeedback = (feedback: IReview) => {
+    setIsEditFeedback(true);
+    setEditableFeedback(feedback);
+  };
 
   const columns = [
     {
@@ -52,7 +63,7 @@ const FeedbackReviews = () => {
       dataIndex: "reviewTo",
       key: "reviewTo",
       render: (reviewTo: IReviewTo, record: IReview) => {
-        const isInstructor = record?.reviewToModel === "Instructor";
+        const isInstructor = record?.reviewToModel === "User";
         return (
           <div className="flex items-center gap-2">
             <img
@@ -79,6 +90,7 @@ const FeedbackReviews = () => {
       render: (_: any, record: IReview) => (
         <Space>
           <Button
+            onClick={() => handleEditFeedback(record)}
             type="primary"
             className="bg-blue-500 hover:bg-blue-600"
             icon={<EditOutlined />}
@@ -109,6 +121,11 @@ const FeedbackReviews = () => {
         columns={columns}
         rowKey="id"
         bordered
+      />
+      <FeedbackEditModal
+        open={isEditFeedback}
+        setOpen={setIsEditFeedback}
+        feedback={editableFeedback as IReview}
       />
     </div>
   );
