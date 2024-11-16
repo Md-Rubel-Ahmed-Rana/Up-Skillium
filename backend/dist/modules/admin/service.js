@@ -22,7 +22,7 @@ class Service {
             const adminId = lastAdmin
                 ? (0, generateAdminId_1.default)(lastAdmin.adminId)
                 : (0, generateAdminId_1.default)("US-AD-0000");
-            yield model_1.Admin.create({ userId: userId, adminId });
+            yield model_1.Admin.create({ user: userId, adminId });
         });
     }
 }

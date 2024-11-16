@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnrollmentService = void 0;
 const service_1 = require("../student-progress/service");
 const model_1 = require("./model");
+const service_2 = require("../student/service");
 class Service {
     createEnrollment(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -54,6 +55,7 @@ class Service {
                     userId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.userId,
                     courseId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.courseId,
                 });
+                yield service_2.StudentService.addNewCourse(enrollment === null || enrollment === void 0 ? void 0 : enrollment.userId, enrollment === null || enrollment === void 0 ? void 0 : enrollment.courseId);
             }
         });
     }

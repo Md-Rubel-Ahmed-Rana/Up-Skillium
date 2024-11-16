@@ -22,21 +22,27 @@ class Service {
             const studentId = lastStudent
                 ? (0, generateStudentId_1.default)(lastStudent.studentId)
                 : (0, generateStudentId_1.default)("US-ST-0000");
-            yield model_1.Student.create({ userId: userId, studentId: studentId });
+            yield model_1.Student.create({ user: userId, studentId: studentId });
         });
     }
-    addNewCourse(studentObjectId, courseId) {
+    addNewCourse(userId, courseId) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield model_1.Student.findByIdAndUpdate(studentObjectId, {
-                $push: { coursesEnrolled: courseId },
+            yield model_1.Student.findOneAndUpdate({ user: userId }, {
+                $push: { courses: courseId },
             });
         });
     }
     getMyCourses(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield model_1.Student.findOne({ userId: userId })
-                .populate("coursesEnrolled", "title image")
-                .exec();
+            const data = yield model_1.Student.findOne({ user: userId }).populate("courses", "title image");
+            return data;
+        });
+    }
+    getAllStudents() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const data = yield model_1.Student.find({})
+                .populate("courses", "title image category")
+                .populate("user", "name email");
             return data;
         });
     }

@@ -22,7 +22,7 @@ class Service {
             const teacherId = lastTeacherId
                 ? (0, generateTeacherId_1.default)(lastTeacherId.teacherId)
                 : (0, generateTeacherId_1.default)("US-TE-0000");
-            yield model_1.Instructor.create({ userId: userId, teacherId });
+            yield model_1.Instructor.create({ user: userId, teacherId });
         });
     }
     getAllInstructors() {
