@@ -27,10 +27,12 @@ class Service {
                 {
                     path: "user",
                     model: "User",
+                    select: { name: 1, image: 1, email: 1 },
                 },
                 {
                     path: "course",
                     model: "Course",
+                    select: { title: 1, category: 1, image: 1 },
                 },
             ]);
             return data;
@@ -42,17 +44,19 @@ class Service {
                 {
                     path: "user",
                     model: "User",
+                    select: { name: 1, image: 1, email: 1 },
                 },
                 {
                     path: "course",
                     model: "Course",
+                    select: { title: 1, category: 1, image: 1 },
                 },
             ]);
         });
     }
-    getCertificateByUserId(userId) {
+    getCertificatesByUserId(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.Certificate.find({ userId: userId }).populate("course", "title");
+            return yield model_1.Certificate.find({ user: userId }).populate("course", "title");
         });
     }
     updateCertificate(id, updateData) {

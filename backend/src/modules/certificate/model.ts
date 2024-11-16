@@ -4,7 +4,7 @@ import { ICertificateSchema } from "./interface";
 
 const certificateSchema = new Schema<ICertificateSchema>(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
     },

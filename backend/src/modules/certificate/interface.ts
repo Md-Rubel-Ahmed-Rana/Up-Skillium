@@ -7,7 +7,7 @@ export type ICertificate = {
 };
 
 export type ICertificateSchema = {
-  userId: Types.ObjectId;
+  user: Types.ObjectId;
   course: Types.ObjectId;
   certificateUrl: string;
 };
