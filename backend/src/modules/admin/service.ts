@@ -9,7 +9,7 @@ class Service {
       ? generateAdminId(lastAdmin.adminId)
       : generateAdminId("US-AD-0000");
 
-    await Admin.create({ userId: userId, adminId });
+    await Admin.create({ user: userId, adminId });
   }
 }
 

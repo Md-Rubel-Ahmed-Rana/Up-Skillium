@@ -9,7 +9,7 @@ class Service {
       ? generateTeacherId(lastTeacherId.teacherId)
       : generateTeacherId("US-TE-0000");
 
-    await Instructor.create({ userId: userId, teacherId });
+    await Instructor.create({ user: userId, teacherId });
   }
   async getAllInstructors() {
     const instructors = await Instructor.find({}).populate([
