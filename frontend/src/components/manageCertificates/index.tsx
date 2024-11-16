@@ -75,15 +75,17 @@ const ManageCertificates = () => {
   ];
 
   return (
-    <div className="p-5">
+    <div className="lg:p-5 px-2 pb-20">
       <h1 className="text-2xl font-semibold mb-5">Manage Certificates</h1>
-      <Table
-        columns={columns}
-        dataSource={certificates}
-        rowKey={(record) => record?.id}
-        loading={isLoading}
-        className="shadow-md border rounded-lg"
-      />
+      <div className="overflow-x-auto">
+        <Table
+          columns={columns}
+          dataSource={certificates}
+          rowKey={(record) => record?.id}
+          loading={isLoading}
+          scroll={{ x: "max-content" }}
+        />
+      </div>
     </div>
   );
 };
