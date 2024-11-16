@@ -20,3 +20,16 @@ export type ICertificate = {
   user: User;
   id: string;
 };
+
+export type ICreateCertificate = {
+  certificatePdfData: {
+    studentName: string;
+    courseName: string;
+    technologies: string[];
+    score: number;
+  };
+  schema: {
+    user: string;
+    course: string;
+  };
+};

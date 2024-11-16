@@ -1,3 +1,5 @@
+import { useCreateCertificateMutation } from "@/features/certificate";
+import { ICreateCertificate } from "@/types/certificate.type";
 import { Button, Form, Input, InputNumber } from "antd/lib";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
@@ -13,21 +15,43 @@ type Props = {
 
 const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
   const [form] = Form.useForm();
+  const [createCertificate, { isLoading }] = useCreateCertificateMutation();
 
-  const handleFormSubmit = (values: any) => {
-    const formData = {
+  const handleFormSubmit = async (values: any) => {
+    const formData: ICreateCertificate = {
       certificatePdfData: {
         studentName: values.studentName,
         courseName: values.courseName,
         technologies: values.technologies,
-        score: values.score,
+        score: values?.score,
       },
       schema: {
-        user: selectedStudent.id,
-        course: selectedCourse.id,
+        user: selectedStudent?.id,
+        course: selectedCourse?.id,
       },
     };
-    toast.success("Certificate created successfully!");
+    console.log(formData);
+    // await handleCreateCertificate(formData);
+  };
+
+  const handleCreateCertificate = async (data: ICreateCertificate) => {
+    try {
+      const result: any = await createCertificate(data);
+      if (result?.data?.statusCode === 201) {
+        toast.success(
+          result?.data?.message || "Certificate created successfully!"
+        );
+      } else {
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            result?.data?.error?.message ||
+            "Failed to create certificate."
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to create certificate. Error: ${error?.message}`);
+    }
   };
 
   useEffect(() => {
@@ -100,8 +124,11 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
             type="primary"
             htmlType="submit"
             className="w-full"
+            disabled={isLoading}
+            loading={isLoading}
+            iconPosition="end"
           >
-            Generate Certificate
+            {isLoading ? "Generating..." : " Generate Certificate"}
           </Button>
         </Form.Item>
       </Form>
