@@ -58,7 +58,7 @@ const AdminSidebar = () => {
           key: "2-1",
           icon: <FaChalkboardTeacher />,
           label: (
-            <Link href={"/dashboard/manage-instructors"}>Instructors list</Link>
+            <Link href={"/dashboard/manage-instructors"}>All Instructors</Link>
           ),
         },
         {
@@ -83,7 +83,25 @@ const AdminSidebar = () => {
     {
       key: "5",
       icon: <FaCertificate />,
-      label: <Link href={"/dashboard/manage-certificates"}>Certificates</Link>,
+      label: "Manage Certificates",
+      children: [
+        {
+          key: "5-1",
+          icon: <FaChalkboardTeacher />,
+          label: (
+            <Link href={"/dashboard/manage-certificates"}>All Certificate</Link>
+          ),
+        },
+        {
+          key: "5-2",
+          icon: <PiChalkboardTeacherLight />,
+          label: (
+            <Link href={"/dashboard/create-certificate"}>
+              Create Certificate
+            </Link>
+          ),
+        },
+      ],
     },
     {
       key: "6",
@@ -117,13 +135,7 @@ const AdminSidebar = () => {
       icon: <FaChalkboardTeacher />,
       label: <Link href={"/dashboard/add-instructor"}>Add Instructor</Link>,
     },
-    {
-      key: "12",
-      icon: <FaCertificate />,
-      label: (
-        <Link href={"/dashboard/create-certificate"}>Create Certificate</Link>
-      ),
-    },
+
     {
       key: "13",
       icon: <FaVideo />,

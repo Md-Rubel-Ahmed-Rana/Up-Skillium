@@ -5,7 +5,20 @@ const certificateApi = apiSlice.injectEndpoints({
     getStudentCertificates: builder.query({
       query: ({ userId }: { userId: string }) => ({
         method: "GET",
-        url: `certificate/my-certificates/${userId}`,
+        url: `/certificate/my-certificates/${userId}`,
+      }),
+      providesTags: [
+        "lesson",
+        "module",
+        "course",
+        "quiz-submission",
+        "certificates",
+      ] as any,
+    }),
+    getAllCertificates: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/certificate`,
       }),
       providesTags: [
         "lesson",
@@ -18,4 +31,5 @@ const certificateApi = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetStudentCertificatesQuery } = certificateApi;
+export const { useGetStudentCertificatesQuery, useGetAllCertificatesQuery } =
+  certificateApi;
