@@ -83,7 +83,6 @@ const ManageCertificates = () => {
           dataSource={certificates}
           rowKey={(record) => record?.id}
           loading={isLoading}
-          scroll={{ x: "max-content" }}
         />
       </div>
     </div>

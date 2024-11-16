@@ -67,7 +67,7 @@ const CertificateUpdate = () => {
   ]);
 
   return (
-    <div className="border w-full lg:p-5 p-2 rounded-md">
+    <div className="border w-full lg:p-5 p-2 mt-5 rounded-md">
       <h2 className="text-lg lg:text-2xl font-semibold mb-5">
         Update Certificate
       </h2>

@@ -89,7 +89,9 @@ const AdminSidebar = () => {
           key: "5-1",
           icon: <FaChalkboardTeacher />,
           label: (
-            <Link href={"/dashboard/manage-certificates"}>All Certificate</Link>
+            <Link href={"/dashboard/manage-certificates"}>
+              All Certificates
+            </Link>
           ),
         },
         {
@@ -132,27 +134,21 @@ const AdminSidebar = () => {
     },
     {
       key: "11",
-      icon: <FaChalkboardTeacher />,
-      label: <Link href={"/dashboard/add-instructor"}>Add Instructor</Link>,
-    },
-
-    {
-      key: "13",
       icon: <FaVideo />,
       label: <Link href={"/dashboard/meetings"}>Manage Meetings</Link>,
     },
     {
-      key: "14",
+      key: "12",
       icon: <FaCog />,
       label: <Link href={"/dashboard/settings"}>Settings</Link>,
     },
     {
-      key: "15",
+      key: "13",
       icon: <FaChartLine />,
       label: <Link href={"/dashboard/analytics"}>Analytics</Link>,
     },
     {
-      key: "16",
+      key: "14",
       icon: <FaSignOutAlt />,
       label: <LogoutButton />,
     },
