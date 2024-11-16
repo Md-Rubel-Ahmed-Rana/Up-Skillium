@@ -11,7 +11,7 @@ router.get("/:id", CertificateController.getSingleCertificate);
 
 router.get(
   "/my-certificates/:userId",
-  CertificateController.getCertificateByUserId
+  CertificateController.getCertificatesByUserId
 );
 
 router.patch("/:id", CertificateController.updateCertificate);

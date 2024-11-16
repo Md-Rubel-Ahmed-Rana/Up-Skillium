@@ -7,7 +7,7 @@ const router = (0, express_1.Router)();
 router.post("/create", controller_1.CertificateController.createCertificate);
 router.get("/", controller_1.CertificateController.getAllCertificate);
 router.get("/:id", controller_1.CertificateController.getSingleCertificate);
-router.get("/my-certificates/:userId", controller_1.CertificateController.getCertificateByUserId);
+router.get("/my-certificates/:userId", controller_1.CertificateController.getCertificatesByUserId);
 router.patch("/:id", controller_1.CertificateController.updateCertificate);
 router.delete("/:id", controller_1.CertificateController.deleteCertificate);
 exports.CertificateRoutes = router;

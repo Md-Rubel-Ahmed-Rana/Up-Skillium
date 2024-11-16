@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import { PdfCreatorService } from "../pdf-creator/service";
-import { ICertificate, IGetCertificate } from "./interface";
+import { ICertificate } from "./interface";
 import { Certificate } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { IPdfCertificate } from "../pdf-creator/interface";
@@ -18,10 +18,12 @@ class Service {
       {
         path: "user",
         model: "User",
+        select: { name: 1, image: 1, email: 1 },
       },
       {
         path: "course",
         model: "Course",
+        select: { title: 1, category: 1, image: 1 },
       },
     ]);
     return data;
@@ -31,18 +33,17 @@ class Service {
       {
         path: "user",
         model: "User",
+        select: { name: 1, image: 1, email: 1 },
       },
       {
         path: "course",
         model: "Course",
+        select: { title: 1, category: 1, image: 1 },
       },
     ]);
   }
-  async getCertificateByUserId(userId: Types.ObjectId) {
-    return await Certificate.find({ userId: userId }).populate(
-      "course",
-      "title"
-    );
+  async getCertificatesByUserId(userId: Types.ObjectId) {
+    return await Certificate.find({ user: userId }).populate("course", "title");
   }
   async updateCertificate(
     id: Types.ObjectId,

@@ -34,10 +34,10 @@ class Controller extends RootController {
       });
     }
   );
-  getCertificateByUserId = this.catchAsync(
+  getCertificatesByUserId = this.catchAsync(
     async (req: Request, res: Response) => {
       const userId = req.params.userId as unknown as Types.ObjectId;
-      const data = await CertificateService.getCertificateByUserId(userId);
+      const data = await CertificateService.getCertificatesByUserId(userId);
       this.apiResponse(res, {
         statusCode: 200,
         success: true,
