@@ -33,6 +33,7 @@ class Service {
             if (existingProgress) {
                 const courseExists = (_b = existingProgress === null || existingProgress === void 0 ? void 0 : existingProgress.courses) === null || _b === void 0 ? void 0 : _b.some((course) => { var _a, _b; return ((_a = course === null || course === void 0 ? void 0 : course.course) === null || _a === void 0 ? void 0 : _a.toString()) === ((_b = data === null || data === void 0 ? void 0 : data.courseId) === null || _b === void 0 ? void 0 : _b.toString()); });
                 if (!courseExists) {
+                    reOrganizedModules[0].lessons[0].isLessonCompleted = true;
                     (_c = existingProgress === null || existingProgress === void 0 ? void 0 : existingProgress.courses) === null || _c === void 0 ? void 0 : _c.push({
                         course: data.courseId,
                         isCourseCompleted: false,
@@ -44,6 +45,7 @@ class Service {
                 }
             }
             else {
+                reOrganizedModules[0].lessons[0].isLessonCompleted = true;
                 const newCourseProgress = {
                     user: data.userId,
                     courses: [
@@ -58,6 +60,27 @@ class Service {
                 };
                 yield model_1.StudentProgress.create(newCourseProgress);
             }
+        });
+    }
+    getAllCoursesProgress() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const progresses = yield model_1.StudentProgress.find({})
+                .populate({
+                path: "courses.course",
+                model: "Course",
+                select: { title: 1, image: 1 },
+            })
+                .populate({
+                path: "courses.lastCompletedLesson",
+                model: "Lesson",
+            })
+                .select({
+                "courses.course": 1,
+                "courses.isCourseCompleted": 1,
+                "courses.completionPercentage": 1,
+                "courses.lastCompletedLesson": 1,
+            });
+            return progresses;
         });
     }
     getStudentProgress(userId) {

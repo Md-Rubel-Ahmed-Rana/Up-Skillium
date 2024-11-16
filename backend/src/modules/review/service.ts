@@ -7,39 +7,45 @@ class Service {
     await Review.create(data);
   }
   async getAllReviews(): Promise<IReview[]> {
-    const reviews = await Review.find({})
-      .populate([
-        {
-          path: "reviewer",
-          model: "User",
-          select: { name: 1, image: 1 },
-        },
-        {
-          path: "reviewTo",
-          select: { name: 1, image: 1, title: 1 },
-        },
-      ])
-      .select("-reviewToModel");
+    const reviews = await Review.find({}).populate([
+      {
+        path: "reviewer",
+        model: "User",
+        select: { name: 1, image: 1 },
+      },
+      {
+        path: "reviewTo",
+        select: { name: 1, image: 1, title: 1 },
+      },
+    ]);
 
     return reviews;
   }
   async getSingleReview(reviewId: Types.ObjectId): Promise<IReview | null> {
-    return await Review.findById(reviewId);
+    return await Review.findById(reviewId).populate([
+      {
+        path: "reviewer",
+        model: "User",
+        select: { name: 1, image: 1 },
+      },
+      {
+        path: "reviewTo",
+        select: { name: 1, image: 1, title: 1 },
+      },
+    ]);
   }
   async getAllReviewByReviewTo(reviewToId: Types.ObjectId): Promise<IReview[]> {
-    const reviews = await Review.find({ reviewTo: reviewToId })
-      .populate([
-        {
-          path: "reviewer",
-          model: "User",
-          select: { name: 1, image: 1 },
-        },
-        {
-          path: "reviewTo",
-          select: { name: 1, image: 1, title: 1 },
-        },
-      ])
-      .select("-reviewToModel");
+    const reviews = await Review.find({ reviewTo: reviewToId }).populate([
+      {
+        path: "reviewer",
+        model: "User",
+        select: { name: 1, image: 1 },
+      },
+      {
+        path: "reviewTo",
+        select: { name: 1, image: 1, title: 1 },
+      },
+    ]);
 
     return reviews;
   }
