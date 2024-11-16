@@ -41,15 +41,15 @@ const ManageInstructors = () => {
   ];
 
   return (
-    <div className="pt-4 overflow-x-auto">
-      <h1 className="text-2xl font-bold mb-4">Manage Instructors</h1>
+    <div className="lg:p-5 px-2 pb-20 overflow-x-auto">
+      <h1 className="text-lg lg:text-2xl font-bold mb-4">Manage Instructors</h1>
       <Table
         columns={columns}
         dataSource={instructors}
         rowKey={(instructor) => instructor?.id}
         pagination={{ pageSize: 5 }}
         bordered
-        className="w-full min-w-[500px] md:min-w-[700px] lg:min-w-[900px]"
+        scroll={{ x: "max-content" }}
       />
     </div>
   );

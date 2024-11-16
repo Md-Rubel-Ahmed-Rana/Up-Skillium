@@ -143,7 +143,7 @@ const ManageCourseTable = ({ courses }: Props) => {
         rowKey="id"
         pagination={false}
         bordered
-        className="w-full min-w-[500px] md:min-w-[700px] lg:min-w-[900px]"
+        className="w-full"
       />
     </div>
   );
