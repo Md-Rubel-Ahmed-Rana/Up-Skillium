@@ -105,16 +105,16 @@ const FeedbackReviews = () => {
   ];
 
   return (
-    <div className="p-2 mt-3">
+    <div className="overflow-x-auto p-2 mt-3">
       <h1 className="text-lg lg:text-2xl font-semibold mb-4">
         Feedbacks & Reviews
       </h1>
       <Table
-        className="shadow-md rounded-lg"
         dataSource={feedbacks}
         columns={columns}
         rowKey="id"
         bordered
+        className="shadow-md rounded-lg w-full min-w-[900px]"
       />
       <FeedbackEditModal
         open={isEditFeedback}

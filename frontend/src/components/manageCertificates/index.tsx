@@ -60,7 +60,7 @@ const ManageCertificates = () => {
       title: "Actions",
       key: "actions",
       render: (_: any, certificate: ICertificate) => (
-        <div className="space-x-3">
+        <div className="flex space-x-3">
           <Link
             href={`/dashboard/certificates/update/${certificate?.id}/${certificate?.user?.id}/${certificate?.course?.id}?studentName=${certificate?.user?.name}&courseName=${certificate?.course?.title}`}
           >
@@ -83,6 +83,7 @@ const ManageCertificates = () => {
           dataSource={certificates}
           rowKey={(record) => record?.id}
           loading={isLoading}
+          className="shadow-md rounded-lg w-full min-w-[900px]"
         />
       </div>
     </div>
