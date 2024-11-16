@@ -5,10 +5,11 @@ import {
   IReviewToCourse,
   IReviewToInstructor,
 } from "@/types/review.type";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons/lib";
+import { EditOutlined } from "@ant-design/icons/lib";
 
 import { Button, Space, Table, Tooltip } from "antd/lib";
 import { useState } from "react";
+import FeedbackDeleteButton from "./FeedbackDeleteButton";
 import FeedbackEditModal from "./FeedbackEditModal";
 
 const FeedbackReviews = () => {
@@ -97,14 +98,7 @@ const FeedbackReviews = () => {
           >
             Edit
           </Button>
-          <Button
-            type="primary"
-            danger
-            className="bg-red-500 hover:bg-red-600"
-            icon={<DeleteOutlined />}
-          >
-            Delete
-          </Button>
+          <FeedbackDeleteButton feedback={record} />
         </Space>
       ),
     },

@@ -32,7 +32,7 @@ const FeedbackEditModal = ({ feedback, open, setOpen }: Props) => {
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to updated feedback."
+            "Failed to update feedback."
         );
         setOpen(false);
       }
