@@ -2,6 +2,7 @@ import { useGetAllCertificatesQuery } from "@/features/certificate";
 import { ICertificate } from "@/types/certificate.type";
 import { Avatar, Table } from "antd/lib";
 import Link from "next/link";
+import CertificateDeleteButton from "./CertificateDeleteButton";
 
 const ManageCertificates = () => {
   const { data, isLoading } = useGetAllCertificatesQuery({});
@@ -67,9 +68,7 @@ const ManageCertificates = () => {
               Edit
             </button>
           </Link>
-          <button className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600">
-            Delete
-          </button>
+          <CertificateDeleteButton certificateId={certificate?.id} />
         </div>
       ),
     },
