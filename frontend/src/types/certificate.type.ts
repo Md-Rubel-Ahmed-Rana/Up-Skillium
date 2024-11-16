@@ -9,6 +9,7 @@ type Course = {
   title: string;
   category: string;
   image: string;
+  technologies: string[];
   id: string;
 };
 
@@ -32,4 +33,11 @@ export type ICreateCertificate = {
     user: string;
     course: string;
   };
+};
+
+export type IUpdateCertificate = {
+  studentName: string;
+  courseName: string;
+  technologies: string[];
+  score: number;
 };
