@@ -1,3 +1,4 @@
+import { ICreateCertificate } from "@/types/certificate.type";
 import apiSlice from "../api/apiSlice";
 
 const certificateApi = apiSlice.injectEndpoints({
@@ -23,6 +24,14 @@ const certificateApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["certificates"] as any,
     }),
+    createCertificate: builder.mutation({
+      query: (data: ICreateCertificate) => ({
+        method: "POST",
+        url: `/certificate/create`,
+        body: data,
+      }),
+      providesTags: ["certificates"] as any,
+    }),
   }),
 });
 
@@ -30,4 +39,5 @@ export const {
   useGetStudentCertificatesQuery,
   useGetAllCertificatesQuery,
   useGetSingleCertificateQuery,
+  useCreateCertificateMutation,
 } = certificateApi;
