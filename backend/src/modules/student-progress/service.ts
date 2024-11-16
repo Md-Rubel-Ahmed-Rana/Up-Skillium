@@ -33,6 +33,7 @@ class Service {
       );
 
       if (!courseExists) {
+        reOrganizedModules[0].lessons[0].isLessonCompleted = true;
         existingProgress?.courses?.push({
           course: data.courseId,
           isCourseCompleted: false,
@@ -43,6 +44,7 @@ class Service {
         await existingProgress.save();
       }
     } else {
+      reOrganizedModules[0].lessons[0].isLessonCompleted = true;
       const newCourseProgress: IStudentProgress = {
         user: data.userId,
         courses: [
@@ -57,6 +59,27 @@ class Service {
       };
       await StudentProgress.create(newCourseProgress);
     }
+  }
+
+  async getAllCoursesProgress() {
+    const progresses = await StudentProgress.find({})
+      .populate({
+        path: "courses.course",
+        model: "Course",
+        select: { title: 1, image: 1 },
+      })
+      .populate({
+        path: "courses.lastCompletedLesson",
+        model: "Lesson",
+      })
+      .select({
+        "courses.course": 1,
+        "courses.isCourseCompleted": 1,
+        "courses.completionPercentage": 1,
+        "courses.lastCompletedLesson": 1,
+      });
+
+    return progresses;
   }
 
   async getStudentProgress(userId: Types.ObjectId) {
