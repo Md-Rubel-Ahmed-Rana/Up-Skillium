@@ -9,6 +9,18 @@ const ManageInstructors = () => {
 
   const columns = [
     {
+      title: "Image",
+      dataIndex: ["user", "name"],
+      key: "name",
+      render: (instructor: IInstructor) => (
+        <img
+          src={instructor?.user?.image}
+          alt={instructor?.user?.name}
+          className="w-10 h-10 object-cover rounded-full ring-1"
+        />
+      ),
+    },
+    {
       title: "Name",
       dataIndex: ["user", "name"],
       key: "name",
@@ -49,7 +61,7 @@ const ManageInstructors = () => {
         rowKey={(instructor) => instructor?.id}
         pagination={{ pageSize: 5 }}
         bordered
-        scroll={{ x: "max-content" }}
+        className="shadow-md rounded-lg w-full min-w-[900px]"
       />
     </div>
   );
