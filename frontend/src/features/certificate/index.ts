@@ -1,4 +1,7 @@
-import { ICreateCertificate } from "@/types/certificate.type";
+import {
+  ICreateCertificate,
+  IUpdateCertificate,
+} from "@/types/certificate.type";
 import apiSlice from "../api/apiSlice";
 
 const certificateApi = apiSlice.injectEndpoints({
@@ -32,6 +35,14 @@ const certificateApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["certificates"] as any,
     }),
+    updateCertificate: builder.mutation({
+      query: ({ id, data }: { id: string; data: IUpdateCertificate }) => ({
+        method: "PATCH",
+        url: `/certificate/${id}`,
+        body: data,
+      }),
+      invalidatesTags: ["certificates"] as any,
+    }),
     deleteCertificate: builder.mutation({
       query: ({ id }: { id: string }) => ({
         method: "DELETE",
@@ -48,4 +59,5 @@ export const {
   useGetSingleCertificateQuery,
   useCreateCertificateMutation,
   useDeleteCertificateMutation,
+  useUpdateCertificateMutation,
 } = certificateApi;
