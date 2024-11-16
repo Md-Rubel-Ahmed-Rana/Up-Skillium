@@ -9,7 +9,7 @@ type Props = {
   course: ICourse;
 };
 
-const MyClasseCard = ({ course }: Props) => {
+const MyClassCard = ({ course }: Props) => {
   return (
     <Card
       className="border shadow-lg"
@@ -66,4 +66,4 @@ const MyClasseCard = ({ course }: Props) => {
   );
 };
 
-export default MyClasseCard;
+export default MyClassCard;

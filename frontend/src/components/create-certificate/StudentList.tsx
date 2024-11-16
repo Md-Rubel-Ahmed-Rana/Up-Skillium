@@ -17,8 +17,6 @@ const StudentList = ({ setSelectedStudent }: Props) => {
     (user) => (user?.role as string) === studentRole?.id
   );
 
-  console.log(students);
-
   const menu = (
     <Menu>
       {students?.map((student) => (

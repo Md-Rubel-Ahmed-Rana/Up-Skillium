@@ -27,7 +27,6 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
         course: selectedCourse.id,
       },
     };
-    console.log(formData);
     toast.success("Certificate created successfully!");
   };
 
