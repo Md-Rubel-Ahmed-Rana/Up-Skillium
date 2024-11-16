@@ -10,6 +10,13 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    getAllUsers: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/user`,
+      }),
+      providesTags: ["user"],
+    }),
     updateUserBasicInfo: builder.mutation({
       query: ({
         id,
@@ -76,4 +83,5 @@ export const {
   useUpdateUserBasicInfoMutation,
   useUpdateUserAddressMutation,
   useUpdateEmergencyContactMutation,
+  useGetAllUsersQuery,
 } = userApi;

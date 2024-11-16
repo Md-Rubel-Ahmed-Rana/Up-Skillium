@@ -11,7 +11,7 @@ type IEmergencyContact = {
   phone: string;
 };
 
-type IRole = {
+export type IRole = {
   id: string;
   role: string;
   permissions: string[];

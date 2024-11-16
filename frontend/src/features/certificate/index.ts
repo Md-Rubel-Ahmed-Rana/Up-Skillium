@@ -7,29 +7,27 @@ const certificateApi = apiSlice.injectEndpoints({
         method: "GET",
         url: `/certificate/my-certificates/${userId}`,
       }),
-      providesTags: [
-        "lesson",
-        "module",
-        "course",
-        "quiz-submission",
-        "certificates",
-      ] as any,
+      providesTags: ["certificates"] as any,
     }),
     getAllCertificates: builder.query({
       query: () => ({
         method: "GET",
         url: `/certificate`,
       }),
-      providesTags: [
-        "lesson",
-        "module",
-        "course",
-        "quiz-submission",
-        "certificates",
-      ] as any,
+      providesTags: ["certificates"] as any,
+    }),
+    getSingleCertificate: builder.query({
+      query: ({ id }: { id: string }) => ({
+        method: "GET",
+        url: `/certificate/${id}`,
+      }),
+      providesTags: ["certificates"] as any,
     }),
   }),
 });
 
-export const { useGetStudentCertificatesQuery, useGetAllCertificatesQuery } =
-  certificateApi;
+export const {
+  useGetStudentCertificatesQuery,
+  useGetAllCertificatesQuery,
+  useGetSingleCertificateQuery,
+} = certificateApi;
