@@ -1,11 +1,22 @@
-export type IGetCertificate = {
+type User = {
   id: string;
-  userId: string;
+  name: string;
+  email: string;
+  image: string;
+};
+
+type Course = {
+  title: string;
+  category: string;
+  image: string;
+  id: string;
+};
+
+export type ICertificate = {
+  course: Course;
   certificateUrl: string;
-  course: {
-    id: string;
-    title: string;
-  };
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+  id: string;
 };
