@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { StudentProgressService } from "../student-progress/service";
 import { IEnrollment } from "./interface";
 import { Enrollment } from "./model";
+import { StudentService } from "../student/service";
 
 class Service {
   async createEnrollment(data: IEnrollment | IEnrollment[]): Promise<void> {
@@ -49,6 +50,10 @@ class Service {
         userId: enrollment?.userId,
         courseId: enrollment?.courseId,
       });
+      await StudentService.addNewCourse(
+        enrollment?.userId,
+        enrollment?.courseId
+      );
     }
   }
 

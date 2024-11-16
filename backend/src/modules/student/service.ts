@@ -11,18 +11,26 @@ class Service {
 
     await Student.create({ user: userId, studentId: studentId });
   }
-  async addNewCourse(
-    studentObjectId: Types.ObjectId,
-    courseId: Types.ObjectId
-  ) {
-    await Student.findByIdAndUpdate(studentObjectId, {
-      $push: { coursesEnrolled: courseId },
-    });
+  async addNewCourse(userId: Types.ObjectId, courseId: Types.ObjectId) {
+    await Student.findOneAndUpdate(
+      { user: userId },
+      {
+        $push: { courses: courseId },
+      }
+    );
   }
   async getMyCourses(userId: Types.ObjectId) {
-    const data = await Student.findOne({ userId: userId })
-      .populate("coursesEnrolled", "title image")
-      .exec();
+    const data = await Student.findOne({ user: userId }).populate(
+      "courses",
+      "title image"
+    );
+
+    return data;
+  }
+  async getAllStudents() {
+    const data = await Student.find({})
+      .populate("courses", "title image category")
+      .populate("user", "name email");
 
     return data;
   }
