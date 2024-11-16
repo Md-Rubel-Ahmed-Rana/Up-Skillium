@@ -1,5 +1,7 @@
+import { useUpdateFeedbackMutation } from "@/features/review";
 import { IReview } from "@/types/review.type";
-import { Button, Form, Input, Modal, Rate } from "antd";
+import { Button, Form, Input, Modal, Rate } from "antd/lib";
+import toast from "react-hot-toast";
 
 type Props = {
   feedback: IReview;
@@ -9,9 +11,35 @@ type Props = {
 
 const FeedbackEditModal = ({ feedback, open, setOpen }: Props) => {
   const [form] = Form.useForm();
+  const [updateFeedback, { isLoading }] = useUpdateFeedbackMutation();
 
-  const handleSaveChanges = (values: { feedback: string; rating: number }) => {
-    console.log(values);
+  const handleSaveChanges = async (values: {
+    feedback: string;
+    rating: number;
+  }) => {
+    try {
+      const result: any = await updateFeedback({
+        id: feedback?.id,
+        data: values,
+      });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result?.data?.message || "Feedback updated successfully!"
+        );
+        setOpen(false);
+      } else {
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            result?.data?.error?.message ||
+            "Failed to updated feedback."
+        );
+        setOpen(false);
+      }
+    } catch (error: any) {
+      toast.error(`Failed to edit feedback. Error: ${error?.message}`);
+      setOpen(false);
+    }
   };
 
   return (
@@ -59,6 +87,7 @@ const FeedbackEditModal = ({ feedback, open, setOpen }: Props) => {
             htmlType="button"
             onClick={() => setOpen(false)}
             className="bg-gray-500 hover:bg-gray-600 text-white rounded-md"
+            disabled={isLoading}
           >
             Cancel
           </Button>
@@ -66,8 +95,11 @@ const FeedbackEditModal = ({ feedback, open, setOpen }: Props) => {
             htmlType="submit"
             type="primary"
             className="bg-blue-500 hover:bg-blue-600 rounded-md"
+            disabled={isLoading}
+            loading={isLoading}
+            iconPosition="end"
           >
-            Save Changes
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       </Form>
