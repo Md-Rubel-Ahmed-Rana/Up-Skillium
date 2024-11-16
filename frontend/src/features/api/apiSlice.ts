@@ -16,6 +16,7 @@ const apiSlice = createApi({
     "course-outline",
     "instructor",
     "certificates",
+    "feedback",
   ],
   endpoints: () => ({}),
 });
