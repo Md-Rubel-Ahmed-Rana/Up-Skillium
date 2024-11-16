@@ -1,5 +1,6 @@
 import { Button, Form, Input, InputNumber } from "antd/lib";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
   selectedStudent: { id: string; name: string };
@@ -26,7 +27,8 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
         course: selectedCourse.id,
       },
     };
-    console.log("Form Data:", formData);
+    console.log(formData);
+    toast.success("Certificate created successfully!");
   };
 
   useEffect(() => {
@@ -38,8 +40,10 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
   }, [selectedStudent, selectedCourse, form]);
 
   return (
-    <div className="border w-full p-5 rounded-md">
-      <h2 className="text-2xl font-semibold mb-5">Create Certificate</h2>
+    <div className="border w-full lg:p-5 p-2 rounded-md">
+      <h2 className="text-lg lg:text-2xl font-semibold mb-5">
+        Create Certificate
+      </h2>
       <Form
         form={form}
         layout="vertical"

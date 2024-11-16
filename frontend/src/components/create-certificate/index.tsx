@@ -17,12 +17,12 @@ const CreateCertificate = () => {
 
   return (
     <div className="flex justify-center items-center pt-5 pb-20">
-      <div className="flex w-full gap-10 p-5 border rounded-md">
+      <div className="flex flex-col-reverse lg:flex-row w-full gap-5 p-2 rounded-md">
         <CertificateForm
           selectedCourse={selectedCourse}
           selectedStudent={selectedStudent}
         />
-        <div className="border w-full flex gap-2 p-5 rounded-md">
+        <div className="border w-full flex flex-col lg:flex-row gap-2 lg:p-5 p-2 rounded-md">
           <div className="w-full">
             <StudentList setSelectedStudent={setSelectedStudent} />
             <div className="mt-2">
