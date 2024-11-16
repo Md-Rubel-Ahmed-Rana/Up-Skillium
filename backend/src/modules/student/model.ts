@@ -4,7 +4,7 @@ import schemaOption from "../../utils/schemaOption";
 
 const studentSchema = new Schema<INewStudent>(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
     },

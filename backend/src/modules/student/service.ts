@@ -9,7 +9,7 @@ class Service {
       ? generateStudentId(lastStudent.studentId)
       : generateStudentId("US-ST-0000");
 
-    await Student.create({ userId: userId, studentId: studentId });
+    await Student.create({ user: userId, studentId: studentId });
   }
   async addNewCourse(
     studentObjectId: Types.ObjectId,

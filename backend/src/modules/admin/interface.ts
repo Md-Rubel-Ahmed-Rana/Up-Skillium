@@ -1,16 +1,7 @@
 import { Types } from "mongoose";
-import { ICreateUser } from "../user/interface";
 
 export type IAdmin = {
-  userId: Types.ObjectId;
-  bio: string;
-  user: ICreateUser;
-  role: string;
+  user: Types.ObjectId;
   adminId: string;
   qualifications: string[];
-  socialLinks?: {
-    linkedin?: string;
-    twitter?: string;
-    website?: string;
-  };
 };
