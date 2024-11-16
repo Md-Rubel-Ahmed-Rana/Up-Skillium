@@ -22,7 +22,11 @@ const textWrapLineBreaker_1 = __importDefault(require("../../utils/textWrapLineB
 class Service {
     createCertificate(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { studentName, courseName, technologies, score } = data;
+            console.log("From pdf create service", data);
+            const studentName = data === null || data === void 0 ? void 0 : data.studentName;
+            const courseName = data === null || data === void 0 ? void 0 : data.courseName;
+            const technologies = data === null || data === void 0 ? void 0 : data.technologies;
+            const score = data === null || data === void 0 ? void 0 : data.score;
             const pdfDoc = yield pdf_lib_1.PDFDocument.create();
             const page = this.createPage(pdfDoc);
             const colors = {

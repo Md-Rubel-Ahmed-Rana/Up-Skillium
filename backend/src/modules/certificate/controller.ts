@@ -5,6 +5,7 @@ import { Types } from "mongoose";
 
 class Controller extends RootController {
   createCertificate = this.catchAsync(async (req: Request, res: Response) => {
+    console.log("From certificate controller", req.body);
     await CertificateService.createCertificate(req.body);
     this.apiResponse(res, {
       statusCode: 201,

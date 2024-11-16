@@ -8,9 +8,9 @@ import { IPdfCertificate } from "../pdf-creator/interface";
 class Service {
   async createCertificate(data: ICertificate) {
     const certificateUrl = await PdfCreatorService.createCertificate(
-      data.certificatePdfData
+      data?.certificatePdfData
     );
-    const schemaData = { ...data.schema, certificateUrl: certificateUrl };
+    const schemaData = { ...data?.schema, certificateUrl: certificateUrl };
     await Certificate.create(schemaData);
   }
   async getAllCertificate(): Promise<any> {

@@ -8,7 +8,11 @@ import { IPdfCertificate } from "./interface";
 
 class Service {
   public async createCertificate(data: IPdfCertificate): Promise<string> {
-    const { studentName, courseName, technologies, score } = data;
+    console.log("From pdf create service", data);
+    const studentName = data?.studentName;
+    const courseName = data?.courseName;
+    const technologies = data?.technologies;
+    const score = data?.score;
     const pdfDoc = await PDFDocument.create();
     const page = this.createPage(pdfDoc);
 

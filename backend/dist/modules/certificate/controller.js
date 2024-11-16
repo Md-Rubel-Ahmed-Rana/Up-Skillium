@@ -19,6 +19,7 @@ class Controller extends rootController_1.default {
     constructor() {
         super(...arguments);
         this.createCertificate = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            console.log("From certificate controller", req.body);
             yield service_1.CertificateService.createCertificate(req.body);
             this.apiResponse(res, {
                 statusCode: 201,

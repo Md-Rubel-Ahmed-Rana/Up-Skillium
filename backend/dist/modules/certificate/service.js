@@ -16,8 +16,8 @@ const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddlewa
 class Service {
     createCertificate(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const certificateUrl = yield service_1.PdfCreatorService.createCertificate(data.certificatePdfData);
-            const schemaData = Object.assign(Object.assign({}, data.schema), { certificateUrl: certificateUrl });
+            const certificateUrl = yield service_1.PdfCreatorService.createCertificate(data === null || data === void 0 ? void 0 : data.certificatePdfData);
+            const schemaData = Object.assign(Object.assign({}, data === null || data === void 0 ? void 0 : data.schema), { certificateUrl: certificateUrl });
             yield model_1.Certificate.create(schemaData);
         });
     }
