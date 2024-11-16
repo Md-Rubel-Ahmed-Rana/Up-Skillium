@@ -32,6 +32,13 @@ const certificateApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["certificates"] as any,
     }),
+    deleteCertificate: builder.mutation({
+      query: ({ id }: { id: string }) => ({
+        method: "DELETE",
+        url: `/certificate/${id}`,
+      }),
+      invalidatesTags: ["certificates"] as any,
+    }),
   }),
 });
 
@@ -40,4 +47,5 @@ export const {
   useGetAllCertificatesQuery,
   useGetSingleCertificateQuery,
   useCreateCertificateMutation,
+  useDeleteCertificateMutation,
 } = certificateApi;

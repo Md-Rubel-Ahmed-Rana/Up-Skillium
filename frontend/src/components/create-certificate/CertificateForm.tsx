@@ -30,7 +30,6 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
         course: selectedCourse?.id,
       },
     };
-    console.log(formData);
     await handleCreateCertificate(formData);
   };
 
