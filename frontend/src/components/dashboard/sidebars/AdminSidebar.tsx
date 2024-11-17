@@ -1,4 +1,5 @@
 import LogoutButton from "@/components/shared/LogoutButton";
+import buildPathToKeyMap from "@/utils/buildPathToKeyMapSidebar";
 import { Menu, MenuProps } from "antd/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -22,36 +23,23 @@ import { PiChalkboardTeacherLight } from "react-icons/pi";
 const AdminSidebar = () => {
   const router = useRouter();
 
-  const pathToKeyMap: { [key: string]: string } = {
-    "/dashboard/profile": "1",
-    "/dashboard/manage-instructors": "2-1",
-    "/dashboard/create-instructor": "2-2",
-    "/dashboard/manage-students": "3",
-    "/dashboard/manage-courses": "4-1",
-    "/dashboard/create-course": "4-2",
-    "/dashboard/manage-modules": "5-1",
-    "/dashboard/create-module": "5-2",
-    "/dashboard/manage-lessons": "6-1",
-    "/dashboard/create-lesson": "6-2",
-    "/dashboard/manage-quizzes": "7-1",
-    "/dashboard/create-quiz": "7-2",
-    "/dashboard/manage-certificates": "8-1",
-    "/dashboard/create-certificate": "8-2",
-    "/dashboard/reports": "9",
-    "/dashboard/manage-assignments": "10-1",
-    "/dashboard/create-assignment": "10-2",
-    "/dashboard/feedback-reviews": "11",
-    "/dashboard/meetings": "12",
-    "/dashboard/analytics": "13",
-  };
-
-  const selectedKey = pathToKeyMap[router.pathname] || "1";
-
   const adminItems: MenuProps["items"] = [
     {
       key: "1",
       icon: <FaUserCircle />,
-      label: <Link href="/dashboard/profile">Profile</Link>,
+      label: "Profile",
+      children: [
+        {
+          key: "1-1",
+          icon: <FaUserCircle />,
+          label: <Link href="/dashboard/profile-info">Profile Info</Link>,
+        },
+        {
+          key: "1-2",
+          icon: <FaChalkboardTeacher />,
+          label: <Link href="/dashboard/change-password">Change Password</Link>,
+        },
+      ],
     },
     {
       key: "2",
@@ -77,8 +65,28 @@ const AdminSidebar = () => {
     {
       key: "3",
       icon: <FaUsers />,
-      label: <Link href="/dashboard/manage-students">Manage Students</Link>,
+      label: "Manage Students",
+      children: [
+        {
+          key: "3-1",
+          icon: <FaChalkboardTeacher />,
+          label: <Link href="/dashboard/manage-students">All Students</Link>,
+        },
+        {
+          key: "3-2",
+          icon: <PiChalkboardTeacherLight />,
+          label: <Link href="/dashboard/create-student">Add Student</Link>,
+        },
+        {
+          key: "3-3",
+          icon: <FaChartBar />,
+          label: (
+            <Link href="/dashboard/students-progress">Students Progress</Link>
+          ),
+        },
+      ],
     },
+
     {
       key: "4",
       icon: <FaBook />,
@@ -157,7 +165,37 @@ const AdminSidebar = () => {
     {
       key: "9",
       icon: <FaChartBar />,
-      label: <Link href="/dashboard/reports">Reports</Link>,
+      label: "Reports",
+      children: [
+        {
+          key: "9-1",
+          icon: <FaBook />,
+          label: <Link href="/dashboard/reports/courses">Course Reports</Link>,
+        },
+        {
+          key: "9-2",
+          icon: <GiTeacher />,
+          label: (
+            <Link href="/dashboard/reports/instructors">
+              Instructor Reports
+            </Link>
+          ),
+        },
+        {
+          key: "9-3",
+          icon: <FaUsers />,
+          label: (
+            <Link href="/dashboard/reports/students">Student Reports</Link>
+          ),
+        },
+        {
+          key: "9-4",
+          icon: <FaComments />,
+          label: (
+            <Link href="/dashboard/reports/feedback">Feedback Reports</Link>
+          ),
+        },
+      ],
     },
     {
       key: "10",
@@ -183,17 +221,97 @@ const AdminSidebar = () => {
     {
       key: "11",
       icon: <FaComments />,
-      label: <Link href="/dashboard/feedback-reviews">Feedback & Reviews</Link>,
+      label: "Feedback & Reviews",
+      children: [
+        {
+          key: "4-1",
+          icon: <FaChalkboardTeacher />,
+          label: <Link href="/dashboard/feedback-reviews">All Reviews</Link>,
+        },
+        {
+          key: "4-2",
+          icon: <FaChalkboardTeacher />,
+          label: (
+            <Link href="/dashboard/feedback-reviews/instructor">
+              Instructor Reviews
+            </Link>
+          ),
+        },
+        {
+          key: "4-3",
+          icon: <PiChalkboardTeacherLight />,
+          label: (
+            <Link href="/dashboard/feedback-reviews/course">
+              Course Reviews
+            </Link>
+          ),
+        },
+      ],
     },
     {
       key: "12",
       icon: <FaVideo />,
-      label: <Link href="/dashboard/meetings">Manage Meetings</Link>,
+      label: "Manage Meetings",
+      children: [
+        {
+          key: "12-1",
+          icon: <FaVideo />,
+          label: (
+            <Link href="/dashboard/meetings/scheduled">Scheduled Meetings</Link>
+          ),
+        },
+        {
+          key: "12-2",
+          icon: <FaVideo />,
+          label: (
+            <Link href="/dashboard/meetings/completed">Completed Meetings</Link>
+          ),
+        },
+        {
+          key: "12-3",
+          icon: <FaVideo />,
+          label: <Link href="/dashboard/meetings/create">Create Meeting</Link>,
+        },
+      ],
     },
     {
       key: "13",
       icon: <FaChartLine />,
-      label: <Link href="/dashboard/analytics">Analytics</Link>,
+      label: "Analytics",
+      children: [
+        {
+          key: "13-1",
+          icon: <FaBook />,
+          label: (
+            <Link href="/dashboard/analytics/courses">Course Analytics</Link>
+          ),
+        },
+        {
+          key: "13-2",
+          icon: <FaUsers />,
+          label: (
+            <Link href="/dashboard/analytics/students">Student Analytics</Link>
+          ),
+        },
+        {
+          key: "13-3",
+          icon: <GiTeacher />,
+          label: (
+            <Link href="/dashboard/analytics/instructors">
+              Instructor Analytics
+            </Link>
+          ),
+        },
+        {
+          key: "13-4",
+          icon: <FaChartLine />,
+          label: (
+            <Link href="/dashboard/analytics/platform">
+              Platform Usage Analytics
+            </Link>
+          ),
+        },
+      ],
     },
     {
       key: "14",
@@ -201,6 +319,9 @@ const AdminSidebar = () => {
       label: <LogoutButton />,
     },
   ];
+
+  const pathToKeyMap = buildPathToKeyMap(adminItems);
+  const selectedKey = pathToKeyMap[router.pathname] || "1";
 
   return (
     <Menu
