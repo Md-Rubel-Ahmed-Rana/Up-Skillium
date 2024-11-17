@@ -9,16 +9,18 @@ import {
   FaChalkboardTeacher,
   FaChartBar,
   FaChartLine,
+  FaClipboardList,
   FaComments,
+  FaPenSquare,
+  FaPlayCircle,
+  FaPlusCircle,
   FaSignOutAlt,
   FaUserCircle,
   FaUsers,
   FaVideo,
 } from "react-icons/fa";
-
 import { GiTeacher } from "react-icons/gi";
-import { MdOutlineContentPaste } from "react-icons/md";
-import { PiChalkboardTeacherLight } from "react-icons/pi";
+import { MdOutlineContentPaste, MdPassword } from "react-icons/md";
 
 const AdminSidebar = () => {
   const router = useRouter();
@@ -36,7 +38,7 @@ const AdminSidebar = () => {
         },
         {
           key: "1-2",
-          icon: <FaChalkboardTeacher />,
+          icon: <MdPassword />,
           label: <Link href="/dashboard/change-password">Change Password</Link>,
         },
       ],
@@ -48,14 +50,14 @@ const AdminSidebar = () => {
       children: [
         {
           key: "2-1",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaUsers />,
           label: (
             <Link href="/dashboard/manage-instructors">All Instructors</Link>
           ),
         },
         {
           key: "2-2",
-          icon: <PiChalkboardTeacherLight />,
+          icon: <FaChalkboardTeacher />,
           label: (
             <Link href="/dashboard/create-instructor">Create Instructor</Link>
           ),
@@ -69,12 +71,12 @@ const AdminSidebar = () => {
       children: [
         {
           key: "3-1",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaUsers />,
           label: <Link href="/dashboard/manage-students">All Students</Link>,
         },
         {
           key: "3-2",
-          icon: <PiChalkboardTeacherLight />,
+          icon: <FaUserCircle />,
           label: <Link href="/dashboard/create-student">Add Student</Link>,
         },
         {
@@ -86,7 +88,6 @@ const AdminSidebar = () => {
         },
       ],
     },
-
     {
       key: "4",
       icon: <FaBook />,
@@ -94,12 +95,12 @@ const AdminSidebar = () => {
       children: [
         {
           key: "4-1",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaBook />,
           label: <Link href="/dashboard/manage-courses">All Courses</Link>,
         },
         {
           key: "4-2",
-          icon: <PiChalkboardTeacherLight />,
+          icon: <FaBook />,
           label: <Link href="/dashboard/create-course">Create Course</Link>,
         },
       ],
@@ -111,32 +112,32 @@ const AdminSidebar = () => {
       children: [
         {
           key: "5-1",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaClipboardList />,
           label: <Link href="/dashboard/manage-modules">All Modules</Link>,
         },
         {
           key: "5-2",
-          icon: <PiChalkboardTeacherLight />,
+          icon: <FaPlusCircle />,
           label: <Link href="/dashboard/create-module">Create Module</Link>,
         },
         {
-          key: "6-1",
-          icon: <FaChalkboardTeacher />,
+          key: "5-3",
+          icon: <FaClipboardList />,
           label: <Link href="/dashboard/manage-lessons">All Lessons</Link>,
         },
         {
-          key: "6-2",
-          icon: <PiChalkboardTeacherLight />,
+          key: "5-4",
+          icon: <FaPlayCircle />,
           label: <Link href="/dashboard/create-lesson">Create Lesson</Link>,
         },
         {
-          key: "7-1",
-          icon: <FaChalkboardTeacher />,
+          key: "5-5",
+          icon: <FaClipboardList />,
           label: <Link href="/dashboard/manage-quizzes">All Quizzes</Link>,
         },
         {
-          key: "7-2",
-          icon: <PiChalkboardTeacherLight />,
+          key: "5-6",
+          icon: <FaPenSquare />,
           label: <Link href="/dashboard/create-quiz">Create Quiz</Link>,
         },
       ],
@@ -148,14 +149,14 @@ const AdminSidebar = () => {
       children: [
         {
           key: "8-1",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaCertificate />,
           label: (
             <Link href="/dashboard/manage-certificates">All Certificates</Link>
           ),
         },
         {
           key: "8-2",
-          icon: <PiChalkboardTeacherLight />,
+          icon: <FaCertificate />,
           label: (
             <Link href="/dashboard/create-certificate">Create Certificate</Link>
           ),
@@ -169,7 +170,7 @@ const AdminSidebar = () => {
       children: [
         {
           key: "9-1",
-          icon: <FaBook />,
+          icon: <FaChartBar />,
           label: <Link href="/dashboard/reports/courses">Course Reports</Link>,
         },
         {
@@ -199,19 +200,19 @@ const AdminSidebar = () => {
     },
     {
       key: "10",
-      icon: <FaChartBar />,
+      icon: <FaComments />,
       label: "Assignments",
       children: [
         {
           key: "10-1",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaClipboardList />,
           label: (
             <Link href="/dashboard/manage-assignments">All Assignments</Link>
           ),
         },
         {
           key: "10-2",
-          icon: <PiChalkboardTeacherLight />,
+          icon: <FaPenSquare />,
           label: (
             <Link href="/dashboard/create-assignment">Create Assignment</Link>
           ),
@@ -224,13 +225,13 @@ const AdminSidebar = () => {
       label: "Feedback & Reviews",
       children: [
         {
-          key: "4-1",
-          icon: <FaChalkboardTeacher />,
+          key: "11-1",
+          icon: <FaComments />,
           label: <Link href="/dashboard/feedback-reviews">All Reviews</Link>,
         },
         {
-          key: "4-2",
-          icon: <FaChalkboardTeacher />,
+          key: "11-2",
+          icon: <FaComments />,
           label: (
             <Link href="/dashboard/feedback-reviews/instructor">
               Instructor Reviews
@@ -238,8 +239,8 @@ const AdminSidebar = () => {
           ),
         },
         {
-          key: "4-3",
-          icon: <PiChalkboardTeacherLight />,
+          key: "11-3",
+          icon: <FaComments />,
           label: (
             <Link href="/dashboard/feedback-reviews/course">
               Course Reviews
@@ -281,14 +282,14 @@ const AdminSidebar = () => {
       children: [
         {
           key: "13-1",
-          icon: <FaBook />,
+          icon: <FaChartLine />,
           label: (
             <Link href="/dashboard/analytics/courses">Course Analytics</Link>
           ),
         },
         {
           key: "13-2",
-          icon: <FaUsers />,
+          icon: <FaChartBar />,
           label: (
             <Link href="/dashboard/analytics/students">Student Analytics</Link>
           ),
