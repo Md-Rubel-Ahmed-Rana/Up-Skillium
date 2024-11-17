@@ -7,6 +7,7 @@ const studentSchema = new Schema<INewStudent>(
     user: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: "User",
     },
     studentId: {
       type: String,
