@@ -1,6 +1,7 @@
 import { useCreateCertificateMutation } from "@/features/certificate";
 import { ICreateCertificate } from "@/types/certificate.type";
 import { Button, Form, Input, InputNumber } from "antd/lib";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
@@ -16,19 +17,16 @@ type Props = {
 const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
   const [form] = Form.useForm();
   const [createCertificate, { isLoading }] = useCreateCertificateMutation();
+  const router = useRouter();
 
   const handleFormSubmit = async (values: any) => {
     const formData: ICreateCertificate = {
-      certificatePdfData: {
-        studentName: values?.studentName,
-        courseName: values?.courseName,
-        technologies: values?.technologies?.split(","),
-        score: values?.score,
-      },
-      schema: {
-        user: selectedStudent?.id,
-        course: selectedCourse?.id,
-      },
+      studentName: values?.studentName,
+      courseName: values?.courseName,
+      technologies: values?.technologies?.split(","),
+      score: values?.score,
+      user: selectedStudent?.id,
+      course: selectedCourse?.id,
     };
     await handleCreateCertificate(formData);
   };
@@ -40,6 +38,7 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
         toast.success(
           result?.data?.message || "Certificate created successfully!"
         );
+        router.push("/dashboard/manage-certificates");
       } else {
         toast.error(
           result?.error?.message ||

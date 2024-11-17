@@ -1,9 +1,9 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
+import DashboardSidebarSkeleton from "@/skeletons/dashboardSidebarSkeleton";
 import { IUser } from "@/types/user.type";
-import StudentSidebar from "./StudentSidebar";
 import AdminSidebar from "./AdminSidebar";
 import InstructorSidebar from "./InstructorSidebar";
-import DashboardSidebarSkeleton from "@/skeletons/dashboardSidebarSkeleton";
+import StudentSidebar from "./StudentSidebar";
 
 const DashboardSidebar = () => {
   const { data, isLoading } = useGetLoggedInUserQuery({});
@@ -14,9 +14,9 @@ const DashboardSidebar = () => {
         <DashboardSidebarSkeleton />
       ) : (
         <div>
-          {user?.role?.role === "student" && <StudentSidebar />}
-          {user?.role?.role === "admin" && <AdminSidebar />}
-          {user?.role?.role === "instructor" && <InstructorSidebar />}
+          {user?.role?.name === "student" && <StudentSidebar />}
+          {user?.role?.name === "admin" && <AdminSidebar />}
+          {user?.role?.name === "instructor" && <InstructorSidebar />}
         </div>
       )}
     </>

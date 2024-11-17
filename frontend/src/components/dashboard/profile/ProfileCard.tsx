@@ -1,8 +1,8 @@
 import { IUser } from "@/types/user.type";
 import { Avatar, Button } from "antd/lib";
+import { useState } from "react";
 import { FaCamera } from "react-icons/fa";
 import UpdateProfilePicture from "./UpdateProfilePicture";
-import { useState } from "react";
 
 type Props = {
   user: IUser;
@@ -37,7 +37,7 @@ const ProfileCard = ({ user }: Props) => {
             type="default"
             className="text-gray-500 font-semibold"
           >
-            {user?.role?.role.toUpperCase()}
+            {user?.role?.name.toUpperCase()}
           </Button>
         </p>
       </div>

@@ -12,7 +12,7 @@ const StudentList = ({ setSelectedStudent }: Props) => {
   const { data: roleData } = useGetAllRolesQuery({});
   const users = data?.data?.users as any[];
   const roles = roleData?.data as IRole[];
-  const studentRole = roles?.find((role) => role?.role === "student");
+  const studentRole = roles?.find((role) => role?.name === "student");
   const students = users?.filter(
     (user) => (user?.role as string) === studentRole?.id
   );

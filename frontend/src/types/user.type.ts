@@ -13,7 +13,7 @@ type IEmergencyContact = {
 
 export type IRole = {
   id: string;
-  role: string;
+  name: string;
   permissions: string[];
 };
 

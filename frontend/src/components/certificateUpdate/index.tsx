@@ -52,18 +52,19 @@ const CertificateUpdate = () => {
 
   useEffect(() => {
     form.setFieldsValue({
-      studentName: certificate?.user?.name,
-      courseName: certificate?.course?.title,
-      technologies: certificate?.course?.technologies
-        ? certificate?.course?.technologies.join(", ")
+      studentName: certificate?.studentName,
+      courseName: certificate?.courseName,
+      technologies: certificate?.technologies
+        ? certificate?.technologies.join(", ")
         : "",
-      score: 0,
+      score: certificate?.score,
     });
   }, [
     form,
-    certificate?.user?.name,
-    certificate?.course?.title,
-    certificate?.course?.technologies,
+    certificate?.studentName,
+    certificate?.courseName,
+    certificate?.technologies,
+    certificate?.score,
   ]);
 
   return (
@@ -76,12 +77,12 @@ const CertificateUpdate = () => {
         layout="vertical"
         onFinish={handleFormSubmit}
         initialValues={{
-          studentName: certificate?.user?.name,
-          courseName: certificate?.course?.title,
-          technologies: certificate?.course?.technologies
-            ? certificate?.course?.technologies.join(", ")
+          studentName: certificate?.studentName,
+          courseName: certificate?.courseName,
+          technologies: certificate?.technologies
+            ? certificate?.technologies.join(", ")
             : "",
-          score: 0,
+          score: certificate?.score,
         }}
       >
         <Form.Item
