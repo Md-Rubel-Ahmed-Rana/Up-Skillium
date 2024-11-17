@@ -1,9 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
-import navbarLogo from "../../../public/assets/images/navbarLogo.webp";
 import NavbarDropdown from "@/components/shared/NavbarDropdown";
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { IUser } from "@/types/user.type";
+import Image from "next/image";
+import Link from "next/link";
+import navbarLogo from "../../../public/assets/images/navbarLogo.webp";
 
 const Navbar = () => {
   const { data } = useGetLoggedInUserQuery({});
@@ -45,7 +45,7 @@ const Navbar = () => {
               >
                 Courses
               </Link>
-              {user && user?.id && user?.role?.role !== "admin" && (
+              {user && user?.id && user?.role?.name !== "admin" && (
                 <Link
                   href={"/dashboard/my-courses"}
                   className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm border-2 border-transparent hover:border-gray-200"

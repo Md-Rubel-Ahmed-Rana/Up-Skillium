@@ -20,22 +20,21 @@ export type ICertificate = {
   updatedAt: string;
   user: User;
   id: string;
-};
-
-export type ICreateCertificate = {
-  certificatePdfData: {
-    studentName: string;
-    courseName: string;
-    technologies: string[];
-    score: number;
-  };
-  schema: {
-    user: string;
-    course: string;
-  };
+  studentName: string;
+  courseName: string;
+  technologies: string[];
+  score: number;
 };
 
 export type IUpdateCertificate = {
+  studentName: string;
+  courseName: string;
+  technologies: string[];
+  score: number;
+};
+export type ICreateCertificate = {
+  user: string;
+  course: string;
   studentName: string;
   courseName: string;
   technologies: string[];

@@ -13,8 +13,11 @@ const ManageCertificates = () => {
       title: "Student",
       dataIndex: "user",
       key: "user",
-      render: (user: ICertificate["user"]) => (
-        <div className="flex items-center space-x-3">
+      render: (user: ICertificate["user"], certificate: ICertificate) => (
+        <div
+          title={`Certificate name: ${certificate?.studentName}`}
+          className="flex items-center space-x-3"
+        >
           <Avatar src={user?.image} alt={user?.name} />
           <span>{user?.name}</span>
         </div>
@@ -24,8 +27,11 @@ const ManageCertificates = () => {
       title: "Course",
       dataIndex: "course",
       key: "course",
-      render: (course: ICertificate["course"]) => (
-        <div className="flex items-center space-x-3">
+      render: (course: ICertificate["course"], certificate: ICertificate) => (
+        <div
+          title={`Certificate name: ${certificate?.courseName}`}
+          className="flex items-center space-x-3"
+        >
           <img
             src={course?.image}
             alt={course?.title}

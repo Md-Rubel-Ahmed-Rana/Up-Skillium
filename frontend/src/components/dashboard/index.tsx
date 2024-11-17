@@ -1,8 +1,8 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { IUser } from "@/types/user.type";
-import StudentDashboard from "./student";
 import AdminDashboard from "./admin";
 import InstructorDashboard from "./instructor";
+import StudentDashboard from "./student";
 
 const DashboardRenderer = () => {
   const { data } = useGetLoggedInUserQuery({});
@@ -10,9 +10,9 @@ const DashboardRenderer = () => {
 
   return (
     <div className="lg:block hidden">
-      {user?.role?.role === "student" && <StudentDashboard />}
-      {user?.role?.role === "admin" && <AdminDashboard />}
-      {user?.role?.role === "instructor" && <InstructorDashboard />}
+      {user?.role?.name === "student" && <StudentDashboard />}
+      {user?.role?.name === "admin" && <AdminDashboard />}
+      {user?.role?.name === "instructor" && <InstructorDashboard />}
     </div>
   );
 };
