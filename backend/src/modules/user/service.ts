@@ -25,11 +25,11 @@ class Service {
 
     const newUser = await User.create(user);
 
-    if (role?.role === "student") {
+    if (role?.name === "student") {
       await StudentService.createNewStudent(newUser._id);
-    } else if (role?.role === "instructor") {
+    } else if (role?.name === "instructor") {
       await InstructorService.createNewInstructor(newUser._id);
-    } else if (role?.role === "admin") {
+    } else if (role?.name === "admin") {
       await AdminService.createNewAdmin(newUser._id);
     }
   }
@@ -127,6 +127,12 @@ class Service {
       await FileUploadMiddleware.deleteSingle(user?.image);
     }
     await User.findByIdAndUpdate(id, { $set: { image: imageUrl } });
+  }
+  async activeOrInactiveAccount(
+    userId: Types.ObjectId,
+    status: string
+  ): Promise<void> {
+    await User.findByIdAndUpdate(userId, { $set: { status: status } });
   }
 }
 

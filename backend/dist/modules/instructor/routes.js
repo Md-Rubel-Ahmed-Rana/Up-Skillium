@@ -6,4 +6,5 @@ const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/create", controller_1.InstructorController.createNewInstructor);
 router.get("/", controller_1.InstructorController.getAllInstructors);
+router.get("/my-students/:instructorUserId", controller_1.InstructorController.getMyStudents);
 exports.InstructorRoutes = router;

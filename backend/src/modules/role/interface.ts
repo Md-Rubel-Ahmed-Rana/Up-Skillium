@@ -1,12 +1,12 @@
 import { Types } from "mongoose";
 
 export type IRole = {
-  role: string;
+  name: string;
   permissions: string[];
 };
 
 export type IGetRole = {
   id: Types.ObjectId;
-  role: string;
+  name: string;
   permissions: string[];
 };

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InstructorService = void 0;
 const model_1 = require("./model");
 const generateTeacherId_1 = __importDefault(require("./generateTeacherId"));
+const service_1 = require("../course/service");
 class Service {
     createNewInstructor(userId) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -31,7 +32,7 @@ class Service {
                 {
                     path: "user",
                     model: "User",
-                    select: { name: 1, email: 1 },
+                    select: { name: 1, email: 1, image: 1 },
                 },
                 {
                     path: "courses",
@@ -54,6 +55,12 @@ class Service {
             yield model_1.Instructor.findOneAndUpdate({ user: userId }, {
                 $pull: { courses: courseId },
             });
+        });
+    }
+    getMyStudents(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const students = yield service_1.CourseService.getMyStudentsByInstructor(instructorId);
+            return students;
         });
     }
 }

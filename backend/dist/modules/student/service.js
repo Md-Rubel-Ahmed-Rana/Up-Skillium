@@ -42,7 +42,7 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const data = yield model_1.Student.find({})
                 .populate("courses", "title image category")
-                .populate("user", "name email");
+                .populate("user", "name email image");
             return data;
         });
     }

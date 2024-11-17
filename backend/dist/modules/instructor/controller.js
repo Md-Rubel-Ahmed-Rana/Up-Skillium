@@ -36,6 +36,17 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
+        this.getMyStudents = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            const instructorId = (_a = req.params) === null || _a === void 0 ? void 0 : _a.instructorUserId;
+            const data = yield service_1.InstructorService.getMyStudents(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "My Students retrieved successfully",
+                data: data,
+            });
+        }));
     }
 }
 exports.InstructorController = new Controller();

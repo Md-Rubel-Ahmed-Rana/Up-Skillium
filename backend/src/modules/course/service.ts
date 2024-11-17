@@ -8,6 +8,7 @@ import {
 import { Course } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { InstructorService } from "../instructor/service";
+import { IUser } from "../user/interface";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -87,6 +88,21 @@ class Service {
   async getCoursesByInstructor(instructorId: Types.ObjectId) {
     const courses = await Course.find({ instructor: instructorId });
     return courses;
+  }
+  async getMyStudentsByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<IUser[]> {
+    const courses = await Course.find({ instructor: instructorId }).populate(
+      "students",
+      "name email image"
+    );
+    const students: IUser[] = [];
+    courses.forEach((course) => {
+      course?.students?.forEach((student) => {
+        students.push(student as unknown as IUser);
+      });
+    });
+    return students;
   }
   async updateCourse(
     id: Types.ObjectId,

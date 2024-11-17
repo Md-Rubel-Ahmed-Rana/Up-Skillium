@@ -30,7 +30,7 @@ class Service {
   async getAllStudents() {
     const data = await Student.find({})
       .populate("courses", "title image category")
-      .populate("user", "name email");
+      .populate("user", "name email image");
 
     return data;
   }

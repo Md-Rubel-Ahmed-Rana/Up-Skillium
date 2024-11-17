@@ -7,11 +7,16 @@ import { IPdfCertificate } from "../pdf-creator/interface";
 
 class Service {
   async createCertificate(data: ICertificate) {
+    const certificatePdfData: IPdfCertificate = {
+      courseName: data?.courseName,
+      studentName: data?.studentName,
+      score: data?.score,
+      technologies: data?.technologies,
+    };
     const certificateUrl = await PdfCreatorService.createCertificate(
-      data?.certificatePdfData
+      certificatePdfData
     );
-    const schemaData = { ...data?.schema, certificateUrl: certificateUrl };
-    await Certificate.create(schemaData);
+    await Certificate.create({ ...data, certificateUrl: certificateUrl });
   }
   async getAllCertificate(): Promise<any> {
     const data = await Certificate.find({}).populate([
@@ -61,6 +66,10 @@ class Service {
     });
   }
   async deleteCertificate(id: Types.ObjectId): Promise<void> {
+    const certificate = await Certificate.findById(id);
+    if (certificate && certificate?.certificateUrl) {
+      await FileUploadMiddleware.deleteSingle(certificate?.certificateUrl);
+    }
     await Certificate.findByIdAndDelete(id);
   }
 }
