@@ -8,7 +8,13 @@ const studentApi = apiSlice.injectEndpoints({
         url: `/student/${userId}`,
       }),
     }),
+    getAllStudents: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/student`,
+      }),
+    }),
   }),
 });
 
-export const { useMyCoursesQuery } = studentApi;
+export const { useMyCoursesQuery, useGetAllStudentsQuery } = studentApi;

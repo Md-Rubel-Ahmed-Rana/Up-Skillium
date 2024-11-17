@@ -18,7 +18,7 @@ const NavbarDropdown = ({ isToggleIcon }: Props) => {
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Link href="/dashboard/profile">Profile</Link>,
+      label: <Link href="/dashboard/profile-info">Profile</Link>,
     },
     {
       key: "2",
