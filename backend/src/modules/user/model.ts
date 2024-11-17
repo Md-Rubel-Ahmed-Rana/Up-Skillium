@@ -46,6 +46,11 @@ export const userSchema = new Schema<IUser>(
     gender: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
+    },
     address: {
       type: addressSchema,
     },

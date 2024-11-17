@@ -47,6 +47,11 @@ exports.userSchema = new mongoose_1.Schema({
     gender: {
         type: String,
     },
+    status: {
+        type: String,
+        enum: ["active", "inactive"],
+        default: "active",
+    },
     address: {
         type: addressSchema,
     },

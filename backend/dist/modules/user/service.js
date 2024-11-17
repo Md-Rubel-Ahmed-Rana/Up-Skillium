@@ -29,13 +29,13 @@ class Service {
             user.password = yield bcrypt_1.BcryptInstance.hash(user.password);
             user.role = role === null || role === void 0 ? void 0 : role.id;
             const newUser = yield model_1.User.create(user);
-            if ((role === null || role === void 0 ? void 0 : role.role) === "student") {
+            if ((role === null || role === void 0 ? void 0 : role.name) === "student") {
                 yield service_2.StudentService.createNewStudent(newUser._id);
             }
-            else if ((role === null || role === void 0 ? void 0 : role.role) === "instructor") {
+            else if ((role === null || role === void 0 ? void 0 : role.name) === "instructor") {
                 yield service_3.InstructorService.createNewInstructor(newUser._id);
             }
-            else if ((role === null || role === void 0 ? void 0 : role.role) === "admin") {
+            else if ((role === null || role === void 0 ? void 0 : role.name) === "admin") {
                 yield service_4.AdminService.createNewAdmin(newUser._id);
             }
         });
@@ -127,6 +127,11 @@ class Service {
                 yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(user === null || user === void 0 ? void 0 : user.image);
             }
             yield model_1.User.findByIdAndUpdate(id, { $set: { image: imageUrl } });
+        });
+    }
+    activeOrInactiveAccount(userId, status) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.User.findByIdAndUpdate(userId, { $set: { status: status } });
         });
     }
 }

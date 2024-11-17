@@ -3,7 +3,7 @@ import schemaOption from "../../utils/schemaOption";
 
 const rolesSchema = new Schema(
   {
-    role: { type: String, required: true, unique: true },
+    name: { type: String, required: true, unique: true },
     permissions: [{ type: String }],
   },
   schemaOption

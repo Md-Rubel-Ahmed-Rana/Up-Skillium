@@ -40,6 +40,7 @@ export type IUser = {
   dateOfBirth: Date;
   password: string;
   gender: string;
+  status: "active" | "inactive";
   address: IAddress;
   emergencyContact: IEmergencyContact;
   phoneNumber: string;

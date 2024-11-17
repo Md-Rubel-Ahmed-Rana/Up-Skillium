@@ -23,6 +23,15 @@ class Controller extends RootController {
       data: data,
     });
   });
+  getAllStudents = this.catchAsync(async (req: Request, res: Response) => {
+    const data = await StudentService.getAllStudents();
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Students retrieved successfully",
+      data: data,
+    });
+  });
 }
 
 export const StudentController = new Controller();

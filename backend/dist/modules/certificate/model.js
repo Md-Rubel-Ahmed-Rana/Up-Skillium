@@ -12,6 +12,22 @@ const certificateSchema = new mongoose_1.Schema({
         required: true,
     },
     course: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: "Course" },
+    courseName: {
+        type: String,
+        required: true,
+    },
+    studentName: {
+        type: String,
+        required: true,
+    },
+    score: {
+        type: Number,
+        required: true,
+    },
+    technologies: {
+        type: [String],
+        required: true,
+    },
     certificateUrl: {
         type: String,
         required: true,

@@ -76,6 +76,19 @@ class Service {
             return courses;
         });
     }
+    getMyStudentsByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const courses = yield model_1.Course.find({ instructor: instructorId }).populate("students", "name email image");
+            const students = [];
+            courses.forEach((course) => {
+                var _a;
+                (_a = course === null || course === void 0 ? void 0 : course.students) === null || _a === void 0 ? void 0 : _a.forEach((student) => {
+                    students.push(student);
+                });
+            });
+            return students;
+        });
+    }
     updateCourse(id, updatedData) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Course.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });

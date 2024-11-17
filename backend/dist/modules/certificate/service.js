@@ -16,9 +16,14 @@ const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddlewa
 class Service {
     createCertificate(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            const certificateUrl = yield service_1.PdfCreatorService.createCertificate(data === null || data === void 0 ? void 0 : data.certificatePdfData);
-            const schemaData = Object.assign(Object.assign({}, data === null || data === void 0 ? void 0 : data.schema), { certificateUrl: certificateUrl });
-            yield model_1.Certificate.create(schemaData);
+            const certificatePdfData = {
+                courseName: data === null || data === void 0 ? void 0 : data.courseName,
+                studentName: data === null || data === void 0 ? void 0 : data.studentName,
+                score: data === null || data === void 0 ? void 0 : data.score,
+                technologies: data === null || data === void 0 ? void 0 : data.technologies,
+            };
+            const certificateUrl = yield service_1.PdfCreatorService.createCertificate(certificatePdfData);
+            yield model_1.Certificate.create(Object.assign(Object.assign({}, data), { certificateUrl: certificateUrl }));
         });
     }
     getAllCertificate() {
@@ -73,6 +78,10 @@ class Service {
     }
     deleteCertificate(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            const certificate = yield model_1.Certificate.findById(id);
+            if (certificate && (certificate === null || certificate === void 0 ? void 0 : certificate.certificateUrl)) {
+                yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(certificate === null || certificate === void 0 ? void 0 : certificate.certificateUrl);
+            }
             yield model_1.Certificate.findByIdAndDelete(id);
         });
     }
