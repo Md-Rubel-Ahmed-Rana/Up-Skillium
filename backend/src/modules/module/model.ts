@@ -1,13 +1,13 @@
 import { model, Schema } from "mongoose";
 import { IModule } from "./interface";
 import schemaOption from "../../utils/schemaOption";
-import { lessonSchema } from "../lesson/model";
 
 const moduleSchema = new Schema<IModule>(
   {
     course: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: "Course",
     },
     title: {
       type: String,

@@ -26,7 +26,11 @@ class Service {
 
     const skip = (page - 1) * limit;
 
-    const quizzes = await Quiz.find(searchQuery).skip(skip).limit(limit).exec();
+    const quizzes = await Quiz.find(searchQuery)
+      .populate("module", "title serial")
+      .skip(skip)
+      .limit(limit)
+      .exec();
 
     return quizzes;
   }

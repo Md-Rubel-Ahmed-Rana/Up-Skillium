@@ -22,7 +22,11 @@ class Service {
 
     const skip = (page - 1) * limit;
 
-    return await Lesson.find(searchQuery).skip(skip).limit(limit).exec();
+    return await Lesson.find(searchQuery)
+      .populate("module", "title serial")
+      .skip(skip)
+      .limit(limit)
+      .exec();
   }
 
   async getLessonById(id: Types.ObjectId): Promise<ILesson | null> {

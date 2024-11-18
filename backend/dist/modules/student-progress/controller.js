@@ -37,6 +37,15 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
+        this.getAllCoursesProgress = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.StudentProgressService.getAllCoursesProgress();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Students progress retrieved successfully",
+                data: data,
+            });
+        }));
         this.getSingleCourseProgress = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const userId = req.params.userId;
             const courseId = req.params.courseId;
@@ -48,9 +57,9 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
-        this.getAllCourseProgress = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.getAllCourseProgressForStudent = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const userId = req.params.userId;
-            const data = yield service_1.StudentProgressService.getAllCourseProgress(userId);
+            const data = yield service_1.StudentProgressService.getAllCourseProgressForStudent(userId);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,

@@ -28,6 +28,7 @@ exports.lessonSchema = new mongoose_1.Schema({
     module: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
+        ref: "Module",
     },
     serial: {
         type: Number,

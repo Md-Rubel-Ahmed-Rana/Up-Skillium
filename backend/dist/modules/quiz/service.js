@@ -24,7 +24,11 @@ class Service {
         return __awaiter(this, arguments, void 0, function* (search = "", moduleId, page = 1, limit = 10) {
             const searchQuery = Object.assign(Object.assign({}, (search && { question: { $regex: search, $options: "i" } })), (moduleId && { moduleId }));
             const skip = (page - 1) * limit;
-            const quizzes = yield model_1.Quiz.find(searchQuery).skip(skip).limit(limit).exec();
+            const quizzes = yield model_1.Quiz.find(searchQuery)
+                .populate("module", "title serial")
+                .skip(skip)
+                .limit(limit)
+                .exec();
             return quizzes;
         });
     }

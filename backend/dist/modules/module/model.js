@@ -10,6 +10,7 @@ const moduleSchema = new mongoose_1.Schema({
     course: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
+        ref: "Course",
     },
     title: {
         type: String,

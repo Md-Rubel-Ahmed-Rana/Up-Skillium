@@ -5,9 +5,14 @@ const router = Router();
 
 router.post("/create", StudentProgressController.createStudentProgress);
 
+router.get("/", StudentProgressController.getAllCoursesProgress);
+
 router.get("/student/:userId", StudentProgressController.getStudentProgress);
 
-router.get("/courses/:userId", StudentProgressController.getAllCourseProgress);
+router.get(
+  "/courses/:userId",
+  StudentProgressController.getAllCourseProgressForStudent
+);
 
 router.get(
   "/course/:userId/:courseId",
