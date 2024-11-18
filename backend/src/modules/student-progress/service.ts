@@ -69,14 +69,28 @@ class Service {
         select: { title: 1, image: 1 },
       })
       .populate({
+        path: "user",
+        model: "User",
+        select: { name: 1, email: 1, image: 1 },
+      })
+      .populate({
+        path: "courses.course",
+        model: "Course",
+        select: { title: 1 },
+      })
+      .populate({
+        path: "courses.modules.module",
+        model: "Module",
+        select: { title: 1 },
+      })
+      .populate({
+        path: "courses.modules.lessons.lesson",
+        model: "Lesson",
+        select: { title: 1, type: 1 },
+      })
+      .populate({
         path: "courses.lastCompletedLesson",
         model: "Lesson",
-      })
-      .select({
-        "courses.course": 1,
-        "courses.isCourseCompleted": 1,
-        "courses.completionPercentage": 1,
-        "courses.lastCompletedLesson": 1,
       });
 
     return progresses;
