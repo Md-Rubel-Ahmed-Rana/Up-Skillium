@@ -16,7 +16,6 @@ const CourseTagsTechs = () => {
         />
       </Form.Item>
 
-      {/* Technologies */}
       <Form.Item
         label="Technologies (Separate by comma)"
         name="technologies"

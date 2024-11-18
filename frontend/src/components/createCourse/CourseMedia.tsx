@@ -3,7 +3,7 @@ import { Button, Form, Input, Upload } from "antd/lib";
 
 const CourseMedia = () => {
   return (
-    <div className="flex gap-5">
+    <div className="flex flex-col gap-5">
       <Form.Item
         label="Course Image"
         name="image"
@@ -16,9 +16,15 @@ const CourseMedia = () => {
           accept="image/*"
           maxCount={1}
           listType="picture"
+          className="w-full"
           beforeUpload={() => false}
         >
-          <Button icon={<UploadOutlined />}>Upload Image</Button>
+          <Button
+            className="w-full"
+            icon={<UploadOutlined className="w-full" />}
+          >
+            Upload Image
+          </Button>
         </Upload>
       </Form.Item>
       <Form.Item

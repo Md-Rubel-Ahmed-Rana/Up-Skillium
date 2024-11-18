@@ -11,7 +11,6 @@ const CourseTitleDescription = () => {
         <Input placeholder="Enter course title" />
       </Form.Item>
 
-      {/* Description */}
       <Form.Item
         label="Course Description"
         name="description"
