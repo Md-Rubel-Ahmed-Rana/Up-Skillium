@@ -66,6 +66,58 @@ class Service {
 
     return courses;
   }
+  async getOnlyPublishedCourses(
+    search: string = "",
+    page: number = 1,
+    limit: number = 5,
+    filters: {
+      category?: string;
+      level?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      status?: string;
+    } = {}
+  ): Promise<ICourse[]> {
+    const searchQuery = search
+      ? {
+          $or: [
+            { title: { $regex: search, $options: "i" } },
+            { description: { $regex: search, $options: "i" } },
+            { tags: { $regex: search, $options: "i" } },
+          ],
+        }
+      : {};
+
+    let filterQuery: any = {
+      status: "published",
+      ...searchQuery,
+      ...(filters.category && { category: filters.category }),
+      ...(filters.level && { level: filters.level }),
+    };
+
+    if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+      filterQuery["price.salePrice"] = {
+        ...(filters.minPrice !== undefined && { $gte: filters.minPrice }),
+        ...(filters.maxPrice !== undefined && { $lte: filters.maxPrice }),
+      };
+    }
+
+    const skip = (page - 1) * limit;
+
+    const courses = await Course.find(filterQuery)
+      .populate([
+        {
+          path: "instructor",
+          model: "User",
+          select: { name: 1, image: 1 },
+        },
+      ])
+      .skip(skip)
+      .limit(limit)
+      .exec();
+
+    return courses;
+  }
   async getSingleCourse(id: Types.ObjectId): Promise<ICourse | null> {
     return await Course.findById(id).populate([
       {

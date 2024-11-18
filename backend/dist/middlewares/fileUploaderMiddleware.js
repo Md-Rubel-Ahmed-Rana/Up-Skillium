@@ -49,6 +49,33 @@ class FileUploader {
             blobStream.end(buffer);
         });
     }
+    uploadSingleFile(folderName, file) {
+        const { originalname, buffer } = file;
+        return new Promise((resolve, reject) => {
+            const filePath = `${rootFolder}/${folderName}/${Date.now()}_${originalname}`;
+            const blob = firebase_1.firebaseBucket.file(filePath);
+            const blobStream = blob.createWriteStream({
+                resumable: false,
+                contentType: file.mimetype,
+            });
+            blobStream.on("error", (err) => {
+                reject(new apiError_1.default(400, "Failed to blob stream file"));
+            });
+            blobStream.on("finish", () => __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const [url] = yield blob.getSignedUrl({
+                        action: "read",
+                        expires: "01-01-2030",
+                    });
+                    resolve(url); // Resolve the promise with the URL
+                }
+                catch (err) {
+                    reject(new apiError_1.default(400, "Failed to upload file"));
+                }
+            }));
+            blobStream.end(buffer);
+        });
+    }
     uploadCertificate(folderName, buffer, filename) {
         return __awaiter(this, void 0, void 0, function* () {
             const filePath = `${rootFolder}/${folderName}/${filename}`;
@@ -77,44 +104,40 @@ class FileUploader {
             });
         });
     }
-    multipleFiles(folderName) {
+    uploadCourseImageAndIntroVideo() {
         return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            if (!req.files || !Array.isArray(req.files)) {
-                return res.status(400).send("No files uploaded.");
-            }
+            var _a, _b;
             try {
-                const fileUploadPromises = req.files.map((file) => {
-                    const { originalname, buffer, mimetype } = file;
-                    const filePath = `${rootFolder}/${folderName}/${Date.now()}_${originalname}`;
-                    const blob = firebase_1.firebaseBucket.file(filePath);
-                    const blobStream = blob.createWriteStream({
-                        resumable: false,
-                        contentType: mimetype,
-                    });
-                    return new Promise((resolve, reject) => {
-                        blobStream.on("error", (err) => {
-                            reject(new apiError_1.default(400, "Failed to blob stream file"));
-                        });
-                        blobStream.on("finish", () => __awaiter(this, void 0, void 0, function* () {
-                            try {
-                                const [url] = yield blob.getSignedUrl({
-                                    action: "read",
-                                    expires: "01-01-2030",
-                                });
-                                resolve(url);
-                            }
-                            catch (err) {
-                                reject(new apiError_1.default(400, "Failed to generate file URL"));
-                            }
-                        }));
-                        blobStream.end(buffer);
-                    });
+                const parseJSON = (input, defaultValue) => {
+                    try {
+                        return input ? JSON.parse(input) : defaultValue;
+                    }
+                    catch (_a) {
+                        return defaultValue;
+                    }
+                };
+                req.body.tags = parseJSON(req.body.tags, []);
+                req.body.technologies = parseJSON(req.body.technologies, []);
+                req.body.price = parseJSON(req.body.price, {
+                    original: 0,
+                    discount: 0,
+                    salePrice: 0,
                 });
-                req.urls = yield Promise.all(fileUploadPromises);
+                if (req.files && Object.keys(req.files).length > 0) {
+                    const files = req.files;
+                    const imageFile = (_a = files.image) === null || _a === void 0 ? void 0 : _a[0];
+                    const videoFile = (_b = files.introductoryVideo) === null || _b === void 0 ? void 0 : _b[0];
+                    if (imageFile) {
+                        req.body.image = yield this.uploadSingleFile("course-thumbnail-images", imageFile);
+                    }
+                    if (videoFile) {
+                        req.body.introductoryVideo = yield this.uploadSingleFile("course-introductory-videos", videoFile);
+                    }
+                }
                 next();
             }
-            catch (error) {
-                next(new apiError_1.default(400, "Failed to upload multiple files"));
+            catch (err) {
+                next(err);
             }
         });
     }

@@ -36,6 +36,31 @@ class Controller extends RootController {
       data: courses,
     });
   });
+  getOnlyPublishedCourses = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const searchText = (req.query.searchText as string) || "";
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+
+      const filters = req.query.filters
+        ? JSON.parse(req.query.filters as string)
+        : {};
+
+      const courses = await CourseService.getOnlyPublishedCourses(
+        searchText,
+        page,
+        limit,
+        filters
+      );
+
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Published courses fetched successfully",
+        data: courses,
+      });
+    }
+  );
   getSingleCourse = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const course = await CourseService.getSingleCourse(id);

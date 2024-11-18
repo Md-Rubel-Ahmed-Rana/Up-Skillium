@@ -42,6 +42,21 @@ class Controller extends rootController_1.default {
                 data: courses,
             });
         }));
+        this.getOnlyPublishedCourses = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const searchText = req.query.searchText || "";
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const filters = req.query.filters
+                ? JSON.parse(req.query.filters)
+                : {};
+            const courses = yield service_1.CourseService.getOnlyPublishedCourses(searchText, page, limit, filters);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Published courses fetched successfully",
+                data: courses,
+            });
+        }));
         this.getSingleCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             const course = yield service_1.CourseService.getSingleCourse(id);

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { firebaseBucket } from "../config/firebase";
 import ApiError from "../shared/apiError";
 import extractFilePath from "../utils/extractFilePath";
+import { Multer } from "multer";
 
 const rootFolder = "up-skillium";
 
@@ -40,6 +41,39 @@ class FileUploader {
       blobStream.end(buffer);
     };
   }
+  uploadSingleFile(
+    folderName: string,
+    file: Express.Multer.File
+  ): Promise<string> {
+    const { originalname, buffer } = file;
+
+    return new Promise((resolve, reject) => {
+      const filePath = `${rootFolder}/${folderName}/${Date.now()}_${originalname}`;
+      const blob = firebaseBucket.file(filePath);
+      const blobStream = blob.createWriteStream({
+        resumable: false,
+        contentType: file.mimetype,
+      });
+
+      blobStream.on("error", (err) => {
+        reject(new ApiError(400, "Failed to blob stream file"));
+      });
+
+      blobStream.on("finish", async () => {
+        try {
+          const [url] = await blob.getSignedUrl({
+            action: "read",
+            expires: "01-01-2030",
+          });
+          resolve(url); // Resolve the promise with the URL
+        } catch (err) {
+          reject(new ApiError(400, "Failed to upload file"));
+        }
+      });
+
+      blobStream.end(buffer);
+    });
+  }
 
   async uploadCertificate(
     folderName: string,
@@ -74,52 +108,56 @@ class FileUploader {
     });
   }
 
-  multipleFiles(folderName: string) {
+  uploadCourseImageAndIntroVideo() {
     return async (req: Request, res: Response, next: NextFunction) => {
-      if (!req.files || !Array.isArray(req.files)) {
-        return res.status(400).send("No files uploaded.");
-      }
-
       try {
-        const fileUploadPromises = req.files.map(
-          (file: Express.Multer.File) => {
-            const { originalname, buffer, mimetype } = file;
-            const filePath = `${rootFolder}/${folderName}/${Date.now()}_${originalname}`;
-            const blob = firebaseBucket.file(filePath);
-            const blobStream = blob.createWriteStream({
-              resumable: false,
-              contentType: mimetype,
-            });
-
-            return new Promise<string>((resolve, reject) => {
-              blobStream.on("error", (err) => {
-                reject(new ApiError(400, "Failed to blob stream file"));
-              });
-
-              blobStream.on("finish", async () => {
-                try {
-                  const [url] = await blob.getSignedUrl({
-                    action: "read",
-                    expires: "01-01-2030",
-                  });
-                  resolve(url);
-                } catch (err) {
-                  reject(new ApiError(400, "Failed to generate file URL"));
-                }
-              });
-
-              blobStream.end(buffer);
-            });
+        const parseJSON = (input: string | undefined, defaultValue: any) => {
+          try {
+            return input ? JSON.parse(input) : defaultValue;
+          } catch {
+            return defaultValue;
           }
-        );
+        };
 
-        req.urls = await Promise.all(fileUploadPromises);
+        req.body.tags = parseJSON(req.body.tags, []);
+        req.body.technologies = parseJSON(req.body.technologies, []);
+        req.body.price = parseJSON(req.body.price, {
+          original: 0,
+          discount: 0,
+          salePrice: 0,
+        });
+
+        if (req.files && Object.keys(req.files).length > 0) {
+          const files = req.files as {
+            image?: Express.Multer.File[];
+            introductoryVideo?: Express.Multer.File[];
+          };
+
+          const imageFile = files.image?.[0];
+          const videoFile = files.introductoryVideo?.[0];
+
+          if (imageFile) {
+            req.body.image = await this.uploadSingleFile(
+              "course-thumbnail-images",
+              imageFile
+            );
+          }
+
+          if (videoFile) {
+            req.body.introductoryVideo = await this.uploadSingleFile(
+              "course-introductory-videos",
+              videoFile
+            );
+          }
+        }
+
         next();
-      } catch (error) {
-        next(new ApiError(400, "Failed to upload multiple files"));
+      } catch (err) {
+        next(err);
       }
     };
   }
+
   async deleteSingle(url: string) {
     const filePath = extractFilePath(url);
     if (filePath) {

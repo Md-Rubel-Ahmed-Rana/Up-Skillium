@@ -9,8 +9,12 @@ const controller_1 = require("./controller");
 const multer_1 = __importDefault(require("../../config/multer"));
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 const router = (0, express_1.Router)();
-router.post("/create", controller_1.CourseController.createCourse);
+router.post("/create", multer_1.default.fields([
+    { name: "image", maxCount: 1 },
+    { name: "introductoryVideo" },
+]), fileUploaderMiddleware_1.FileUploadMiddleware.uploadCourseImageAndIntroVideo(), controller_1.CourseController.createCourse);
 router.get("/", controller_1.CourseController.getCourses);
+router.get("/published/courses", controller_1.CourseController.getOnlyPublishedCourses);
 router.get("/:id", controller_1.CourseController.getSingleCourse);
 router.get("/instructor/:instructorId", controller_1.CourseController.getCoursesByInstructor);
 router.delete("/:id", controller_1.CourseController.deleteCourse);
