@@ -1,8 +1,10 @@
 import { IQuizQuestion } from "./quiz.type";
+import { IUser } from "./user.type";
 
 export type IStudentCourseProgress = {
   id: string;
   courses: ICourseProgress;
+  user: IUser;
 };
 
 export type ICourseProgress = {
