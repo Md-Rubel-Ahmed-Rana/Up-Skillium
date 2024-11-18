@@ -7,6 +7,14 @@ import apiSlice from "../api/apiSlice";
 
 const courseApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    createCourse: builder.mutation({
+      query: ({ course }: { course: FormData }) => ({
+        method: "POST",
+        url: `/course/create`,
+        body: course,
+      }),
+      invalidatesTags: ["course"],
+    }),
     getAllCourses: builder.query({
       query: ({ searchText = "" }: { searchText?: string }) => ({
         method: "GET",
@@ -103,4 +111,5 @@ export const {
   useUpdateCoursePriceMutation,
   useUpdateCourseTagsTechsMutation,
   useGetInstructorCoursesQuery,
+  useCreateCourseMutation,
 } = courseApi;
