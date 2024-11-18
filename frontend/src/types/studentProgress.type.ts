@@ -1,5 +1,10 @@
 import { IQuizQuestion } from "./quiz.type";
 
+export type IStudentCourseProgress = {
+  id: string;
+  courses: ICourseProgress;
+};
+
 export type ICourseProgress = {
   course: {
     image: string;
