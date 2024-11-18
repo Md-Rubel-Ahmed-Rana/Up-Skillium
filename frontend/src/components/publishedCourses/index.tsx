@@ -17,9 +17,9 @@ type TableDataType = {
   actions: JSX.Element[];
 };
 
-const DraftCourses = () => {
+const PublishedCourses = () => {
   const { data, isLoading } = useGetAllCoursesQuery({
-    filters: { status: "draft" },
+    filters: { status: "published" },
   });
   const courses = data?.data as ICourse[];
   const tableDataCourse: TableDataType[] = courses?.map((course) => ({
@@ -138,7 +138,9 @@ const DraftCourses = () => {
 
   return (
     <div className="mt-4">
-      <h1 className="text-lg lg:text-2xl font-semibold mb-3">Draft courses</h1>
+      <h1 className="text-lg lg:text-2xl font-semibold mb-3">
+        Published courses
+      </h1>
       <div className="overflow-x-auto w-full">
         <Table<TableDataType>
           columns={columns}
@@ -154,4 +156,4 @@ const DraftCourses = () => {
   );
 };
 
-export default DraftCourses;
+export default PublishedCourses;
