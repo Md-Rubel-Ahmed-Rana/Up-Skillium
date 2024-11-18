@@ -23,6 +23,7 @@ class Service {
             const searchQuery = Object.assign(Object.assign({}, (search && { title: { $regex: search, $options: "i" } })), (courseId && { courseId }));
             const skip = (page - 1) * limit;
             const modules = yield model_1.Module.find(searchQuery)
+                .populate("course", "title image category")
                 .skip(skip)
                 .limit(limit)
                 .exec();

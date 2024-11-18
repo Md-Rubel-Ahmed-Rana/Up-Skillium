@@ -21,6 +21,7 @@ class Service {
     const skip = (page - 1) * limit;
 
     const modules = await Module.find(searchQuery)
+      .populate("course", "title image category")
       .skip(skip)
       .limit(limit)
       .exec();

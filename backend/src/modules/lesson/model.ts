@@ -16,6 +16,7 @@ export const lessonSchema = new Schema<ILesson>(
     module: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: "Module",
     },
     serial: {
       type: Number,

@@ -23,7 +23,11 @@ class Service {
         return __awaiter(this, arguments, void 0, function* (search = "", type, page = 1, limit = 10) {
             const searchQuery = Object.assign(Object.assign({}, (search && { title: { $regex: search, $options: "i" } })), (type && { type }));
             const skip = (page - 1) * limit;
-            return yield model_1.Lesson.find(searchQuery).skip(skip).limit(limit).exec();
+            return yield model_1.Lesson.find(searchQuery)
+                .populate("module", "title serial")
+                .skip(skip)
+                .limit(limit)
+                .exec();
         });
     }
     getLessonById(id) {

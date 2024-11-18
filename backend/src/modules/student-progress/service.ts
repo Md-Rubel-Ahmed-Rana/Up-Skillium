@@ -126,7 +126,7 @@ class Service {
     return progress.courses[0];
   }
 
-  async getAllCourseProgress(userId: Types.ObjectId) {
+  async getAllCourseProgressForStudent(userId: Types.ObjectId) {
     const progress = await StudentProgress.findOne({
       user: userId,
     })

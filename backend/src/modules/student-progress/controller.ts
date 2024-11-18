@@ -25,6 +25,17 @@ class Controller extends RootController {
       data: data,
     });
   });
+  getAllCoursesProgress = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const data = await StudentProgressService.getAllCoursesProgress();
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Students progress retrieved successfully",
+        data: data,
+      });
+    }
+  );
   getSingleCourseProgress = this.catchAsync(
     async (req: Request, res: Response) => {
       const userId = req.params.userId as unknown as Types.ObjectId;
@@ -41,10 +52,12 @@ class Controller extends RootController {
       });
     }
   );
-  getAllCourseProgress = this.catchAsync(
+  getAllCourseProgressForStudent = this.catchAsync(
     async (req: Request, res: Response) => {
       const userId = req.params.userId as unknown as Types.ObjectId;
-      const data = await StudentProgressService.getAllCourseProgress(userId);
+      const data = await StudentProgressService.getAllCourseProgressForStudent(
+        userId
+      );
       this.apiResponse(res, {
         statusCode: 200,
         success: true,

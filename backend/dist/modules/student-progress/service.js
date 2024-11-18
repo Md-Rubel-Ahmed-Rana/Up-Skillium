@@ -121,7 +121,7 @@ class Service {
             return progress.courses[0];
         });
     }
-    getAllCourseProgress(userId) {
+    getAllCourseProgressForStudent(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const progress = yield model_1.StudentProgress.findOne({
                 user: userId,
