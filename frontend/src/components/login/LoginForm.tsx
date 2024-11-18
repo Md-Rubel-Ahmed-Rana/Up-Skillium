@@ -1,9 +1,9 @@
-import React from "react";
+import { useUserLoginMutation } from "@/features/auth";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd/lib";
-import { useUserLoginMutation } from "@/features/auth";
-import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import React from "react";
+import toast from "react-hot-toast";
 import { MdEmail, MdLock } from "react-icons/md";
 
 type FieldType = {
@@ -20,7 +20,7 @@ const LoginForm: React.FC = () => {
       const response: any = await loginUser(data);
       if (response?.data?.statusCode === 200) {
         toast.success(response?.data?.message || "User login successful");
-        router.push("/dashboard/profile");
+        router.push("/dashboard/profile-info");
       } else {
         toast.error(
           response?.data?.message ||
