@@ -16,14 +16,30 @@ const courseApi = apiSlice.injectEndpoints({
       invalidatesTags: ["course"],
     }),
     getAllCourses: builder.query({
-      query: ({ searchText = "" }: { searchText?: string }) => ({
+      query: ({
+        searchText = "",
+        filters = {},
+        page = 1,
+        limit = 10,
+      }: {
+        searchText?: string;
+        filters?: Record<string, string>;
+        page?: number;
+        limit?: number;
+      }) => ({
         method: "GET",
         url: `/course`,
-        params: { searchText },
+        params: {
+          searchText,
+          page,
+          limit,
+          filters: JSON.stringify(filters),
+        },
       }),
       keepUnusedDataFor: 0,
       providesTags: ["course"] as any,
     }),
+
     getAllPublishedCourses: builder.query({
       query: ({ searchText = "" }: { searchText?: string }) => ({
         method: "GET",
