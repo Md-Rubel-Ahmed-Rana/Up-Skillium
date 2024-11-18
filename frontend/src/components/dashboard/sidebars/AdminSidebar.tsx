@@ -4,6 +4,7 @@ import { Menu, MenuProps } from "antd/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
+  FaArchive,
   FaBook,
   FaCertificate,
   FaChalkboardTeacher,
@@ -11,6 +12,8 @@ import {
   FaChartLine,
   FaClipboardList,
   FaComments,
+  FaDraftingCompass,
+  FaFolderOpen,
   FaPenSquare,
   FaPlayCircle,
   FaPlusCircle,
@@ -20,7 +23,13 @@ import {
   FaVideo,
 } from "react-icons/fa";
 import { GiTeacher } from "react-icons/gi";
-import { MdOutlineContentPaste, MdPassword } from "react-icons/md";
+import { HiOutlineDocumentText } from "react-icons/hi";
+import {
+  MdOutlineContentPaste,
+  MdOutlineLibraryBooks,
+  MdPassword,
+  MdPublishedWithChanges,
+} from "react-icons/md";
 
 const AdminSidebar = () => {
   const router = useRouter();
@@ -95,13 +104,39 @@ const AdminSidebar = () => {
       children: [
         {
           key: "4-1",
-          icon: <FaBook />,
+          icon: <MdOutlineLibraryBooks />,
           label: <Link href="/dashboard/manage-courses">All Courses</Link>,
         },
         {
           key: "4-2",
-          icon: <FaBook />,
+          icon: <FaDraftingCompass />,
           label: <Link href="/dashboard/create-course">Create Course</Link>,
+        },
+        {
+          key: "4-3",
+          icon: <FaFolderOpen />,
+          label: <Link href="/dashboard/draft-courses">Draft Courses</Link>,
+        },
+        {
+          key: "4-4",
+          icon: <FaArchive />,
+          label: (
+            <Link href="/dashboard/archived-courses">Archived Courses</Link>
+          ),
+        },
+        {
+          key: "4-5",
+          icon: <MdPublishedWithChanges />,
+          label: (
+            <Link href="/dashboard/published-courses">Published Courses</Link>
+          ),
+        },
+        {
+          key: "4-6",
+          icon: <HiOutlineDocumentText />,
+          label: (
+            <Link href="/dashboard/course-outlines">Courses Outlines</Link>
+          ),
         },
       ],
     },
