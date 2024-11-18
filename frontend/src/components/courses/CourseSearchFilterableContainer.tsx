@@ -1,14 +1,14 @@
-import { useLazyGetAllCoursesQuery } from "@/features/course";
+import { useLazyGetAllPublishedCoursesQuery } from "@/features/course";
 import { ICourse } from "@/types/course.type";
-import CourseSearch from "./CourseSearch";
+import { useEffect, useState } from "react";
 import CourseContainer from "./CourseContainer";
-import { useState, useEffect } from "react";
+import CourseSearch from "./CourseSearch";
 
 const CourseSearchFilterableContainer = () => {
   const [searchValue, setSearchValue] = useState("");
   const [debouncedSearchValue, setDebouncedSearchValue] = useState(searchValue);
 
-  const [trigger, { data, isLoading }] = useLazyGetAllCoursesQuery({
+  const [trigger, { data, isLoading }] = useLazyGetAllPublishedCoursesQuery({
     refetchOnReconnect: true,
     refetchOnFocus: true,
   });
