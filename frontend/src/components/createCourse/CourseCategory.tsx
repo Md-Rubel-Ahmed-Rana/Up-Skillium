@@ -13,7 +13,6 @@ const CourseCategory = () => {
         <Select.Option value="digitalMarketing">
           Digital Marketing
         </Select.Option>
-        {/* Add more categories as needed */}
       </Select>
     </Form.Item>
   );

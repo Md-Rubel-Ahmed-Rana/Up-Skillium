@@ -33,8 +33,7 @@ const CoursePrices = ({ form }: Props) => {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {/* Original Price */}
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <Form.Item
         label="Original Price"
         name={["price", "original"]}

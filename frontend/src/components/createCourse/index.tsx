@@ -15,7 +15,9 @@ const CreateCourse = () => {
 
   return (
     <div className="p-4 shadow-md rounded-lg mt-3 mb-20">
-      <h2 className="text-2xl font-semibold mb-3">Create New Course</h2>
+      <h2 className="text-lg lg:text-2xl font-semibold mb-3">
+        Create New Course
+      </h2>
       <Form
         form={form}
         layout="vertical"
