@@ -24,6 +24,15 @@ const courseApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ["course"] as any,
     }),
+    getAllPublishedCourses: builder.query({
+      query: ({ searchText = "" }: { searchText?: string }) => ({
+        method: "GET",
+        url: `/course/published/courses`,
+        params: { searchText },
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ["course"] as any,
+    }),
     getSingleCourse: builder.query({
       query: ({ id }: { id: string }) => ({
         method: "GET",
@@ -112,4 +121,6 @@ export const {
   useUpdateCourseTagsTechsMutation,
   useGetInstructorCoursesQuery,
   useCreateCourseMutation,
+  useGetAllPublishedCoursesQuery,
+  useLazyGetAllPublishedCoursesQuery,
 } = courseApi;
