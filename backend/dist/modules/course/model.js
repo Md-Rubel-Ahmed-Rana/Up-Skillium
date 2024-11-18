@@ -18,7 +18,6 @@ const courseSchema = new mongoose_1.Schema({
     technologies: [String],
     introductoryVideo: {
         type: String,
-        required: true,
     },
     tags: { type: [String], required: true },
     category: { type: String, required: true },
@@ -31,7 +30,6 @@ const courseSchema = new mongoose_1.Schema({
     instructor: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User",
-        required: true,
     },
     students: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }],
     ratings: {

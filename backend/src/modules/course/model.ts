@@ -15,7 +15,6 @@ const courseSchema = new Schema<ICourse>(
     technologies: [String],
     introductoryVideo: {
       type: String,
-      required: true,
     },
     tags: { type: [String], required: true },
     category: { type: String, required: true },
@@ -28,7 +27,6 @@ const courseSchema = new Schema<ICourse>(
     instructor: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
     },
     students: [{ type: Schema.Types.ObjectId, ref: "User" }],
     ratings: {

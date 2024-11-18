@@ -49,6 +49,36 @@ class Service {
             return courses;
         });
     }
+    getOnlyPublishedCourses() {
+        return __awaiter(this, arguments, void 0, function* (search = "", page = 1, limit = 5, filters = {}) {
+            const searchQuery = search
+                ? {
+                    $or: [
+                        { title: { $regex: search, $options: "i" } },
+                        { description: { $regex: search, $options: "i" } },
+                        { tags: { $regex: search, $options: "i" } },
+                    ],
+                }
+                : {};
+            let filterQuery = Object.assign(Object.assign(Object.assign({ status: "published" }, searchQuery), (filters.category && { category: filters.category })), (filters.level && { level: filters.level }));
+            if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+                filterQuery["price.salePrice"] = Object.assign(Object.assign({}, (filters.minPrice !== undefined && { $gte: filters.minPrice })), (filters.maxPrice !== undefined && { $lte: filters.maxPrice }));
+            }
+            const skip = (page - 1) * limit;
+            const courses = yield model_1.Course.find(filterQuery)
+                .populate([
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: { name: 1, image: 1 },
+                },
+            ])
+                .skip(skip)
+                .limit(limit)
+                .exec();
+            return courses;
+        });
+    }
     getSingleCourse(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.Course.findById(id).populate([

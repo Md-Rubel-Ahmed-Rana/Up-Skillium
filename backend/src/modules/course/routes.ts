@@ -5,9 +5,19 @@ import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 
 const router = Router();
 
-router.post("/create", CourseController.createCourse);
+router.post(
+  "/create",
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "introductoryVideo" },
+  ]),
+  FileUploadMiddleware.uploadCourseImageAndIntroVideo(),
+  CourseController.createCourse
+);
 
 router.get("/", CourseController.getCourses);
+
+router.get("/published/courses", CourseController.getOnlyPublishedCourses);
 
 router.get("/:id", CourseController.getSingleCourse);
 
