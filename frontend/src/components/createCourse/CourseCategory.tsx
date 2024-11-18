@@ -1,6 +1,10 @@
+import { useGetAllCategoriesQuery } from "@/features/category";
+import { ICategory } from "@/types/category.type";
 import { Form, Select } from "antd/lib";
 
 const CourseCategory = () => {
+  const { data } = useGetAllCategoriesQuery({});
+  const categories = (data?.data as ICategory[]) || [];
   return (
     <Form.Item
       label="Category"
@@ -8,11 +12,11 @@ const CourseCategory = () => {
       rules={[{ required: true, message: "Please select a category" }]}
     >
       <Select placeholder="Select category" className="w-full">
-        <Select.Option value="webDevelopment">Web Development</Select.Option>
-        <Select.Option value="graphicDesign">Graphic Design</Select.Option>
-        <Select.Option value="digitalMarketing">
-          Digital Marketing
-        </Select.Option>
+        {categories?.map((category) => (
+          <Select.Option key={category?.id} value={category?.name}>
+            {category?.name}
+          </Select.Option>
+        ))}
       </Select>
     </Form.Item>
   );
