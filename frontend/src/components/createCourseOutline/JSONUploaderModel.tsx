@@ -34,7 +34,19 @@ const JSONUploaderModal = ({ open, setOpen, setUploadedModules }: Props) => {
   };
 
   const handleJsonInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setJsonInput(e.target.value);
+    const inputValue = e.target.value;
+    setJsonInput(inputValue);
+
+    if (inputValue.trim() === "") {
+      return;
+    }
+
+    try {
+      const parsedData = JSON.parse(inputValue);
+      processJsonData(parsedData);
+    } catch (error: any) {
+      toast.error("Invalid JSON format:", error?.message);
+    }
   };
 
   const handleFileUpload = (info: UploadChangeParam) => {
@@ -107,19 +119,24 @@ const JSONUploaderModal = ({ open, setOpen, setUploadedModules }: Props) => {
     >
       {jsonType === "paste" ? (
         <Input.TextArea
-          rows={6}
-          placeholder="Paste JSON data here"
+          rows={10}
+          placeholder="Paste JSON data here: [{name: 'name of module', serial: 'serial number of module'},{name: 'name of module', serial: 'serial number of module'}] "
           value={jsonInput}
           onChange={handleJsonInputChange}
         />
       ) : (
-        <Upload
-          beforeUpload={() => false}
-          onChange={handleFileUpload}
-          accept=".json"
-        >
-          <Button>Upload JSON File</Button>
-        </Upload>
+        <div>
+          <Upload
+            className="w-1/2 h-24 py-2 rounded-md mx-auto flex justify-center items-center"
+            beforeUpload={() => false}
+            onChange={handleFileUpload}
+            accept=".json"
+          >
+            <button className="w-full font-serif hover:text-blue-600 h-24 px-12 hover:border-blue-400 transition-all rounded-md border ">
+              Upload JSON File
+            </button>
+          </Upload>
+        </div>
       )}
     </Modal>
   );
