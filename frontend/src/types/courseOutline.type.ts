@@ -21,6 +21,8 @@ export type IModuleOutline = {
   id: string;
   name: string;
   serial: number;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type ICourseOutlineModuleSerialUpdate = {
