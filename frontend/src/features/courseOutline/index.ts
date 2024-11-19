@@ -65,7 +65,9 @@ const courseOutlineApi = apiSlice.injectEndpoints({
 
 export const {
   useGetAllCourseOutlinesQuery,
+  useLazyGetAllCourseOutlinesQuery,
   useGetCourseOutlineByCourseIdQuery,
+  useLazyGetCourseOutlineByCourseIdQuery,
   useUpdateModuleNameMutation,
   useUpdateCourseOutlineModuleSerialMutation,
   useDeleteCourseOutlineModuleMutation,
