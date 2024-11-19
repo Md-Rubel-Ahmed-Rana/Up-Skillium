@@ -138,6 +138,11 @@ const AdminSidebar = () => {
             <Link href="/dashboard/course-outlines">Courses Outlines</Link>
           ),
         },
+        {
+          key: "4-7",
+          icon: <FaPlusCircle />,
+          label: <Link href="/dashboard/create-outline">Create Outline</Link>,
+        },
       ],
     },
     {
