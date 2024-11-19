@@ -141,7 +141,9 @@ const AdminSidebar = () => {
         {
           key: "4-7",
           icon: <FaPlusCircle />,
-          label: <Link href="/dashboard/create-outline">Create Outline</Link>,
+          label: (
+            <Link href="/dashboard/create-course-outline">Create Outline</Link>
+          ),
         },
       ],
     },
