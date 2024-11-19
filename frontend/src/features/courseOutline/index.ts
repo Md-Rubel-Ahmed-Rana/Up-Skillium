@@ -1,4 +1,7 @@
-import { ICourseOutlineModuleSerialUpdate } from "@/types/courseOutline.type";
+import {
+  ICourseOutlineModuleSerialUpdate,
+  ICreateOutline,
+} from "@/types/courseOutline.type";
 import apiSlice from "../api/apiSlice";
 
 const courseOutlineApi = apiSlice.injectEndpoints({
@@ -8,14 +11,14 @@ const courseOutlineApi = apiSlice.injectEndpoints({
         method: "GET",
         url: `/course-outline`,
       }),
-      providesTags: ["course-outline"] as any,
+      providesTags: ["course-outline"],
     }),
     getCourseOutlineByCourseId: builder.query({
       query: ({ courseId }: { courseId: string }) => ({
         method: "GET",
         url: `/course-outline/by-course/${courseId}`,
       }),
-      providesTags: ["course-outline"] as any,
+      providesTags: ["course-outline"],
     }),
     updateModuleName: builder.mutation({
       query: ({
@@ -31,7 +34,7 @@ const courseOutlineApi = apiSlice.injectEndpoints({
         url: `/course-outline/update-module-name/${courseId}/${moduleId}`,
         body: { name: updateName },
       }),
-      invalidatesTags: ["course-outline"] as any,
+      invalidatesTags: ["course-outline"],
     }),
     updateCourseOutlineModuleSerial: builder.mutation({
       query: ({
@@ -45,7 +48,7 @@ const courseOutlineApi = apiSlice.injectEndpoints({
         url: `/course-outline/update-module-serial/${courseId}`,
         body: data,
       }),
-      invalidatesTags: ["course-outline"] as any,
+      invalidatesTags: ["course-outline"],
     }),
     deleteCourseOutlineModule: builder.mutation({
       query: ({
@@ -58,7 +61,15 @@ const courseOutlineApi = apiSlice.injectEndpoints({
         method: "DELETE",
         url: `/course-outline/delete-module/${courseId}/${moduleId}`,
       }),
-      invalidatesTags: ["course-outline"] as any,
+      invalidatesTags: ["course-outline"],
+    }),
+    createCourseOutline: builder.mutation({
+      query: ({ data }: { data: ICreateOutline }) => ({
+        method: "POST",
+        url: `/course-outline/create`,
+        body: data,
+      }),
+      invalidatesTags: ["course-outline"],
     }),
   }),
 });
@@ -71,4 +82,5 @@ export const {
   useUpdateModuleNameMutation,
   useUpdateCourseOutlineModuleSerialMutation,
   useDeleteCourseOutlineModuleMutation,
+  useCreateCourseOutlineMutation,
 } = courseOutlineApi;
