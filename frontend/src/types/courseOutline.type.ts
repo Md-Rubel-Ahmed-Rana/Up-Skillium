@@ -35,3 +35,13 @@ export type ICourseOutlineModuleSerialUpdate = {
     moduleId: string;
   };
 };
+
+export type ICreateModuleOutline = {
+  name: string;
+  serial: number;
+};
+
+export type ICreateOutline = {
+  course: string;
+  modules: ICreateModuleOutline[];
+};
