@@ -1,68 +1,111 @@
-import {
-  ICreateModuleOutline,
-  ICreateOutline,
-} from "@/types/courseOutline.type";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Table } from "antd/lib";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { Button, Form, Table } from "antd/lib";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import CourseDropDownList from "./CourseDropDownList";
+import EditableCell from "./EditableCell";
+import getMergedColumns from "./getMergedColumns";
+import ModulesSaveButton from "./ModulesSaveButton";
+import NewModuleForm from "./NewModuleForm";
+
+interface DataType {
+  id: string;
+  key: string;
+  serial: number;
+  name: string;
+}
 
 const CreateCourseOutline = () => {
   const [form] = Form.useForm();
   const { query } = useRouter();
   const courseId = query?.courseId as string;
   const courseTitle = query?.courseTitle as string;
-  const [createModules, setCreateModules] = useState<ICreateModuleOutline[]>(
-    []
-  );
+  const [modules, setModules] = useState<DataType[]>([]);
+  const [editingKey, setEditingKey] = useState("");
 
-  const handleCreateModules = () => {
-    const outline: ICreateOutline = {
-      course: courseId,
-      modules: createModules,
-    };
-    console.log(outline);
+  const isEditing = (record: DataType) => record.key === editingKey;
+
+  const handleEditRow = (record: Partial<DataType> & { key: React.Key }) => {
+    form.setFieldsValue({ name: "", serial: 0, ...record });
+    setEditingKey(record.key);
   };
 
-  const handleAddModule = (values: ICreateModuleOutline) => {
-    setCreateModules([
-      ...createModules,
-      { ...values, serial: Number(values?.serial) },
-    ]);
-    form.resetFields();
+  const handleCancelEditRow = () => {
+    setEditingKey("");
   };
 
-  const handleDeleteModule = (serial: number) => {
-    setCreateModules(
-      createModules.filter((module) => module.serial !== serial)
-    );
+  const handleSaveEditedRow = async (key: React.Key) => {
+    try {
+      const row = (await form.validateFields()) as DataType;
+      const newData = [...modules];
+      const index = newData.findIndex((item) => key === item.key);
+
+      if (index > -1) {
+        newData.splice(index, 1, { ...newData[index], ...row });
+        setModules(newData);
+        setEditingKey("");
+      } else {
+        newData.push(row);
+        setModules(newData);
+        setEditingKey("");
+      }
+    } catch (errInfo: any) {
+      toast.error(errInfo.errorFields[0]?.errors[0]);
+    }
+  };
+
+  const removeModule = (row: DataType) => {
+    const remaining = modules.filter((module) => module?.key !== row?.key);
+    setModules(remaining);
   };
 
   const columns = [
+    { title: "Serial", dataIndex: "serial", key: "serial", editable: true },
+    { title: "Module Name", dataIndex: "name", key: "name", editable: true },
     {
-      title: "Serial",
-      dataIndex: "serial",
-      key: "serial",
-    },
-    {
-      title: "Module Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Action",
+      title: "Actions",
       key: "action",
-      render: (_: any, record: ICreateModuleOutline) => (
-        <Button
-          type="text"
-          icon={<DeleteOutlined />}
-          danger
-          onClick={() => handleDeleteModule(record.serial)}
-        />
-      ),
+      render: (_: any, record: DataType) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Button
+              type="primary"
+              onClick={() => handleSaveEditedRow(record.key)}
+              style={{ marginInlineEnd: 8 }}
+            >
+              Save
+            </Button>
+            <Button
+              onClick={handleCancelEditRow}
+              style={{ marginInlineEnd: 8 }}
+            >
+              Cancel
+            </Button>
+          </span>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Button
+              disabled={editingKey !== ""}
+              onClick={() => handleEditRow(record)}
+            >
+              Edit
+            </Button>
+            <Button
+              disabled={editingKey !== ""}
+              onClick={() => removeModule(record)}
+              danger
+            >
+              Delete
+            </Button>
+          </div>
+        );
+      },
     },
   ];
+
+  const mergedColumns = getMergedColumns(columns, isEditing);
 
   return (
     <div className="mt-4 space-y-2">
@@ -73,53 +116,23 @@ const CreateCourseOutline = () => {
           <h4>Selected course: </h4>
           <h4>{courseTitle}</h4>
         </div>
+        <NewModuleForm modules={modules} setModules={setModules} />
       </div>
-      <Form
-        form={form}
-        layout="inline"
-        onFinish={handleAddModule}
-        className=" bg-white flex items-center rounded-md p-5 shadow-md"
-      >
-        <Form.Item
-          name="serial"
-          rules={[{ required: true, message: "Serial is required" }]}
-        >
-          <Input type="number" placeholder="Serial" prefix={<span>#</span>} />
-        </Form.Item>
-
-        <Form.Item
-          name="name"
-          rules={[{ required: true, message: "Module name is required" }]}
-        >
-          <Input placeholder="Module Name" />
-        </Form.Item>
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit" icon={<PlusOutlined />}>
-            Add Module
-          </Button>
-        </Form.Item>
-      </Form>
-
       <div className="bg-white p-5 rounded-md shadow-md">
-        <div className="flex items-center gap-2  mb-4">
+        <div className="flex items-center gap-2 mb-4">
           <h2 className="text-xl font-medium">Modules List</h2>
-          <Button
-            onClick={handleCreateModules}
-            disabled={createModules?.length <= 0}
-            type="primary"
-            htmlType="button"
-          >
-            Save Modules
-          </Button>
+          <ModulesSaveButton modules={modules} />
         </div>
-        <Table
-          columns={columns}
-          dataSource={createModules}
-          rowKey="serial"
-          pagination={false}
-          className="shadow-md rounded-lg"
-        />
+        <Form form={form} component={false}>
+          <Table<DataType>
+            components={{ body: { cell: EditableCell } }}
+            bordered
+            dataSource={modules}
+            columns={mergedColumns}
+            rowClassName="editable-row"
+            pagination={{ onChange: handleCancelEditRow, pageSize: 5 }}
+          />
+        </Form>
       </div>
     </div>
   );
