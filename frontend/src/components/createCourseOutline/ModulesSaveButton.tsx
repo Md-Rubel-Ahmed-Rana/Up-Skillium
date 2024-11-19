@@ -1,3 +1,4 @@
+import { useCreateCourseOutlineMutation } from "@/features/courseOutline";
 import {
   ICreateModuleOutline,
   ICreateOutline,
@@ -5,6 +6,7 @@ import {
 import { Button, Modal } from "antd/lib";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 interface DataType {
   id: string;
@@ -18,11 +20,12 @@ type Props = {
 };
 
 const ModulesSaveButton = ({ modules }: Props) => {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const courseId = query?.courseId as string;
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [createOutline, { isLoading }] = useCreateCourseOutlineMutation();
 
-  const handleCreateModules = () => {
+  const handleCreateModules = async () => {
     if (courseId) {
       const newModules: ICreateModuleOutline[] = modules.map((module) => ({
         serial: module?.serial,
@@ -32,8 +35,7 @@ const ModulesSaveButton = ({ modules }: Props) => {
         course: courseId,
         modules: newModules,
       };
-
-      console.log(outline);
+      await handleCreateCourseOutline(outline);
     } else {
       setIsModalVisible(true);
     }
@@ -43,19 +45,42 @@ const ModulesSaveButton = ({ modules }: Props) => {
     setIsModalVisible(false);
   };
 
+  const handleCreateCourseOutline = async (data: ICreateOutline) => {
+    try {
+      const result: any = await createOutline({ data: data });
+      if (result?.data?.statusCode === 201) {
+        toast.success(
+          result?.data?.message || "Course outline created successfully!"
+        );
+        push("/dashboard/course-outlines");
+      } else {
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            result?.data?.error?.message ||
+            "Failed to create course outline."
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to create course outline. Error: ${error?.message}`);
+    }
+  };
+
   return (
     <>
       <Button
-        disabled={modules?.length <= 0}
+        disabled={modules?.length <= 0 || isLoading}
         htmlType="button"
         onClick={handleCreateModules}
         type="primary"
+        loading={isLoading}
+        iconPosition="end"
       >
-        Save Modules
+        {isLoading ? "Creating outline" : "Create outline"}
       </Button>
       <Modal
         title="Error: No Course Selected"
-        visible={isModalVisible}
+        open={isModalVisible}
         onCancel={handleCloseModal}
         footer={[
           <Button key="ok" type="primary" onClick={handleCloseModal}>
