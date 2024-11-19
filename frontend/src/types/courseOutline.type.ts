@@ -2,15 +2,15 @@ export type ICourseOutline = {
   id: string;
   course: ICourseForOutline;
   modules: IModuleOutline[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | null;
+  updatedAt: Date | null;
 };
 
 export type ICourseForOutline = {
   id: string;
   title: string;
   image: string;
-  price: {
+  price?: {
     original: number;
     discount: number;
     salePrice: number;

@@ -4,7 +4,7 @@ import { Table } from "antd/lib";
 import InstructorActions from "./InstructorActions";
 
 const ManageInstructors = () => {
-  const { data } = useGetAllInstructorsQuery({});
+  const { data, isLoading } = useGetAllInstructorsQuery({});
   const instructors = data?.data as IInstructor[];
 
   const columns = [
@@ -69,8 +69,9 @@ const ManageInstructors = () => {
         columns={columns}
         dataSource={instructors}
         rowKey={(instructor) => instructor?.id}
-        pagination={{ pageSize: 7 }}
+        pagination={{ pageSize: 5 }}
         bordered
+        loading={isLoading}
         className="shadow-md rounded-lg w-full min-w-[900px]"
       />
     </div>

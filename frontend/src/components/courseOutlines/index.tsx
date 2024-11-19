@@ -1,13 +1,29 @@
 import { useGetAllCoursesQuery } from "@/features/course";
 import { useGetAllCourseOutlinesQuery } from "@/features/courseOutline";
+import { ICourse } from "@/types/course.type";
 import { ICourseOutline, IModuleOutline } from "@/types/courseOutline.type";
-import { Avatar, Table } from "antd/lib";
+import { Avatar, Button, Table } from "antd/lib";
+import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
 
 const CourseOutlines = () => {
   const { data, isLoading } = useGetAllCourseOutlinesQuery({});
   const { data: courseData } = useGetAllCoursesQuery({});
-  console.log(courseData);
+  const courses = courseData?.data as ICourse[];
   const courseOutlines = data?.data as ICourseOutline[];
+
+  const coursesNoOutline = courses?.filter(
+    (course) =>
+      !courseOutlines?.some((outline) => outline?.course?.id === course?.id)
+  );
+
+  const newOutlines: ICourseOutline[] = coursesNoOutline?.map((course) => ({
+    id: uuidv4(),
+    course: { id: course?.id, title: course?.title, image: course?.image },
+    modules: [],
+    createdAt: null,
+    updatedAt: null,
+  }));
 
   const columns = [
     {
@@ -35,13 +51,27 @@ const CourseOutlines = () => {
       title: "Created At",
       dataIndex: "createdAt",
       key: "createdAt",
-      render: (createdAt: Date) => new Date(createdAt).toLocaleDateString(),
+      render: (createdAt: Date) =>
+        createdAt ? new Date(createdAt).toLocaleDateString() : "No date",
     },
     {
       title: "Updated At",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      render: (updatedAt: Date) => new Date(updatedAt).toLocaleDateString(),
+      render: (updatedAt: Date) =>
+        updatedAt ? new Date(updatedAt).toLocaleDateString() : "No date",
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      key: "action",
+      render: (_id: any, outline: ICourseOutline) => (
+        <Link
+          href={`/dashboard/course/edit-outline/${outline?.id}/${outline?.course?.id}?courseName=${outline?.course?.title}`}
+        >
+          <Button type="primary">Edit</Button>
+        </Link>
+      ),
     },
   ];
 
@@ -51,15 +81,16 @@ const CourseOutlines = () => {
       <div className="overflow-x-auto">
         <Table
           columns={columns}
-          dataSource={courseOutlines}
+          dataSource={courseOutlines?.concat(newOutlines)}
           rowKey={(record) => record?.id}
           loading={isLoading}
+          pagination={{ pageSize: 5 }}
           className="shadow-md rounded-lg w-full min-w-[900px]"
           expandable={{
             expandedRowRender: (outline) => (
               <div className="bg-gray-50 p-2">
                 <h3 className="font-semibold">Modules</h3>
-                {outline?.modules?.length ? (
+                {outline?.modules?.length > 0 ? (
                   <div className="flex flex-col gap-2">
                     {outline?.modules.map((module: IModuleOutline) => (
                       <div
