@@ -19,3 +19,9 @@ export type IGetModule = {
   };
   lessons: string[];
 };
+
+export type ICreateModule = {
+  course: string;
+  title: string;
+  serial: number;
+};
