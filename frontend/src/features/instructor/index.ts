@@ -10,9 +10,9 @@ const instructorApi = apiSlice.injectEndpoints({
       providesTags: ["instructor"] as any,
     }),
     getMyStudents: builder.query({
-      query: ({ instructorUserId }: { instructorUserId: string }) => ({
+      query: ({ instructorId }: { instructorId: string }) => ({
         method: "GET",
-        url: `/instructor/my-students/${instructorUserId}`,
+        url: `/instructor/my-students/${instructorId}`,
       }),
       providesTags: ["instructor"] as any,
     }),

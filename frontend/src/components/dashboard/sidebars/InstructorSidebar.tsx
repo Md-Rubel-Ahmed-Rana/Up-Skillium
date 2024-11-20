@@ -2,20 +2,20 @@ import LogoutButton from "@/components/shared/LogoutButton";
 import { Menu, MenuProps } from "antd/lib";
 import Link from "next/link";
 import {
-  FaUserCircle,
   FaBookOpen,
-  FaUserGraduate,
-  FaTasks,
-  FaChartLine,
-  FaCommentDots,
-  FaSignOutAlt,
   FaCalendarAlt,
-  FaChartPie,
   FaChalkboardTeacher,
+  FaChartLine,
+  FaChartPie,
+  FaCommentDots,
+  FaFolderPlus,
   FaLayerGroup,
   FaListAlt,
   FaQuestionCircle,
-  FaFolderPlus,
+  FaSignOutAlt,
+  FaTasks,
+  FaUserCircle,
+  FaUserGraduate,
 } from "react-icons/fa";
 
 const InstructorSidebar = () => {
@@ -23,51 +23,37 @@ const InstructorSidebar = () => {
     {
       key: "1",
       icon: <FaUserCircle />,
-      label: (
-        <Link href={"/dashboard/profile"}>Profile</Link>
-      ),
+      label: <Link href={"/dashboard/profile"}>Profile</Link>,
     },
     {
       key: "2",
       icon: <FaBookOpen />,
-      label: (
-        <Link href={"/dashboard/my-classes"}>My Classes</Link>
-      ),
+      label: <Link href={"/dashboard/my-classes"}>My Classes</Link>,
     },
     {
       key: "3",
       icon: <FaUserGraduate />,
-      label: (
-        <Link href={"/dashboard/my-students"}>My Students</Link>
-      ),
+      label: <Link href={"/dashboard/my-students"}>My Students</Link>,
     },
     {
       key: "4",
       icon: <FaTasks />,
-      label: (
-        <Link href={"/dashboard/assignments"}>Assignments</Link>
-      ),
+      label: <Link href={"/dashboard/assignments"}>Assignments</Link>,
     },
     {
       key: "5",
       icon: <FaLayerGroup />,
-      label: (
-        <Link href={"/dashboard/create-module"}>Create Module</Link>
-      ),
+      label: <Link href={"/dashboard/create-module"}>Create Module</Link>,
     },
     {
       key: "6",
       icon: <FaListAlt />,
-      label: (
-        <Link href={"/dashboard/create-lesson"}>Create Lesson</Link>
-      ),
+      label: <Link href={"/dashboard/create-lesson"}>Create Lesson</Link>,
     },
     {
       key: "7",
       icon: <FaQuestionCircle />,
-      label: (
-        <Link href={"/dashboard/create-quiz"}>Create Quiz</Link>
-      ),
+      label: <Link href={"/dashboard/create-quiz"}>Create Quiz</Link>,
     },
     {
       key: "8",
@@ -109,7 +95,9 @@ const InstructorSidebar = () => {
     {
       key: "12",
       icon: <FaChalkboardTeacher />,
-      label: <Link href={"/dashboard/teaching-resources"}>Teaching Resources</Link>,
+      label: (
+        <Link href={"/dashboard/teaching-resources"}>Teaching Resources</Link>
+      ),
     },
     {
       key: "13",
@@ -126,6 +114,7 @@ const InstructorSidebar = () => {
   return (
     <Menu
       theme="light"
+      className="w-full lg:min-h-screen h-full mt-3 flex lg:flex-col flex-row overflow-x-auto lg:overflow-visible space-x-3 lg:space-x-0"
       mode="inline"
       defaultSelectedKeys={["1"]}
       items={InstructorItems}
