@@ -67,7 +67,7 @@ const CourseOutlines = () => {
       key: "action",
       render: (_id: any, outline: ICourseOutline) => (
         <Link
-          href={`/dashboard/course/edit-outline/${outline?.id}/${outline?.course?.id}?courseName=${outline?.course?.title}`}
+          href={`/dashboard/course/edit-course-outline/${outline?.id}/${outline?.course?.id}?courseName=${outline?.course?.title}`}
         >
           <Button type="primary">Edit</Button>
         </Link>

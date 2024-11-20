@@ -1,28 +1,26 @@
-import DashboardCourseOutlines from "@/components/dashboardCourseOutline";
+import CourseOutlineEdit from "@/components/editCourseOutline";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
 
-const DashboardCourseOutlinePage = () => {
+const CourseOutlineEditPage = () => {
   const { query } = useRouter();
-  const courseTitle = query?.courseTitle as string;
+  const courseName = query?.courseName as string;
   return (
     <>
       <PageMetadata
-        title={`Course Outlines - ${
-          courseTitle || "Course title"
-        } - Up Skillium`}
+        title={`Edit outline - ${courseName || "Course title"} - Up Skillium`}
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <DashboardCourseOutlines />
+      <CourseOutlineEdit />
     </>
   );
 };
 
-DashboardCourseOutlinePage.getLayout = function (page: ReactElement) {
+CourseOutlineEditPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
       <DashboardLayout>{page}</DashboardLayout>
@@ -30,4 +28,4 @@ DashboardCourseOutlinePage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default DashboardCourseOutlinePage;
+export default CourseOutlineEditPage;
