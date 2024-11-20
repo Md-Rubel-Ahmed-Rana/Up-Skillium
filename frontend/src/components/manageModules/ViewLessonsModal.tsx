@@ -20,20 +20,26 @@ const ViewLessonsModal = ({ open, setOpen, moduleName, moduleId }: Props) => {
       title={`Lessons for: ${moduleName}`}
       loading={isLoading}
     >
-      <div className="flex flex-col gap-3">
-        {lessons.map((lesson) => (
-          <div
-            className="flex justify-between gap-3 border p-2 rounded-md bg-gray-50"
-            key={lesson?.id}
-          >
-            <div className="flex items-center ga-2">
-              <Tag color="geekblue">S. {lesson?.serial}</Tag>
-              <h3>{lesson?.title}</h3>
+      {lessons?.length <= 0 ? (
+        <div>
+          <h2>No lessons found!</h2>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {lessons?.map((lesson) => (
+            <div
+              className="flex justify-between gap-3 border p-2 rounded-md bg-gray-50"
+              key={lesson?.id}
+            >
+              <div className="flex items-center ga-2">
+                <Tag color="geekblue">S. {lesson?.serial}</Tag>
+                <h3>{lesson?.title}</h3>
+              </div>
+              <Tag color="geekblue">{lesson?.type}</Tag>
             </div>
-            <Tag color="geekblue">{lesson?.type}</Tag>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </Modal>
   );
 };
