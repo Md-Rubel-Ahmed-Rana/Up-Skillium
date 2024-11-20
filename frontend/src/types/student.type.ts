@@ -9,3 +9,19 @@ export type IStudent = {
   user: IUser;
   courses: ICourse[];
 };
+
+export type IMyStudent = {
+  student: {
+    id: string;
+    name: string;
+    email: string;
+    image: string;
+  };
+  courses: [
+    {
+      id: string;
+      image: string;
+      title: string;
+    }
+  ];
+};
