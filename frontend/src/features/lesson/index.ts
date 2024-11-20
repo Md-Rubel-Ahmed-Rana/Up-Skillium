@@ -18,6 +18,13 @@ const lessonApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["lesson"] as any,
     }),
+    getLessonsByModuleId: builder.query({
+      query: ({ moduleId }: { moduleId: string }) => ({
+        method: "GET",
+        url: `/lesson/module/${moduleId}`,
+      }),
+      providesTags: ["lesson"] as any,
+    }),
     getSingleLessonWithQuizCorrectAnswer: builder.query({
       query: ({ lessonId }: { lessonId: string }) => ({
         method: "GET",
@@ -73,4 +80,5 @@ export const {
   useDeleteLessonMutation,
   useUpdateLessonQuizQuestionsMutation,
   useGetSingleLessonWithQuizCorrectAnswerQuery,
+  useGetLessonsByModuleIdQuery,
 } = lessonApi;
