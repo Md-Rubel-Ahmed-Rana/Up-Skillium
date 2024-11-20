@@ -11,6 +11,7 @@ class Service {
   async createOutline(data: ICourseOutline | ICourseOutline[]): Promise<void> {
     await CourseOutline.create(data);
   }
+
   async getOutlines(): Promise<ICourseOutline[]> {
     const outlines = await CourseOutline.find({}).populate([
       {
@@ -40,6 +41,7 @@ class Service {
     data.modules = data.modules.sort((a, b) => a.serial - b.serial);
     return data;
   }
+
   async getOutlineByCourse(courseId: string): Promise<ICourseOutline | null> {
     const data = await CourseOutline.findOne({ course: courseId }).populate([
       {
@@ -58,15 +60,17 @@ class Service {
     return data;
   }
 
-  async updateOutline(
+  async updateOutlineModules(
     id: string,
-    updatedData: Partial<ICourseOutline>
+    modules: IModuleOutline[]
   ): Promise<void> {
-    await CourseOutline.findByIdAndUpdate(id, { $set: { ...updatedData } });
+    await CourseOutline.findByIdAndUpdate(id, { $set: { modules: modules } });
   }
+
   async deleteOutline(id: string): Promise<void> {
     await CourseOutline.findByIdAndDelete(id);
   }
+
   async updateModuleSerialNumberFromDragDrop(
     courseId: Types.ObjectId,
     data: IModuleSerialUpdate
@@ -99,6 +103,7 @@ class Service {
 
     await outline.save();
   }
+
   async deleteModule(courseId: Types.ObjectId, moduleId: Types.ObjectId) {
     await CourseOutline.updateOne(
       { course: courseId },

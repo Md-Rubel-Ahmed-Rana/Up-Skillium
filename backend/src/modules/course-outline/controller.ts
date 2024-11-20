@@ -42,16 +42,18 @@ class Controller extends RootController {
       data: data,
     });
   });
-  updateOutline = this.catchAsync(async (req: Request, res: Response) => {
-    const id = req.params.id;
-    await CourseOutlineService.updateOutline(id, req.body);
-    this.apiResponse(res, {
-      statusCode: 200,
-      success: true,
-      message: "Course outline fetched successfully",
-      data: null,
-    });
-  });
+  updateOutlineModules = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const id = req.params.id;
+      await CourseOutlineService.updateOutlineModules(id, req.body);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Course outline fetched successfully",
+        data: null,
+      });
+    }
+  );
   deleteOutline = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await CourseOutlineService.deleteOutline(id);

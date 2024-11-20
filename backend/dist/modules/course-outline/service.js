@@ -68,9 +68,9 @@ class Service {
             return data;
         });
     }
-    updateOutline(id, updatedData) {
+    updateOutlineModules(id, modules) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield model_1.CourseOutline.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });
+            yield model_1.CourseOutline.findByIdAndUpdate(id, { $set: { modules: modules } });
         });
     }
     deleteOutline(id) {

@@ -8,7 +8,6 @@ import {
 import { Course } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { InstructorService } from "../instructor/service";
-import { IUser } from "../user/interface";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -141,20 +140,41 @@ class Service {
     const courses = await Course.find({ instructor: instructorId });
     return courses;
   }
-  async getMyStudentsByInstructor(
-    instructorId: Types.ObjectId
-  ): Promise<IUser[]> {
+  async getMyStudentsByInstructor(instructorId: Types.ObjectId): Promise<any> {
     const courses = await Course.find({ instructor: instructorId }).populate(
       "students",
       "name email image"
     );
-    const students: IUser[] = [];
+
+    const studentMap = new Map();
+
     courses.forEach((course) => {
       course?.students?.forEach((student) => {
-        students.push(student as unknown as IUser);
+        const studentId = student?._id.toString();
+
+        if (studentMap.has(studentId)) {
+          studentMap.get(studentId).courses.push({
+            id: course?.id,
+            title: course?.title,
+            image: course?.image,
+          });
+        } else {
+          studentMap.set(studentId, {
+            student: student,
+            courses: [
+              {
+                id: course?.id,
+                title: course?.title,
+                image: course?.image,
+              },
+            ],
+          });
+        }
       });
     });
-    return students;
+
+    const organizedData = Array.from(studentMap.values());
+    return organizedData;
   }
   async updateCourse(
     id: Types.ObjectId,

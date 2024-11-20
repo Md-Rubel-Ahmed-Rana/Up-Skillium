@@ -26,7 +26,7 @@ router.delete(
   CourseOutlineController.deleteModule
 );
 
-router.patch("/:id", CourseOutlineController.updateOutline);
+router.patch("/:id", CourseOutlineController.updateOutlineModules);
 
 router.delete("/:id", CourseOutlineController.deleteOutline);
 
