@@ -109,14 +109,34 @@ class Service {
     getMyStudentsByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
             const courses = yield model_1.Course.find({ instructor: instructorId }).populate("students", "name email image");
-            const students = [];
+            const studentMap = new Map();
             courses.forEach((course) => {
                 var _a;
                 (_a = course === null || course === void 0 ? void 0 : course.students) === null || _a === void 0 ? void 0 : _a.forEach((student) => {
-                    students.push(student);
+                    const studentId = student === null || student === void 0 ? void 0 : student._id.toString();
+                    if (studentMap.has(studentId)) {
+                        studentMap.get(studentId).courses.push({
+                            id: course === null || course === void 0 ? void 0 : course.id,
+                            title: course === null || course === void 0 ? void 0 : course.title,
+                            image: course === null || course === void 0 ? void 0 : course.image,
+                        });
+                    }
+                    else {
+                        studentMap.set(studentId, {
+                            student: student,
+                            courses: [
+                                {
+                                    id: course === null || course === void 0 ? void 0 : course.id,
+                                    title: course === null || course === void 0 ? void 0 : course.title,
+                                    image: course === null || course === void 0 ? void 0 : course.image,
+                                },
+                            ],
+                        });
+                    }
                 });
             });
-            return students;
+            const organizedData = Array.from(studentMap.values());
+            return organizedData;
         });
     }
     updateCourse(id, updatedData) {

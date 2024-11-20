@@ -11,6 +11,6 @@ router.get("/by-course/:courseId", controller_1.CourseOutlineController.getOutli
 router.patch("/update-module-serial/:courseId", controller_1.CourseOutlineController.updateModuleSerialNumberFromDragDrop);
 router.patch("/update-module-name/:courseId/:moduleId", controller_1.CourseOutlineController.updateModuleName);
 router.delete("/delete-module/:courseId/:moduleId", controller_1.CourseOutlineController.deleteModule);
-router.patch("/:id", controller_1.CourseOutlineController.updateOutline);
+router.patch("/:id", controller_1.CourseOutlineController.updateOutlineModules);
 router.delete("/:id", controller_1.CourseOutlineController.deleteOutline);
 exports.CourseOutlineRoutes = router;

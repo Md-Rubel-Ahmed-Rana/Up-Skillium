@@ -56,9 +56,9 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
-        this.updateOutline = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+        this.updateOutlineModules = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
-            yield service_1.CourseOutlineService.updateOutline(id, req.body);
+            yield service_1.CourseOutlineService.updateOutlineModules(id, req.body);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,

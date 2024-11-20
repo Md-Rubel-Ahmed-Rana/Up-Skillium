@@ -74,24 +74,10 @@ class Service {
         select: { name: 1, email: 1, image: 1 },
       })
       .populate({
-        path: "courses.course",
-        model: "Course",
-        select: { title: 1 },
-      })
-      .populate({
-        path: "courses.modules.module",
-        model: "Module",
-        select: { title: 1 },
-      })
-      .populate({
-        path: "courses.modules.lessons.lesson",
-        model: "Lesson",
-        select: { title: 1, type: 1 },
-      })
-      .populate({
         path: "courses.lastCompletedLesson",
         model: "Lesson",
-      });
+      })
+      .select("-courses.modules");
 
     return progresses;
   }
