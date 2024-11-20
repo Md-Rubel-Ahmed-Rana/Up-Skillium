@@ -31,3 +31,14 @@ export type IGetLesson = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type ICreateLesson = {
+  title: string;
+  type: "video" | "instruction" | "quiz" | "assignment";
+  module: string;
+  videoLength?: number;
+  videoUrl?: string;
+  content?: string;
+  quizQuestions?: string[];
+  serial: number;
+};
