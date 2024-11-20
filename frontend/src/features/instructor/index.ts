@@ -9,7 +9,15 @@ const instructorApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["instructor"] as any,
     }),
+    getMyStudents: builder.query({
+      query: ({ instructorUserId }: { instructorUserId: string }) => ({
+        method: "GET",
+        url: `/instructor/my-students/${instructorUserId}`,
+      }),
+      providesTags: ["instructor"] as any,
+    }),
   }),
 });
 
-export const { useGetAllInstructorsQuery } = instructorApi;
+export const { useGetAllInstructorsQuery, useGetMyStudentsQuery } =
+  instructorApi;

@@ -1,6 +1,7 @@
 import {
   ICourseOutlineModuleSerialUpdate,
   ICreateOutline,
+  IUpdateModuleOutline,
 } from "@/types/courseOutline.type";
 import apiSlice from "../api/apiSlice";
 
@@ -17,6 +18,13 @@ const courseOutlineApi = apiSlice.injectEndpoints({
       query: ({ courseId }: { courseId: string }) => ({
         method: "GET",
         url: `/course-outline/by-course/${courseId}`,
+      }),
+      providesTags: ["course-outline"],
+    }),
+    getSingleCourseOutline: builder.query({
+      query: ({ id }: { id: string }) => ({
+        method: "GET",
+        url: `/course-outline/${id}`,
       }),
       providesTags: ["course-outline"],
     }),
@@ -71,6 +79,20 @@ const courseOutlineApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["course-outline"],
     }),
+    updateOutlineModules: builder.mutation({
+      query: ({
+        id,
+        modules,
+      }: {
+        id: string;
+        modules: IUpdateModuleOutline[];
+      }) => ({
+        method: "PATCH",
+        url: `/course-outline/${id}`,
+        body: modules,
+      }),
+      invalidatesTags: ["course-outline"],
+    }),
   }),
 });
 
@@ -83,4 +105,6 @@ export const {
   useUpdateCourseOutlineModuleSerialMutation,
   useDeleteCourseOutlineModuleMutation,
   useCreateCourseOutlineMutation,
+  useGetSingleCourseOutlineQuery,
+  useUpdateOutlineModulesMutation,
 } = courseOutlineApi;
