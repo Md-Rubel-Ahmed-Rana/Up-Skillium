@@ -9,7 +9,7 @@ type Props = {
 };
 
 const ModulesUpdateButton = ({ modules }: Props) => {
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const outlineId = query?.outlineId as string;
   const [updateModules, { isLoading }] = useUpdateOutlineModulesMutation();
 
@@ -38,6 +38,7 @@ const ModulesUpdateButton = ({ modules }: Props) => {
       const result: any = await updateModules({ id: outlineId, modules: data });
       if (result?.data?.statusCode === 200) {
         toast.success(result?.data?.message || "Modules updated successfully!");
+        push("/dashboard/course-outlines");
       } else {
         toast.error(
           result?.error?.message ||
