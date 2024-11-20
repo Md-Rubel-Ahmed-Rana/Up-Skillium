@@ -9,7 +9,15 @@ const moduleApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["lesson"] as any,
     }),
+    getAllModules: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/module`,
+      }),
+      providesTags: ["lesson", "module"],
+    }),
   }),
 });
 
-export const { useGetModulesByCourseIdQuery } = moduleApi;
+export const { useGetModulesByCourseIdQuery, useGetAllModulesQuery } =
+  moduleApi;
