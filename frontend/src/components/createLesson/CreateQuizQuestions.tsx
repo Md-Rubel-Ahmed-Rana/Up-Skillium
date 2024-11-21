@@ -20,7 +20,7 @@ const CreateQuizQuestions = ({ form }: Props) => {
             Upload JSON
           </Button>
         </div>
-        <Form.List name="questions">
+        <Form.List name="quizQuestions">
           {(fields, { add, remove }) => (
             <>
               <Collapse accordion>

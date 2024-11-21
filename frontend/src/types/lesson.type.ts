@@ -1,4 +1,4 @@
-import { IQuizQuestion } from "./quiz.type";
+import { ICreateQuizQuestion, IQuizQuestion } from "./quiz.type";
 
 export type ILesson = {
   id: string;
@@ -41,6 +41,15 @@ export type ICreateLesson = {
   content?: string;
   quizQuestions?: string[];
   serial: number;
+};
+
+export type ICreateQuizLesson = {
+  title: string;
+  type: "video" | "instruction" | "quiz" | "assignment";
+  module: string;
+  content: string;
+  serial: number;
+  quizQuestions: ICreateQuizQuestion;
 };
 export type ICreateAssignmentOrInstructionLesson = {
   title: string;
