@@ -49,7 +49,7 @@ const ManageLessons = () => {
   ];
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 overflow-x-auto w-full">
       <h2 className="text-lg lg:text-2xl font-semibold mb-3">Manage Lessons</h2>
       <Table
         rowKey="id"
@@ -58,6 +58,7 @@ const ManageLessons = () => {
         loading={isLoading}
         bordered
         pagination={{ pageSize: 10 }}
+        className="shadow-md rounded-lg w-full min-w-[900px]"
       />
     </div>
   );

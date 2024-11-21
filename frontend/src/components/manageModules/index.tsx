@@ -66,7 +66,7 @@ const ManageModules = () => {
   ];
 
   return (
-    <div className="mt-4">
+    <div className="mt-4 overflow-x-auto w-full">
       <h2 className="text-lg lg:text-2xl font-semibold mb-3">Manage Modules</h2>
       <Table
         rowKey="id"
@@ -75,6 +75,7 @@ const ManageModules = () => {
         loading={isLoading}
         bordered
         pagination={{ pageSize: 10 }}
+        className="shadow-md rounded-lg w-full min-w-[900px]"
       />
     </div>
   );

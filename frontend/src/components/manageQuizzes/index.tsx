@@ -72,13 +72,14 @@ const ManageQuizzes = () => {
   ];
 
   return (
-    <div className="mt-4 pb-20">
+    <div className="mt-4 pb-20 overflow-x-auto w-full">
       <h2 className="text-lg lg:text-2xl font-semibold mb-3">Manage Quizzes</h2>
       <Table
         columns={columns}
         dataSource={lessons}
         bordered
         pagination={{ pageSize: 10 }}
+        className="shadow-md rounded-lg w-full min-w-[900px]"
       />
     </div>
   );
