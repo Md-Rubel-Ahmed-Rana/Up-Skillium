@@ -42,3 +42,12 @@ export type ICreateLesson = {
   quizQuestions?: string[];
   serial: number;
 };
+
+export type ICreateVideoLesson = {
+  title: string;
+  type: "video" | "instruction" | "quiz" | "assignment";
+  module: string;
+  videoLength: number;
+  serial: number;
+  video: any;
+};
