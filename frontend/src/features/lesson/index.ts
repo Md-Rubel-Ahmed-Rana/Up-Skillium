@@ -9,28 +9,28 @@ const lessonApi = apiSlice.injectEndpoints({
         method: "GET",
         url: `/lesson?limit=100&page=1`,
       }),
-      providesTags: ["lesson"] as any,
+      providesTags: ["lesson"],
     }),
     getSingleLesson: builder.query({
       query: ({ lessonId }: { lessonId: string }) => ({
         method: "GET",
         url: `/lesson/${lessonId}`,
       }),
-      providesTags: ["lesson"] as any,
+      providesTags: ["lesson"],
     }),
     getLessonsByModuleId: builder.query({
       query: ({ moduleId }: { moduleId: string }) => ({
         method: "GET",
         url: `/lesson/module/${moduleId}`,
       }),
-      providesTags: ["lesson"] as any,
+      providesTags: ["lesson"],
     }),
     getSingleLessonWithQuizCorrectAnswer: builder.query({
       query: ({ lessonId }: { lessonId: string }) => ({
         method: "GET",
         url: `/lesson/quiz-correct-answer/${lessonId}`,
       }),
-      providesTags: ["lesson"] as any,
+      providesTags: ["lesson"],
     }),
     uploadLessonVideo: builder.mutation({
       query: ({ video }: { video: FormData }) => ({
@@ -38,7 +38,7 @@ const lessonApi = apiSlice.injectEndpoints({
         url: `/lesson/upload-video`,
         body: video,
       }),
-      invalidatesTags: ["lesson"] as any,
+      invalidatesTags: ["lesson"],
     }),
     updateLesson: builder.mutation({
       query: ({ lessonId, data }: { lessonId: string; data: ILesson }) => ({
@@ -46,7 +46,7 @@ const lessonApi = apiSlice.injectEndpoints({
         url: `/lesson/${lessonId}`,
         body: data,
       }),
-      invalidatesTags: ["lesson"] as any,
+      invalidatesTags: ["lesson"],
     }),
     updateLessonQuizQuestions: builder.mutation({
       query: ({
@@ -60,14 +60,22 @@ const lessonApi = apiSlice.injectEndpoints({
         url: `/lesson/update-quizzes/${lessonId}`,
         body: quizzes,
       }),
-      invalidatesTags: ["lesson"] as any,
+      invalidatesTags: ["lesson"],
     }),
     deleteLesson: builder.mutation({
       query: ({ lessonId }: { lessonId: string }) => ({
         method: "DELETE",
         url: `/lesson/${lessonId}`,
       }),
-      invalidatesTags: ["lesson"] as any,
+      invalidatesTags: ["lesson"],
+    }),
+    createVideoLesson: builder.mutation({
+      query: ({ data }: { data: FormData }) => ({
+        method: "POST",
+        url: `/lesson/create/type/video`,
+        body: data,
+      }),
+      invalidatesTags: ["lesson"],
     }),
   }),
 });
@@ -81,4 +89,5 @@ export const {
   useUpdateLessonQuizQuestionsMutation,
   useGetSingleLessonWithQuizCorrectAnswerQuery,
   useGetLessonsByModuleIdQuery,
+  useCreateVideoLessonMutation,
 } = lessonApi;

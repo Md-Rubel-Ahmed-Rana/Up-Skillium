@@ -1,22 +1,26 @@
+import { useCreateVideoLessonMutation } from "@/features/lesson";
+import { ICreateVideoLesson } from "@/types/lesson.type";
 import { UploadOutlined } from "@ant-design/icons/lib";
 import { Button, Form, Input, InputNumber, Upload } from "antd/lib";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 
 const AssignmentOrInstructionForm = () => {
   const [form] = Form.useForm();
   const { query } = useRouter();
   const moduleId = query?.moduleId as string;
   const type = query?.type as "video" | "quiz" | "assignment" | "instruction";
+  const [createLesson, { isLoading }] = useCreateVideoLessonMutation();
 
-  const handleSubmitLesson = async (values: any) => {
+  const handleSubmitLesson = async (values: ICreateVideoLesson) => {
     const formData = new FormData();
-    const newLesson: any = {
+    const newLesson: Record<any, any> = {
       title: values?.title,
       serial: values?.serial,
       module: moduleId,
       type: type,
       videoLength: values?.videoLength,
-      video: values?.video[0]?.originFileObj,
+      video: values?.video[0]?.originFileObj as File,
     };
     for (const key in newLesson) {
       const value = newLesson[key];
@@ -27,7 +31,27 @@ const AssignmentOrInstructionForm = () => {
         formData.append(key, value);
       }
     }
-    console.log(newLesson);
+    await handleCreateVideoLesson(formData);
+  };
+
+  const handleCreateVideoLesson = async (lesson: FormData) => {
+    try {
+      const result: any = await createLesson({ data: lesson });
+      if (result?.data?.statusCode === 201) {
+        toast.success(
+          result?.data?.message || "Video lesson created successfully!"
+        );
+      } else {
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            result?.data?.error?.message ||
+            "Failed to create video lesson."
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to create video lesson. Error: ${error?.message}`);
+    }
   };
 
   return (
@@ -95,8 +119,10 @@ const AssignmentOrInstructionForm = () => {
             size="large"
             className="w-full bg-blue-500 hover:bg-blue-600"
             iconPosition="end"
+            loading={isLoading}
+            disabled={isLoading}
           >
-            Create lesson
+            {isLoading ? "Creating..." : "Create lesson"}
           </Button>
         </Form.Item>
       </Form>
