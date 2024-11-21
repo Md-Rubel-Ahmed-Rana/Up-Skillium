@@ -87,7 +87,7 @@ const JSONQuizUploaderModel = ({ open, setOpen, form }: Props) => {
       );
       return;
     }
-    form.setFieldValue("questions", newQuestions);
+    form.setFieldValue("quizQuestions", newQuestions);
     setOpen(false);
     resetState();
   };

@@ -1,5 +1,6 @@
 import {
   ICreateAssignmentOrInstructionLesson,
+  ICreateQuizLesson,
   ILesson,
 } from "@/types/lesson.type";
 import { IQuizQuestion } from "@/types/quiz.type";
@@ -94,6 +95,14 @@ const lessonApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["lesson"],
     }),
+    createQuizLesson: builder.mutation({
+      query: ({ data }: { data: ICreateQuizLesson }) => ({
+        method: "POST",
+        url: `/lesson/create/type/quiz`,
+        body: data,
+      }),
+      invalidatesTags: ["lesson"],
+    }),
   }),
 });
 
@@ -107,5 +116,6 @@ export const {
   useGetSingleLessonWithQuizCorrectAnswerQuery,
   useGetLessonsByModuleIdQuery,
   useCreateVideoLessonMutation,
-  useCreateAssignmentOrInstructionLessonMutation
+  useCreateAssignmentOrInstructionLessonMutation,
+  useCreateQuizLessonMutation,
 } = lessonApi;
