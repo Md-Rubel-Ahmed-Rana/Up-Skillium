@@ -1,4 +1,4 @@
-import CreateCertificate from "@/components/create-certificate";
+import CreateCertificate from "@/components/createCertificate";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
