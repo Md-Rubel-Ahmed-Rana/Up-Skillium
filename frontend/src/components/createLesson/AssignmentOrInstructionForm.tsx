@@ -1,27 +1,51 @@
-import { ICreateLesson } from "@/types/lesson.type";
+import { useCreateAssignmentOrInstructionLessonMutation } from "@/features/lesson";
+import { ICreateAssignmentOrInstructionLesson } from "@/types/lesson.type";
 import { Button, Form, Input, InputNumber } from "antd/lib";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import toast from "react-hot-toast";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 const AssignmentOrInstructionForm = () => {
   const [form] = Form.useForm();
   const { query } = useRouter();
-  const [content, setContent] = useState<string | null>(null);
   const moduleId = query?.moduleId as string;
   const type = query?.type as "video" | "quiz" | "assignment" | "instruction";
+  const [createLesson, { isLoading }] =
+    useCreateAssignmentOrInstructionLessonMutation();
 
-  const handleSubmitLesson = async (values: ICreateLesson) => {
-    const newLesson: ICreateLesson = {
+  const handleSubmitLesson = async (
+    values: ICreateAssignmentOrInstructionLesson
+  ) => {
+    const newLesson: ICreateAssignmentOrInstructionLesson = {
       title: values?.title,
       serial: values?.serial,
       content: values?.content,
       module: moduleId,
       type: type,
     };
-    console.log(newLesson);
+    await handleCreateLesson(newLesson);
+  };
+
+  const handleCreateLesson = async (
+    lesson: ICreateAssignmentOrInstructionLesson
+  ) => {
+    try {
+      const result: any = await createLesson({ type: type, data: lesson });
+      if (result?.data?.statusCode === 201) {
+        toast.success(result?.data?.message || "Lesson created successfully!");
+      } else {
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            result?.data?.error?.message ||
+            "Failed to create lesson."
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to create lesson. Error: ${error?.message}`);
+    }
   };
 
   return (
@@ -62,8 +86,7 @@ const AssignmentOrInstructionForm = () => {
             theme="snow"
             placeholder="Write your lesson content here..."
             className="bg-white rounded-lg shadow-sm"
-            onChange={(value) => setContent(value)}
-            value={content as string}
+            onChange={(value) => form.setFieldValue("content", value)}
           />
         </Form.Item>
         <Form.Item>
@@ -73,8 +96,10 @@ const AssignmentOrInstructionForm = () => {
             size="large"
             className="w-full bg-blue-500 hover:bg-blue-600"
             iconPosition="end"
+            loading={isLoading}
+            disabled={isLoading}
           >
-            Create lesson
+            {isLoading ? "Creating..." : "Create lesson"}
           </Button>
         </Form.Item>
       </Form>
