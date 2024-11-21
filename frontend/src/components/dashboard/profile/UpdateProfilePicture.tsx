@@ -71,6 +71,7 @@ const UpdateProfilePicture: React.FC<Props> = ({ isOpen, setIsOpen }) => {
             showUploadList={false}
             beforeUpload={() => false}
             onChange={handleChange}
+            accept="image/*"
           >
             {imageUrl ? (
               <img
