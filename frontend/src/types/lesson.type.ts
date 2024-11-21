@@ -32,16 +32,10 @@ export type IGetLesson = {
   updatedAt: string;
 };
 
-export type ICreateLesson = {
-  title: string;
-  type: "video" | "instruction" | "quiz" | "assignment";
-  module: string;
-  videoLength?: number;
-  videoUrl?: string;
-  content?: string;
-  quizQuestions?: string[];
-  serial: number;
-};
+export type ICreateLesson =
+  | ICreateQuizLesson
+  | ICreateAssignmentOrInstructionLesson
+  | FormData;
 
 export type ICreateQuizLesson = {
   title: string;
@@ -51,6 +45,7 @@ export type ICreateQuizLesson = {
   serial: number;
   quizQuestions: ICreateQuizQuestion;
 };
+
 export type ICreateAssignmentOrInstructionLesson = {
   title: string;
   type: "video" | "instruction" | "quiz" | "assignment";

@@ -82,15 +82,9 @@ const lessonApi = apiSlice.injectEndpoints({
       invalidatesTags: ["lesson"],
     }),
     createAssignmentOrInstructionLesson: builder.mutation({
-      query: ({
-        type,
-        data,
-      }: {
-        type: string;
-        data: ICreateAssignmentOrInstructionLesson;
-      }) => ({
+      query: ({ data }: { data: ICreateAssignmentOrInstructionLesson }) => ({
         method: "POST",
-        url: `/lesson/create/type/${type}`,
+        url: `/lesson/create/type/${data?.type}`,
         body: data,
       }),
       invalidatesTags: ["lesson"],
