@@ -33,11 +33,11 @@ const QuizUpdateModal = ({ quiz }: Props) => {
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to updated quiz."
+            "Failed to update quiz."
         );
       }
     } catch (error: any) {
-      toast.error(`Failed to updated quiz. Error: ${error?.message}`);
+      toast.error(`Failed to update quiz. Error: ${error?.message}`);
     }
   };
 

@@ -1,5 +1,6 @@
 import { IGetQuizQuestion } from "@/types/quiz.type";
 import { Table, TableProps } from "antd/lib";
+import QuizDeleteModal from "./QuizDeleteModal";
 import QuizUpdateModal from "./QuizUpdateModal";
 
 const ManageQuizzes = () => {
@@ -62,7 +63,10 @@ const ManageQuizzes = () => {
       title: "Actions",
       key: "actions",
       render: (_: any, quiz: IGetQuizQuestion) => (
-        <QuizUpdateModal quiz={quiz} />
+        <div className="flex items-center gap-3">
+          <QuizUpdateModal quiz={quiz} />
+          <QuizDeleteModal quiz={quiz} />
+        </div>
       ),
     },
   ];
