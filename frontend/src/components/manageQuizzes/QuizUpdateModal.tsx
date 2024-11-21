@@ -1,3 +1,4 @@
+import { useUpdateQuizMutation } from "@/features/quiz";
 import { IGetQuizQuestion } from "@/types/quiz.type";
 import { Button, Form, Input, Modal } from "antd/lib";
 import { useState } from "react";
@@ -10,6 +11,7 @@ type Props = {
 const QuizUpdateModal = ({ quiz }: Props) => {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
+  const [updateQuiz, { isLoading }] = useUpdateQuizMutation();
 
   const handleEditQuiz = async (values: IGetQuizQuestion) => {
     const updatedData: IGetQuizQuestion = {
@@ -19,7 +21,10 @@ const QuizUpdateModal = ({ quiz }: Props) => {
       options: values?.options,
     };
     try {
-      const result: any = {};
+      const result: any = await updateQuiz({
+        quizId: updatedData?.id,
+        updatedQuiz: updatedData,
+      });
       if (result?.data?.statusCode === 200) {
         toast.success(result?.data?.message || "Quiz updated successfully!");
         setOpen(false);
@@ -85,8 +90,10 @@ const QuizUpdateModal = ({ quiz }: Props) => {
               size="large"
               className="w-full bg-blue-500 hover:bg-blue-600"
               iconPosition="end"
+              disabled={isLoading}
+              loading={isLoading}
             >
-              Save Changes
+              {isLoading ? "Saving..." : "Save Changes"}
             </Button>
           </Form.Item>
         </Form>

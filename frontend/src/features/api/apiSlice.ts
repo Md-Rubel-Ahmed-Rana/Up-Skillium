@@ -19,6 +19,7 @@ const apiSlice = createApi({
     "feedback",
     "category",
     "student-progress",
+    "quiz",
   ],
   endpoints: () => ({}),
 });
