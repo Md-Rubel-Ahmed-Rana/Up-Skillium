@@ -1,5 +1,6 @@
 import { IGetQuizQuestion } from "@/types/quiz.type";
-import { Button, Table, TableProps } from "antd/lib";
+import { Table, TableProps } from "antd/lib";
+import QuizUpdateModal from "./QuizUpdateModal";
 
 const ManageQuizzes = () => {
   const lessons: IGetQuizQuestion[] = Array.from({ length: 100 }).map(
@@ -60,7 +61,9 @@ const ManageQuizzes = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, quiz: IGetQuizQuestion) => <Button>Edit</Button>,
+      render: (_: any, quiz: IGetQuizQuestion) => (
+        <QuizUpdateModal quiz={quiz} />
+      ),
     },
   ];
 
