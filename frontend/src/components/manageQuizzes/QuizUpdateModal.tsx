@@ -79,9 +79,11 @@ const QuizUpdateModal = ({ quiz }: Props) => {
             name="options"
             rules={[{ required: true, message: "Options are required" }]}
           >
-            {quiz?.options?.map((option, index) => (
-              <Input key={index} value={option} />
-            ))}
+            <div className="flex flex-col gap-2">
+              {quiz?.options?.map((option, index) => (
+                <Input key={index} value={option} />
+              ))}
+            </div>
           </Form.Item>
           <Form.Item>
             <Button
