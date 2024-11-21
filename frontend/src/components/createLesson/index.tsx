@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import AssignmentOrIntroductionForm from "./AssignmentOrIntroductionForm";
+import AssignmentOrInstructionForm from "./AssignmentOrInstructionForm";
 import CreateQuizLesson from "./CreateQuizLesson";
 import CreateVideoLesson from "./CreateVideoLesson";
 import ModuleDropdown from "./ModuleDropdown";
@@ -24,11 +24,13 @@ const CreateLesson = () => {
           {type === "video" && <CreateVideoLesson />}{" "}
           {type === "quiz" && <CreateQuizLesson />}{" "}
           {(type === "instruction" || type === "assignment") && (
-            <AssignmentOrIntroductionForm />
+            <AssignmentOrInstructionForm />
           )}
         </>
       ) : (
-        <h4>Select lesson type first</h4>
+        <h4 className="text-lg font-semibold text-gray-500">
+          Select lesson type first
+        </h4>
       )}
     </div>
   );

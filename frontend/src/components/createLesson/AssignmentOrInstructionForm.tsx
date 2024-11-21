@@ -6,7 +6,7 @@ import { useState } from "react";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const AssignmentOrIntroductionForm = () => {
+const AssignmentOrInstructionForm = () => {
   const [form] = Form.useForm();
   const { query } = useRouter();
   const [content, setContent] = useState<string | null>(null);
@@ -82,4 +82,4 @@ const AssignmentOrIntroductionForm = () => {
   );
 };
 
-export default AssignmentOrIntroductionForm;
+export default AssignmentOrInstructionForm;
