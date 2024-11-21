@@ -14,6 +14,7 @@ const CreateQuizLesson = () => {
   return (
     <div className="w-full max-w-2xl mx-auto border shadow-md p-5 rounded-md">
       <h2 className="text-xl font-extrabold text-center">Create quiz lesson</h2>
+
       <Form
         form={form}
         layout="vertical"
@@ -45,7 +46,7 @@ const CreateQuizLesson = () => {
         >
           <Input placeholder="Please enter lesson title" />
         </Form.Item>
-        <CreateQuizQuestions />
+        <CreateQuizQuestions form={form} />
         <Form.Item>
           <Button
             type="primary"
