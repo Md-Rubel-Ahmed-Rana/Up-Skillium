@@ -1,9 +1,10 @@
 import { useCreateVideoLessonMutation } from "@/features/lesson";
-import { ICreateVideoLesson } from "@/types/lesson.type";
+import { ICreateLesson } from "@/types/lesson.type";
 import { UploadOutlined } from "@ant-design/icons/lib";
-import { Button, Form, Input, InputNumber, Upload } from "antd/lib";
+import { Form, InputNumber, Upload } from "antd/lib";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
+import CreateLessonCommonFields from "./CreateLessonCommonFields";
+import CreateLessonFormWrapper from "./CreateLessonFormWrapper";
 
 const AssignmentOrInstructionForm = () => {
   const [form] = Form.useForm();
@@ -12,7 +13,7 @@ const AssignmentOrInstructionForm = () => {
   const type = query?.type as "video" | "quiz" | "assignment" | "instruction";
   const [createLesson, { isLoading }] = useCreateVideoLessonMutation();
 
-  const handleSubmitLesson = async (values: ICreateVideoLesson) => {
+  const handleSubmitLesson = (values: any): ICreateLesson => {
     const formData = new FormData();
     const newLesson: Record<any, any> = {
       title: values?.title,
@@ -31,27 +32,7 @@ const AssignmentOrInstructionForm = () => {
         formData.append(key, value);
       }
     }
-    await handleCreateVideoLesson(formData);
-  };
-
-  const handleCreateVideoLesson = async (lesson: FormData) => {
-    try {
-      const result: any = await createLesson({ data: lesson });
-      if (result?.data?.statusCode === 201) {
-        toast.success(
-          result?.data?.message || "Video lesson created successfully!"
-        );
-      } else {
-        toast.error(
-          result?.error?.message ||
-            result?.error?.data?.message ||
-            result?.data?.error?.message ||
-            "Failed to create video lesson."
-        );
-      }
-    } catch (error: any) {
-      toast.error(`Failed to create video lesson. Error: ${error?.message}`);
-    }
+    return formData;
   };
 
   return (
@@ -59,30 +40,13 @@ const AssignmentOrInstructionForm = () => {
       <h2 className="text-xl font-extrabold text-center">
         Create {type} lesson
       </h2>
-      <Form
+      <CreateLessonFormWrapper
         form={form}
-        layout="vertical"
-        onFinish={handleSubmitLesson}
-        className="space-y-6"
+        isLoading={isLoading}
+        createLessonHook={createLesson}
+        createLessonSubmitter={handleSubmitLesson}
       >
-        <Form.Item
-          label="Title"
-          name="title"
-          rules={[{ required: true, message: "Title is required" }]}
-        >
-          <Input placeholder="Please enter lesson title" />
-        </Form.Item>
-        <Form.Item
-          label="Serial"
-          name="serial"
-          className="w-full"
-          rules={[{ required: true, message: "Serial number is required" }]}
-        >
-          <InputNumber
-            className="w-full"
-            placeholder="Please enter serial number"
-          />
-        </Form.Item>
+        <CreateLessonCommonFields />
         <Form.Item
           label="Video length (Minutes)"
           name="videoLength"
@@ -112,20 +76,7 @@ const AssignmentOrInstructionForm = () => {
             <UploadOutlined className="text-3xl text-blue-500" />
           </Upload>
         </Form.Item>
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            size="large"
-            className="w-full bg-blue-500 hover:bg-blue-600"
-            iconPosition="end"
-            loading={isLoading}
-            disabled={isLoading}
-          >
-            {isLoading ? "Creating..." : "Create lesson"}
-          </Button>
-        </Form.Item>
-      </Form>
+      </CreateLessonFormWrapper>
     </div>
   );
 };
