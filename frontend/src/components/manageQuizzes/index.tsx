@@ -1,9 +1,12 @@
+import { useGetAllQuizzesQuery } from "@/features/quiz";
 import { IGetQuizQuestion } from "@/types/quiz.type";
 import { Table, TableProps } from "antd/lib";
 import QuizDeleteModal from "./QuizDeleteModal";
 import QuizUpdateModal from "./QuizUpdateModal";
 
 const ManageQuizzes = () => {
+  const { data, isLoading } = useGetAllQuizzesQuery({});
+  const quizzes = data?.data as IGetQuizQuestion[];
   const lessons: IGetQuizQuestion[] = Array.from({ length: 100 }).map(
     (_, index) => ({
       id: (index + 1).toString(),
@@ -80,6 +83,7 @@ const ManageQuizzes = () => {
         bordered
         pagination={{ pageSize: 10 }}
         className="shadow-md rounded-lg w-full min-w-[900px]"
+        loading={isLoading}
       />
     </div>
   );

@@ -24,7 +24,18 @@ const quizApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["quiz"],
     }),
+    getAllQuizzes: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/quiz`,
+      }),
+      providesTags: ["quiz"],
+    }),
   }),
 });
 
-export const { useUpdateQuizMutation, useDeleteQuizMutation } = quizApi;
+export const {
+  useUpdateQuizMutation,
+  useDeleteQuizMutation,
+  useGetAllQuizzesQuery,
+} = quizApi;
