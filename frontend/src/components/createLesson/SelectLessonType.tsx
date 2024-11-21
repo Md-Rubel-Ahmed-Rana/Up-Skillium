@@ -12,10 +12,10 @@ const SelectLessonType = () => {
       placeholder="Select lesson type"
       className="w-full"
     >
-      <Select.Option value="Video">Video</Select.Option>
-      <Select.Option value="Instruction">Instruction</Select.Option>
-      <Select.Option value="Quiz">Quiz</Select.Option>
-      <Select.Option value="Assignment">Assignment</Select.Option>
+      <Select.Option value="video">Video</Select.Option>
+      <Select.Option value="instruction">Instruction</Select.Option>
+      <Select.Option value="quiz">Quiz</Select.Option>
+      <Select.Option value="assignment">Assignment</Select.Option>
     </Select>
   );
 };
