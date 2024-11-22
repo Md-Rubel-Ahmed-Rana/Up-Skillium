@@ -1,7 +1,8 @@
 import { useGetAllAssignmentsQuery } from "@/features/assignment";
 import { IGetLesson as IAssignment } from "@/types/lesson.type";
-import { Table, TableProps } from "antd/lib";
-import UpdateAssignmentModal from "./UpdateAssignmentModal";
+import { Button, Table, TableProps } from "antd/lib";
+import Link from "next/link";
+import AssignmentDeleteModal from "./AssignmentDeleteModal";
 
 const ManageAssignments = () => {
   const { data, isLoading } = useGetAllAssignmentsQuery({});
@@ -38,7 +39,14 @@ const ManageAssignments = () => {
       title: "Actions",
       key: "actions",
       render: (_: any, assignment: IAssignment) => (
-        <UpdateAssignmentModal assignment={assignment} />
+        <div className="flex items-center gap-2">
+          <Link
+            href={`/dashboard/update-assignment/${assignment?.id}?title=${assignment?.title}&module=${assignment?.module?.title}&content=${assignment?.content}`}
+          >
+            <Button type="primary">Edit</Button>
+          </Link>
+          <AssignmentDeleteModal assignment={assignment} />
+        </div>
       ),
     },
   ];
