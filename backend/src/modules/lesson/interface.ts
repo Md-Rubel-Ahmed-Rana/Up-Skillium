@@ -1,4 +1,5 @@
 import { Types } from "mongoose";
+import { IQuizQuestion } from "../quiz/interface";
 
 export type ILesson = {
   title: string;
@@ -8,6 +9,15 @@ export type ILesson = {
   videoUrl?: string;
   content?: string;
   quizQuestions?: Types.ObjectId[];
+  serial: number;
+};
+
+export type ICreateQuizLesson = {
+  title: string;
+  type: "video" | "instruction" | "quiz" | "assignment";
+  module: Types.ObjectId;
+  content: string;
+  quizQuestions: IQuizQuestion[];
   serial: number;
 };
 
