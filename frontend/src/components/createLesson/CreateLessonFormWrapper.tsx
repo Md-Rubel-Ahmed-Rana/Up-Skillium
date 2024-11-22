@@ -1,4 +1,5 @@
 import { ICreateLesson } from "@/types/lesson.type";
+import handleValidationErrors from "@/utils/handleValidationErrors";
 import { TypedMutationTrigger } from "@reduxjs/toolkit/query/react";
 import { Button, Form, FormInstance } from "antd/lib";
 import toast from "react-hot-toast";
@@ -24,7 +25,9 @@ const CreateLessonFormWrapper = ({
       const result: any = await createLessonHook({ data: lesson });
       if (result?.data?.statusCode === 201) {
         toast.success(result?.data?.message || "lesson created successfully!");
+        form.resetFields();
       } else {
+        handleValidationErrors(result);
         toast.error(
           result?.error?.message ||
             result?.error?.data?.message ||
