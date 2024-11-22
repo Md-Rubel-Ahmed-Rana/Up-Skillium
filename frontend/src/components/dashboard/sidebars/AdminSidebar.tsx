@@ -54,42 +54,48 @@ const AdminSidebar = () => {
     },
     {
       key: "2",
-      icon: <GiTeacher />,
-      label: "Manage Instructors",
+      icon: <FaUsers />,
+      label: "Manage Users",
       children: [
         {
           key: "2-1",
           icon: <FaUsers />,
-          label: (
-            <Link href="/dashboard/manage-instructors">All Instructors</Link>
-          ),
+          label: <Link href="/dashboard/manage-users">All Users</Link>,
         },
         {
           key: "2-2",
+          icon: <FaChalkboardTeacher />,
+          label: <Link href="/dashboard/manage-admins">Admins</Link>,
+        },
+        {
+          key: "2-3",
+          icon: <FaUsers />,
+          label: <Link href="/dashboard/manage-instructors">Instructors</Link>,
+        },
+        {
+          key: "2-4",
+          icon: <FaUsers />,
+          label: <Link href="/dashboard/manage-students">Students</Link>,
+        },
+        {
+          key: "2-5",
+          icon: <FaChalkboardTeacher />,
+          label: <Link href="/dashboard/create-admin">Create Admin</Link>,
+        },
+        {
+          key: "2-6",
           icon: <FaChalkboardTeacher />,
           label: (
             <Link href="/dashboard/create-instructor">Create Instructor</Link>
           ),
         },
-      ],
-    },
-    {
-      key: "3",
-      icon: <FaUsers />,
-      label: "Manage Students",
-      children: [
         {
-          key: "3-1",
-          icon: <FaUsers />,
-          label: <Link href="/dashboard/manage-students">All Students</Link>,
-        },
-        {
-          key: "3-2",
+          key: "2-7",
           icon: <FaUserCircle />,
-          label: <Link href="/dashboard/create-student">Add Student</Link>,
+          label: <Link href="/dashboard/create-student">Create Student</Link>,
         },
         {
-          key: "3-3",
+          key: "2-8",
           icon: <FaChartBar />,
           label: (
             <Link href="/dashboard/students-progress">Students Progress</Link>
