@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { firebaseBucket } from "../config/firebase";
 import ApiError from "../shared/apiError";
 import extractFilePath from "../utils/extractFilePath";
-import { Multer } from "multer";
 
 const rootFolder = "up-skillium";
 
@@ -65,7 +64,7 @@ class FileUploader {
             action: "read",
             expires: "01-01-2030",
           });
-          resolve(url); // Resolve the promise with the URL
+          resolve(url);
         } catch (err) {
           reject(new ApiError(400, "Failed to upload file"));
         }
@@ -74,6 +73,20 @@ class FileUploader {
       blobStream.end(buffer);
     });
   }
+
+  uploadLessonVideo = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    if (req.file) {
+      req.body.videoUrl = await this.uploadSingleFile(
+        "lesson-videos",
+        req.file
+      );
+    }
+    next();
+  };
 
   async uploadCertificate(
     folderName: string,

@@ -18,6 +18,14 @@ const apiError_1 = __importDefault(require("../shared/apiError"));
 const extractFilePath_1 = __importDefault(require("../utils/extractFilePath"));
 const rootFolder = "up-skillium";
 class FileUploader {
+    constructor() {
+        this.uploadLessonVideo = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            if (req.file) {
+                req.body.videoUrl = yield this.uploadSingleFile("lesson-videos", req.file);
+            }
+            next();
+        });
+    }
     singleFile(folderName) {
         return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             if (!req.file) {
@@ -67,7 +75,7 @@ class FileUploader {
                         action: "read",
                         expires: "01-01-2030",
                     });
-                    resolve(url); // Resolve the promise with the URL
+                    resolve(url);
                 }
                 catch (err) {
                     reject(new apiError_1.default(400, "Failed to upload file"));

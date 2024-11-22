@@ -27,6 +27,15 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.createVideoLesson = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield service_1.LessonService.createVideoLesson(req.body);
+            this.apiResponse(res, {
+                statusCode: 201,
+                success: true,
+                message: "Video lesson created successfully",
+                data: null,
+            });
+        }));
         this.getAllLessons = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const { search = "", type, page = 1, limit = 10 } = req.query;
             const lessons = yield service_1.LessonService.getAllLessons(search, type, Number(page), Number(limit));

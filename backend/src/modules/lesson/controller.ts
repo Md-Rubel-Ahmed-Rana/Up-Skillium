@@ -13,6 +13,15 @@ class Controller extends RootController {
       data: null,
     });
   });
+  createVideoLesson = this.catchAsync(async (req: Request, res: Response) => {
+    await LessonService.createVideoLesson(req.body);
+    this.apiResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "Video lesson created successfully",
+      data: null,
+    });
+  });
 
   getAllLessons = this.catchAsync(async (req: Request, res: Response) => {
     const { search = "", type, page = 1, limit = 10 } = req.query;

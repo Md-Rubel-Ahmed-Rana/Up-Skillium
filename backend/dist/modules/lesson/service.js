@@ -19,6 +19,13 @@ class Service {
             yield model_1.Lesson.create(data);
         });
     }
+    createVideoLesson(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(data);
+            return;
+            // await Lesson.create(data);
+        });
+    }
     getAllLessons() {
         return __awaiter(this, arguments, void 0, function* (search = "", type, page = 1, limit = 10) {
             const searchQuery = Object.assign(Object.assign({}, (search && { title: { $regex: search, $options: "i" } })), (type && { type }));
