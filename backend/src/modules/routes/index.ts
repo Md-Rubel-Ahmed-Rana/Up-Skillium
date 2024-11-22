@@ -19,6 +19,7 @@ import { QuizSubmissionRoutes } from "../quiz-submission/routes";
 import { AssignmentSubmissionRoutes } from "../assignment-submission/routes";
 import { StripePaymentRoutes } from "../stripe-payment/routes";
 import { ReviewRoutes } from "../review/routes";
+import { AssignmentRoutes } from "../assignment/routes";
 
 const router = Router();
 
@@ -57,6 +58,8 @@ router.use("/student-progress", StudentProgressRoutes);
 router.use("/quiz-submission", QuizSubmissionRoutes);
 
 router.use("/assignment-submission", AssignmentSubmissionRoutes);
+
+router.use("/assignment", AssignmentRoutes);
 
 router.use("/stripe", StripePaymentRoutes);
 
