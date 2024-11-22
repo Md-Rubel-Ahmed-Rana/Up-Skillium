@@ -10,9 +10,7 @@ class Service {
   }
 
   async createVideoLesson(data: ILesson | ILesson[]): Promise<void> {
-    console.log(data);
-    return;
-    // await Lesson.create(data);
+    await Lesson.create(data);
   }
 
   async getAllLessons(
