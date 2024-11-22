@@ -74,7 +74,6 @@ const UpdateAssignment = () => {
               rules={[{ required: true, message: "Title is required" }]}
             >
               <Input
-                onChange={(value) => form.setFieldValue("title", value)}
                 placeholder="Please enter title"
                 value={assignment?.title}
               />
