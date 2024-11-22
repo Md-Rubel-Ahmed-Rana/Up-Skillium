@@ -1,4 +1,5 @@
 import { useGetAllCoursesQuery } from "@/features/course";
+import CourseSkeleton from "@/skeletons/courseSkeleton";
 import { ICourse } from "@/types/course.type";
 import { useState } from "react";
 import LayoutSwitcher from "./LayoutSwitcher";
@@ -12,9 +13,7 @@ const ManageCourses = () => {
   return (
     <div className="mt-4 pb-20 w-full">
       {isLoading ? (
-        <div className="h-screen flex justify-center items-center">
-          <h1 className="text-2xl font-bold">Data loading...</h1>
-        </div>
+        <CourseSkeleton />
       ) : (
         <>
           <LayoutSwitcher viewMode={viewMode} setViewMode={setViewMode} />
