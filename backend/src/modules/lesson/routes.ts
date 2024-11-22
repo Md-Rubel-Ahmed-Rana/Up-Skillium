@@ -1,9 +1,18 @@
 import { Router } from "express";
 import { LessonController } from "./controller";
+import upload from "../../config/multer";
+import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 
 const router = Router();
 
 router.post("/create", LessonController.createLesson);
+
+router.post(
+  "/create/type/video",
+  upload.single("video"),
+  FileUploadMiddleware.uploadLessonVideo,
+  LessonController.createVideoLesson
+);
 
 router.get("/", LessonController.getAllLessons);
 

@@ -1,10 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LessonRoutes = void 0;
 const express_1 = require("express");
 const controller_1 = require("./controller");
+const multer_1 = __importDefault(require("../../config/multer"));
+const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 const router = (0, express_1.Router)();
 router.post("/create", controller_1.LessonController.createLesson);
+router.post("/create/type/video", multer_1.default.single("video"), fileUploaderMiddleware_1.FileUploadMiddleware.uploadLessonVideo, controller_1.LessonController.createVideoLesson);
 router.get("/", controller_1.LessonController.getAllLessons);
 router.get("/:id", controller_1.LessonController.getLessonById);
 router.get("/quiz-correct-answer/:lessonId", controller_1.LessonController.getLessonByIdWithQuizCorrectAnswer);

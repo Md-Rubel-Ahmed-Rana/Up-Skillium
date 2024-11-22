@@ -9,6 +9,12 @@ class Service {
     await Lesson.create(data);
   }
 
+  async createVideoLesson(data: ILesson | ILesson[]): Promise<void> {
+    console.log(data);
+    return;
+    // await Lesson.create(data);
+  }
+
   async getAllLessons(
     search: string = "",
     type?: "video" | "instruction" | "quiz" | "assignment",
