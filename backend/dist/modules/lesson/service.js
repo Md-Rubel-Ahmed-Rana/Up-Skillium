@@ -8,8 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LessonService = void 0;
+const apiError_1 = __importDefault(require("../../shared/apiError"));
 const service_1 = require("../quiz/service");
 const model_1 = require("./model");
 const mongoose_1 = require("mongoose");
@@ -21,9 +25,19 @@ class Service {
     }
     createVideoLesson(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(data);
-            return;
-            // await Lesson.create(data);
+            yield model_1.Lesson.create(data);
+        });
+    }
+    createQuizLesson(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            if ((data === null || data === void 0 ? void 0 : data.quizQuestions) && ((_a = data === null || data === void 0 ? void 0 : data.quizQuestions) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+                const createdQuizzes = yield service_1.QuizService.createQuizzes(data === null || data === void 0 ? void 0 : data.quizQuestions);
+                yield model_1.Lesson.create(Object.assign(Object.assign({}, data), { quizQuestions: createdQuizzes }));
+            }
+            else {
+                throw new apiError_1.default(400, "Quizzes must be included with lesson data");
+            }
         });
     }
     getAllLessons() {

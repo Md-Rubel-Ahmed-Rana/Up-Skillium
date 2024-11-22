@@ -1,6 +1,7 @@
+import ApiError from "../../shared/apiError";
 import { IQuizQuestion } from "../quiz/interface";
 import { QuizService } from "../quiz/service";
-import { ILesson, IQuizUpdateOnLesson } from "./interface";
+import { ICreateQuizLesson, ILesson, IQuizUpdateOnLesson } from "./interface";
 import { Lesson } from "./model";
 import { Types } from "mongoose";
 
@@ -11,6 +12,17 @@ class Service {
 
   async createVideoLesson(data: ILesson | ILesson[]): Promise<void> {
     await Lesson.create(data);
+  }
+
+  async createQuizLesson(data: ICreateQuizLesson): Promise<void> {
+    if (data?.quizQuestions && data?.quizQuestions?.length > 0) {
+      const createdQuizzes = await QuizService.createQuizzes(
+        data?.quizQuestions as IQuizQuestion[]
+      );
+      await Lesson.create({ ...data, quizQuestions: createdQuizzes });
+    } else {
+      throw new ApiError(400, "Quizzes must be included with lesson data");
+    }
   }
 
   async getAllLessons(

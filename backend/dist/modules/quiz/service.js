@@ -20,6 +20,13 @@ class Service {
             yield service_1.LessonService.createLesson(Object.assign(Object.assign({}, data.lesson), { quizQuestions: quizIds }));
         });
     }
+    createQuizzes(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const newQuizzes = yield model_1.Quiz.create(data);
+            const quizIds = newQuizzes.map((quiz) => quiz === null || quiz === void 0 ? void 0 : quiz._id);
+            return quizIds;
+        });
+    }
     getAllQuizzes() {
         return __awaiter(this, arguments, void 0, function* (search = "", moduleId, page = 1, limit = 10) {
             const searchQuery = Object.assign(Object.assign({}, (search && { question: { $regex: search, $options: "i" } })), (moduleId && { moduleId }));

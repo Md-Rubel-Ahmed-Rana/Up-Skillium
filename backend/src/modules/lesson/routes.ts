@@ -11,6 +11,8 @@ router.post("/create/type/instruction", LessonController.createLesson);
 
 router.post("/create/type/assignment", LessonController.createLesson);
 
+router.post("/create/type/quiz", LessonController.createQuizLesson);
+
 router.post(
   "/create/type/video",
   upload.single("video"),

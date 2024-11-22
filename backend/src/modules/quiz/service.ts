@@ -13,6 +13,11 @@ class Service {
       quizQuestions: quizIds,
     });
   }
+  async createQuizzes(data: IQuizQuestion[]): Promise<Types.ObjectId[]> {
+    const newQuizzes = await Quiz.create(data);
+    const quizIds = newQuizzes.map((quiz) => quiz?._id);
+    return quizIds;
+  }
   async getAllQuizzes(
     search: string = "",
     moduleId?: Types.ObjectId,

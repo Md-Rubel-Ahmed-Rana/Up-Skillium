@@ -22,6 +22,15 @@ class Controller extends RootController {
       data: null,
     });
   });
+  createQuizLesson = this.catchAsync(async (req: Request, res: Response) => {
+    await LessonService.createQuizLesson(req.body);
+    this.apiResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "Quiz lesson created successfully",
+      data: null,
+    });
+  });
 
   getAllLessons = this.catchAsync(async (req: Request, res: Response) => {
     const { search = "", type, page = 1, limit = 10 } = req.query;
