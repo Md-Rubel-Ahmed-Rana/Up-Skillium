@@ -20,6 +20,21 @@ class Service {
             return result;
         });
     }
+    getAllSubmission() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.AssignmentSubmission.find({});
+        });
+    }
+    getAllPendingSubmissions() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.AssignmentSubmission.find({ status: "pending" });
+        });
+    }
+    getAllReviewedSubmissions() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.AssignmentSubmission.find({ status: "checked" });
+        });
+    }
     getAssignmentSubmissionByLessonId(userId, lessonId) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.AssignmentSubmission.findOne({
@@ -34,6 +49,13 @@ class Service {
                 userId: data.userId,
                 lessonId: data.lessonId,
             }, { $set: Object.assign({}, data) });
+        });
+    }
+    updateSubmission(id, updatedData) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.AssignmentSubmission.findByIdAndUpdate(id, {
+                $set: Object.assign({}, updatedData),
+            });
         });
     }
 }

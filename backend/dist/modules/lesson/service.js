@@ -51,6 +51,11 @@ class Service {
                 .exec();
         });
     }
+    getAllAssignmentLessons() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.Lesson.find({ type: "assignment" }).populate("module", "title serial");
+        });
+    }
     getLessonById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.Lesson.findById(id)

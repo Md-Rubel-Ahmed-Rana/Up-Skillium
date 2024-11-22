@@ -31,6 +31,33 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.getAllSubmission = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.AssignmentSubmissionService.getAllSubmission();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Assignment submissions retrieved successfully",
+                data: data,
+            });
+        }));
+        this.getAllPendingSubmissions = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.AssignmentSubmissionService.getAllPendingSubmissions();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Pending submissions retrieved successfully",
+                data: data,
+            });
+        }));
+        this.getAllReviewedSubmissions = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.AssignmentSubmissionService.getAllReviewedSubmissions();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Reviewed submissions retrieved successfully",
+                data: data,
+            });
+        }));
         this.getAssignmentSubmissionByLessonId = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const userId = req.params.userId;
             const lessonId = req.params.lessonId;
@@ -44,6 +71,16 @@ class Controller extends rootController_1.default {
         }));
         this.updateAssignmentReview = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             yield service_1.AssignmentSubmissionService.updateAssignmentReview(req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Assignment reviewed retrieved successfully",
+                data: null,
+            });
+        }));
+        this.updateSubmission = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.AssignmentSubmissionService.updateSubmission(id, req.body);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
