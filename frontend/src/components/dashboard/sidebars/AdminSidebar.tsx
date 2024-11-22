@@ -19,7 +19,11 @@ import {
   FaPlusCircle,
   FaSignOutAlt,
   FaUserCircle,
+  FaUserGraduate,
+  FaUserPlus,
   FaUsers,
+  FaUserShield,
+  FaUserTie,
   FaVideo,
 } from "react-icons/fa";
 import { GiTeacher } from "react-icons/gi";
@@ -64,39 +68,39 @@ const AdminSidebar = () => {
         },
         {
           key: "2-2",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaUserShield />,
           label: <Link href="/dashboard/manage-admins">Admins</Link>,
         },
         {
           key: "2-3",
-          icon: <FaUsers />,
+          icon: <FaChalkboardTeacher />,
           label: <Link href="/dashboard/manage-instructors">Instructors</Link>,
         },
         {
           key: "2-4",
-          icon: <FaUsers />,
+          icon: <FaUserGraduate />,
           label: <Link href="/dashboard/manage-students">Students</Link>,
         },
         {
           key: "2-5",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaUserPlus />,
           label: <Link href="/dashboard/create-admin">Create Admin</Link>,
         },
         {
           key: "2-6",
-          icon: <FaChalkboardTeacher />,
+          icon: <FaUserTie />,
           label: (
             <Link href="/dashboard/create-instructor">Create Instructor</Link>
           ),
         },
         {
           key: "2-7",
-          icon: <FaUserCircle />,
+          icon: <FaUserPlus />,
           label: <Link href="/dashboard/create-student">Create Student</Link>,
         },
         {
           key: "2-8",
-          icon: <FaChartBar />,
+          icon: <FaChartLine />,
           label: (
             <Link href="/dashboard/students-progress">Students Progress</Link>
           ),

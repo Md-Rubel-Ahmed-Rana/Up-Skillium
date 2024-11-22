@@ -1,7 +1,7 @@
-import { ICourse } from "@/types/course.type";
-import CourseCard from "./CourseCard";
-import { BiError } from "react-icons/bi";
 import CourseSkeleton from "@/skeletons/courseSkeleton";
+import { ICourse } from "@/types/course.type";
+import { BiError } from "react-icons/bi";
+import CourseCard from "./CourseCard";
 
 type Props = {
   courses: ICourse[];

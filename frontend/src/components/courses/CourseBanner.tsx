@@ -1,6 +1,6 @@
+import { Carousel } from "antd/lib";
 import Image from "next/image";
 import banner from "../../../public/assets/courseImages/courseBanner.jpg";
-import { Carousel } from "antd/lib";
 
 const CoursesBanner: React.FC = () => (
   <div className="relative">
