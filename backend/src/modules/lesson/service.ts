@@ -45,6 +45,13 @@ class Service {
       .exec();
   }
 
+  async getAllAssignmentLessons(): Promise<ILesson[]> {
+    return await Lesson.find({ type: "assignment" }).populate(
+      "module",
+      "title serial"
+    );
+  }
+
   async getLessonById(id: Types.ObjectId): Promise<ILesson | null> {
     return await Lesson.findById(id)
       .populate({
