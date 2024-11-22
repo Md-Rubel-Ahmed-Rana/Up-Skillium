@@ -46,7 +46,7 @@ class Service {
     search: string = "",
     page: number = 1,
     limit: number = 5
-  ): Promise<{ users: IGetUser[]; total: number }> {
+  ): Promise<IGetUser[]> {
     const searchQuery = search
       ? {
           $or: [
@@ -63,8 +63,7 @@ class Service {
       .limit(limit)
       .lean()
       .exec();
-    const total = await User.countDocuments();
-    return { users, total };
+    return users;
   }
   async findUserByEmailWithPassword(email: string) {
     return User.findOne({ email: email });

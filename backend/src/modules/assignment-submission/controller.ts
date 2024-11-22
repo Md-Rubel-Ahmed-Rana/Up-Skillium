@@ -23,6 +23,38 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getAllSubmission = this.catchAsync(async (req: Request, res: Response) => {
+    const data = await AssignmentSubmissionService.getAllSubmission();
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Assignment submissions retrieved successfully",
+      data: data,
+    });
+  });
+  getAllPendingSubmissions = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const data = await AssignmentSubmissionService.getAllPendingSubmissions();
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Pending submissions retrieved successfully",
+        data: data,
+      });
+    }
+  );
+  getAllReviewedSubmissions = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const data =
+        await AssignmentSubmissionService.getAllReviewedSubmissions();
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Reviewed submissions retrieved successfully",
+        data: data,
+      });
+    }
+  );
   getAssignmentSubmissionByLessonId = this.catchAsync(
     async (req: Request, res: Response) => {
       const userId = req.params.userId as unknown as Types.ObjectId;
@@ -51,6 +83,16 @@ class Controller extends RootController {
       });
     }
   );
+  updateSubmission = this.catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id as unknown as Types.ObjectId;
+    await AssignmentSubmissionService.updateSubmission(id, req.body);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Assignment reviewed retrieved successfully",
+      data: null,
+    });
+  });
 }
 
 export const AssignmentSubmissionController = new Controller();

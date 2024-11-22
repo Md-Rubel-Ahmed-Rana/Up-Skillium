@@ -69,8 +69,7 @@ class Service {
                 .limit(limit)
                 .lean()
                 .exec();
-            const total = yield model_1.User.countDocuments();
-            return { users, total };
+            return users;
         });
     }
     findUserByEmailWithPassword(email) {
