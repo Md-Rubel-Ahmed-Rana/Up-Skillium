@@ -2,6 +2,7 @@ import { IEducation } from "@/types/education.type";
 import { Button } from "antd/lib";
 import { useState } from "react";
 import AddOrEditEducationModal from "./AddOrEditEducationModal";
+import EducationDeleteModal from "./EducationDeleteModal";
 
 type Props = {
   education: IEducation;
@@ -16,9 +17,7 @@ const EducationActions = ({ education }: Props) => {
         <Button onClick={() => setIsEditEducation(true)} type="primary">
           Edit
         </Button>
-        <Button type="primary" danger>
-          Delete
-        </Button>
+        <EducationDeleteModal education={education} />
       </div>
       <AddOrEditEducationModal
         actionType="edit"
