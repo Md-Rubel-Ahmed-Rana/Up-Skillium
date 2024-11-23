@@ -282,7 +282,7 @@ const AdminSidebar = () => {
         {
           key: "7-1",
           icon: <FaGraduationCap />,
-          label: <Link href="/dashboard/educations">Educations</Link>,
+          label: <Link href="/dashboard/manage-educations">Educations</Link>,
         },
         {
           key: "7-2",
