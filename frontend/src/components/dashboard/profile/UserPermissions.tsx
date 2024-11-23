@@ -11,9 +11,9 @@ const UserPermissions = ({ user }: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   return (
     <Descriptions
-      title={`Permissions as ${user?.role?.name?.toUpperCase()}`}
+      title={`Permissions as ${user?.role?.name?.toUpperCase() || "unknown"}`}
       bordered={isLargeDevice}
-      className="mt-4"
+      className="mt-4 pb-4 border-b"
     >
       <Descriptions.Item label={isLargeDevice ? "Permissions" : ""}>
         <ul className="list-disc list-inside border lg:border-0 p-3 rounded-md w-full">

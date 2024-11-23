@@ -1,12 +1,13 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
+import ProfileSkeleton from "@/skeletons/profile";
 import { IUser } from "@/types/user.type";
 import { Card } from "antd/lib";
-import ProfileCard from "./ProfileCard";
 import BasicInformation from "./BasicInformation";
-import UserAddress from "./UserAddress";
+import Educations from "./Educations";
 import EmergencyContact from "./EmergencyContact";
+import ProfileCard from "./ProfileCard";
+import UserAddress from "./UserAddress";
 import UserPermissions from "./UserPermissions";
-import ProfileSkeleton from "@/skeletons/profile";
 
 const ProfileInfo = () => {
   const { data, isLoading } = useGetLoggedInUserQuery({});
@@ -32,6 +33,8 @@ const ProfileInfo = () => {
 
             {/* Permissions */}
             <UserPermissions user={user} />
+            {/* personal educations  */}
+            <Educations />
           </Card>
         </div>
       )}
