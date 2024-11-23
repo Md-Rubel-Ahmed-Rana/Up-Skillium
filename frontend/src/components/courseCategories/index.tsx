@@ -8,13 +8,6 @@ const CourseCategories = () => {
   const { data, isLoading } = useGetAllCategoriesQuery({});
   const categories = (data?.data as ICategory[]) || [];
 
-  const catData: ICategory[] = Array.from({ length: 50 }).map((_, index) => ({
-    id: `Cat id: ${index + 1}`,
-    name: `Cat name: ${index + 1}`,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }));
-
   const columns: TableProps<ICategory>["columns"] = [
     {
       title: "Name",
@@ -61,7 +54,7 @@ const CourseCategories = () => {
       <Table
         rowKey="id"
         columns={columns}
-        dataSource={catData}
+        dataSource={categories}
         loading={isLoading}
         bordered
         pagination={{ pageSize: 10 }}

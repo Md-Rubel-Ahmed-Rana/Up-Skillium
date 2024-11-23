@@ -1,10 +1,10 @@
-import { useGetAllPendingAssignmentsQuery } from "@/features/assignmentSubmission";
+import { useGetAllReviewedAssignmentsQuery } from "@/features/assignmentSubmission";
 import { IAssignmentSubmission } from "@/types/assignmentSubmission.type";
 import { Table, TableProps } from "antd/lib";
 import AssignmentActions from "./AssignmentActions";
 
 const ManageReviewedAssignments = () => {
-  const { data, isLoading } = useGetAllPendingAssignmentsQuery({});
+  const { data, isLoading } = useGetAllReviewedAssignmentsQuery({});
   const assignments = data?.data as IAssignmentSubmission[];
   const columns: TableProps<IAssignmentSubmission>["columns"] = [
     {
