@@ -1,6 +1,8 @@
 import { useGetAllCategoriesQuery } from "@/features/category";
 import { ICategory } from "@/types/category.type";
-import { Button, Table, TableProps } from "antd/lib";
+import { Table, TableProps } from "antd/lib";
+import CategoryDeleteModal from "./CategoryDeleteModal";
+import CategoryEditModal from "./CategoryEditModal";
 
 const CourseCategories = () => {
   const { data, isLoading } = useGetAllCategoriesQuery({});
@@ -15,7 +17,7 @@ const CourseCategories = () => {
 
   const columns: TableProps<ICategory>["columns"] = [
     {
-      title: "Category Name",
+      title: "Name",
       dataIndex: "name",
       key: "name",
     },
@@ -44,10 +46,8 @@ const CourseCategories = () => {
       key: "actions",
       render: (_: any, category: ICategory) => (
         <div className="flex items-center gap-2">
-          <Button type="primary">Edit</Button>
-          <Button type="primary" danger>
-            Delete
-          </Button>
+          <CategoryEditModal category={category} />
+          <CategoryDeleteModal category={category} />
         </div>
       ),
     },
