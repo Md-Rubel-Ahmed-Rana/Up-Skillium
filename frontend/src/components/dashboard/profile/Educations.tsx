@@ -56,6 +56,12 @@ const Educations = () => {
       ),
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status: string) => <h6>{status}</h6>,
+    },
+    {
       title: "Actions",
       key: "actions",
       render: (_: any, education: IEducation) => (
