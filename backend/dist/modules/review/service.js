@@ -33,6 +33,38 @@ class Service {
             return reviews;
         });
     }
+    getAllCourseReviews() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const reviews = yield model_1.Review.find({ reviewToModel: "Course" }).populate([
+                {
+                    path: "reviewer",
+                    model: "User",
+                    select: { name: 1, image: 1 },
+                },
+                {
+                    path: "reviewTo",
+                    select: { name: 1, image: 1, title: 1 },
+                },
+            ]);
+            return reviews;
+        });
+    }
+    getAllInstructorReviews() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const reviews = yield model_1.Review.find({ reviewToModel: "User" }).populate([
+                {
+                    path: "reviewer",
+                    model: "User",
+                    select: { name: 1, image: 1 },
+                },
+                {
+                    path: "reviewTo",
+                    select: { name: 1, image: 1, title: 1 },
+                },
+            ]);
+            return reviews;
+        });
+    }
     getSingleReview(reviewId) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.Review.findById(reviewId).populate([

@@ -22,8 +22,8 @@ class Service {
     getEnrollmentById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.Enrollment.findById(id)
-                .populate("userId", "name email")
-                .populate("courseId", "title description")
+                .populate("user", "name email image")
+                .populate("course", "title image")
                 .exec();
         });
     }
@@ -34,13 +34,13 @@ class Service {
     }
     getSuccessEnrollmentForStudent(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield model_1.Enrollment.find({ userId: userId, status: "success" });
+            const data = yield model_1.Enrollment.find({ user: userId, status: "success" });
             return data;
         });
     }
     getOrderEnrollmentHistoryForStudent(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield model_1.Enrollment.find({ userId: userId });
+            const data = yield model_1.Enrollment.find({ user: userId });
             return data;
         });
     }
@@ -52,10 +52,10 @@ class Service {
             if (enrollment) {
                 yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success" } });
                 yield service_1.StudentProgressService.createOrUpdateStudentProgress({
-                    userId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.userId,
-                    courseId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.courseId,
+                    userId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.user,
+                    courseId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.course,
                 });
-                yield service_2.StudentService.addNewCourse(enrollment === null || enrollment === void 0 ? void 0 : enrollment.userId, enrollment === null || enrollment === void 0 ? void 0 : enrollment.courseId);
+                yield service_2.StudentService.addNewCourse(enrollment === null || enrollment === void 0 ? void 0 : enrollment.user, enrollment === null || enrollment === void 0 ? void 0 : enrollment.course);
             }
         });
     }
@@ -64,24 +64,20 @@ class Service {
             yield model_1.Enrollment.findByIdAndDelete(id);
         });
     }
-    getEnrollments(filter_1) {
-        return __awaiter(this, arguments, void 0, function* (filter, page = 1, limit = 10, sort = { enrollmentDate: -1 }) {
-            const skip = (page - 1) * limit;
-            const enrollments = yield model_1.Enrollment.find(filter)
-                .populate("userId", "name email")
-                .populate("courseId", "title description")
-                .sort(sort)
-                .skip(skip)
-                .limit(limit)
-                .exec();
-            const total = yield model_1.Enrollment.countDocuments(filter);
-            const totalPages = Math.ceil(total / limit);
-            return {
-                enrollments,
-                total,
-                page,
-                totalPages,
-            };
+    getAllOrderHistory() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const enrollments = yield model_1.Enrollment.find({})
+                .populate("user", "name email image")
+                .populate("course", "title image");
+            return enrollments;
+        });
+    }
+    getAllSuccessEnrollments() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const enrollments = yield model_1.Enrollment.find({ status: "success" })
+                .populate("user", "name email image")
+                .populate("course", "title image");
+            return enrollments;
         });
     }
     searchEnrollments(searchQuery_1) {
@@ -89,23 +85,16 @@ class Service {
             const skip = (page - 1) * limit;
             const filter = {
                 $or: [
-                    { "userId.name": { $regex: searchQuery, $options: "i" } },
+                    { "user.name": { $regex: searchQuery, $options: "i" } },
                     { courseName: { $regex: searchQuery, $options: "i" } },
                 ],
             };
             const enrollments = yield model_1.Enrollment.find(filter)
-                .populate("userId", "name email")
+                .populate("user", "name email")
                 .skip(skip)
                 .limit(limit)
                 .exec();
-            const total = yield model_1.Enrollment.countDocuments(filter);
-            const totalPages = Math.ceil(total / limit);
-            return {
-                enrollments,
-                total,
-                page,
-                totalPages,
-            };
+            return enrollments;
         });
     }
 }

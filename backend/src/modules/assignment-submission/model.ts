@@ -9,8 +9,8 @@ const submissionSchema = new Schema({
 
 const assignmentSubmissionSchema = new Schema<IAssignmentSubmission>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-    lessonId: { type: Schema.Types.ObjectId, ref: "Lesson", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    lesson: { type: Schema.Types.ObjectId, ref: "Lesson", required: true },
     status: { type: String, enum: ["pending", "checked"], default: "pending" },
     fullMark: { type: Number },
     yourMark: { type: Number },

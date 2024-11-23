@@ -17,14 +17,29 @@ class Service {
     submitQuiz(userId, courseId, moduleId, lessonId, data) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield service_2.QuizService.checkAndCalculateQuizAnswers(data);
-            const newData = Object.assign(Object.assign({}, result), { userId, lessonId });
+            const newData = Object.assign(Object.assign({}, result), { user: userId, lesson: lessonId });
             yield model_1.QuizSubmission.create(newData);
             yield service_1.StudentProgressService.quizLessonMarkAsSubmitted(userId, courseId, moduleId, lessonId);
         });
     }
     getSubmittedQuizResultByLessonId(lessonId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.QuizSubmission.findOne({ lessonId });
+            return model_1.QuizSubmission.findOne({ lesson: lessonId });
+        });
+    }
+    getAllQuizSubmissions() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.QuizSubmission.find({}).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { name: 1, email: 1, image: 1 },
+                },
+                {
+                    path: "lesson",
+                    model: "Lesson",
+                },
+            ]);
         });
     }
 }

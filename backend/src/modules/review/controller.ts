@@ -22,6 +22,26 @@ class Controller extends RootController {
       data: data,
     });
   });
+  getAllCourseReviews = this.catchAsync(async (req: Request, res: Response) => {
+    const data = await ReviewService.getAllCourseReviews();
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Courses reviews retrieved successfully",
+      data: data,
+    });
+  });
+  getAllInstructorReviews = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const data = await ReviewService.getAllInstructorReviews();
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Instructors reviews retrieved successfully",
+        data: data,
+      });
+    }
+  );
   getSingleReview = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const data = await ReviewService.getSingleReview(id);

@@ -11,7 +11,9 @@ router.patch("/:id", EnrollmentController.updateEnrollment);
 
 router.delete("/:id", EnrollmentController.deleteEnrollment);
 
-router.get("/", EnrollmentController.getEnrollments);
+router.get("/", EnrollmentController.getAllSuccessEnrollments);
+
+router.get("/order-history", EnrollmentController.getAllOrderHistory);
 
 router.get(
   "/student/:userId",
@@ -19,7 +21,7 @@ router.get(
 );
 
 router.get(
-  "/order-history/:userId",
+  "/student-order-history/:userId",
   EnrollmentController.getOrderEnrollmentHistoryForStudent
 );
 

@@ -21,28 +21,58 @@ class Service {
     return result;
   }
   async getAllSubmission(): Promise<IAssignmentSubmission[]> {
-    return await AssignmentSubmission.find({});
+    return await AssignmentSubmission.find({}).populate([
+      {
+        path: "user",
+        model: "User",
+        select: { name: 1, email: 1, image: 1 },
+      },
+      {
+        path: "lesson",
+        model: "Lesson",
+      },
+    ]);
   }
   async getAllPendingSubmissions(): Promise<IAssignmentSubmission[]> {
-    return await AssignmentSubmission.find({ status: "pending" });
+    return await AssignmentSubmission.find({ status: "pending" }).populate([
+      {
+        path: "user",
+        model: "User",
+        select: { name: 1, email: 1, image: 1 },
+      },
+      {
+        path: "lesson",
+        model: "Lesson",
+      },
+    ]);
   }
   async getAllReviewedSubmissions(): Promise<IAssignmentSubmission[]> {
-    return await AssignmentSubmission.find({ status: "checked" });
+    return await AssignmentSubmission.find({ status: "checked" }).populate([
+      {
+        path: "user",
+        model: "User",
+        select: { name: 1, email: 1, image: 1 },
+      },
+      {
+        path: "lesson",
+        model: "Lesson",
+      },
+    ]);
   }
   async getAssignmentSubmissionByLessonId(
     userId: Types.ObjectId,
     lessonId: Types.ObjectId
   ) {
     return await AssignmentSubmission.findOne({
-      userId: userId,
-      lessonId: lessonId,
+      user: userId,
+      lesson: lessonId,
     });
   }
   async updateAssignmentReview(data: IAssignmentSubmission): Promise<void> {
     await AssignmentSubmission.findOneAndUpdate(
       {
-        userId: data.userId,
-        lessonId: data.lessonId,
+        user: data.user,
+        lesson: data.lesson,
       },
       { $set: { ...data } }
     );

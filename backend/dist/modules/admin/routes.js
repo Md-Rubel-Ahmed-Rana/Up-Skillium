@@ -5,4 +5,5 @@ const express_1 = require("express");
 const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/create", controller_1.AdminController.createNewAdmin);
+router.get("/", controller_1.AdminController.getAllAdmins);
 exports.AdminRoutes = router;

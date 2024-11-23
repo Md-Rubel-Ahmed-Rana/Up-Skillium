@@ -6,13 +6,16 @@ class Service {
     await Education.create(data);
   }
   async getEducations(): Promise<IEducation[]> {
-    return await Education.find({});
+    return await Education.find({}).populate("user", "name email image");
   }
   async getEducation(id: string): Promise<IEducation | null> {
-    return await Education.findById(id);
+    return await Education.findById(id).populate("user", "name email image");
   }
   async getEducationsByUserId(userId: string): Promise<IEducation[]> {
-    return await Education.find({ userId: userId });
+    return await Education.find({ user: userId }).populate(
+      "user",
+      "name email image"
+    );
   }
   async updateEducation(
     id: string,

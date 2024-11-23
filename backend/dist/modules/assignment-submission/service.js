@@ -22,32 +22,62 @@ class Service {
     }
     getAllSubmission() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.AssignmentSubmission.find({});
+            return yield model_1.AssignmentSubmission.find({}).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { name: 1, email: 1, image: 1 },
+                },
+                {
+                    path: "lesson",
+                    model: "Lesson",
+                },
+            ]);
         });
     }
     getAllPendingSubmissions() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.AssignmentSubmission.find({ status: "pending" });
+            return yield model_1.AssignmentSubmission.find({ status: "pending" }).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { name: 1, email: 1, image: 1 },
+                },
+                {
+                    path: "lesson",
+                    model: "Lesson",
+                },
+            ]);
         });
     }
     getAllReviewedSubmissions() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.AssignmentSubmission.find({ status: "checked" });
+            return yield model_1.AssignmentSubmission.find({ status: "checked" }).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { name: 1, email: 1, image: 1 },
+                },
+                {
+                    path: "lesson",
+                    model: "Lesson",
+                },
+            ]);
         });
     }
     getAssignmentSubmissionByLessonId(userId, lessonId) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.AssignmentSubmission.findOne({
-                userId: userId,
-                lessonId: lessonId,
+                user: userId,
+                lesson: lessonId,
             });
         });
     }
     updateAssignmentReview(data) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.AssignmentSubmission.findOneAndUpdate({
-                userId: data.userId,
-                lessonId: data.lessonId,
+                user: data.user,
+                lesson: data.lesson,
             }, { $set: Object.assign({}, data) });
         });
     }

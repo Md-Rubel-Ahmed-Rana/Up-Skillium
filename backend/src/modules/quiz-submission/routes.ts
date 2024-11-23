@@ -13,4 +13,6 @@ router.post(
   QuizSubmissionController.submitQuiz
 );
 
+router.get("/", QuizSubmissionController.getAllQuizSubmissions);
+
 export const QuizSubmissionRoutes = router;

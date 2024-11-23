@@ -26,12 +26,12 @@ const modifiedAnswerSchema = new Schema<IModifiedAnswer>(
 
 const quizSubmissionSchema = new Schema<IQuizSubmission>(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    lessonId: {
+    lesson: {
       type: Schema.Types.ObjectId,
       ref: "Lesson",
       required: true,

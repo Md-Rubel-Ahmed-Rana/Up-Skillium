@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
 
 export type IAssignmentSubmission = {
-  userId: Types.ObjectId;
-  lessonId: Types.ObjectId;
+  user: Types.ObjectId;
+  lesson: Types.ObjectId;
   status: "pending" | "checked";
   fullMark: number;
   yourMark: number;
