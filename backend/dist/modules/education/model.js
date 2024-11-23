@@ -7,7 +7,7 @@ exports.Education = void 0;
 const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 const educationSchema = new mongoose_1.Schema({
-    userId: {
+    user: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,
         ref: "User",
@@ -22,6 +22,10 @@ const educationSchema = new mongoose_1.Schema({
     institution: {
         type: String,
         required: true,
+    },
+    isCurrent: {
+        type: Boolean,
+        default: false,
     },
     startDate: {
         type: Date,

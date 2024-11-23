@@ -75,13 +75,17 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
-        this.getEnrollments = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const { page = 1, limit = 10, sortBy = "enrollmentDate", order = -1, } = req.query;
-            const filter = req.body.filter || {};
-            const sort = {
-                [sortBy]: (order === "asc" ? 1 : -1),
-            };
-            const result = yield service_1.EnrollmentService.getEnrollments(filter, +page, +limit, sort);
+        this.getAllOrderHistory = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const result = yield service_1.EnrollmentService.getAllOrderHistory();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Order histories retrieved successfully",
+                data: result,
+            });
+        }));
+        this.getAllSuccessEnrollments = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const result = yield service_1.EnrollmentService.getAllSuccessEnrollments();
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,

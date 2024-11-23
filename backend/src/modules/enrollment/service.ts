@@ -11,8 +11,8 @@ class Service {
 
   async getEnrollmentById(id: Types.ObjectId): Promise<IEnrollment | null> {
     return await Enrollment.findById(id)
-      .populate("userId", "name email")
-      .populate("courseId", "title description")
+      .populate("user", "name email image")
+      .populate("course", "title image")
       .exec();
   }
 
@@ -26,14 +26,14 @@ class Service {
   async getSuccessEnrollmentForStudent(
     userId: Types.ObjectId
   ): Promise<IEnrollment[]> {
-    const data = await Enrollment.find({ userId: userId, status: "success" });
+    const data = await Enrollment.find({ user: userId, status: "success" });
     return data;
   }
 
   async getOrderEnrollmentHistoryForStudent(
     userId: Types.ObjectId
   ): Promise<IEnrollment[]> {
-    const data = await Enrollment.find({ userId: userId });
+    const data = await Enrollment.find({ user: userId });
     return data;
   }
 
@@ -47,13 +47,10 @@ class Service {
         { $set: { status: "success" } }
       );
       await StudentProgressService.createOrUpdateStudentProgress({
-        userId: enrollment?.userId,
-        courseId: enrollment?.courseId,
+        userId: enrollment?.user,
+        courseId: enrollment?.course,
       });
-      await StudentService.addNewCourse(
-        enrollment?.userId,
-        enrollment?.courseId
-      );
+      await StudentService.addNewCourse(enrollment?.user, enrollment?.course);
     }
   }
 
@@ -61,71 +58,41 @@ class Service {
     await Enrollment.findByIdAndDelete(id);
   }
 
-  async getEnrollments(
-    filter: Partial<IEnrollment>,
-    page: number = 1,
-    limit: number = 10,
-    sort: Record<string, 1 | -1> = { enrollmentDate: -1 }
-  ): Promise<{
-    enrollments: IEnrollment[];
-    total: number;
-    page: number;
-    totalPages: number;
-  }> {
-    const skip = (page - 1) * limit;
-    const enrollments = await Enrollment.find(filter)
-      .populate("userId", "name email")
-      .populate("courseId", "title description")
-      .sort(sort)
-      .skip(skip)
-      .limit(limit)
-      .exec();
+  async getAllOrderHistory(): Promise<IEnrollment[]> {
+    const enrollments = await Enrollment.find({})
+      .populate("user", "name email image")
+      .populate("course", "title image");
+    return enrollments;
+  }
 
-    const total = await Enrollment.countDocuments(filter);
-    const totalPages = Math.ceil(total / limit);
-
-    return {
-      enrollments,
-      total,
-      page,
-      totalPages,
-    };
+  async getAllSuccessEnrollments(): Promise<IEnrollment[]> {
+    const enrollments = await Enrollment.find({ status: "success" })
+      .populate("user", "name email image")
+      .populate("course", "title image");
+    return enrollments;
   }
 
   async searchEnrollments(
     searchQuery: string,
     page: number = 1,
     limit: number = 10
-  ): Promise<{
-    enrollments: IEnrollment[];
-    total: number;
-    page: number;
-    totalPages: number;
-  }> {
+  ): Promise<IEnrollment[]> {
     const skip = (page - 1) * limit;
 
     const filter = {
       $or: [
-        { "userId.name": { $regex: searchQuery, $options: "i" } },
+        { "user.name": { $regex: searchQuery, $options: "i" } },
         { courseName: { $regex: searchQuery, $options: "i" } },
       ],
     };
 
     const enrollments = await Enrollment.find(filter)
-      .populate("userId", "name email")
+      .populate("user", "name email")
       .skip(skip)
       .limit(limit)
       .exec();
 
-    const total = await Enrollment.countDocuments(filter);
-    const totalPages = Math.ceil(total / limit);
-
-    return {
-      enrollments,
-      total,
-      page,
-      totalPages,
-    };
+    return enrollments;
   }
 }
 

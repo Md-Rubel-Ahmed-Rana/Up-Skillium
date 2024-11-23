@@ -4,12 +4,12 @@ import schemaOption from "../../utils/schemaOption";
 
 const EnrollmentSchema = new Schema<IEnrollment & Document>(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    courseId: {
+    course: {
       type: Schema.Types.ObjectId,
       ref: "Course",
       required: true,

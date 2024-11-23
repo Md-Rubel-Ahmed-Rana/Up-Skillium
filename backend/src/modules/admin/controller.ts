@@ -12,6 +12,15 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getAllAdmins = this.catchAsync(async (req: Request, res: Response) => {
+    const data = await AdminService.getAllAdmins();
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Admins retrieved successfully",
+      data: data,
+    });
+  });
 }
 
 export const AdminController = new Controller();

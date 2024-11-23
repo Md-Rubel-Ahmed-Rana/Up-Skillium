@@ -47,8 +47,8 @@ class Service {
     const { sessionId, sessionUrl } = await this.stripeCheckout(items);
     const enrollmentData: IEnrollment[] = items.map(
       (item: IStripeCheckout) => ({
-        userId: item?.userId,
-        courseId: item?.courseId,
+        user: item?.userId,
+        course: item?.courseId,
         courseName: item?.courseName,
         price: item?.price,
         paymentSessionId: sessionId,

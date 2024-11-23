@@ -25,5 +25,16 @@ class Service {
             yield model_1.Admin.create({ user: userId, adminId });
         });
     }
+    getAllAdmins() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.Admin.find({}).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { name: 1, email: 1, image: 1 },
+                },
+            ]);
+        });
+    }
 }
 exports.AdminService = new Service();

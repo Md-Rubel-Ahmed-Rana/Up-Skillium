@@ -25,12 +25,12 @@ const modifiedAnswerSchema = new mongoose_1.Schema({
     },
 }, { _id: false });
 const quizSubmissionSchema = new mongoose_1.Schema({
-    userId: {
+    user: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
-    lessonId: {
+    lesson: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Lesson",
         required: true,

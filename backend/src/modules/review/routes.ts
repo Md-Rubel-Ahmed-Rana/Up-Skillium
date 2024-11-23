@@ -7,6 +7,10 @@ router.post("/add", ReviewController.addReview);
 
 router.get("/", ReviewController.getAllReviews);
 
+router.get("/course", ReviewController.getAllCourseReviews);
+
+router.get("/instructor", ReviewController.getAllInstructorReviews);
+
 router.get("/:id", ReviewController.getSingleReview);
 
 router.get(

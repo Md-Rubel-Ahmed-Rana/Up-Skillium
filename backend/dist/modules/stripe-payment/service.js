@@ -54,8 +54,8 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const { sessionId, sessionUrl } = yield this.stripeCheckout(items);
             const enrollmentData = items.map((item) => ({
-                userId: item === null || item === void 0 ? void 0 : item.userId,
-                courseId: item === null || item === void 0 ? void 0 : item.courseId,
+                user: item === null || item === void 0 ? void 0 : item.userId,
+                course: item === null || item === void 0 ? void 0 : item.courseId,
                 courseName: item === null || item === void 0 ? void 0 : item.courseName,
                 price: item === null || item === void 0 ? void 0 : item.price,
                 paymentSessionId: sessionId,

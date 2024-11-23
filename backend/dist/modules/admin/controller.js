@@ -27,6 +27,15 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.getAllAdmins = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.AdminService.getAllAdmins();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Admins retrieved successfully",
+                data: data,
+            });
+        }));
     }
 }
 exports.AdminController = new Controller();

@@ -65,6 +65,8 @@ class Service {
                 : {};
             const skip = (page - 1) * limit;
             const users = yield model_1.User.find(searchQuery)
+                .select({ password: 0 })
+                .populate("role")
                 .skip(skip)
                 .limit(limit)
                 .lean()

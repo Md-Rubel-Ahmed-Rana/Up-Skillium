@@ -11,8 +11,8 @@ const submissionSchema = new mongoose_1.Schema({
     file: { type: String },
 });
 const assignmentSubmissionSchema = new mongoose_1.Schema({
-    userId: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
-    lessonId: { type: mongoose_1.Schema.Types.ObjectId, ref: "Lesson", required: true },
+    user: { type: mongoose_1.Schema.Types.ObjectId, ref: "User", required: true },
+    lesson: { type: mongoose_1.Schema.Types.ObjectId, ref: "Lesson", required: true },
     status: { type: String, enum: ["pending", "checked"], default: "pending" },
     fullMark: { type: Number },
     yourMark: { type: Number },

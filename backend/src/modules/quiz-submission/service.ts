@@ -13,7 +13,11 @@ class Service {
     data: IQuizSubmitData[]
   ) {
     const result = await QuizService.checkAndCalculateQuizAnswers(data);
-    const newData: IQuizSubmission = { ...result, userId, lessonId };
+    const newData: IQuizSubmission = {
+      ...result,
+      user: userId,
+      lesson: lessonId,
+    };
     await QuizSubmission.create(newData);
     await StudentProgressService.quizLessonMarkAsSubmitted(
       userId,
@@ -25,7 +29,20 @@ class Service {
   async getSubmittedQuizResultByLessonId(
     lessonId: Types.ObjectId
   ): Promise<IQuizSubmission | null> {
-    return QuizSubmission.findOne({ lessonId });
+    return QuizSubmission.findOne({ lesson: lessonId });
+  }
+  async getAllQuizSubmissions(): Promise<IQuizSubmission[]> {
+    return await QuizSubmission.find({}).populate([
+      {
+        path: "user",
+        model: "User",
+        select: { name: 1, email: 1, image: 1 },
+      },
+      {
+        path: "lesson",
+        model: "Lesson",
+      },
+    ]);
   }
 }
 

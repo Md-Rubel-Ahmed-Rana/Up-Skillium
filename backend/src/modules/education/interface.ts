@@ -1,10 +1,11 @@
 import { Types } from "mongoose";
 
 export type IEducation = {
-  userId: Types.ObjectId;
+  user: Types.ObjectId;
   degree: string;
   fieldOfStudy?: string;
   institution: string;
+  isCurrent: boolean;
   startDate: Date;
   endDate?: Date;
   description?: string;

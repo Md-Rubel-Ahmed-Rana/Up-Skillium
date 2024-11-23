@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
 
 export type IQuizSubmission = {
-  userId: Types.ObjectId;
-  lessonId: Types.ObjectId;
+  user: Types.ObjectId;
+  lesson: Types.ObjectId;
   totalQuiz: number;
   correctAnswers: number;
   wrongAnswers: number;

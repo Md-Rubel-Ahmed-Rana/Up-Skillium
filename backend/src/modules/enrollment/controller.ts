@@ -72,33 +72,26 @@ class Controller extends RootController {
     });
   });
 
-  getEnrollments = this.catchAsync(async (req: Request, res: Response) => {
-    const {
-      page = 1,
-      limit = 10,
-      sortBy = "enrollmentDate",
-      order = -1,
-    } = req.query;
-    const filter = req.body.filter || {};
-
-    const sort: Record<string, 1 | -1> = {
-      [sortBy as string]: (order === "asc" ? 1 : -1) as 1 | -1,
-    };
-
-    const result = await EnrollmentService.getEnrollments(
-      filter,
-      +page,
-      +limit,
-      sort
-    );
-
+  getAllOrderHistory = this.catchAsync(async (req: Request, res: Response) => {
+    const result = await EnrollmentService.getAllOrderHistory();
     this.apiResponse(res, {
       statusCode: 200,
       success: true,
-      message: "Enrollments retrieved successfully",
+      message: "Order histories retrieved successfully",
       data: result,
     });
   });
+  getAllSuccessEnrollments = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const result = await EnrollmentService.getAllSuccessEnrollments();
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Enrollments retrieved successfully",
+        data: result,
+      });
+    }
+  );
 
   searchEnrollments = this.catchAsync(async (req: Request, res: Response) => {
     const { searchQuery = "", page = 1, limit = 10 } = req.query;

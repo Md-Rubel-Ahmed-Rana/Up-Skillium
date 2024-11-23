@@ -7,12 +7,12 @@ exports.Enrollment = void 0;
 const mongoose_1 = require("mongoose");
 const schemaOption_1 = __importDefault(require("../../utils/schemaOption"));
 const EnrollmentSchema = new mongoose_1.Schema({
-    userId: {
+    user: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User",
         required: true,
     },
-    courseId: {
+    course: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "Course",
         required: true,

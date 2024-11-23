@@ -36,6 +36,24 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
+        this.getAllCourseReviews = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.ReviewService.getAllCourseReviews();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Courses reviews retrieved successfully",
+                data: data,
+            });
+        }));
+        this.getAllInstructorReviews = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.ReviewService.getAllInstructorReviews();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Instructors reviews retrieved successfully",
+                data: data,
+            });
+        }));
         this.getSingleReview = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             const data = yield service_1.ReviewService.getSingleReview(id);

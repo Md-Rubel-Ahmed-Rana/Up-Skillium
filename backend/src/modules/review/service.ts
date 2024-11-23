@@ -21,6 +21,36 @@ class Service {
 
     return reviews;
   }
+  async getAllCourseReviews(): Promise<IReview[]> {
+    const reviews = await Review.find({ reviewToModel: "Course" }).populate([
+      {
+        path: "reviewer",
+        model: "User",
+        select: { name: 1, image: 1 },
+      },
+      {
+        path: "reviewTo",
+        select: { name: 1, image: 1, title: 1 },
+      },
+    ]);
+
+    return reviews;
+  }
+  async getAllInstructorReviews(): Promise<IReview[]> {
+    const reviews = await Review.find({ reviewToModel: "User" }).populate([
+      {
+        path: "reviewer",
+        model: "User",
+        select: { name: 1, image: 1 },
+      },
+      {
+        path: "reviewTo",
+        select: { name: 1, image: 1, title: 1 },
+      },
+    ]);
+
+    return reviews;
+  }
   async getSingleReview(reviewId: Types.ObjectId): Promise<IReview | null> {
     return await Review.findById(reviewId).populate([
       {

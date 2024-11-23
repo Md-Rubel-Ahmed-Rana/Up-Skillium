@@ -4,7 +4,7 @@ import schemaOption from "../../utils/schemaOption";
 
 const educationSchema = new Schema<IEducation>(
   {
-    userId: {
+    user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
@@ -19,6 +19,10 @@ const educationSchema = new Schema<IEducation>(
     institution: {
       type: String,
       required: true,
+    },
+    isCurrent: {
+      type: Boolean,
+      default: false,
     },
     startDate: {
       type: Date,
