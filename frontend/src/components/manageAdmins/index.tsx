@@ -1,21 +1,20 @@
-import { useGetAllStudentsQuery } from "@/features/student";
-import { IStudent } from "@/types/student.type";
-import { Table } from "antd/lib";
-import StudentActions from "./InstructorActions";
+import { useGetAllAdminsQuery } from "@/features/admin";
+import { IAdmin } from "@/types/admin.type";
+import { Button, Table } from "antd/lib";
 
-const ManageStudents = () => {
-  const { data, isLoading } = useGetAllStudentsQuery({});
-  const students = data?.data as IStudent[];
+const ManageAdmins = () => {
+  const { data, isLoading } = useGetAllAdminsQuery({});
+  const admins = data?.data as IAdmin[];
   const columns = [
     {
       title: "Image",
       dataIndex: ["user", "image"],
       key: "image",
-      render: (image: string, student: IStudent) => (
+      render: (image: string, admin: IAdmin) => (
         <div className="w-10 h-10 rounded-full overflow-hidden ring-1">
           <img
             src={image}
-            alt={student?.user?.name}
+            alt={admin?.user?.name}
             className="w-full h-full object-cover"
           />
         </div>
@@ -34,26 +33,15 @@ const ManageStudents = () => {
       render: (email: string) => <span className="text-blue-500">{email}</span>,
     },
     {
-      title: "Student ID",
-      dataIndex: ["studentId"],
-      key: "studentId",
-      render: (studentId: string) => (
-        <span className="text-blue-500">{studentId}</span>
+      title: "Admin ID",
+      dataIndex: ["adminId"],
+      key: "adminId",
+      render: (adminId: string) => (
+        <span className="text-blue-500">{adminId}</span>
       ),
     },
     {
-      title: "Courses",
-      key: "courses",
-      render: (_: any, student: IStudent) => (
-        <ul className="list-disc pl-5">
-          {student?.courses?.map((course) => (
-            <li key={course?.id}>{course?.title}</li>
-          ))}
-        </ul>
-      ),
-    },
-    {
-      title: "Enrolled At",
+      title: "Created At",
       dataIndex: ["createdAt"],
       key: "createdAt",
       render: (date: Date) => (
@@ -65,19 +53,17 @@ const ManageStudents = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, student: IStudent) => (
-        <StudentActions student={student} />
-      ),
+      render: (_: any, admin: IAdmin) => <Button>View Profile</Button>,
     },
   ];
 
   return (
     <div className="lg:p-5 px-2 pb-20 overflow-x-auto">
-      <h1 className="text-lg lg:text-2xl font-bold mb-4">Manage Students</h1>
+      <h1 className="text-lg lg:text-2xl font-bold mb-4">Manage Admins</h1>
       <Table
         columns={columns}
-        dataSource={students}
-        rowKey={(student) => student?.id}
+        dataSource={admins}
+        rowKey={(admin) => admin?.id}
         pagination={{ pageSize: 10 }}
         bordered
         className="shadow-md rounded-lg w-full min-w-[900px]"
@@ -87,4 +73,4 @@ const ManageStudents = () => {
   );
 };
 
-export default ManageStudents;
+export default ManageAdmins;
