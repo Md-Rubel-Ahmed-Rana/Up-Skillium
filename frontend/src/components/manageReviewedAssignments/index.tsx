@@ -1,55 +1,74 @@
-import { useGetAllReviewedAssignmentsQuery } from "@/features/assignmentSubmission";
-import { IGetLesson as IAssignment } from "@/types/lesson.type";
-import { Button, Table, TableProps } from "antd/lib";
-import Link from "next/link";
-import AssignmentDeleteModal from "./AssignmentDeleteModal";
+import { useGetAllPendingAssignmentsQuery } from "@/features/assignmentSubmission";
+import { IAssignmentSubmission } from "@/types/assignmentSubmission.type";
+import { Table, TableProps } from "antd/lib";
+import AssignmentActions from "./AssignmentActions";
 
 const ManageReviewedAssignments = () => {
-  const { data, isLoading } = useGetAllReviewedAssignmentsQuery({});
-  const assignments = data?.data as IAssignment[];
-  const columns: TableProps<IAssignment>["columns"] = [
-    {
-      title: "Title",
-      key: "title",
-      dataIndex: "title",
-    },
+  const { data, isLoading } = useGetAllPendingAssignmentsQuery({});
+  const assignments = data?.data as IAssignmentSubmission[];
+  const columns: TableProps<IAssignmentSubmission>["columns"] = [
     {
       title: "Serial",
       key: "serial",
-      dataIndex: "serial",
+      render: (value: any, record: any, index: number) => <h3>{index + 1}</h3>,
     },
     {
-      title: "Module",
-      key: "module.title",
-      dataIndex: ["module", "title"],
+      title: "Student",
+      dataIndex: ["user", "name"],
+      key: "name",
+      render: (name: string, assignment: IAssignmentSubmission) => (
+        <div className="flex items-center gap-2">
+          <img
+            className="h-10 w-10 rounded-full ring-1"
+            src={assignment?.user?.image}
+            alt={name}
+          />
+          <h5>{name}</h5>
+        </div>
+      ),
     },
     {
-      title: "Created At",
-      key: "createdAt",
-      dataIndex: "createdAt",
-      render: (date: Date) => new Date(date).toLocaleDateString(),
+      title: "Lesson",
+      key: "lesson.title",
+      dataIndex: ["lesson", "title"],
     },
     {
-      title: "Updated At",
-      key: "updatedAt",
-      dataIndex: "updatedAt",
-      render: (date: Date) => new Date(date).toLocaleDateString(),
+      title: "Submitted At",
+      key: "submittedAt",
+      dataIndex: "submittedAt",
+      render: (submittedAt: Date) => (
+        <h3>{new Date(submittedAt).toLocaleString()}</h3>
+      ),
+    },
+    {
+      title: "Full Marks",
+      key: "fullMark",
+      dataIndex: "fullMark",
+      render: (fullMark: number) => <h3>{fullMark}</h3>,
+    },
+    {
+      title: "Got Marks",
+      key: "yourMark",
+      dataIndex: "yourMark",
+      render: (yourMark: number) => <h3>{yourMark}</h3>,
+    },
+    {
+      title: "Checked At",
+      key: "checkedAt",
+      dataIndex: "checkedAt",
+      render: (checkedAt: Date) => (
+        <h3>{new Date(checkedAt).toLocaleString()}</h3>
+      ),
     },
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, assignment: IAssignment) => (
-        <div className="flex items-center gap-2">
-          <Link
-            href={`/dashboard/update-assignment/${assignment?.id}?title=${assignment?.title}&module=${assignment?.module?.title}&content=${assignment?.content}`}
-          >
-            <Button type="primary">Edit</Button>
-          </Link>
-          <AssignmentDeleteModal assignment={assignment} />
-        </div>
+      render: (_: any, assignment: IAssignmentSubmission) => (
+        <AssignmentActions assignment={assignment} />
       ),
     },
   ];
+
   return (
     <div className="mt-4 overflow-x-auto w-full">
       <h2 className="text-lg lg:text-2xl font-semibold mb-3">
