@@ -5,6 +5,7 @@ import { Button, Table } from "antd/lib";
 const ManageEducations = () => {
   const { data, isLoading } = useGetAllEducationsQuery({});
   const educations = (data?.data || []) as IEducation[];
+  console.log(educations);
 
   const columns = [
     {
