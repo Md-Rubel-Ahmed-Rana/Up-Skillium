@@ -108,7 +108,7 @@ const AddOrEditEducationModal = ({
         form={form}
         layout="vertical"
         onFinish={handleSubmitEducation}
-        className="space-y-6"
+        className="space-y-2"
         initialValues={education || { institute: "", degree: "", status: "" }}
       >
         <Form.Item
@@ -128,37 +128,42 @@ const AddOrEditEducationModal = ({
         >
           <Input placeholder="Please enter degree" value={education?.degree} />
         </Form.Item>
-        <Form.Item
-          label="Status"
-          name="status"
-          rules={[{ required: true, message: "status is required" }]}
-        >
-          <Select
-            value={education?.status || "passed"}
-            placeholder="Select status"
+        <div className="flex items-center flex-col lg:flex-row justify-between gap-2">
+          <Form.Item
+            label="Status"
+            name="status"
+            className="w-full"
+            rules={[{ required: true, message: "status is required" }]}
           >
-            <Select.Option value={"passed"}>Passed</Select.Option>
-            <Select.Option value={"studying"}>Studying</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Start"
-          name="start"
-          rules={[{ required: true, message: "Start date is required" }]}
-        >
-          <DatePicker
+            <Select
+              className="w-full"
+              value={education?.status || "passed"}
+              placeholder="Select status"
+            >
+              <Select.Option value={"passed"}>Passed</Select.Option>
+              <Select.Option value={"studying"}>Studying</Select.Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            className="w-full"
+            label="Start"
             name="start"
-            className="w-full"
-            placeholder="Select start date"
-          />
-        </Form.Item>
-        <Form.Item label="End" name="end">
-          <DatePicker
-            name="end"
-            className="w-full"
-            placeholder="Select end date"
-          />
-        </Form.Item>
+            rules={[{ required: true, message: "Start date is required" }]}
+          >
+            <DatePicker
+              name="start"
+              className="w-full"
+              placeholder="Select start date"
+            />
+          </Form.Item>
+          <Form.Item className="w-full" label="End" name="end">
+            <DatePicker
+              name="end"
+              className="w-full"
+              placeholder="Select end date"
+            />
+          </Form.Item>
+        </div>
         <Form.Item>
           <div className="flex justify-between items-center">
             <Button
