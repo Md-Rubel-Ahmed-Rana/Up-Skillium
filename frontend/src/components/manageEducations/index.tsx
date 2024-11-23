@@ -1,18 +1,9 @@
-import { useGetLoggedInUserQuery } from "@/features/auth";
-import { useGetAllEducationsByUserQuery } from "@/features/education";
+import { useGetAllEducationsQuery } from "@/features/education";
 import { IEducation } from "@/types/education.type";
-import { IUser } from "@/types/user.type";
-import { Table } from "antd/lib";
-import AddEducationButton from "./AddEducationButton";
-import EducationActions from "./EducationActions";
+import { Button, Table } from "antd/lib";
 
-const Educations = () => {
-  const { data: userData } = useGetLoggedInUserQuery({});
-  const user = userData?.data as IUser;
-  const { data, isLoading } = useGetAllEducationsByUserQuery({
-    userId: user?.id,
-  });
-
+const ManageEducations = () => {
+  const { data, isLoading } = useGetAllEducationsQuery({});
   const educations = (data?.data || []) as IEducation[];
 
   const columns = [
@@ -56,30 +47,34 @@ const Educations = () => {
       title: "Actions",
       key: "actions",
       render: (_: any, education: IEducation) => (
-        <EducationActions education={education} />
+        <div className="flex items-center gap-2">
+          <Button type="primary">Edit</Button>
+          <Button type="primary" danger>
+            Delete
+          </Button>
+        </div>
       ),
     },
   ];
 
   return (
     <div className="mt-4">
-      <div className="flex items-center gap-3 mb-2">
-        <h2 className="text-lg lg:text-2xl font-semibold">Educations</h2>
-        <AddEducationButton />
-      </div>
+      <h2 className="text-lg lg:text-2xl font-semibold mb-3">
+        Manage Educations
+      </h2>
       <div className="overflow-x-auto">
         <Table
           columns={columns}
           dataSource={educations}
           rowKey={(education) => education?.id}
           loading={isLoading}
-          className="shadow-md rounded-lg w-full min-w-[900px]"
-          pagination={false}
           bordered
+          className="shadow-md rounded-lg w-full min-w-[900px]"
+          pagination={{ pageSize: 10 }}
         />
       </div>
     </div>
   );
 };
 
-export default Educations;
+export default ManageEducations;

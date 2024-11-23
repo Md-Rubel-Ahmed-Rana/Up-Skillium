@@ -10,6 +10,13 @@ const educationApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["education"],
     }),
+    getAllEducations: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/education`,
+      }),
+      providesTags: ["education"],
+    }),
     addEducation: builder.mutation({
       query: ({ data }: { data: ICreateEducation }) => ({
         method: "POST",
@@ -41,4 +48,5 @@ export const {
   useAddEducationMutation,
   useUpdateEducationMutation,
   useDeleteEducationMutation,
+  useGetAllEducationsQuery,
 } = educationApi;
