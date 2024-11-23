@@ -1,5 +1,13 @@
-import { IEducation } from "@/types/education.type";
-import { Button, Form, Input, Modal, Select } from "antd/lib";
+import { useGetLoggedInUserQuery } from "@/features/auth";
+import {
+  useAddEducationMutation,
+  useUpdateEducationMutation,
+} from "@/features/education";
+import { ICreateEducation, IEducation } from "@/types/education.type";
+import { IUser } from "@/types/user.type";
+import handleValidationErrors from "@/utils/handleValidationErrors";
+import { Button, DatePicker, Form, Input, Modal, Select } from "antd/lib";
+import toast from "react-hot-toast";
 
 type Props = {
   education?: IEducation;
@@ -15,8 +23,78 @@ const AddOrEditEducationModal = ({
   actionType,
 }: Props) => {
   const [form] = Form.useForm();
+  const { data } = useGetLoggedInUserQuery({});
+  const user = data?.data as IUser;
+  const [addEducation, { isLoading: isAdding }] = useAddEducationMutation();
+  const [editEducation, { isLoading: isEditing }] =
+    useUpdateEducationMutation();
 
-  const handleSubmitEducation = (values: IEducation) => {};
+  const handleSubmitEducation = (values: IEducation) => {
+    if (actionType === "add") {
+      handleAddEducation({
+        institute: values?.institute,
+        degree: values?.degree,
+        status: values?.status,
+        end: values?.end,
+        start: values?.start,
+        user: user?.id,
+      });
+    } else {
+      handleUpdateEducation({
+        ...education,
+        institute: values?.institute,
+        degree: values?.degree,
+        status: values?.status,
+        end: values?.end,
+        start: values?.start,
+      } as IEducation);
+    }
+  };
+
+  const handleAddEducation = async (data: ICreateEducation) => {
+    try {
+      const result: any = await addEducation({ data });
+      if (result?.data?.statusCode === 201) {
+        toast.success(result?.data?.message || "Education added successfully!");
+        setOpen(false);
+      } else {
+        handleValidationErrors(result);
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            result?.data?.error?.message ||
+            "Failed to add education."
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to add education. Error: ${error?.message}`);
+    }
+  };
+
+  const handleUpdateEducation = async (data: IEducation) => {
+    try {
+      const result: any = await editEducation({
+        id: education?.id as string,
+        data,
+      });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result?.data?.message || "Education updated successfully!"
+        );
+        setOpen(false);
+      } else {
+        handleValidationErrors(result);
+        toast.error(
+          result?.error?.message ||
+            result?.error?.data?.message ||
+            result?.data?.error?.message ||
+            "Failed to edit education."
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to edit education. Error: ${error?.message}`);
+    }
+  };
 
   return (
     <Modal
@@ -24,6 +102,7 @@ const AddOrEditEducationModal = ({
       open={open}
       onCancel={() => setOpen(false)}
       footer={false}
+      maskClosable={!isAdding || !isEditing}
     >
       <Form
         form={form}
@@ -62,6 +141,24 @@ const AddOrEditEducationModal = ({
             <Select.Option value={"studying"}>Studying</Select.Option>
           </Select>
         </Form.Item>
+        <Form.Item
+          label="Start"
+          name="start"
+          rules={[{ required: true, message: "Start date is required" }]}
+        >
+          <DatePicker
+            name="start"
+            className="w-full"
+            placeholder="Select start date"
+          />
+        </Form.Item>
+        <Form.Item label="End" name="end">
+          <DatePicker
+            name="end"
+            className="w-full"
+            placeholder="Select end date"
+          />
+        </Form.Item>
         <Form.Item>
           <div className="flex justify-between items-center">
             <Button
@@ -69,6 +166,7 @@ const AddOrEditEducationModal = ({
               type="default"
               htmlType="button"
               size="large"
+              disabled={isAdding || isEditing}
             >
               Cancel
             </Button>
@@ -77,6 +175,7 @@ const AddOrEditEducationModal = ({
               htmlType="submit"
               size="large"
               iconPosition="end"
+              disabled={isAdding || isEditing}
             >
               {actionType === "add" ? " Add Now" : "Save changes"}
             </Button>

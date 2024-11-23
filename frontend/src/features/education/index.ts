@@ -1,3 +1,4 @@
+import { ICreateEducation, IEducation } from "@/types/education.type";
 import apiSlice from "../api/apiSlice";
 
 const educationApi = apiSlice.injectEndpoints({
@@ -9,7 +10,35 @@ const educationApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["education"],
     }),
+    addEducation: builder.mutation({
+      query: ({ data }: { data: ICreateEducation }) => ({
+        method: "POST",
+        url: `/education/add`,
+        body: data,
+      }),
+      invalidatesTags: ["education"],
+    }),
+    updateEducation: builder.mutation({
+      query: ({ id, data }: { id: string; data: IEducation }) => ({
+        method: "PATCH",
+        url: `/education/${id}`,
+        body: data,
+      }),
+      invalidatesTags: ["education"],
+    }),
+    deleteEducation: builder.mutation({
+      query: ({ id }: { id: string }) => ({
+        method: "DELETE",
+        url: `/education/${id}`,
+      }),
+      invalidatesTags: ["education"],
+    }),
   }),
 });
 
-export const { useGetAllEducationsByUserQuery } = educationApi;
+export const {
+  useGetAllEducationsByUserQuery,
+  useAddEducationMutation,
+  useUpdateEducationMutation,
+  useDeleteEducationMutation,
+} = educationApi;
