@@ -7,22 +7,6 @@ const ManagePendingAssignments = () => {
   const { data, isLoading } = useGetAllPendingAssignmentsQuery({});
   const assignments = data?.data as IAssignmentSubmission[];
 
-  const assignmentsData = Array.from({ length: 20 }).map((_, index) => ({
-    id: `item-${index + 1}`,
-    user: {
-      name: `user name-${index + 1}`,
-      image: "",
-    },
-    lesson: {
-      id: `lesson id-${index + 1}`,
-      title: `lesson title-${index + 1}`,
-    },
-    submittedAt: new Date(),
-    dueDate: new Date(),
-    status: "pending",
-    isLate: false,
-  }));
-
   const columns: TableProps<IAssignmentSubmission>["columns"] = [
     {
       title: "Serial",
@@ -93,7 +77,7 @@ const ManagePendingAssignments = () => {
       <Table
         rowKey="id"
         columns={columns}
-        dataSource={assignmentsData}
+        dataSource={assignments}
         loading={isLoading}
         bordered
         pagination={{ pageSize: 10 }}
