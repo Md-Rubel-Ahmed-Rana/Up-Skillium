@@ -2,8 +2,9 @@ import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useGetAllEducationsByUserQuery } from "@/features/education";
 import { IEducation } from "@/types/education.type";
 import { IUser } from "@/types/user.type";
-import { Button, Table } from "antd/lib";
-import { FaPlus } from "react-icons/fa";
+import { Table } from "antd/lib";
+import AddEducationButton from "./AddEducationButton";
+import EducationActions from "./EducationActions";
 
 const Educations = () => {
   const { data: userData } = useGetLoggedInUserQuery({});
@@ -58,12 +59,7 @@ const Educations = () => {
       title: "Actions",
       key: "actions",
       render: (_: any, education: IEducation) => (
-        <div className="flex space-x-3">
-          <Button type="primary">Edit</Button>
-          <Button type="primary" danger>
-            Delete
-          </Button>
-        </div>
+        <EducationActions education={education} />
       ),
     },
   ];
@@ -72,14 +68,7 @@ const Educations = () => {
     <div className="mt-4">
       <div className="flex items-center gap-3 mb-2">
         <h2 className="text-lg lg:text-2xl font-semibold">Educations</h2>
-        <Button
-          size="small"
-          icon={<FaPlus />}
-          iconPosition="start"
-          type="primary"
-        >
-          Add
-        </Button>
+        <AddEducationButton />
       </div>
       <div className="overflow-x-auto">
         <Table
