@@ -12,17 +12,8 @@ const Educations = () => {
   const { data, isLoading } = useGetAllEducationsByUserQuery({
     userId: user?.id,
   });
+
   const educations = (data?.data || []) as IEducation[];
-  const eduData = Array.from({ length: 5 }).map((_, index) => ({
-    id: (index + 1).toString(),
-    institute: `Institute ${index + 1}`,
-    degree: `Degree ${index + 1}`,
-    status: "passed",
-    start: new Date(),
-    end: new Date(),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }));
 
   const columns = [
     {
@@ -79,7 +70,7 @@ const Educations = () => {
       <div className="overflow-x-auto">
         <Table
           columns={columns}
-          dataSource={eduData}
+          dataSource={educations}
           rowKey={(education) => education?.id}
           loading={isLoading}
           className="shadow-md rounded-lg w-full min-w-[900px]"
