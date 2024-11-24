@@ -1,3 +1,6 @@
+import { ILesson } from "./lesson.type";
+import { IUser } from "./user.type";
+
 export type IQuizAnswer = {
   question: string;
   givenAnswer: string;
@@ -7,8 +10,8 @@ export type IQuizAnswer = {
 
 export type IQuizSubmissionResult = {
   id: string;
-  userId: string;
-  lessonId: string;
+  user: IUser;
+  lesson: ILesson;
   totalQuiz: number;
   correctAnswers: number;
   wrongAnswers: number;
