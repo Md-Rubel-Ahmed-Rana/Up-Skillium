@@ -15,10 +15,12 @@ export type IEducation = {
 };
 
 export type ICreateEducation = {
-  institute: string;
-  degree: string;
-  status: "studying" | "passed";
   user: string;
-  start: Date;
-  end: Date;
+  degree: string;
+  fieldOfStudy: string;
+  institution: string;
+  isCurrent: boolean;
+  startDate: Date;
+  endDate: Date;
+  description: string;
 };
