@@ -1,6 +1,7 @@
 import { useGetAllCategoriesQuery } from "@/features/category";
 import { ICategory } from "@/types/category.type";
 import { Table, TableProps } from "antd/lib";
+import AddCategoryModal from "./AddCategoryModal";
 import CategoryDeleteModal from "./CategoryDeleteModal";
 import CategoryEditModal from "./CategoryEditModal";
 
@@ -48,9 +49,12 @@ const CourseCategories = () => {
 
   return (
     <div className="mt-4 overflow-x-auto w-full">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-3">
-        Manage Categories
-      </h2>
+      <div className="flex items-center gap-2">
+        <h2 className="text-lg lg:text-2xl font-semibold mb-3">
+          Manage Categories
+        </h2>
+        <AddCategoryModal />
+      </div>
       <Table
         rowKey="id"
         columns={columns}

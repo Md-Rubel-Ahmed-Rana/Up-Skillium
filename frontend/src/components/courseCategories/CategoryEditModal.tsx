@@ -16,8 +16,7 @@ const CategoryEditModal = ({ category }: Props) => {
   const handleEditCategory = async () => {
     try {
       const result: any = await updateCategory({
-        id: category?.id,
-        name: editedName,
+        categories: [{ ...category, name: editedName }],
       });
       if (result?.data?.statusCode === 200) {
         toast.success(

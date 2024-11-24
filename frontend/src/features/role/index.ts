@@ -21,7 +21,7 @@ const roleApi = apiSlice.injectEndpoints({
     addNewRole: builder.mutation({
       query: ({ data }: { data: { name: string; permissions: string[] } }) => ({
         method: "POST",
-        url: `/role/add`,
+        url: `/role/create`,
         body: data,
       }),
       invalidatesTags: ["role"],

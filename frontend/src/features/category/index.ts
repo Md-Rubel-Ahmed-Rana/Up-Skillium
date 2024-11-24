@@ -1,3 +1,4 @@
+import { ICategory } from "@/types/category.type";
 import apiSlice from "../api/apiSlice";
 
 const categoryApi = apiSlice.injectEndpoints({
@@ -10,17 +11,26 @@ const categoryApi = apiSlice.injectEndpoints({
       providesTags: ["category"],
     }),
     deleteCategory: builder.mutation({
-      query: ({ id }: { id: string }) => ({
+      query: ({ ids }: { ids: string[] }) => ({
         method: "DELETE",
-        url: `/category/${id}`,
+        url: `/category`,
+        body: ids,
       }),
       invalidatesTags: ["category"],
     }),
     updateCategory: builder.mutation({
-      query: ({ id, name }: { id: string; name: string }) => ({
-        method: "DELETE",
-        url: `/category/${id}`,
-        body: { name },
+      query: ({ categories }: { categories: ICategory[] }) => ({
+        method: "PATCH",
+        url: `/category`,
+        body: categories,
+      }),
+      invalidatesTags: ["category"],
+    }),
+    createCategory: builder.mutation({
+      query: ({ data }: { data: { name: string }[] }) => ({
+        method: "POST",
+        url: `/category/create`,
+        body: data,
       }),
       invalidatesTags: ["category"],
     }),
@@ -31,4 +41,5 @@ export const {
   useGetAllCategoriesQuery,
   useDeleteCategoryMutation,
   useUpdateCategoryMutation,
+  useCreateCategoryMutation,
 } = categoryApi;

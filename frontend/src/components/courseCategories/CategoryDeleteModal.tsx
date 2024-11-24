@@ -15,7 +15,7 @@ const CategoryDeleteModal = ({ category }: Props) => {
   const handleDeleteCategory = async () => {
     try {
       const result: any = await deleteCategory({
-        id: category?.id,
+        ids: [category?.id],
       });
       if (result?.data?.statusCode === 200) {
         toast.success(result?.data?.message || "Category delete successfully!");
