@@ -75,6 +75,41 @@ const CourseOutlines = () => {
     },
   ];
 
+  const handleShowModules = (outline: ICourseOutline) => {
+    return (
+      <div className="bg-gray-50 p-2">
+        <h3 className="font-semibold">Modules</h3>
+        {outline?.modules?.length > 0 ? (
+          <div className="flex flex-col gap-2">
+            {outline?.modules.map((module: IModuleOutline) => (
+              <div
+                className="flex justify-between bg-white p-2 rounded-md"
+                key={module?.id}
+              >
+                <h4 className="w-2/12">Serial: {module?.serial}</h4>
+                <h3 className="w-6/12">Title: {module?.name}</h3>
+                <h3 className="w-2/12">
+                  <span> CreatedAt:</span>
+                  <span>
+                    {new Date(module?.createdAt)?.toLocaleDateString()}
+                  </span>
+                </h3>
+                <h3 className="w-2/12">
+                  <span> UpdatedAt: </span>
+                  <span>
+                    {new Date(module?.updatedAt)?.toLocaleDateString()}
+                  </span>
+                </h3>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No modules available.</p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="lg:p-5 px-2 pb-20">
       <h1 className="text-2xl font-semibold mb-5">All Course Outlines</h1>
@@ -86,40 +121,7 @@ const CourseOutlines = () => {
           loading={isLoading}
           pagination={{ pageSize: 5 }}
           className="shadow-md rounded-lg w-full min-w-[900px]"
-          expandable={{
-            expandedRowRender: (outline) => (
-              <div className="bg-gray-50 p-2">
-                <h3 className="font-semibold">Modules</h3>
-                {outline?.modules?.length > 0 ? (
-                  <div className="flex flex-col gap-2">
-                    {outline?.modules.map((module: IModuleOutline) => (
-                      <div
-                        className="flex justify-between bg-white p-2 rounded-md"
-                        key={module?.id}
-                      >
-                        <h4 className="w-2/12">Serial: {module?.serial}</h4>
-                        <h3 className="w-6/12">Title: {module?.name}</h3>
-                        <h3 className="w-2/12">
-                          <span> CreatedAt:</span>
-                          <span>
-                            {new Date(module?.createdAt)?.toLocaleDateString()}
-                          </span>
-                        </h3>
-                        <h3 className="w-2/12">
-                          <span> UpdatedAt: </span>
-                          <span>
-                            {new Date(module?.updatedAt)?.toLocaleDateString()}
-                          </span>
-                        </h3>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p>No modules available.</p>
-                )}
-              </div>
-            ),
-          }}
+          expandable={{ expandedRowRender: handleShowModules }}
         />
       </div>
     </div>
