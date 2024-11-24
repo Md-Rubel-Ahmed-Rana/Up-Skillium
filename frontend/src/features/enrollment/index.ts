@@ -8,14 +8,30 @@ const enrollmentApi = apiSlice.injectEndpoints({
         url: `/enrollment/student/${userId}`,
       }),
     }),
+    getAllEnrollments: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/enrollment/`,
+      }),
+    }),
     getStudentOrderHistory: builder.query({
       query: ({ userId }: { userId: string }) => ({
         method: "GET",
-        url: `/enrollment/order-history/${userId}`,
+        url: `/enrollment/student-order-history/${userId}`,
+      }),
+    }),
+    getAllOrderHistory: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/enrollment/order-history`,
       }),
     }),
   }),
 });
 
-export const { useGetStudentEnrollmentsQuery, useGetStudentOrderHistoryQuery } =
-  enrollmentApi;
+export const {
+  useGetStudentEnrollmentsQuery,
+  useGetStudentOrderHistoryQuery,
+  useGetAllEnrollmentsQuery,
+  useGetAllOrderHistoryQuery,
+} = enrollmentApi;
