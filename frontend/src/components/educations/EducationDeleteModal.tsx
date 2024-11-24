@@ -53,8 +53,8 @@ const EducationDeleteModal = ({ education }: Props) => {
         maskClosable={!isLoading}
       >
         <p className="text-gray-600 text-md my-5 font-semibold">
-          Are you sure you want to delete the education : {education?.institute}
-          ?
+          Are you sure you want to delete the education :{" "}
+          {education?.institution}?
         </p>
       </Modal>
     </>
