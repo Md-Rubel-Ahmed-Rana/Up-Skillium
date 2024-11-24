@@ -1,56 +1,77 @@
-import { useGetLoggedInUserQuery } from "@/features/auth";
-import { useAddEducationMutation } from "@/features/education";
-import { ICreateEducation } from "@/types/education.type";
-import { IUser } from "@/types/user.type";
+import {
+  useGetSingleEducationQuery,
+  useUpdateEducationMutation,
+} from "@/features/education";
+import { IEducation } from "@/types/education.type";
 import { Button, Checkbox, DatePicker, Form, Input } from "antd/lib";
+import dayjs from "dayjs";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-const AddEducation = () => {
-  const { data } = useGetLoggedInUserQuery({});
-  const user = data?.data as IUser;
-  const [form] = Form.useForm<ICreateEducation>();
-  const router = useRouter();
-  const [isCurrent, setIsCurrent] = useState(false);
-  const [addNewEducation, { isLoading }] = useAddEducationMutation();
+const EditEducation = () => {
+  const { query, back } = useRouter();
+  const id = query.id as string;
+  const { data, isLoading } = useGetSingleEducationQuery({ id });
+  const education = data?.data as IEducation;
 
-  const handleAddEducation = async (values: any) => {
-    const newEducation: ICreateEducation = {
+  const [form] = Form.useForm();
+  const [isCurrent, setIsCurrent] = useState(false);
+
+  const [updateEducation, { isLoading: isUpdating }] =
+    useUpdateEducationMutation();
+
+  useEffect(() => {
+    if (education) {
+      form.setFieldsValue({
+        ...education,
+        startDate: education?.startDate ? dayjs(education?.startDate) : null,
+        endDate: education?.endDate ? dayjs(education?.endDate) : null,
+      });
+      setIsCurrent(education.isCurrent);
+    }
+  }, [education, form]);
+
+  const handleUpdateEducation = async (values: any) => {
+    const updatedEducation: IEducation = {
       ...values,
       startDate: values?.startDate?.toDate() || null,
       endDate: values?.endDate?.toDate() || null,
-      user: user?.id,
     };
 
     try {
-      const result: any = await addNewEducation({ data: newEducation });
-      if (result?.data?.statusCode === 201) {
-        toast.success(result?.data?.message || "Education added successfully!");
+      const result: any = await updateEducation({
+        id: education?.id,
+        data: updatedEducation,
+      });
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result?.data?.message || "Education updated successfully!"
+        );
         form.resetFields();
         setIsCurrent(false);
-        router.back();
+        back();
       } else {
         toast.error(
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to add education."
+            "Failed to edit education."
         );
       }
     } catch (error: any) {
-      toast.error(`Failed to add education. Error: ${error?.message}`);
+      toast.error(`Failed to edit education. Error: ${error?.message}`);
     }
   };
 
   return (
     <div className="mt-3 pb-20">
-      <h2 className="text-lg font-semibold mb-4">Add Education</h2>
+      <h2 className="text-lg font-semibold mb-4">Edit Education</h2>
       <Form
         form={form}
         layout="vertical"
-        onFinish={handleAddEducation}
-        className="space-y-4 border rounded-md p-2"
+        onFinish={handleUpdateEducation}
+        className="space-y-4 border rounded-md p-4 bg-white shadow-md"
       >
         <Form.Item
           label="Institution"
@@ -81,7 +102,7 @@ const AddEducation = () => {
           valuePropName="checked"
           className="flex items-center"
         >
-          <Checkbox onChange={(e) => setIsCurrent(e.target.checked as boolean)}>
+          <Checkbox onChange={(e) => setIsCurrent(e.target.checked)}>
             Currently Studying Here
           </Checkbox>
         </Form.Item>
@@ -99,7 +120,16 @@ const AddEducation = () => {
         </Form.Item>
 
         {!isCurrent && (
-          <Form.Item label="End Date" name="endDate">
+          <Form.Item
+            label="End Date"
+            name="endDate"
+            rules={[
+              {
+                required: true,
+                message: "End Date is required when not current",
+              },
+            ]}
+          >
             <DatePicker
               format="YYYY-MM-DD"
               className="w-full"
@@ -118,21 +148,21 @@ const AddEducation = () => {
         <Form.Item>
           <div className="flex justify-between">
             <Button
-              onClick={() => router.back()}
-              disabled={isLoading}
+              onClick={() => back()}
+              disabled={isUpdating}
               type="default"
               htmlType="button"
             >
               Back
             </Button>
             <Button
-              disabled={isLoading}
-              loading={isLoading}
+              loading={isUpdating}
+              disabled={isUpdating}
               iconPosition="end"
               type="primary"
               htmlType="submit"
             >
-              {isLoading ? "Adding..." : "Add Education"}
+              {isUpdating ? "Saving..." : "Save changes"}
             </Button>
           </div>
         </Form.Item>
@@ -141,4 +171,4 @@ const AddEducation = () => {
   );
 };
 
-export default AddEducation;
+export default EditEducation;
