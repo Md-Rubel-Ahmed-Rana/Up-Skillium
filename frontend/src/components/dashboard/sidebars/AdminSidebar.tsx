@@ -14,6 +14,7 @@ import {
   FaCheckCircle,
   FaClipboardCheck,
   FaClipboardList,
+  FaCommentDots,
   FaComments,
   FaDraftingCompass,
   FaFileAlt,
@@ -27,6 +28,7 @@ import {
   FaPlusCircle,
   FaPlusSquare,
   FaSignOutAlt,
+  FaStar,
   FaTags,
   FaTasks,
   FaUserCheck,
@@ -296,20 +298,19 @@ const AdminSidebar = () => {
         },
       ],
     },
-
     {
       key: "8",
-      icon: <FaComments />,
+      icon: <FaCommentDots />,
       label: "Feedback & Reviews",
       children: [
         {
           key: "8-1",
-          icon: <FaComments />,
+          icon: <FaStar />,
           label: <Link href="/dashboard/feedback-reviews">All Reviews</Link>,
         },
         {
           key: "8-2",
-          icon: <FaComments />,
+          icon: <FaChalkboardTeacher />,
           label: (
             <Link href="/dashboard/feedback-reviews/instructor">
               Instructor Reviews
@@ -318,7 +319,7 @@ const AdminSidebar = () => {
         },
         {
           key: "8-3",
-          icon: <FaComments />,
+          icon: <FaBook />,
           label: (
             <Link href="/dashboard/feedback-reviews/course">
               Course Reviews
