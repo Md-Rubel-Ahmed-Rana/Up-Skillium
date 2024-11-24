@@ -1,3 +1,4 @@
+import { IRole } from "@/types/role.type";
 import apiSlice from "../api/apiSlice";
 
 const roleApi = apiSlice.injectEndpoints({
@@ -7,8 +8,17 @@ const roleApi = apiSlice.injectEndpoints({
         method: "GET",
         url: `/role`,
       }),
+      providesTags: ["role"],
+    }),
+    updateRole: builder.mutation({
+      query: ({ id, data }: { id: string; data: IRole }) => ({
+        method: "PATCH",
+        url: `/role/${id}`,
+        body: data,
+      }),
+      invalidatesTags: ["role"],
     }),
   }),
 });
 
-export const { useGetAllRolesQuery } = roleApi;
+export const { useGetAllRolesQuery, useUpdateRoleMutation } = roleApi;
