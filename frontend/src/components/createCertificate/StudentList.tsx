@@ -1,6 +1,6 @@
 import { useGetAllRolesQuery } from "@/features/role";
 import { useGetAllUsersQuery } from "@/features/user";
-import { IRole } from "@/types/user.type";
+import { IRole } from "@/types/role.type";
 import { Button, Dropdown, Menu } from "antd/lib";
 
 type Props = {
