@@ -1,27 +1,19 @@
 import { Button } from "antd/lib";
-import { useState } from "react";
+import Link from "next/link";
 import { FaPlus } from "react-icons/fa";
-import AddOrEditEducationModal from "./AddOrEditEducationModal";
 
 const AddEducationButton = () => {
-  const [isAddEducation, setIsAddEducation] = useState(false);
   return (
-    <>
+    <Link href={"/dashboard/add-education"}>
       <Button
         size="small"
         icon={<FaPlus />}
         iconPosition="start"
         type="primary"
-        onClick={() => setIsAddEducation(true)}
       >
         Add
       </Button>
-      <AddOrEditEducationModal
-        actionType="add"
-        open={isAddEducation}
-        setOpen={setIsAddEducation}
-      />
-    </>
+    </Link>
   );
 };
 
