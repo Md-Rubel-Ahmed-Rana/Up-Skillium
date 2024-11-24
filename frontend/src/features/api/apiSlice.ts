@@ -23,6 +23,7 @@ const apiSlice = createApi({
     "assignment",
     "education",
     "assignment-submission",
+    "role",
   ],
   endpoints: () => ({}),
 });

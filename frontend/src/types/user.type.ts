@@ -1,3 +1,5 @@
+import { IRole } from "./role.type";
+
 type IAddress = {
   street: string;
   city: string;
@@ -9,12 +11,6 @@ type IEmergencyContact = {
   name: string;
   relationship: string;
   phone: string;
-};
-
-export type IRole = {
-  id: string;
-  name: string;
-  permissions: string[];
 };
 
 export type IUser = {
