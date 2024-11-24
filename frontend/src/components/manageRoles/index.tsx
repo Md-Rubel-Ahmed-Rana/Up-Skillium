@@ -1,8 +1,9 @@
 import { useGetAllRolesQuery } from "@/features/role";
 import { IRole } from "@/types/role.type";
-import { Button, Table, TableProps } from "antd/lib";
+import { Table, TableProps } from "antd/lib";
 import "tailwindcss/tailwind.css";
 import AddRoleModal from "./AddRoleModal";
+import RoleDeleteModal from "./RoleDeleteModal";
 import RoleEditModal from "./RoleEditModal";
 
 const ManageRoles = () => {
@@ -50,9 +51,7 @@ const ManageRoles = () => {
       render: (_, role: IRole) => (
         <div className="flex items-center gap-2">
           <RoleEditModal role={role} />
-          <Button type="primary" danger>
-            Delete
-          </Button>
+          <RoleDeleteModal role={role} />
         </div>
       ),
     },
