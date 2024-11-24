@@ -5,7 +5,7 @@ const express_1 = require("express");
 const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/create", controller_1.EnrollmentController.createEnrollment);
-router.get("/:id", controller_1.EnrollmentController.getEnrollmentById);
+router.get("/single/:id", controller_1.EnrollmentController.getEnrollmentById);
 router.patch("/:id", controller_1.EnrollmentController.updateEnrollment);
 router.delete("/:id", controller_1.EnrollmentController.deleteEnrollment);
 router.get("/", controller_1.EnrollmentController.getAllSuccessEnrollments);
