@@ -2,6 +2,7 @@ import { useGetAllRolesQuery } from "@/features/role";
 import { IRole } from "@/types/role.type";
 import { Button, Table, TableProps } from "antd/lib";
 import "tailwindcss/tailwind.css";
+import AddRoleModal from "./AddRoleModal";
 import RoleEditModal from "./RoleEditModal";
 
 const ManageRoles = () => {
@@ -59,7 +60,10 @@ const ManageRoles = () => {
 
   return (
     <div className="mt-3">
-      <h2 className="text-lg font-semibold mb-4">Manage Roles</h2>
+      <div className="flex items-center gap-2 mb-4">
+        <h2 className="text-lg font-semibold">Manage Roles</h2>
+        <AddRoleModal />
+      </div>
       <Table
         dataSource={roles}
         columns={columns}
