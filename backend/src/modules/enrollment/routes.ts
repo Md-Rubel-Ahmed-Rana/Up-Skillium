@@ -5,7 +5,7 @@ const router = Router();
 
 router.post("/create", EnrollmentController.createEnrollment);
 
-router.get("/:id", EnrollmentController.getEnrollmentById);
+router.get("/single/:id", EnrollmentController.getEnrollmentById);
 
 router.patch("/:id", EnrollmentController.updateEnrollment);
 
