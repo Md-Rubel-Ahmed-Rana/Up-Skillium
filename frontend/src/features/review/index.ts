@@ -16,6 +16,13 @@ const reviewApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["feedback"],
     }),
+    getAllReviewsByReviewTo: builder.query({
+      query: ({ reviewToId }: { reviewToId: string }) => ({
+        method: "GET",
+        url: `/review/by-review-to/${reviewToId}`,
+      }),
+      providesTags: ["feedback"],
+    }),
     getCourseReviews: builder.query({
       query: () => ({
         method: "GET",
@@ -53,4 +60,5 @@ export const {
   useDeleteFeedbackMutation,
   useGetCourseReviewsQuery,
   useGetInstructorReviewsQuery,
+  useGetAllReviewsByReviewToQuery,
 } = reviewApi;

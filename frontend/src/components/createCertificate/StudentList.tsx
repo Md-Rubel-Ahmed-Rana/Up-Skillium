@@ -1,6 +1,5 @@
-import { useGetAllRolesQuery } from "@/features/role";
-import { useGetAllUsersQuery } from "@/features/user";
-import { IRole } from "@/types/role.type";
+import { useGetAllStudentsQuery } from "@/features/student";
+import { IStudent } from "@/types/student.type";
 import { Button, Dropdown, Menu } from "antd/lib";
 
 type Props = {
@@ -8,14 +7,8 @@ type Props = {
 };
 
 const StudentList = ({ setSelectedStudent }: Props) => {
-  const { data } = useGetAllUsersQuery({});
-  const { data: roleData } = useGetAllRolesQuery({});
-  const users = data?.data?.users as any[];
-  const roles = roleData?.data as IRole[];
-  const studentRole = roles?.find((role) => role?.name === "student");
-  const students = users?.filter(
-    (user) => (user?.role as string) === studentRole?.id
-  );
+  const { data } = useGetAllStudentsQuery({});
+  const students = data?.data as IStudent[];
 
   const menu = (
     <Menu>
@@ -23,15 +16,17 @@ const StudentList = ({ setSelectedStudent }: Props) => {
         <Menu.Item
           onClick={() =>
             setSelectedStudent({
-              id: student?.id || student?._id,
-              name: student?.name,
+              id: student?.user?.id,
+              name: student?.user?.name,
             })
           }
           key={student?.id}
         >
           <div className="p-2">
-            <p className="font-semibold">{student?.name}</p>
-            <p className="text-gray-500 text-sm">Email: {student?.email}</p>
+            <p className="font-semibold">{student?.user?.name}</p>
+            <p className="text-gray-500 text-sm">
+              Email: {student?.user?.email}
+            </p>
           </div>
         </Menu.Item>
       ))}
