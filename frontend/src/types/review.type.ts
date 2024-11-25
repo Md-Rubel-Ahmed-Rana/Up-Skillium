@@ -28,3 +28,11 @@ export type IReview = {
   reviewer: IReviewer;
   reviewTo: IReviewTo;
 };
+
+export type IAddReview = {
+  feedback: string;
+  reviewToModel: "User" | "Course";
+  rating: number;
+  reviewer: string;
+  reviewTo: string;
+};

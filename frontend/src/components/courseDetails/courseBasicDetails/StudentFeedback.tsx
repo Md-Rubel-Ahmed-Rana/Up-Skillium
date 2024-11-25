@@ -3,6 +3,7 @@ import { ICourse } from "@/types/course.type";
 import { IReview } from "@/types/review.type";
 import calculateReviewRatings from "@/utils/calculateReviewRatings";
 import { Card, Divider } from "antd/lib";
+import FeedbackModal from "../feedback/FeedbackModal";
 import RatingCard from "./RatingCard";
 import ReviewsList from "./ReviewsList";
 
@@ -15,7 +16,7 @@ const StudentFeedback = ({ course }: Props) => {
     reviewToId: course?.id,
   });
   const reviews = data?.data as IReview[];
-  const ratings = calculateReviewRatings(reviews);
+  const ratings = calculateReviewRatings(reviews) || 0;
 
   return (
     <Card bordered={false} className="rounded-lg space-y-4">
@@ -23,6 +24,7 @@ const StudentFeedback = ({ course }: Props) => {
       <RatingCard
         ratings={{ averageRating: ratings, ratingCount: reviews?.length }}
       />
+      <FeedbackModal />
       <ReviewsList reviews={reviews} isLoading={isLoading} />
     </Card>
   );

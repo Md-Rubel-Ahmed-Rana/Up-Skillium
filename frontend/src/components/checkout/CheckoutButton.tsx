@@ -2,6 +2,7 @@ import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useMakeStripeCheckoutMutation } from "@/features/stripePayment";
 import { ICheckout } from "@/types/checkout.type";
 import { IUser } from "@/types/user.type";
+import handleValidationErrors from "@/utils/handleValidationErrors";
 import { Button } from "antd/lib";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
@@ -47,6 +48,7 @@ const CheckoutButton = ({
             result?.data?.message || "Payment created successfully."
           );
         } else {
+          handleValidationErrors(result);
           toast.error(
             result?.error?.data?.message ||
               result?.data?.error?.message ||

@@ -1,3 +1,4 @@
+import { IAddReview } from "@/types/review.type";
 import apiSlice from "../api/apiSlice";
 
 const reviewApi = apiSlice.injectEndpoints({
@@ -51,6 +52,14 @@ const reviewApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["feedback"],
     }),
+    addFeedback: builder.mutation({
+      query: ({ data }: { data: IAddReview }) => ({
+        method: "POST",
+        url: `/review/add`,
+        body: data,
+      }),
+      invalidatesTags: ["feedback"],
+    }),
   }),
 });
 
@@ -61,4 +70,5 @@ export const {
   useGetCourseReviewsQuery,
   useGetInstructorReviewsQuery,
   useGetAllReviewsByReviewToQuery,
+  useAddFeedbackMutation,
 } = reviewApi;

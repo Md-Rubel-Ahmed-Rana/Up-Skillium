@@ -12,7 +12,7 @@ const ReviewsList = ({ reviews, isLoading }: Props) => {
       {isLoading ? (
         <div>Feedbacks loading...</div>
       ) : (
-        <div>
+        <div className="flex flex-col gap-2">
           {reviews?.length > 0 ? (
             <>
               {reviews?.map((review) => (
