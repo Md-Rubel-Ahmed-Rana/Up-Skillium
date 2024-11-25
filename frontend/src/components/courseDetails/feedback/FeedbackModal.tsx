@@ -5,7 +5,7 @@ import { ICourse } from "@/types/course.type";
 import { IAddReview } from "@/types/review.type";
 import { IUser } from "@/types/user.type";
 import handleValidationErrors from "@/utils/handleValidationErrors";
-import { Button, Input, Modal, Rate } from "antd";
+import { Button, Input, Modal, Rate } from "antd/lib";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
