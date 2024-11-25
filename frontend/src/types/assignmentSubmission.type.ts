@@ -1,3 +1,5 @@
+import { IUser } from "./user.type";
+
 export type ISubmission = {
   content: string;
   file: string;
@@ -5,9 +7,12 @@ export type ISubmission = {
 };
 
 export type IAssignmentSubmission = {
-  id?: string;
-  userId: string;
-  lessonId: string;
+  id: string;
+  user: IUser;
+  lesson: {
+    id: string;
+    title: string;
+  };
   status: string;
   fullMark: number;
   yourMark: number;

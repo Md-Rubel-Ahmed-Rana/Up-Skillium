@@ -16,6 +16,7 @@ const CreateQuizLesson = () => {
     const quizLesson: ICreateQuizLesson = {
       ...values,
       type: "quiz",
+      module: moduleId,
       quizQuestions: values?.quizQuestions?.map((ques: any) => ({
         ...ques,
         module: moduleId,

@@ -73,7 +73,7 @@ const ManageStudents = () => {
 
   return (
     <div className="lg:p-5 px-2 pb-20 overflow-x-auto">
-      <h1 className="text-lg lg:text-2xl font-bold mb-4">Manage Instructors</h1>
+      <h1 className="text-lg lg:text-2xl font-bold mb-4">Manage Students</h1>
       <Table
         columns={columns}
         dataSource={students}

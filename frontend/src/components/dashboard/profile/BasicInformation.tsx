@@ -1,11 +1,11 @@
-import { IUser } from "@/types/user.type";
-import { Button, Descriptions, Input, DatePicker, Select } from "antd/lib";
-import React, { useState } from "react";
-import { CiMail } from "react-icons/ci";
-import { FaPhone, FaEdit } from "react-icons/fa";
-import dayjs from "dayjs";
 import { useUpdateUserBasicInfoMutation } from "@/features/user";
+import { IUser } from "@/types/user.type";
+import { Button, DatePicker, Descriptions, Input, Select } from "antd/lib";
+import dayjs from "dayjs";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import { CiMail } from "react-icons/ci";
+import { FaEdit, FaPhone } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 
 const { Option } = Select;

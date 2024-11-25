@@ -1,6 +1,5 @@
-import React from "react";
-import ReactPlayer from "react-player";
 import { Card } from "antd/lib";
+import ReactPlayer from "react-player";
 
 type Props = {
   videoUrl: string;

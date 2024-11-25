@@ -9,6 +9,27 @@ const reviewApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["feedback"],
     }),
+    getInstructorReviews: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/review/instructor`,
+      }),
+      providesTags: ["feedback"],
+    }),
+    getAllReviewsByReviewTo: builder.query({
+      query: ({ reviewToId }: { reviewToId: string }) => ({
+        method: "GET",
+        url: `/review/by-review-to/${reviewToId}`,
+      }),
+      providesTags: ["feedback"],
+    }),
+    getCourseReviews: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/review/course`,
+      }),
+      providesTags: ["feedback"],
+    }),
     updateFeedback: builder.mutation({
       query: ({
         id,
@@ -37,4 +58,7 @@ export const {
   useGetAllReviewsQuery,
   useUpdateFeedbackMutation,
   useDeleteFeedbackMutation,
+  useGetCourseReviewsQuery,
+  useGetInstructorReviewsQuery,
+  useGetAllReviewsByReviewToQuery,
 } = reviewApi;

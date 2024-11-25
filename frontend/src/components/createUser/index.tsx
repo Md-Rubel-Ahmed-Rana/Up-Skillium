@@ -1,12 +1,12 @@
+import { useUserRegisterMutation } from "@/features/auth";
+import passwordValidationRegx from "@/utils/verifyStrongPassword";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd/lib";
-import { useUserRegisterMutation } from "@/features/auth";
-import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 import { FaUserCircle } from "react-icons/fa";
-import { MdEmail, MdLock } from "react-icons/md";
 import { IoMdCheckmarkCircle, IoMdClose } from "react-icons/io";
-import passwordValidationRegx from "@/utils/verifyStrongPassword";
+import { MdEmail, MdLock } from "react-icons/md";
 
 type FieldType = {
   name: string;
@@ -15,17 +15,33 @@ type FieldType = {
   password: string;
 };
 
-const RegisterForm = () => {
+type Props = {
+  formTitle: string;
+  role: "admin" | "student" | "instructor";
+  successRoute:
+    | "/dashboard/manage-students"
+    | "/dashboard/manage-instructors"
+    | "/dashboard/manage-admins"
+    | "/dashboard/profile-info";
+  buttonText?: string;
+};
+
+const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
+  const [form] = Form.useForm();
   const [register, { isLoading }] = useUserRegisterMutation();
   const router = useRouter();
 
   const handleRegister: FormProps<FieldType>["onFinish"] = async (data) => {
     try {
-      data.role = "student";
+      data.role = role?.toLowerCase();
       const response: any = await register(data);
       if (response?.data?.statusCode === 201) {
         toast.success(response?.data?.message || "User register successful");
-        router.push("/login");
+        if (successRoute) {
+          router.push(successRoute);
+        } else {
+          form.resetFields();
+        }
       } else {
         toast.error(
           response?.data?.message ||
@@ -40,12 +56,16 @@ const RegisterForm = () => {
 
   return (
     <Form
+      form={form}
       name="User Register Form"
       initialValues={{ remember: true }}
       onFinish={handleRegister}
       layout="vertical"
-      className="w-full"
+      className="w-full p-4 bg-gray-50 shadow-md rounded-md"
     >
+      <h2 className="text-lg lg:text-2xl font-semibold text-center">
+        {formTitle}
+      </h2>
       <Form.Item<FieldType>
         label="Name"
         name="name"
@@ -60,7 +80,7 @@ const RegisterForm = () => {
           size="large"
           name="name"
           autoFocus
-          placeholder="Please enter your name"
+          placeholder="Enter instructor name"
           prefix={<FaUserCircle />}
         />
       </Form.Item>
@@ -77,7 +97,7 @@ const RegisterForm = () => {
           type="email"
           size="large"
           name="email"
-          placeholder="Please enter your email"
+          placeholder="Enter instructor email"
           prefix={<MdEmail />}
         />
       </Form.Item>
@@ -151,11 +171,11 @@ const RegisterForm = () => {
           htmlType="submit"
           size="large"
         >
-          {isLoading ? "Loading" : "Create account"}
+          {isLoading ? "Creating..." : `${buttonText || "Register"}`}
         </Button>
       </Form.Item>
     </Form>
   );
 };
 
-export default RegisterForm;
+export default CreateUser;
