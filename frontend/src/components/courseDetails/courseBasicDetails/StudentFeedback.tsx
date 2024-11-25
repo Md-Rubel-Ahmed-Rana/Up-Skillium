@@ -1,6 +1,7 @@
 import { useGetAllReviewsByReviewToQuery } from "@/features/review";
 import { ICourse } from "@/types/course.type";
 import { IReview } from "@/types/review.type";
+import calculateReviewRatings from "@/utils/calculateReviewRatings";
 import { Card, Divider } from "antd/lib";
 import RatingCard from "./RatingCard";
 import ReviewsList from "./ReviewsList";
@@ -14,10 +15,14 @@ const StudentFeedback = ({ course }: Props) => {
     reviewToId: course?.id,
   });
   const reviews = data?.data as IReview[];
+  const ratings = calculateReviewRatings(reviews);
+
   return (
     <Card bordered={false} className="rounded-lg space-y-4">
       <Divider>Student Feedback</Divider>
-      <RatingCard ratings={course?.ratings} />
+      <RatingCard
+        ratings={{ averageRating: ratings, ratingCount: reviews?.length }}
+      />
       <ReviewsList reviews={reviews} isLoading={isLoading} />
     </Card>
   );
