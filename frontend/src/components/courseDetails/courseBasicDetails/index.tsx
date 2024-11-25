@@ -14,7 +14,7 @@ const CourseBasicDetails = () => {
   const course = data?.data as ICourse;
 
   return (
-    <div className="lg:p-6 p-2 max-w-4xl mx-auto space-y-6 bg-gray-50 rounded-lg shadow-md">
+    <div className="p-2 max-w-4xl mx-auto space-y-6 bg-gray-50 rounded-lg shadow-md">
       <IntroductoryVideoPlayer videoUrl={course?.introductoryVideo} />
 
       <CourseTitleCategoryCard

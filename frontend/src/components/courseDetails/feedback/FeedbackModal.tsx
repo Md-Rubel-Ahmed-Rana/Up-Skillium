@@ -89,6 +89,11 @@ const FeedbackModal = () => {
         closable={!isLoading}
       >
         <div className="flex flex-col gap-4">
+          {feedbackType === "User" && (
+            <p className="text-gray-500 font-sans m-0 p-0 text-xs">
+              Instructor feedbacks only shown to admins.
+            </p>
+          )}
           <div className="flex flex-col items-start">
             <p className="font-semibold">Rate your experience:</p>
             <Rate onChange={(value) => setRating(value)} value={rating} />
