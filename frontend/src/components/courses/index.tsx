@@ -1,11 +1,11 @@
 import CoursesBanner from "./CourseBanner";
-import CourseSearchFilterableContainer from "./CourseSearchFilterableContainer";
+import CourseContainer from "./CourseContainer";
 
 const Courses = () => {
   return (
     <div className="py-2 pb-20">
       <CoursesBanner />
-      <CourseSearchFilterableContainer />
+      <CourseContainer />
     </div>
   );
 };
