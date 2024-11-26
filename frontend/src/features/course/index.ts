@@ -44,13 +44,17 @@ const courseApi = apiSlice.injectEndpoints({
       query: ({
         searchText = "",
         filters,
+        page = 1,
+        limit = 6,
       }: {
         searchText?: string;
-        filters: Record<any, any>;
+        filters?: Record<any, any>;
+        page?: number;
+        limit?: number;
       }) => ({
         method: "GET",
         url: `/course/published/courses`,
-        params: { searchText, filters: JSON.stringify(filters) },
+        params: { searchText, filters: JSON.stringify(filters), page, limit },
       }),
       keepUnusedDataFor: 0,
       providesTags: ["course"] as any,

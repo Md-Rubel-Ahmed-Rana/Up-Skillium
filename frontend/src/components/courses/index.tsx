@@ -3,7 +3,7 @@ import CourseContainer from "./CourseContainer";
 
 const Courses = () => {
   return (
-    <div className="py-2 pb-20">
+    <div className="pb-20">
       <CoursesBanner />
       <CourseContainer />
     </div>
