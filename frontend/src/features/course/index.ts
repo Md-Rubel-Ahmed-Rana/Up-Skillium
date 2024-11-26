@@ -37,7 +37,7 @@ const courseApi = apiSlice.injectEndpoints({
         },
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["course"] as any,
+      providesTags: ["course"],
     }),
 
     getAllPublishedCourses: builder.query({
@@ -57,14 +57,14 @@ const courseApi = apiSlice.injectEndpoints({
         params: { searchText, filters: JSON.stringify(filters), page, limit },
       }),
       keepUnusedDataFor: 0,
-      providesTags: ["course"] as any,
+      providesTags: ["course"],
     }),
     getSingleCourse: builder.query({
       query: ({ id }: { id: string }) => ({
         method: "GET",
         url: `/course/${id}`,
       }),
-      providesTags: ["course"] as any,
+      providesTags: ["course"],
     }),
 
     getInstructorCourses: builder.query({
@@ -72,7 +72,7 @@ const courseApi = apiSlice.injectEndpoints({
         method: "GET",
         url: `/course/instructor/${instructorId}`,
       }),
-      providesTags: ["course"] as any,
+      providesTags: ["course"],
     }),
 
     updateCourseImage: builder.mutation({
@@ -81,7 +81,7 @@ const courseApi = apiSlice.injectEndpoints({
         url: `/course/change-course-image/${courseId}`,
         body: image,
       }),
-      invalidatesTags: ["course"] as any,
+      invalidatesTags: ["course"],
     }),
     updateCourseIntroVideo: builder.mutation({
       query: ({ courseId, video }: { courseId: string; video: FormData }) => ({
@@ -89,7 +89,7 @@ const courseApi = apiSlice.injectEndpoints({
         url: `/course/change-course-introductory-video/${courseId}`,
         body: video,
       }),
-      invalidatesTags: ["course"] as any,
+      invalidatesTags: ["course"],
     }),
     updateCourseBasicInfo: builder.mutation({
       query: ({
@@ -103,7 +103,7 @@ const courseApi = apiSlice.injectEndpoints({
         url: `/course/update-basic-info/${courseId}`,
         body: data,
       }),
-      invalidatesTags: ["course"] as any,
+      invalidatesTags: ["course"],
     }),
     updateCoursePrice: builder.mutation({
       query: ({
@@ -117,7 +117,7 @@ const courseApi = apiSlice.injectEndpoints({
         url: `/course/update-price/${courseId}`,
         body: data,
       }),
-      invalidatesTags: ["course"] as any,
+      invalidatesTags: ["course"],
     }),
     updateCourseTagsTechs: builder.mutation({
       query: ({
@@ -131,7 +131,20 @@ const courseApi = apiSlice.injectEndpoints({
         url: `/course/update-tags-techs/${courseId}`,
         body: data,
       }),
-      invalidatesTags: ["course"] as any,
+      invalidatesTags: ["course"],
+    }),
+    reAssignInstructor: builder.mutation({
+      query: ({
+        courseId,
+        instructorId,
+      }: {
+        courseId: string;
+        instructorId: string;
+      }) => ({
+        method: "PATCH",
+        url: `course/update-instructor/${courseId}/${instructorId}`,
+      }),
+      invalidatesTags: ["course", "instructor"],
     }),
   }),
 });
@@ -149,4 +162,5 @@ export const {
   useCreateCourseMutation,
   useGetAllPublishedCoursesQuery,
   useLazyGetAllPublishedCoursesQuery,
+  useReAssignInstructorMutation,
 } = courseApi;

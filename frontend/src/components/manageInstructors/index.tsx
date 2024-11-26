@@ -1,6 +1,6 @@
 import { useGetAllInstructorsQuery } from "@/features/instructor";
 import { IInstructor } from "@/types/instructor.type";
-import { Table } from "antd/lib";
+import { Avatar, Table } from "antd/lib";
 import InstructorActions from "./InstructorActions";
 
 const ManageInstructors = () => {
@@ -13,13 +13,19 @@ const ManageInstructors = () => {
       dataIndex: ["user", "image"],
       key: "image",
       render: (image: string, instructor: IInstructor) => (
-        <div className="w-10 h-10 rounded-full overflow-hidden ring-1">
-          <img
-            src={image}
-            alt={instructor?.user?.name}
-            className="w-full h-full object-cover"
-          />
-        </div>
+        <>
+          {image ? (
+            <img
+              src={image}
+              alt={instructor?.user?.name}
+              className="w-10 h-10 rounded-full overflow-hidden ring-1 object-cover"
+            />
+          ) : (
+            <Avatar className="h-10 w-10 rounded-full bg-blue-600 ring-1">
+              {instructor?.user?.name?.slice(0, 1)?.toUpperCase()}
+            </Avatar>
+          )}
+        </>
       ),
     },
     {
