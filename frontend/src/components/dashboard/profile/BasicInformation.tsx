@@ -12,9 +12,10 @@ const { Option } = Select;
 
 type Props = {
   user: IUser;
+  isProfileOwner: boolean;
 };
 
-const BasicInformation = ({ user }: Props) => {
+const BasicInformation = ({ user, isProfileOwner }: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [isEdit, setIsEdit] = useState(false);
   const [updateInfo, { isLoading }] = useUpdateUserBasicInfoMutation();
@@ -80,10 +81,14 @@ const BasicInformation = ({ user }: Props) => {
               </Button>
             </>
           ) : (
-            <FaEdit
-              onClick={() => setIsEdit(true)}
-              className="cursor-pointer"
-            />
+            <>
+              {isProfileOwner && (
+                <FaEdit
+                  onClick={() => setIsEdit(true)}
+                  className="cursor-pointer"
+                />
+              )}
+            </>
           )}
         </div>
       }

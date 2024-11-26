@@ -1,13 +1,17 @@
 import { IEducation } from "@/types/education.type";
 import { Table, TableProps } from "antd/lib";
+import { useRouter } from "next/router";
 import EducationActions from "./EducationActions";
 
 type Props = {
   educations: IEducation[];
   isLoading: boolean;
+  isProfileOwner: boolean;
 };
 
-const EducationTable = ({ educations, isLoading }: Props) => {
+const EducationTable = ({ educations, isLoading, isProfileOwner }: Props) => {
+  const router = useRouter();
+  const adminPath = router?.pathname as string;
   const columns: TableProps<IEducation>["columns"] = [
     {
       title: "Institution",
@@ -51,7 +55,11 @@ const EducationTable = ({ educations, isLoading }: Props) => {
       title: "Actions",
       key: "actions",
       render: (_: any, education: IEducation) => (
-        <EducationActions education={education} />
+        <>
+          {isProfileOwner || adminPath === "/dashboard/manage-educations" ? (
+            <EducationActions education={education} />
+          ) : null}
+        </>
       ),
     },
   ];
