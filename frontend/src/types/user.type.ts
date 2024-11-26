@@ -14,6 +14,7 @@ type IEmergencyContact = {
 };
 
 export type IUser = {
+  _id: string;
   id: string;
   name: string;
   image: string;

@@ -6,9 +6,10 @@ import UpdateProfilePicture from "./UpdateProfilePicture";
 
 type Props = {
   user: IUser;
+  isProfileOwner: boolean;
 };
 
-const ProfileCard = ({ user }: Props) => {
+const ProfileCard = ({ user, isProfileOwner }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -24,10 +25,12 @@ const ProfileCard = ({ user }: Props) => {
           src={user?.image}
           alt="User Avatar"
         />
-        <FaCamera
-          onClick={handleOpenModal}
-          className="absolute bottom-1 right-1/2 translate-x-1/2 translate-y-1/2 text-white bg-blue-600 p-1 text-3xl rounded-full cursor-pointer"
-        />
+        {isProfileOwner && (
+          <FaCamera
+            onClick={handleOpenModal}
+            className="absolute bottom-1 right-1/2 translate-x-1/2 translate-y-1/2 text-white bg-blue-600 p-1 text-3xl rounded-full cursor-pointer"
+          />
+        )}
       </div>
       <div className="flex flex-col lg:items-start items-center">
         <h2 className="text-lg lg:text-2xl font-semibold">{user?.name}</h2>

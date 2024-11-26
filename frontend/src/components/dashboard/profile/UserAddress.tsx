@@ -1,16 +1,17 @@
 import { useUpdateUserAddressMutation } from "@/features/user";
 import { IUser } from "@/types/user.type";
 import { Button, Descriptions, Input } from "antd/lib";
-import React, { useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 
 type Props = {
   user: IUser;
+  isProfileOwner: boolean;
 };
 
-const UserAddress = ({ user }: Props) => {
+const UserAddress = ({ user, isProfileOwner }: Props) => {
   const isLargeDevice = useMediaQuery({ minWidth: 1024 });
   const [updateAddress, { isLoading }] = useUpdateUserAddressMutation();
   const [isEdit, setIsEdit] = useState(false);
@@ -70,10 +71,14 @@ const UserAddress = ({ user }: Props) => {
               </Button>
             </>
           ) : (
-            <FaEdit
-              onClick={() => setIsEdit(true)}
-              className="cursor-pointer"
-            />
+            <>
+              {isProfileOwner && (
+                <FaEdit
+                  onClick={() => setIsEdit(true)}
+                  className="cursor-pointer"
+                />
+              )}
+            </>
           )}
         </div>
       }

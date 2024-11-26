@@ -1,11 +1,11 @@
 import { useGetAllUsersQuery } from "@/features/user";
 import { IUser } from "@/types/user.type";
-import { Button, Table } from "antd/lib";
+import { Table } from "antd/lib";
+import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 
 const ManageUsers = () => {
   const { data, isLoading } = useGetAllUsersQuery({});
   const users = data?.data as IUser[];
-
   const columns = [
     {
       title: "Image",
@@ -59,9 +59,12 @@ const ManageUsers = () => {
       title: "Actions",
       key: "actions",
       render: (_: any, user: IUser) => (
-        <div>
-          <Button type="primary">View Profile</Button>
-        </div>
+        <PublicProfileRedirectLink
+          buttonType="primary"
+          isButton={true}
+          linkText="View Profile"
+          user={user}
+        />
       ),
     },
   ];
@@ -71,7 +74,7 @@ const ManageUsers = () => {
       <Table
         columns={columns}
         dataSource={users}
-        rowKey={(user) => user?.id}
+        rowKey={(user) => user?.id || user?._id}
         pagination={{ pageSize: 10 }}
         bordered
         loading={isLoading}

@@ -12,7 +12,11 @@ const ManageEducations = () => {
         Manage Educations
       </h2>
       <div className="overflow-x-auto">
-        <EducationTable educations={educations} isLoading={isLoading} />
+        <EducationTable
+          isProfileOwner={true}
+          educations={educations}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );
