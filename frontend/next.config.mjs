@@ -22,6 +22,9 @@ const nextConfig = {
       {
         hostname: "ibb.co.com",
       },
+      {
+        hostname: "storage.googleapis.com",
+      },
     ],
   },
 };
