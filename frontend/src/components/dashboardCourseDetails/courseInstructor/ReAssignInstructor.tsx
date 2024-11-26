@@ -1,12 +1,19 @@
+import { useReAssignInstructorMutation } from "@/features/course";
 import { useGetAllInstructorsQuery } from "@/features/instructor";
 import { IInstructor } from "@/types/instructor.type";
 import { Avatar, Modal, Select } from "antd/lib";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FaEdit } from "react-icons/fa";
 
 const ReAssignInstructor = () => {
+  const { query } = useRouter();
+  const courseId = query?.courseId as string;
   const [isReAssign, setIsReAssign] = useState(false);
   const { data, isLoading } = useGetAllInstructorsQuery({});
+  const [reAssign, { isLoading: isAssigning }] =
+    useReAssignInstructorMutation();
   const instructors = (data?.data as IInstructor[]) || [];
   const [selectedInstructor, setSelectedInstructor] =
     useState<IInstructor | null>(null);
@@ -18,6 +25,31 @@ const ReAssignInstructor = () => {
     setSelectedInstructor(instructor as IInstructor);
   };
 
+  const handleReAssignInstructor = async () => {
+    try {
+      const result: any = await reAssign({
+        courseId,
+        instructorId: selectedInstructor?.user?.id as string,
+      });
+
+      if (result?.data?.statusCode === 200) {
+        toast.success(
+          result?.data?.message || "Instructor assigned successfully!"
+        );
+        setIsReAssign(false);
+      } else {
+        toast.error(
+          result?.data?.error?.message ||
+            result?.error?.data?.message ||
+            result?.error?.message ||
+            "Failed to re-assign instructor"
+        );
+      }
+    } catch (error: any) {
+      toast.error(`Failed to re-assign instructor. Error: ${error?.message}`);
+    }
+  };
+
   return (
     <>
       <FaEdit onClick={() => setIsReAssign(true)} className="cursor-pointer" />
@@ -25,9 +57,17 @@ const ReAssignInstructor = () => {
       <Modal
         open={isReAssign}
         title="Re-Assign Instructor"
-        okText="Re-Assign"
+        okText={isAssigning ? "Assigning..." : "Re-Assign"}
         onCancel={() => setIsReAssign(false)}
         loading={isLoading}
+        onOk={handleReAssignInstructor}
+        maskClosable={!isAssigning}
+        okButtonProps={{
+          disabled: isAssigning,
+          loading: isAssigning,
+          iconPosition: "end",
+        }}
+        cancelButtonProps={{ disabled: isAssigning }}
       >
         <div>
           <Select
