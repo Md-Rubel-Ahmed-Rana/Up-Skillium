@@ -7,6 +7,8 @@ const router = Router();
 
 router.get("/", UserController.findUsers);
 
+router.get("/:id", UserController.getSingleUser);
+
 router.patch("/:id", UserController.updateUser);
 
 router.patch("/change-password/:userId", UserController.changePassword);

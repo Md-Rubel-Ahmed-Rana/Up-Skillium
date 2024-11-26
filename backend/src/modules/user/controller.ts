@@ -16,6 +16,16 @@ class Controller extends RootController {
       data: users,
     });
   });
+  getSingleUser = this.catchAsync(async (req: Request, res: Response) => {
+    const id = req.params?.id as unknown as Types.ObjectId;
+    const user = await UserService.findUserById(id);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "User found successfully",
+      data: user,
+    });
+  });
   updateUser = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await UserService.updateUser(id, req.body);
