@@ -1,6 +1,7 @@
 import { IInstructor } from "@/types/course.type";
 import { Descriptions } from "antd/lib";
 import { useMediaQuery } from "react-responsive";
+import ReAssignInstructor from "./ReAssignInstructor";
 
 type Props = {
   instructor: IInstructor;
@@ -11,7 +12,12 @@ const CourseInstructor = ({ instructor }: Props) => {
 
   return (
     <Descriptions
-      title={"Course Instructor"}
+      title={
+        <div className="flex items-center gap-2">
+          <span>Course Instructor</span>
+          <ReAssignInstructor />
+        </div>
+      }
       column={2}
       bordered
       className="mt-4 pb-4"
