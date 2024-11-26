@@ -30,6 +30,17 @@ class Controller extends rootController_1.default {
                 data: users,
             });
         }));
+        this.getSingleUser = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            const id = (_a = req.params) === null || _a === void 0 ? void 0 : _a.id;
+            const user = yield service_1.UserService.findUserById(id);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "User found successfully",
+                data: user,
+            });
+        }));
         this.updateUser = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             yield service_1.UserService.updateUser(id, req.body);

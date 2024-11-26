@@ -36,7 +36,7 @@ class Service {
   async findUserByEmail(email: string) {
     return User.findOne({ email: email });
   }
-  async findUserById(id: string) {
+  async findUserById(id: string | Types.ObjectId) {
     const user = await User.findById(id)
       .select({ password: 0 })
       .populate("role");
@@ -62,9 +62,7 @@ class Service {
       .select({ password: 0 })
       .populate("role")
       .skip(skip)
-      .limit(limit)
-      .lean()
-      .exec();
+      .limit(limit);
     return users;
   }
   async findUserByEmailWithPassword(email: string) {

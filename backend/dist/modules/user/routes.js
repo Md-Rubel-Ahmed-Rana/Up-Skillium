@@ -10,6 +10,7 @@ const multer_1 = __importDefault(require("../../config/multer"));
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 const router = (0, express_1.Router)();
 router.get("/", controller_1.UserController.findUsers);
+router.get("/:id", controller_1.UserController.getSingleUser);
 router.patch("/:id", controller_1.UserController.updateUser);
 router.patch("/change-password/:userId", controller_1.UserController.changePassword);
 router.patch("/update-basic-info/:id", controller_1.UserController.updateUserBasicInfo);

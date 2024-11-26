@@ -68,9 +68,7 @@ class Service {
                 .select({ password: 0 })
                 .populate("role")
                 .skip(skip)
-                .limit(limit)
-                .lean()
-                .exec();
+                .limit(limit);
             return users;
         });
     }
