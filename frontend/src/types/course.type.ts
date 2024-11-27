@@ -33,7 +33,7 @@ export type ICourse = {
   status: string;
   ratings: {
     averageRating: number;
-    ratingCount: number;
+    totalReviews: number;
   };
   createdAt: Date;
   updatedAt: Date;
