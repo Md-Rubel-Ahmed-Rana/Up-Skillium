@@ -1,6 +1,7 @@
 import { useGetAllAdminsQuery } from "@/features/admin";
 import { IAdmin } from "@/types/admin.type";
-import { Button, Table } from "antd/lib";
+import { Table } from "antd/lib";
+import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 
 const ManageAdmins = () => {
   const { data, isLoading } = useGetAllAdminsQuery({});
@@ -53,7 +54,14 @@ const ManageAdmins = () => {
     {
       title: "Actions",
       key: "actions",
-      render: (_: any, admin: IAdmin) => <Button>View Profile</Button>,
+      render: (_: any, admin: IAdmin) => (
+        <PublicProfileRedirectLink
+          buttonType="primary"
+          isButton={true}
+          linkText="View Profile"
+          user={admin?.user}
+        />
+      ),
     },
   ];
 

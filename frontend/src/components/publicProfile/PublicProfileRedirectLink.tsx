@@ -6,6 +6,8 @@ type Props = {
   user: IUser;
   linkText?: "Profile" | "View Profile";
   isButton: boolean;
+  buttonStyles?: string;
+  linkStyles?: string;
   buttonType: "dashed" | "default" | "primary";
 };
 
@@ -14,19 +16,25 @@ const PublicProfileRedirectLink = ({
   linkText = "View Profile",
   isButton,
   buttonType = "default",
+  buttonStyles,
+  linkStyles,
 }: Props) => {
   return (
     <>
       {isButton ? (
         <Link
+          className={linkStyles}
           href={`/profile/${user?.id || user?._id}?name=${user?.name}&email=${
             user?.email
           }`}
         >
-          <Button type={buttonType}>{linkText}</Button>
+          <Button className={buttonStyles} type={buttonType}>
+            {linkText}
+          </Button>
         </Link>
       ) : (
         <Link
+          className={linkStyles}
           href={`/profile/${user?.id}?name=${user?.name}&email=${user?.email}`}
         >
           {linkText}

@@ -1,3 +1,5 @@
+import { IUser } from "./user.type";
+
 type ICourse = {
   id: string;
   title: string;
@@ -8,13 +10,6 @@ type ICourse = {
 type IRatings = {
   averageRating: number;
   totalReviews: number;
-};
-
-type IUser = {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
 };
 
 export type IInstructor = {
