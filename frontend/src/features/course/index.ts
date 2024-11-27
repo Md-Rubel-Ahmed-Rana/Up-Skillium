@@ -146,6 +146,13 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["course", "instructor"],
     }),
+    getCoursesByCategory: builder.query({
+      query: ({ category }: { category: string }) => ({
+        method: "GET",
+        url: `/course/category/courses/${category}`,
+      }),
+      providesTags: ["course"],
+    }),
   }),
 });
 
@@ -163,4 +170,5 @@ export const {
   useGetAllPublishedCoursesQuery,
   useLazyGetAllPublishedCoursesQuery,
   useReAssignInstructorMutation,
+  useGetCoursesByCategoryQuery,
 } = courseApi;
