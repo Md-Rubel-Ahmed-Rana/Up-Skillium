@@ -34,7 +34,7 @@ const courseSchema = new mongoose_1.Schema({
     students: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "User" }],
     ratings: {
         averageRating: { type: Number, default: 0 },
-        ratingCount: { type: Number, default: 0 },
+        totalReviews: { type: Number, default: 0 },
     },
     reviews: [{ type: mongoose_1.Schema.Types.ObjectId, ref: "Review" }],
     status: {

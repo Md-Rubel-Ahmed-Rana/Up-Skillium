@@ -8,6 +8,8 @@ import {
 import { Course } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { InstructorService } from "../instructor/service";
+import incrementAverageRating from "../../utils/incrementAverageRating";
+import ApiError from "../../shared/apiError";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -243,6 +245,26 @@ class Service {
     }
     await Course.findByIdAndUpdate(id, {
       $set: { introductoryVideo: videoUrl },
+    });
+  }
+  async incrementRatings(id: Types.ObjectId, newRating: number): Promise<void> {
+    const course = await Course.findById(id);
+
+    if (!course) {
+      throw new ApiError(404, "Course not found");
+    }
+
+    await Course.findByIdAndUpdate(id, {
+      $set: {
+        "ratings.averageRating": incrementAverageRating(
+          course?.ratings?.totalReviews as number,
+          course?.ratings?.averageRating as number,
+          newRating
+        ),
+      },
+      $inc: {
+        "ratings.totalReviews": 1,
+      },
     });
   }
 }

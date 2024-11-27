@@ -16,6 +16,8 @@ exports.InstructorService = void 0;
 const model_1 = require("./model");
 const generateTeacherId_1 = __importDefault(require("./generateTeacherId"));
 const service_1 = require("../course/service");
+const incrementAverageRating_1 = __importDefault(require("../../utils/incrementAverageRating"));
+const apiError_1 = __importDefault(require("../../shared/apiError"));
 class Service {
     createNewInstructor(userId) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -61,6 +63,23 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const students = yield service_1.CourseService.getMyStudentsByInstructor(instructorId);
             return students;
+        });
+    }
+    incrementRatings(userId, newRating) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const instructor = yield model_1.Instructor.findOne({ user: userId });
+            if (!instructor) {
+                throw new apiError_1.default(404, "Instructor not found");
+            }
+            yield model_1.Instructor.findOneAndUpdate({ user: userId }, {
+                $set: {
+                    "ratings.averageRating": (0, incrementAverageRating_1.default)((_a = instructor === null || instructor === void 0 ? void 0 : instructor.ratings) === null || _a === void 0 ? void 0 : _a.totalReviews, (_b = instructor === null || instructor === void 0 ? void 0 : instructor.ratings) === null || _b === void 0 ? void 0 : _b.averageRating, newRating),
+                },
+                $inc: {
+                    "ratings.totalReviews": 1,
+                },
+            });
         });
     }
 }
