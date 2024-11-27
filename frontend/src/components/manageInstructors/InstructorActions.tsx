@@ -1,6 +1,7 @@
 import { IInstructor } from "@/types/instructor.type";
-import { Button, Dropdown, MenuProps } from "antd/lib";
+import { Dropdown, MenuProps } from "antd/lib";
 import { FiMoreVertical } from "react-icons/fi";
+import UserActiveInactiveButton from "../manageUsers/UserActiveInactiveButton";
 import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 import AssignCourse from "./AssignCourse";
 
@@ -30,13 +31,14 @@ const InstructorActions = ({ instructor }: Props) => {
     {
       key: "3",
       label: (
-        <Button
-          type="dashed"
-          danger
-          className="text-red-500 hover:text-red-700 w-full"
-        >
-          Activate
-        </Button>
+        <UserActiveInactiveButton
+          buttonType="default"
+          buttonStyles="w-full"
+          user={{
+            id: instructor?.user?.id || instructor?.user?._id,
+            status: instructor?.user?.status as "active" | "inactive",
+          }}
+        />
       ),
     },
   ];

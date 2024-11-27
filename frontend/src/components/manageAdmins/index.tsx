@@ -1,6 +1,7 @@
 import { useGetAllAdminsQuery } from "@/features/admin";
 import { IAdmin } from "@/types/admin.type";
 import { Table } from "antd/lib";
+import UserActiveInactiveButton from "../manageUsers/UserActiveInactiveButton";
 import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 
 const ManageAdmins = () => {
@@ -55,12 +56,21 @@ const ManageAdmins = () => {
       title: "Actions",
       key: "actions",
       render: (_: any, admin: IAdmin) => (
-        <PublicProfileRedirectLink
-          buttonType="primary"
-          isButton={true}
-          linkText="View Profile"
-          user={admin?.user}
-        />
+        <div className="flex items-center gap-2">
+          <PublicProfileRedirectLink
+            buttonType="primary"
+            isButton={true}
+            linkText="Profile"
+            user={admin?.user}
+          />
+          <UserActiveInactiveButton
+            buttonType="default"
+            user={{
+              id: admin?.user?.id || admin?.user?._id,
+              status: admin?.user?.status as "active" | "inactive",
+            }}
+          />
+        </div>
       ),
     },
   ];
