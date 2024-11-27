@@ -169,6 +169,17 @@ class Controller extends rootController_1.default {
                 data: courses,
             });
         }));
+        this.getCoursesByCategory = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            const category = (_a = req.params) === null || _a === void 0 ? void 0 : _a.category;
+            const courses = yield service_1.CourseService.getCoursesByCategory(category);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Courses retrieved by category successfully",
+                data: courses,
+            });
+        }));
     }
 }
 exports.CourseController = new Controller();

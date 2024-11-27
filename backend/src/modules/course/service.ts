@@ -281,6 +281,21 @@ class Service {
 
     return courses;
   }
+  async getCoursesByCategory(
+    category: string
+  ): Promise<{ courses: ICourse[]; otherCourses: ICourse[] }> {
+    const courses = await Course.find({
+      category: category,
+      status: "published",
+    });
+
+    const otherCourses = await Course.find({
+      category: { $ne: category },
+      status: "published",
+    });
+
+    return { courses, otherCourses };
+  }
 }
 
 export const CourseService = new Service();

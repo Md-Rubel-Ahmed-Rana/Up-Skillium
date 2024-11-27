@@ -185,6 +185,18 @@ class Controller extends RootController {
       });
     }
   );
+  getCoursesByCategory = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const category = req.params?.category as string;
+      const courses = await CourseService.getCoursesByCategory(category);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Courses retrieved by category successfully",
+        data: courses,
+      });
+    }
+  );
 }
 
 export const CourseController = new Controller();

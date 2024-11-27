@@ -21,6 +21,11 @@ router.get("/related-courses", CourseController.getMatchedRelatedCourses);
 
 router.get("/published/courses", CourseController.getOnlyPublishedCourses);
 
+router.get(
+  "/category/courses/:category",
+  CourseController.getCoursesByCategory
+);
+
 router.get("/:id", CourseController.getSingleCourse);
 
 router.get(

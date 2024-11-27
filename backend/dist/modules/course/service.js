@@ -243,5 +243,18 @@ class Service {
             return courses;
         });
     }
+    getCoursesByCategory(category) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const courses = yield model_1.Course.find({
+                category: category,
+                status: "published",
+            });
+            const otherCourses = yield model_1.Course.find({
+                category: { $ne: category },
+                status: "published",
+            });
+            return { courses, otherCourses };
+        });
+    }
 }
 exports.CourseService = new Service();
