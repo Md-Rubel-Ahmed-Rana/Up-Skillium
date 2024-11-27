@@ -96,6 +96,19 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    activeInactiveUserAccount: builder.mutation({
+      query: ({
+        userId,
+        status,
+      }: {
+        userId: string;
+        status: "active" | "inactive";
+      }) => ({
+        method: "PATCH",
+        url: `/user/update-status/${userId}/${status}`,
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -107,4 +120,5 @@ export const {
   useGetAllUsersQuery,
   useChangePasswordMutation,
   useGetSingleUserQuery,
+  useActiveInactiveUserAccountMutation,
 } = userApi;

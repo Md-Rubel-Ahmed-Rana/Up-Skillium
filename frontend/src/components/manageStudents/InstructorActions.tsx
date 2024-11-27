@@ -43,6 +43,7 @@ const StudentActions = ({ student }: Props) => {
           user={{
             id: student?.user?.id || student?.user?._id,
             status: student?.user?.status as "active" | "inactive",
+            userName: student?.user?.name,
           }}
         />
       ),
