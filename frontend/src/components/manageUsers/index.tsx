@@ -72,6 +72,7 @@ const ManageUsers = () => {
             user={{
               id: user?.id || user?._id,
               status: user?.status as "active" | "inactive",
+              userName: user?.name,
             }}
           />
         </div>
