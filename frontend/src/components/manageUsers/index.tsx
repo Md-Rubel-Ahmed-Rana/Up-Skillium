@@ -1,8 +1,9 @@
 import { useGetAllUsersQuery } from "@/features/user";
 import { IUser } from "@/types/user.type";
-import { Table } from "antd/lib";
+import { Avatar, Table } from "antd/lib";
 import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 import UserActiveInactiveButton from "./UserActiveInactiveButton";
+import UserDeleteButton from "./UserDeleteButton";
 
 const ManageUsers = () => {
   const { data, isLoading } = useGetAllUsersQuery({});
@@ -14,11 +15,17 @@ const ManageUsers = () => {
       key: "image",
       render: (image: string, user: IUser) => (
         <div className="w-10 h-10 rounded-full overflow-hidden ring-1">
-          <img
-            src={image}
-            alt={user?.name}
-            className="w-full h-full object-cover"
-          />
+          {image ? (
+            <img
+              src={image}
+              alt={user?.name}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <Avatar className="w-full h-full object-cover">
+              {user?.name?.slice(0, 1).toUpperCase()}
+            </Avatar>
+          )}
         </div>
       ),
     },
@@ -72,6 +79,13 @@ const ManageUsers = () => {
             user={{
               id: user?.id || user?._id,
               status: user?.status as "active" | "inactive",
+              userName: user?.name,
+            }}
+          />
+          <UserDeleteButton
+            buttonType="primary"
+            user={{
+              id: user?.id || user?._id,
               userName: user?.name,
             }}
           />

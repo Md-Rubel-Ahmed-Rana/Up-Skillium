@@ -2,6 +2,7 @@ import { IStudent } from "@/types/student.type";
 import { Button, Dropdown, MenuProps } from "antd/lib";
 import { FiMoreVertical } from "react-icons/fi";
 import UserActiveInactiveButton from "../manageUsers/UserActiveInactiveButton";
+import UserDeleteButton from "../manageUsers/UserDeleteButton";
 import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 
 type Props = {
@@ -51,9 +52,14 @@ const StudentActions = ({ student }: Props) => {
     {
       key: "4",
       label: (
-        <Button className="w-full" danger>
-          Delete
-        </Button>
+        <UserDeleteButton
+          buttonType="primary"
+          buttonStyles="w-full"
+          user={{
+            id: student?.user?.id || student?.user?._id,
+            userName: student?.user?.name,
+          }}
+        />
       ),
     },
   ];
