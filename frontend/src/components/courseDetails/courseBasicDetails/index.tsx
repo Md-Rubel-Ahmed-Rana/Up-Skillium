@@ -20,6 +20,7 @@ const CourseBasicDetails = () => {
       <CourseTitleCategoryCard
         title={course?.title}
         category={course?.category}
+        totalStudents={course?.students?.length}
       />
 
       <InstructorCard instructor={course?.instructor} />
