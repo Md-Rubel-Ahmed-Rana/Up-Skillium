@@ -36,7 +36,17 @@ const CoursesBanner: React.FC = () => {
                   {availableCategories.map((category) => (
                     <Link
                       key={category}
-                      href={`/courses/category/${makeCategoryAsUrl(category)}`}
+                      href={`/courses/category/${makeCategoryAsUrl(
+                        category
+                      )}?category=${course?.category}&courseTitle=${
+                        course?.title
+                      }&description=${
+                        course?.description
+                      }&techs=${course?.technologies?.join(
+                        "-"
+                      )}&tags=${course?.tags?.join("-")}&courseId=${
+                        course?.id
+                      }`}
                     >
                       <Button
                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-lg"
