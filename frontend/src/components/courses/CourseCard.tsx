@@ -78,9 +78,15 @@ const CourseCard = ({ course }: Props) => {
       </div>
       <div className="flex justify-between items-center mt-5">
         <div className="flex flex-col items-center space-y-2">
-          <Rate allowHalf defaultValue={2.5} />
+          <Rate
+            allowHalf={true}
+            count={5}
+            disabled
+            value={course?.ratings?.averageRating || 0}
+            defaultValue={course?.ratings?.averageRating || 0}
+          />
           <span className="text-sm text-gray-500">
-            ({course?.ratings?.ratingCount || 0} Ratings)
+            ({course?.ratings?.totalReviews || 0} Ratings)
           </span>
         </div>
         <div className="flex flex-col font-semibold">

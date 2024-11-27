@@ -47,7 +47,7 @@ const CourseContainer = () => {
     trigger,
   ]);
 
-  const courses = ((data?.data || data?.data?.courses) as ICourse[]) || [];
+  const courses = (data?.data?.courses as ICourse[]) || [];
   const totalCourses = (data?.data?.totalCourse || courses?.length) as number;
 
   return (

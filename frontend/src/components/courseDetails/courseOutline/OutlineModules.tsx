@@ -11,7 +11,7 @@ const OutlineModules = ({ modules }: Props) => {
       <div className="space-y-6">
         <div className="text-center">
           <Typography.Title level={2} className="text-blue-600">
-            Outline of the Course
+            Course Outline
           </Typography.Title>
           <Typography.Text className="text-gray-500">
             Dive into the modules covered in this course
