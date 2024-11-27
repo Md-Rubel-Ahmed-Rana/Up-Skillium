@@ -49,12 +49,12 @@ class Controller extends rootController_1.default {
             const filters = req.query.filters
                 ? JSON.parse(req.query.filters)
                 : {};
-            const courses = yield service_1.CourseService.getOnlyPublishedCourses(searchText, page, limit, filters);
+            const data = yield service_1.CourseService.getOnlyPublishedCourses(searchText, page, limit, filters);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
                 message: "Published courses fetched successfully",
-                data: courses,
+                data: data,
             });
         }));
         this.getSingleCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -156,6 +156,17 @@ class Controller extends rootController_1.default {
                 success: true,
                 message: "Course instructor updated successfully",
                 data: null,
+            });
+        }));
+        this.getMatchedRelatedCourses = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            const relatableText = (_a = req.query) === null || _a === void 0 ? void 0 : _a.relatableText;
+            const courses = yield service_1.CourseService.getMatchedRelatedCourses(relatableText);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Related courses retrieved successfully",
+                data: courses,
             });
         }));
     }

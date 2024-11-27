@@ -46,18 +46,17 @@ class Controller extends RootController {
         ? JSON.parse(req.query.filters as string)
         : {};
 
-      const courses = await CourseService.getOnlyPublishedCourses(
+      const data = await CourseService.getOnlyPublishedCourses(
         searchText,
         page,
         limit,
         filters
       );
-
       this.apiResponse(res, {
         statusCode: 200,
         success: true,
         message: "Published courses fetched successfully",
-        data: courses,
+        data: data,
       });
     }
   );

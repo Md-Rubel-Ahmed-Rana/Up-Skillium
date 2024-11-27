@@ -78,7 +78,7 @@ class Service {
       maxPrice?: number;
       status?: string;
     } = {}
-  ): Promise<ICourse[]> {
+  ): Promise<{ courses: ICourse[]; totalCourse: number }> {
     const searchQuery = search
       ? {
           $or: [
@@ -116,7 +116,9 @@ class Service {
       .skip(skip)
       .limit(limit);
 
-    return courses;
+    const total = await Course.countDocuments({ status: "published" });
+
+    return { courses, totalCourse: total };
   }
   async getSingleCourse(id: Types.ObjectId): Promise<ICourse | null> {
     return await Course.findById(id).populate([
@@ -271,9 +273,6 @@ class Service {
       $text: { $search: relatableText, $caseSensitive: false },
       status: "published",
     }).limit(5);
-
-    console.log(courses);
-
     if (courses?.length === 0) {
       courses = await Course.find({ status: "published" })
         .sort({ createdAt: -1 })

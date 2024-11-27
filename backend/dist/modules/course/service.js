@@ -79,9 +79,9 @@ class Service {
                 },
             ])
                 .skip(skip)
-                .limit(limit)
-                .exec();
-            return courses;
+                .limit(limit);
+            const total = yield model_1.Course.countDocuments({ status: "published" });
+            return { courses, totalCourse: total };
         });
     }
     getSingleCourse(id) {
@@ -227,6 +227,20 @@ class Service {
                     "ratings.totalReviews": 1,
                 },
             });
+        });
+    }
+    getMatchedRelatedCourses(relatableText) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let courses = yield model_1.Course.find({
+                $text: { $search: relatableText, $caseSensitive: false },
+                status: "published",
+            }).limit(5);
+            if ((courses === null || courses === void 0 ? void 0 : courses.length) === 0) {
+                courses = yield model_1.Course.find({ status: "published" })
+                    .sort({ createdAt: -1 })
+                    .limit(5);
+            }
+            return courses;
         });
     }
 }

@@ -43,4 +43,5 @@ const courseSchema = new mongoose_1.Schema({
         default: "draft",
     },
 }, schemaOption_1.default);
+courseSchema.index({ title: "text", description: "text", tags: "text" });
 exports.Course = (0, mongoose_1.model)("Course", courseSchema);
