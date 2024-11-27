@@ -16,6 +16,7 @@ router.post("/create", multer_1.default.fields([
 router.get("/", controller_1.CourseController.getCourses);
 router.get("/related-courses", controller_1.CourseController.getMatchedRelatedCourses);
 router.get("/published/courses", controller_1.CourseController.getOnlyPublishedCourses);
+router.get("/category/courses/:category", controller_1.CourseController.getCoursesByCategory);
 router.get("/:id", controller_1.CourseController.getSingleCourse);
 router.get("/instructor/:instructorId", controller_1.CourseController.getCoursesByInstructor);
 router.delete("/:id", controller_1.CourseController.deleteCourse);
