@@ -43,4 +43,6 @@ const courseSchema = new Schema<ICourse>(
   schemaOption
 );
 
+courseSchema.index({ title: "text", description: "text", tags: "text" });
+
 export const Course = model("Course", courseSchema);

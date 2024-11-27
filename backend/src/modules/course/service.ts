@@ -114,8 +114,7 @@ class Service {
         },
       ])
       .skip(skip)
-      .limit(limit)
-      .exec();
+      .limit(limit);
 
     return courses;
   }
@@ -266,6 +265,22 @@ class Service {
         "ratings.totalReviews": 1,
       },
     });
+  }
+  async getMatchedRelatedCourses(relatableText: string): Promise<ICourse[]> {
+    let courses = await Course.find({
+      $text: { $search: relatableText, $caseSensitive: false },
+      status: "published",
+    }).limit(5);
+
+    console.log(courses);
+
+    if (courses?.length === 0) {
+      courses = await Course.find({ status: "published" })
+        .sort({ createdAt: -1 })
+        .limit(5);
+    }
+
+    return courses;
   }
 }
 

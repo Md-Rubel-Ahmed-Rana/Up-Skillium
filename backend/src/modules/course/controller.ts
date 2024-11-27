@@ -172,6 +172,20 @@ class Controller extends RootController {
       });
     }
   );
+  getMatchedRelatedCourses = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const relatableText = req.query?.relatableText as string;
+      const courses = await CourseService.getMatchedRelatedCourses(
+        relatableText
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Related courses retrieved successfully",
+        data: courses,
+      });
+    }
+  );
 }
 
 export const CourseController = new Controller();
