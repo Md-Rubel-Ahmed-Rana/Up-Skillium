@@ -1,6 +1,7 @@
 import { IStudent } from "@/types/student.type";
 import { Button, Dropdown, MenuProps } from "antd/lib";
 import { FiMoreVertical } from "react-icons/fi";
+import UserActiveInactiveButton from "../manageUsers/UserActiveInactiveButton";
 import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 
 type Props = {
@@ -36,13 +37,14 @@ const StudentActions = ({ student }: Props) => {
     {
       key: "3",
       label: (
-        <Button
-          type="dashed"
-          danger
-          className="text-red-500 hover:text-red-700 w-full"
-        >
-          Activate
-        </Button>
+        <UserActiveInactiveButton
+          buttonType="default"
+          buttonStyles="w-full"
+          user={{
+            id: student?.user?.id || student?.user?._id,
+            status: student?.user?.status as "active" | "inactive",
+          }}
+        />
       ),
     },
     {

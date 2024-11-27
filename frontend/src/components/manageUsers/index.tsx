@@ -2,6 +2,7 @@ import { useGetAllUsersQuery } from "@/features/user";
 import { IUser } from "@/types/user.type";
 import { Table } from "antd/lib";
 import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
+import UserActiveInactiveButton from "./UserActiveInactiveButton";
 
 const ManageUsers = () => {
   const { data, isLoading } = useGetAllUsersQuery({});
@@ -59,12 +60,21 @@ const ManageUsers = () => {
       title: "Actions",
       key: "actions",
       render: (_: any, user: IUser) => (
-        <PublicProfileRedirectLink
-          buttonType="primary"
-          isButton={true}
-          linkText="View Profile"
-          user={user}
-        />
+        <div className="flex items-center gap-2">
+          <PublicProfileRedirectLink
+            buttonType="primary"
+            isButton={true}
+            linkText="Profile"
+            user={user}
+          />
+          <UserActiveInactiveButton
+            buttonType="default"
+            user={{
+              id: user?.id || user?._id,
+              status: user?.status as "active" | "inactive",
+            }}
+          />
+        </div>
       ),
     },
   ];
