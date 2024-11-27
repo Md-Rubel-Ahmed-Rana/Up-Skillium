@@ -28,11 +28,14 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const isExist = yield service_1.UserService.findUserByEmailWithPassword(email);
             if (!isExist) {
-                throw new apiError_1.default(404, "User not found!");
+                throw new apiError_1.default(404, "User not found. Please check your email and try again.");
             }
-            const isMatchedPassword = yield bcrypt_1.BcryptInstance.compare(password, isExist === null || isExist === void 0 ? void 0 : isExist.password);
+            if ((isExist === null || isExist === void 0 ? void 0 : isExist.status) === "inactive") {
+                throw new apiError_1.default(403, "Your account is inactive. Please contact the support team or an administrator for assistance.");
+            }
+            const isMatchedPassword = yield bcrypt_1.BcryptInstance.compare(password, isExist.password);
             if (!isMatchedPassword) {
-                throw new apiError_1.default(401, "Password doesn't match");
+                throw new apiError_1.default(401, "Invalid password. Please try again or reset your password.");
             }
             const jwtPayload = {
                 id: isExist === null || isExist === void 0 ? void 0 : isExist._id,

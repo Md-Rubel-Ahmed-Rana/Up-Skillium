@@ -103,6 +103,18 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.activeOrInactiveAccount = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _a;
+            const id = req.params.id;
+            const status = (_a = req.params) === null || _a === void 0 ? void 0 : _a.status;
+            yield service_1.UserService.activeOrInactiveAccount(id, status);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: `User account has been ${status} successfully!`,
+                data: null,
+            });
+        }));
     }
 }
 exports.UserController = new Controller();

@@ -24,19 +24,23 @@ const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddlewa
 class Service {
     createUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
-            const userRole = user.role;
+            const existingUser = yield model_1.User.findOne({ email: user === null || user === void 0 ? void 0 : user.email });
+            if (existingUser) {
+                throw new apiError_1.default(409, "Email already exists. Please use a different email.");
+            }
+            const userRole = user === null || user === void 0 ? void 0 : user.role;
             const role = yield service_1.RoleService.getRoleByRoleName(userRole);
             user.password = yield bcrypt_1.BcryptInstance.hash(user.password);
             user.role = role === null || role === void 0 ? void 0 : role.id;
             const newUser = yield model_1.User.create(user);
             if ((role === null || role === void 0 ? void 0 : role.name) === "student") {
-                yield service_2.StudentService.createNewStudent(newUser._id);
+                yield service_2.StudentService.createNewStudent(newUser === null || newUser === void 0 ? void 0 : newUser._id);
             }
             else if ((role === null || role === void 0 ? void 0 : role.name) === "instructor") {
-                yield service_3.InstructorService.createNewInstructor(newUser._id);
+                yield service_3.InstructorService.createNewInstructor(newUser === null || newUser === void 0 ? void 0 : newUser._id);
             }
             else if ((role === null || role === void 0 ? void 0 : role.name) === "admin") {
-                yield service_4.AdminService.createNewAdmin(newUser._id);
+                yield service_4.AdminService.createNewAdmin(newUser === null || newUser === void 0 ? void 0 : newUser._id);
             }
         });
     }
