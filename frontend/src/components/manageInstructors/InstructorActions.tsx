@@ -1,6 +1,7 @@
 import { IInstructor } from "@/types/instructor.type";
 import { Button, Dropdown, MenuProps } from "antd/lib";
 import { FiMoreVertical } from "react-icons/fi";
+import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 import AssignCourse from "./AssignCourse";
 
 type Props = {
@@ -12,9 +13,14 @@ const InstructorActions = ({ instructor }: Props) => {
     {
       key: "1",
       label: (
-        <Button type="primary" className="bg-blue-500 hover:bg-blue-600 w-full">
-          View Profile
-        </Button>
+        <PublicProfileRedirectLink
+          buttonType="primary"
+          isButton={true}
+          linkText="View Profile"
+          user={instructor?.user}
+          buttonStyles="w-full"
+          linkStyles="w-full"
+        />
       ),
     },
     {

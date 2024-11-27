@@ -1,19 +1,25 @@
 import { IStudent } from "@/types/student.type";
 import { Button, Dropdown, MenuProps } from "antd/lib";
 import { FiMoreVertical } from "react-icons/fi";
+import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 
 type Props = {
   student: IStudent;
 };
 
-const StudentActions = ({}: Props) => {
+const StudentActions = ({ student }: Props) => {
   const items: MenuProps["items"] = [
     {
       key: "1",
       label: (
-        <Button type="primary" className="bg-blue-500 hover:bg-blue-600 w-full">
-          View Profile
-        </Button>
+        <PublicProfileRedirectLink
+          buttonType="primary"
+          isButton={true}
+          linkText="View Profile"
+          user={student?.user}
+          buttonStyles="w-full"
+          linkStyles="w-full"
+        />
       ),
     },
     {
