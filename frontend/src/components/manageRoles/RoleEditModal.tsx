@@ -13,6 +13,7 @@ const RoleEditModal = ({ role }: Props) => {
     role?.permissions || []
   );
   const [newPermission, setNewPermission] = useState("");
+  const [updatedRoleName, setUpdatedRoleName] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [updateRole, { isLoading }] = useUpdateRoleMutation();
 
@@ -30,7 +31,11 @@ const RoleEditModal = ({ role }: Props) => {
   };
 
   const handleUpdateRole = async () => {
-    const updatedRole: IRole = { ...role, permissions: editedPermissions };
+    const updatedRole: IRole = {
+      ...role,
+      permissions: editedPermissions,
+      name: updatedRoleName || role?.name,
+    };
     try {
       const result: any = await updateRole({ id: role?.id, data: updatedRole });
       if (result?.data?.statusCode === 200) {
@@ -70,6 +75,15 @@ const RoleEditModal = ({ role }: Props) => {
         }}
       >
         <Form layout="vertical" className="space-y-4">
+          <Form.Item label="Role name">
+            <Input
+              defaultValue={role?.name}
+              value={updatedRoleName}
+              onChange={(e) => setUpdatedRoleName(e.target.value)}
+              placeholder="Enter role name"
+              className="flex-grow"
+            />
+          </Form.Item>
           <Form.Item label="Add New Permission">
             <div className="flex items-center gap-2">
               <Input
