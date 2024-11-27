@@ -14,6 +14,7 @@ router.post("/create", multer_1.default.fields([
     { name: "introductoryVideo" },
 ]), fileUploaderMiddleware_1.FileUploadMiddleware.uploadCourseImageAndIntroVideo(), controller_1.CourseController.createCourse);
 router.get("/", controller_1.CourseController.getCourses);
+router.get("/related-courses", controller_1.CourseController.getMatchedRelatedCourses);
 router.get("/published/courses", controller_1.CourseController.getOnlyPublishedCourses);
 router.get("/:id", controller_1.CourseController.getSingleCourse);
 router.get("/instructor/:instructorId", controller_1.CourseController.getCoursesByInstructor);
