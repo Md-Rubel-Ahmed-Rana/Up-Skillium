@@ -1,11 +1,10 @@
-import { useActiveInactiveUserAccountMutation } from "@/features/user";
+import { useDeleteUserAccountMutation } from "@/features/user";
 import { Button, Modal } from "antd/lib";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 type User = {
   id: string;
-  status: "active" | "inactive";
   userName: string;
 };
 
@@ -15,26 +14,22 @@ type Props = {
   buttonType: "dashed" | "default" | "primary";
 };
 
-const UserActiveInactiveButton = ({
-  user: { id, status, userName },
+const UserDeleteButton = ({
+  user: { id, userName },
   buttonType = "default",
-  buttonStyles = "bg-yellow-300",
+  buttonStyles,
 }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [updateStatus, { isLoading }] = useActiveInactiveUserAccountMutation();
+  const [deleteAccount, { isLoading }] = useDeleteUserAccountMutation();
 
   const handleUpdateAccountStatus = async () => {
     try {
-      const result: any = await updateStatus({
+      const result: any = await deleteAccount({
         userId: id,
-        status: status === "active" ? "inactive" : "active",
       });
       if (result?.data?.statusCode === 200) {
         toast.success(
-          result?.data?.message ||
-            `Account has been ${
-              status === "active" ? "inactivated" : "activated"
-            } successfully!`
+          result?.data?.message || `Account has been  deleted successfully!`
         );
         setIsModalOpen(false);
       } else {
@@ -42,11 +37,11 @@ const UserActiveInactiveButton = ({
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to update account status."
+            "Failed to delete account."
         );
       }
     } catch (error: any) {
-      toast.error(`Failed to update account status. Error: ${error?.message}`);
+      toast.error(`Failed to delete account. Error: ${error?.message}`);
     }
   };
 
@@ -58,33 +53,36 @@ const UserActiveInactiveButton = ({
       <Button
         className={buttonStyles}
         type={buttonType}
+        danger
         onClick={openModal}
-        loading={isLoading}
       >
-        {status === "active" ? "Inactive" : "Active"}
+        Delete
       </Button>
 
       <Modal
-        title={`Confirm ${status === "active" ? "Inactivation" : "Activation"}`}
+        title={`Confirm Deletion`}
         open={isModalOpen}
         onOk={handleUpdateAccountStatus}
         onCancel={closeModal}
-        okText={status === "active" ? "Inactivate" : "Activate"}
+        maskClosable={!isLoading}
+        okText={isLoading ? "Deleting.." : "Delete"}
         okButtonProps={{
-          danger: status === "active",
+          danger: true,
           loading: isLoading,
           disabled: isLoading,
+          iconPosition: "end",
         }}
         cancelButtonProps={{ disabled: isLoading }}
       >
         <p>
-          Are you sure you want to{" "}
-          <strong>{status === "active" ? "inactivate" : "activate"}</strong> the
-          account of <strong>{userName}</strong>?
+          <span className="mr-2">
+            Are you sure you want to delete the account of
+          </span>
+          <strong>{userName}</strong>?
         </p>
       </Modal>
     </>
   );
 };
 
-export default UserActiveInactiveButton;
+export default UserDeleteButton;

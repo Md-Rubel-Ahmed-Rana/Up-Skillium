@@ -2,6 +2,7 @@ import { IInstructor } from "@/types/instructor.type";
 import { Dropdown, MenuProps } from "antd/lib";
 import { FiMoreVertical } from "react-icons/fi";
 import UserActiveInactiveButton from "../manageUsers/UserActiveInactiveButton";
+import UserDeleteButton from "../manageUsers/UserDeleteButton";
 import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 import AssignCourse from "./AssignCourse";
 
@@ -37,6 +38,19 @@ const InstructorActions = ({ instructor }: Props) => {
           user={{
             id: instructor?.user?.id || instructor?.user?._id,
             status: instructor?.user?.status as "active" | "inactive",
+            userName: instructor?.user?.name,
+          }}
+        />
+      ),
+    },
+    {
+      key: "4",
+      label: (
+        <UserDeleteButton
+          buttonType="primary"
+          buttonStyles="w-full"
+          user={{
+            id: instructor?.user?.id || instructor?.user?._id,
             userName: instructor?.user?.name,
           }}
         />

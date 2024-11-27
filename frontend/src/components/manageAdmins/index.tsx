@@ -2,6 +2,7 @@ import { useGetAllAdminsQuery } from "@/features/admin";
 import { IAdmin } from "@/types/admin.type";
 import { Table } from "antd/lib";
 import UserActiveInactiveButton from "../manageUsers/UserActiveInactiveButton";
+import UserDeleteButton from "../manageUsers/UserDeleteButton";
 import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
 
 const ManageAdmins = () => {
@@ -68,6 +69,13 @@ const ManageAdmins = () => {
             user={{
               id: admin?.user?.id || admin?.user?._id,
               status: admin?.user?.status as "active" | "inactive",
+              userName: admin?.user?.name,
+            }}
+          />
+          <UserDeleteButton
+            buttonType="primary"
+            user={{
+              id: admin?.user?.id,
               userName: admin?.user?.name,
             }}
           />
