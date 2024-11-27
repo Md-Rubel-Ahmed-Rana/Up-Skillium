@@ -5,9 +5,10 @@ import React, { Suspense } from "react";
 
 type Props = {
   children: React.ReactNode;
+  maxWidth?: string;
 };
 
-const RootLayout = ({ children }: Props) => {
+const RootLayout = ({ children, maxWidth = "1400px" }: Props) => {
   return (
     <Suspense
       fallback={
@@ -18,7 +19,7 @@ const RootLayout = ({ children }: Props) => {
     >
       <div className="bg-[#f0f8ff]">
         <Navbar />
-        <main className="max-w-[1400px] w-full mx-auto">{children}</main>
+        <main className={`max-w-[${maxWidth}] w-full mx-auto`}>{children}</main>
         <Footer />
       </div>
     </Suspense>

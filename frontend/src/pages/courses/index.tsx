@@ -17,7 +17,7 @@ const CoursesPage = () => {
 };
 
 CoursesPage.getLayout = function (page: ReactElement) {
-  return <RootLayout>{page}</RootLayout>;
+  return <RootLayout maxWidth="100000px">{page}</RootLayout>;
 };
 
 export default CoursesPage;

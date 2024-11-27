@@ -1,7 +1,7 @@
-import PageMetadata from "@/utils/PageMetadata";
-import RootLayout from "@/layout/RootLayout";
-import { ReactElement } from "react";
 import Home from "@/components/home";
+import RootLayout from "@/layout/RootLayout";
+import PageMetadata from "@/utils/PageMetadata";
+import { ReactElement } from "react";
 
 const HomePage = () => {
   return (

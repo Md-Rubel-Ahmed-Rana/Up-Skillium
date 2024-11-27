@@ -66,11 +66,17 @@ const CourseCard = ({ course }: Props) => {
         <Meta
           className="border rounded-md p-2 text-xs flex items-center"
           avatar={
-            <Avatar
-              size={40}
-              className="ring-1"
-              src={course?.instructor?.image}
-            />
+            course?.instructor?.image ? (
+              <Avatar
+                size={40}
+                className="ring-1"
+                src={course?.instructor?.image}
+              />
+            ) : (
+              <Avatar size={40} className="ring-1 ">
+                {course?.instructor?.name?.slice(0, 1)?.toUpperCase()}
+              </Avatar>
+            )
           }
           title={course?.instructor?.name || "Unknown"}
           description="Instructor"
