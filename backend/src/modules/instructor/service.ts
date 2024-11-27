@@ -3,6 +3,8 @@ import generateTeacherId from "./generateTeacherId";
 import { Types } from "mongoose";
 import { CourseService } from "../course/service";
 import { IUser } from "../user/interface";
+import incrementAverageRating from "../../utils/incrementAverageRating";
+import ApiError from "../../shared/apiError";
 
 class Service {
   async createNewInstructor(userId: Types.ObjectId): Promise<void> {
@@ -55,6 +57,32 @@ class Service {
       instructorId
     );
     return students;
+  }
+  async incrementRatings(
+    userId: Types.ObjectId,
+    newRating: number
+  ): Promise<void> {
+    const instructor = await Instructor.findOne({ user: userId });
+
+    if (!instructor) {
+      throw new ApiError(404, "Instructor not found");
+    }
+
+    await Instructor.findOneAndUpdate(
+      { user: userId },
+      {
+        $set: {
+          "ratings.averageRating": incrementAverageRating(
+            instructor?.ratings?.totalReviews,
+            instructor?.ratings?.averageRating,
+            newRating
+          ),
+        },
+        $inc: {
+          "ratings.totalReviews": 1,
+        },
+      }
+    );
   }
 }
 

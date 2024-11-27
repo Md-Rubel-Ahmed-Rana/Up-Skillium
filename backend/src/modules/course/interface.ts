@@ -19,7 +19,7 @@ export type ICourse = {
   students?: Types.ObjectId[];
   ratings?: {
     averageRating: number;
-    ratingCount: number;
+    totalReviews: number;
   };
   reviews?: Types.ObjectId[];
   status?: "draft" | "published" | "archived";

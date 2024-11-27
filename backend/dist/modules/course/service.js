@@ -8,11 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CourseService = void 0;
 const model_1 = require("./model");
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 const service_1 = require("../instructor/service");
+const incrementAverageRating_1 = __importDefault(require("../../utils/incrementAverageRating"));
+const apiError_1 = __importDefault(require("../../shared/apiError"));
 class Service {
     createCourse(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -204,6 +209,23 @@ class Service {
             }
             yield model_1.Course.findByIdAndUpdate(id, {
                 $set: { introductoryVideo: videoUrl },
+            });
+        });
+    }
+    incrementRatings(id, newRating) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            const course = yield model_1.Course.findById(id);
+            if (!course) {
+                throw new apiError_1.default(404, "Course not found");
+            }
+            yield model_1.Course.findByIdAndUpdate(id, {
+                $set: {
+                    "ratings.averageRating": (0, incrementAverageRating_1.default)((_a = course === null || course === void 0 ? void 0 : course.ratings) === null || _a === void 0 ? void 0 : _a.totalReviews, (_b = course === null || course === void 0 ? void 0 : course.ratings) === null || _b === void 0 ? void 0 : _b.averageRating, newRating),
+                },
+                $inc: {
+                    "ratings.totalReviews": 1,
+                },
             });
         });
     }

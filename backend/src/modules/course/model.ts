@@ -31,7 +31,7 @@ const courseSchema = new Schema<ICourse>(
     students: [{ type: Schema.Types.ObjectId, ref: "User" }],
     ratings: {
       averageRating: { type: Number, default: 0 },
-      ratingCount: { type: Number, default: 0 },
+      totalReviews: { type: Number, default: 0 },
     },
     reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
     status: {
