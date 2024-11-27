@@ -17,7 +17,16 @@ import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 
 class Service {
   async createUser(user: ICreateUser): Promise<void> {
-    const userRole = user.role as string;
+    const existingUser = await User.findOne({ email: user?.email });
+
+    if (existingUser) {
+      throw new ApiError(
+        409,
+        "Email already exists. Please use a different email."
+      );
+    }
+
+    const userRole = user?.role as string;
     const role = await RoleService.getRoleByRoleName(userRole);
 
     user.password = await BcryptInstance.hash(user.password);
@@ -26,11 +35,11 @@ class Service {
     const newUser = await User.create(user);
 
     if (role?.name === "student") {
-      await StudentService.createNewStudent(newUser._id);
+      await StudentService.createNewStudent(newUser?._id);
     } else if (role?.name === "instructor") {
-      await InstructorService.createNewInstructor(newUser._id);
+      await InstructorService.createNewInstructor(newUser?._id);
     } else if (role?.name === "admin") {
-      await AdminService.createNewAdmin(newUser._id);
+      await AdminService.createNewAdmin(newUser?._id);
     }
   }
   async findUserByEmail(email: string) {

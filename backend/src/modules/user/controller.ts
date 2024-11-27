@@ -90,6 +90,19 @@ class Controller extends RootController {
       });
     }
   );
+  activeOrInactiveAccount = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const id = req.params.id as unknown as Types.ObjectId;
+      const status = req.params?.status as string;
+      await UserService.activeOrInactiveAccount(id, status);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: `User account has been ${status} successfully!`,
+        data: null,
+      });
+    }
+  );
 }
 
 export const UserController = new Controller();

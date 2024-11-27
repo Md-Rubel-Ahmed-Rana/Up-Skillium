@@ -11,6 +11,11 @@ router.get("/:id", UserController.getSingleUser);
 
 router.patch("/:id", UserController.updateUser);
 
+router.patch(
+  "/update-status/:id/:status",
+  UserController.activeOrInactiveAccount
+);
+
 router.patch("/change-password/:userId", UserController.changePassword);
 
 router.patch("/update-basic-info/:id", UserController.updateUserBasicInfo);
