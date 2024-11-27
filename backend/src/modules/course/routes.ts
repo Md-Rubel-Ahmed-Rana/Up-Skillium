@@ -17,6 +17,8 @@ router.post(
 
 router.get("/", CourseController.getCourses);
 
+router.get("/related-courses", CourseController.getMatchedRelatedCourses);
+
 router.get("/published/courses", CourseController.getOnlyPublishedCourses);
 
 router.get("/:id", CourseController.getSingleCourse);
