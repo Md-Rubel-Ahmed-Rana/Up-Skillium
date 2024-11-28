@@ -11,9 +11,7 @@ type Props = {
 const CourseTitleCategoryCard = ({ title, category, totalStudents }: Props) => {
   return (
     <Card bordered={false} className="rounded-lg p-4">
-      <Title level={3} className="text-blue-600">
-        {title}
-      </Title>
+      <h3 className="font-semibold text-lg lg:text-2xl">{title}</h3>
       <Text className="text-gray-500 block mb-2">{category}</Text>
       <Button
         icon={<AiOutlineUsergroupAdd className="text-green-500 text-lg" />}

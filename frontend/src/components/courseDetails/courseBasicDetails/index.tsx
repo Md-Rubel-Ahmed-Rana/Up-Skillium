@@ -1,11 +1,11 @@
 import { useGetSingleCourseQuery } from "@/features/course";
 import { ICourse } from "@/types/course.type";
 import { useRouter } from "next/router";
+import StudentFeedback from "../feedback/StudentFeedback";
 import CourseInformation from "./CourseInformation";
 import CourseTitleCategoryCard from "./CourseTitleCategoryCard";
 import InstructorCard from "./InstructorCard";
 import IntroductoryVideoPlayer from "./IntroductoryVideoPlayer";
-import StudentFeedback from "./StudentFeedback";
 
 const CourseBasicDetails = () => {
   const { query } = useRouter();
