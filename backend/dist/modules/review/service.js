@@ -34,11 +34,11 @@ class Service {
                 {
                     path: "reviewer",
                     model: "User",
-                    select: { name: 1, image: 1 },
+                    select: { password: 0 },
                 },
                 {
                     path: "reviewTo",
-                    select: { name: 1, image: 1, title: 1 },
+                    select: { password: 0 },
                 },
             ]);
             return reviews;
@@ -50,11 +50,11 @@ class Service {
                 {
                     path: "reviewer",
                     model: "User",
-                    select: { name: 1, image: 1 },
+                    select: { password: 0 },
                 },
                 {
                     path: "reviewTo",
-                    select: { name: 1, image: 1, title: 1 },
+                    select: { password: 0 },
                 },
             ]);
             return reviews;
@@ -66,11 +66,11 @@ class Service {
                 {
                     path: "reviewer",
                     model: "User",
-                    select: { name: 1, image: 1 },
+                    select: { password: 0 },
                 },
                 {
                     path: "reviewTo",
-                    select: { name: 1, image: 1, title: 1 },
+                    select: { password: 0 },
                 },
             ]);
             return reviews;
@@ -82,11 +82,11 @@ class Service {
                 {
                     path: "reviewer",
                     model: "User",
-                    select: { name: 1, image: 1 },
+                    select: { password: 0 },
                 },
                 {
                     path: "reviewTo",
-                    select: { name: 1, image: 1, title: 1 },
+                    select: { password: 0 },
                 },
             ]);
         });
@@ -97,11 +97,11 @@ class Service {
                 {
                     path: "reviewer",
                     model: "User",
-                    select: { name: 1, image: 1 },
+                    select: { password: 0 },
                 },
                 {
                     path: "reviewTo",
-                    select: { name: 1, image: 1, title: 1 },
+                    select: { password: 0 },
                 },
             ]);
             return reviews;

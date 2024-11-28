@@ -22,9 +22,8 @@ class Service {
     getEnrollmentById(id) {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.Enrollment.findById(id)
-                .populate("user", "name email image")
-                .populate("course", "title image")
-                .exec();
+                .populate("user", "-password")
+                .populate("course");
         });
     }
     updateEnrollment(id, data) {
@@ -34,13 +33,17 @@ class Service {
     }
     getSuccessEnrollmentForStudent(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield model_1.Enrollment.find({ user: userId, status: "success" });
+            const data = yield model_1.Enrollment.find({ user: userId, status: "success" })
+                .populate("user", "-password")
+                .populate("course");
             return data;
         });
     }
     getOrderEnrollmentHistoryForStudent(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield model_1.Enrollment.find({ user: userId });
+            const data = yield model_1.Enrollment.find({ user: userId })
+                .populate("user", "-password")
+                .populate("course");
             return data;
         });
     }
@@ -67,16 +70,16 @@ class Service {
     getAllOrderHistory() {
         return __awaiter(this, void 0, void 0, function* () {
             const enrollments = yield model_1.Enrollment.find({})
-                .populate("user", "name email image")
-                .populate("course", "title image");
+                .populate("user", "-password")
+                .populate("course");
             return enrollments;
         });
     }
     getAllSuccessEnrollments() {
         return __awaiter(this, void 0, void 0, function* () {
             const enrollments = yield model_1.Enrollment.find({ status: "success" })
-                .populate("user", "name email image")
-                .populate("course", "title image");
+                .populate("user", "-password")
+                .populate("course");
             return enrollments;
         });
     }
@@ -90,10 +93,10 @@ class Service {
                 ],
             };
             const enrollments = yield model_1.Enrollment.find(filter)
-                .populate("user", "name email")
+                .populate("user", "-password")
+                .populate("course")
                 .skip(skip)
-                .limit(limit)
-                .exec();
+                .limit(limit);
             return enrollments;
         });
     }

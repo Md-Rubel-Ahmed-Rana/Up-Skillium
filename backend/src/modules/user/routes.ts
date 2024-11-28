@@ -11,6 +11,8 @@ router.get("/:id", UserController.getSingleUser);
 
 router.patch("/:id", UserController.updateUser);
 
+router.delete("/:id", UserController.deleteUserAccount);
+
 router.patch(
   "/update-status/:id/:status",
   UserController.activeOrInactiveAccount

@@ -20,17 +20,16 @@ class Service {
     );
   }
   async getMyCourses(userId: Types.ObjectId) {
-    const data = await Student.findOne({ user: userId }).populate(
-      "courses",
-      "title image"
-    );
+    const data = await Student.findOne({ user: userId })
+      .populate("courses")
+      .populate("user", "-password");
 
     return data;
   }
   async getAllStudents() {
     const data = await Student.find({})
-      .populate("courses", "title image category")
-      .populate("user", "name email image");
+      .populate("courses")
+      .populate("user", "-password");
 
     return data;
   }
