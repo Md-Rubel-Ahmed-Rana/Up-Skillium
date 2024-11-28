@@ -24,7 +24,8 @@ const ReviewsList = ({ courseId }: Props) => {
     page: pagination?.page,
   });
 
-  const reviews = data?.data as IReview[];
+  const reviews = (data?.data?.reviews as IReview[]) || [];
+  const totalReviews = (data?.data?.totalReviews as number) || 0;
 
   return (
     <>
@@ -94,7 +95,7 @@ const ReviewsList = ({ courseId }: Props) => {
             </div>
             {reviews?.length > 0 && (
               <ReviewPagination
-                totalReviews={reviews?.length || 0}
+                totalReviews={totalReviews}
                 setPagination={setPagination}
               />
             )}
