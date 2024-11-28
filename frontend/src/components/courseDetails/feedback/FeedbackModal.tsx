@@ -63,7 +63,7 @@ const FeedbackModal = () => {
 
   return (
     <>
-      <div className="flex items-center gap-3 my-4">
+      <div className="flex flex-col lg:flex-row lg:items-center gap-3 my-4">
         <FeedbackButton
           setOpen={setIsOpen}
           setTitle={setTitle}

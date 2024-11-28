@@ -4,7 +4,7 @@ const { Text } = Typography;
 type Props = {
   ratings: {
     averageRating: number;
-    ratingCount: number;
+    totalReviews: number;
   };
 };
 
@@ -18,10 +18,10 @@ const RatingCard = ({ ratings }: Props) => {
         value={ratings?.averageRating || 0}
         defaultValue={ratings?.averageRating || 0}
       />
-      <Text className="text-lg font-semibold text-gray-700">
+      <Text className="lg:text-lg font-semibold text-gray-700">
         {ratings?.averageRating} / 5.0
       </Text>
-      <Text className="text-gray-500">({ratings?.ratingCount} reviews)</Text>
+      <Text className="text-gray-500">({ratings?.totalReviews} reviews)</Text>
     </div>
   );
 };

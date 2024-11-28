@@ -18,9 +18,18 @@ const reviewApi = apiSlice.injectEndpoints({
       providesTags: ["feedback"],
     }),
     getAllReviewsByReviewTo: builder.query({
-      query: ({ reviewToId }: { reviewToId: string }) => ({
+      query: ({
+        reviewToId,
+        page = 1,
+        limit = 5,
+      }: {
+        reviewToId: string;
+        page?: number;
+        limit?: number;
+      }) => ({
         method: "GET",
         url: `/review/by-review-to/${reviewToId}`,
+        params: { page, limit },
       }),
       providesTags: ["feedback"],
     }),
