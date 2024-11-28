@@ -115,6 +115,16 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.deleteUserAccount = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            yield service_1.UserService.deleteUserAccount(id);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: `User account has been deleted successfully!`,
+                data: null,
+            });
+        }));
     }
 }
 exports.UserController = new Controller();

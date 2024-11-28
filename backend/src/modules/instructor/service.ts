@@ -20,12 +20,11 @@ class Service {
       {
         path: "user",
         model: "User",
-        select: { name: 1, email: 1, image: 1 },
+        select: { password: 0 },
       },
       {
         path: "courses",
         model: "Course",
-        select: { title: 1, image: 1, category: 1 },
       },
     ]);
     return instructors;

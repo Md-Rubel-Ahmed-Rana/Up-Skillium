@@ -58,12 +58,11 @@ class Service {
         {
           path: "instructor",
           model: "User",
-          select: { name: 1, image: 1 },
+          select: { password: 0 },
         },
       ])
       .skip(skip)
-      .limit(limit)
-      .exec();
+      .limit(limit);
 
     return courses;
   }
@@ -110,7 +109,7 @@ class Service {
         {
           path: "instructor",
           model: "User",
-          select: { name: 1, image: 1 },
+          select: { password: 0 },
         },
       ])
       .skip(skip)
@@ -125,17 +124,17 @@ class Service {
       {
         path: "instructor",
         model: "User",
-        select: { name: 1, image: 1 },
+        select: { password: 0 },
       },
       {
         path: "students",
         model: "User",
-        select: { name: 1, image: 1 },
+        select: { password: 0 },
       },
       {
         path: "reviews",
         model: "User",
-        select: { name: 1, image: 1 },
+        select: { password: 0 },
       },
     ]);
   }
@@ -272,9 +271,25 @@ class Service {
     let courses = await Course.find({
       $text: { $search: relatableText, $caseSensitive: false },
       status: "published",
-    }).limit(5);
+    })
+      .populate([
+        {
+          path: "instructor",
+          model: "User",
+          select: { password: 0 },
+        },
+      ])
+      .limit(5);
+
     if (courses?.length === 0) {
       courses = await Course.find({ status: "published" })
+        .populate([
+          {
+            path: "instructor",
+            model: "User",
+            select: { password: 0 },
+          },
+        ])
         .sort({ createdAt: -1 })
         .limit(5);
     }
@@ -287,12 +302,27 @@ class Service {
     const courses = await Course.find({
       category: category,
       status: "published",
-    });
+    }).populate([
+      {
+        path: "instructor",
+        model: "User",
+        select: { password: 0 },
+      },
+    ]);
 
     const otherCourses = await Course.find({
       category: { $ne: category },
       status: "published",
-    });
+    })
+      .populate([
+        {
+          path: "instructor",
+          model: "User",
+          select: { password: 0 },
+        },
+      ])
+      .sort({ createdAt: -1 })
+      .limit(6);
 
     return { courses, otherCourses };
   }

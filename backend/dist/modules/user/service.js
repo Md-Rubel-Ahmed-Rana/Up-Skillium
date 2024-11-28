@@ -137,5 +137,10 @@ class Service {
             yield model_1.User.findByIdAndUpdate(userId, { $set: { status: status } });
         });
     }
+    deleteUserAccount(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.User.findByIdAndDelete(id);
+        });
+    }
 }
 exports.UserService = new Service();

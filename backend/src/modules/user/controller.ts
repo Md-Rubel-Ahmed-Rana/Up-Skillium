@@ -103,6 +103,16 @@ class Controller extends RootController {
       });
     }
   );
+  deleteUserAccount = this.catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id as unknown as Types.ObjectId;
+    await UserService.deleteUserAccount(id);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: `User account has been deleted successfully!`,
+      data: null,
+    });
+  });
 }
 
 export const UserController = new Controller();

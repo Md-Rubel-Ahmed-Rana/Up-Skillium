@@ -34,15 +34,17 @@ class Service {
     }
     getMyCourses(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const data = yield model_1.Student.findOne({ user: userId }).populate("courses", "title image");
+            const data = yield model_1.Student.findOne({ user: userId })
+                .populate("courses")
+                .populate("user", "-password");
             return data;
         });
     }
     getAllStudents() {
         return __awaiter(this, void 0, void 0, function* () {
             const data = yield model_1.Student.find({})
-                .populate("courses", "title image category")
-                .populate("user", "name email image");
+                .populate("courses")
+                .populate("user", "-password");
             return data;
         });
     }

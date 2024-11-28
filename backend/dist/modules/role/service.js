@@ -29,7 +29,7 @@ class Service {
     }
     getRoleByRoleName(roleName) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.Role.findOne({ role: roleName });
+            return yield model_1.Role.findOne({ name: roleName });
         });
     }
     updateRole(id, updatedData) {

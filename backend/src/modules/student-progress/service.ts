@@ -66,12 +66,11 @@ class Service {
       .populate({
         path: "courses.course",
         model: "Course",
-        select: { title: 1, image: 1 },
       })
       .populate({
         path: "user",
         model: "User",
-        select: { name: 1, email: 1, image: 1 },
+        select: { password: 0 },
       })
       .populate({
         path: "courses.lastCompletedLesson",
@@ -83,7 +82,16 @@ class Service {
   }
 
   async getStudentProgress(userId: Types.ObjectId) {
-    return StudentProgress.findOne({ user: userId });
+    return StudentProgress.findOne({ user: userId })
+      .populate({
+        path: "courses.course",
+        model: "Course",
+      })
+      .populate({
+        path: "user",
+        model: "User",
+        select: { password: 0 },
+      });
   }
 
   async getSingleCourseProgress(

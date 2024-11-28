@@ -24,7 +24,17 @@ class Service {
     }
     getSubmittedQuizResultByLessonId(lessonId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.QuizSubmission.findOne({ lesson: lessonId });
+            return model_1.QuizSubmission.findOne({ lesson: lessonId }).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { password: 0 },
+                },
+                {
+                    path: "lesson",
+                    model: "Lesson",
+                },
+            ]);
         });
     }
     getAllQuizSubmissions() {
@@ -33,7 +43,7 @@ class Service {
                 {
                     path: "user",
                     model: "User",
-                    select: { name: 1, email: 1, image: 1 },
+                    select: { password: 0 },
                 },
                 {
                     path: "lesson",

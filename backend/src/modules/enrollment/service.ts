@@ -11,9 +11,8 @@ class Service {
 
   async getEnrollmentById(id: Types.ObjectId): Promise<IEnrollment | null> {
     return await Enrollment.findById(id)
-      .populate("user", "name email image")
-      .populate("course", "title image")
-      .exec();
+      .populate("user", "-password")
+      .populate("course");
   }
 
   async updateEnrollment(
@@ -26,14 +25,18 @@ class Service {
   async getSuccessEnrollmentForStudent(
     userId: Types.ObjectId
   ): Promise<IEnrollment[]> {
-    const data = await Enrollment.find({ user: userId, status: "success" });
+    const data = await Enrollment.find({ user: userId, status: "success" })
+      .populate("user", "-password")
+      .populate("course");
     return data;
   }
 
   async getOrderEnrollmentHistoryForStudent(
     userId: Types.ObjectId
   ): Promise<IEnrollment[]> {
-    const data = await Enrollment.find({ user: userId });
+    const data = await Enrollment.find({ user: userId })
+      .populate("user", "-password")
+      .populate("course");
     return data;
   }
 
@@ -60,15 +63,15 @@ class Service {
 
   async getAllOrderHistory(): Promise<IEnrollment[]> {
     const enrollments = await Enrollment.find({})
-      .populate("user", "name email image")
-      .populate("course", "title image");
+      .populate("user", "-password")
+      .populate("course");
     return enrollments;
   }
 
   async getAllSuccessEnrollments(): Promise<IEnrollment[]> {
     const enrollments = await Enrollment.find({ status: "success" })
-      .populate("user", "name email image")
-      .populate("course", "title image");
+      .populate("user", "-password")
+      .populate("course");
     return enrollments;
   }
 
@@ -87,10 +90,10 @@ class Service {
     };
 
     const enrollments = await Enrollment.find(filter)
-      .populate("user", "name email")
+      .populate("user", "-password")
+      .populate("course")
       .skip(skip)
-      .limit(limit)
-      .exec();
+      .limit(limit);
 
     return enrollments;
   }

@@ -12,6 +12,7 @@ const router = (0, express_1.Router)();
 router.get("/", controller_1.UserController.findUsers);
 router.get("/:id", controller_1.UserController.getSingleUser);
 router.patch("/:id", controller_1.UserController.updateUser);
+router.delete("/:id", controller_1.UserController.deleteUserAccount);
 router.patch("/update-status/:id/:status", controller_1.UserController.activeOrInactiveAccount);
 router.patch("/change-password/:userId", controller_1.UserController.changePassword);
 router.patch("/update-basic-info/:id", controller_1.UserController.updateUserBasicInfo);

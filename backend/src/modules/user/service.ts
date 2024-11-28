@@ -142,6 +142,9 @@ class Service {
   ): Promise<void> {
     await User.findByIdAndUpdate(userId, { $set: { status: status } });
   }
+  async deleteUserAccount(id: Types.ObjectId): Promise<void> {
+    await User.findByIdAndDelete(id);
+  }
 }
 
 export const UserService = new Service();

@@ -19,17 +19,17 @@ class Service {
     }
     getEducations() {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.Education.find({}).populate("user", "name email image");
+            return yield model_1.Education.find({}).populate("user", "-password");
         });
     }
     getEducation(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.Education.findById(id).populate("user", "name email image");
+            return yield model_1.Education.findById(id).populate("user", "-password");
         });
     }
     getEducationsByUserId(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.Education.find({ user: userId }).populate("user", "name email image");
+            return yield model_1.Education.find({ user: userId }).populate("user", "-password");
         });
     }
     updateEducation(id, updatedData) {

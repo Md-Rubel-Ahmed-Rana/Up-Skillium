@@ -12,7 +12,7 @@ class Service {
     return await Role.findById(id);
   }
   async getRoleByRoleName(roleName: string): Promise<IGetRole | null> {
-    return await Role.findOne({ role: roleName });
+    return await Role.findOne({ name: roleName });
   }
   async updateRole(id: string, updatedData: Partial<IRole>): Promise<void> {
     await Role.findByIdAndUpdate(id, { $set: { ...updatedData } });

@@ -23,12 +23,11 @@ class Service {
       {
         path: "user",
         model: "User",
-        select: { name: 1, image: 1, email: 1 },
+        select: { password: 0 },
       },
       {
         path: "course",
         model: "Course",
-        select: { title: 1, category: 1, image: 1 },
       },
     ]);
     return data;
@@ -38,17 +37,26 @@ class Service {
       {
         path: "user",
         model: "User",
-        select: { name: 1, image: 1, email: 1 },
+        select: { password: 0 },
       },
       {
         path: "course",
         model: "Course",
-        select: { title: 1, category: 1, image: 1 },
       },
     ]);
   }
   async getCertificatesByUserId(userId: Types.ObjectId) {
-    return await Certificate.find({ user: userId }).populate("course", "title");
+    return await Certificate.find({ user: userId }).populate([
+      {
+        path: "user",
+        model: "User",
+        select: { password: 0 },
+      },
+      {
+        path: "course",
+        model: "Course",
+      },
+    ]);
   }
   async updateCertificate(
     id: Types.ObjectId,

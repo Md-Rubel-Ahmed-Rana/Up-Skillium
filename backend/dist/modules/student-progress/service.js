@@ -68,12 +68,11 @@ class Service {
                 .populate({
                 path: "courses.course",
                 model: "Course",
-                select: { title: 1, image: 1 },
             })
                 .populate({
                 path: "user",
                 model: "User",
-                select: { name: 1, email: 1, image: 1 },
+                select: { password: 0 },
             })
                 .populate({
                 path: "courses.lastCompletedLesson",
@@ -85,7 +84,16 @@ class Service {
     }
     getStudentProgress(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.StudentProgress.findOne({ user: userId });
+            return model_1.StudentProgress.findOne({ user: userId })
+                .populate({
+                path: "courses.course",
+                model: "Course",
+            })
+                .populate({
+                path: "user",
+                model: "User",
+                select: { password: 0 },
+            });
         });
     }
     getSingleCourseProgress(userId, courseId) {
