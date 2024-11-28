@@ -12,6 +12,15 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      animation: {
+        swing: "swing 3s ease-in-out infinite",
+      },
+      keyframes: {
+        swing: {
+          "0%, 100%": { transform: "translateY(-10px)" },
+          "50%": { transform: "translateY(10px)" },
+        },
+      },
     },
   },
   plugins: [],

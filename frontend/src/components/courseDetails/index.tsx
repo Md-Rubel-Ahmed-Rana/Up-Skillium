@@ -1,3 +1,4 @@
+import BenefitsPage from "./benefits";
 import CourseBasicDetails from "./courseBasicDetails";
 import CourseOutline from "./courseOutline";
 import RecommrndedCourses from "./recommendedCourses";
@@ -13,6 +14,7 @@ const CourseDetails = () => {
           <CourseOutline />
         </div>
       </div>
+      <BenefitsPage />
       <RecommrndedCourses />
     </>
   );
