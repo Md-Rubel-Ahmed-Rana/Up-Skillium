@@ -91,9 +91,11 @@ class Service {
             ]);
         });
     }
-    getAllReviewByReviewTo(reviewToId) {
+    getAllReviewByReviewTo(reviewToId, page, limit) {
         return __awaiter(this, void 0, void 0, function* () {
-            const reviews = yield model_1.Review.find({ reviewTo: reviewToId }).populate([
+            const skip = (page - 1) * limit;
+            const reviews = yield model_1.Review.find({ reviewTo: reviewToId })
+                .populate([
                 {
                     path: "reviewer",
                     model: "User",
@@ -103,8 +105,12 @@ class Service {
                     path: "reviewTo",
                     select: { password: 0 },
                 },
-            ]);
-            return reviews;
+            ])
+                .skip(skip)
+                .limit(limit)
+                .sort({ createdAt: -1 });
+            const total = yield model_1.Review.countDocuments({ reviewTo: reviewToId });
+            return { reviews, totalReviews: total };
         });
     }
     updateReview(reviewId, data) {

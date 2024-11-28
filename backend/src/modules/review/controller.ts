@@ -55,7 +55,13 @@ class Controller extends RootController {
   getAllReviewByReviewTo = this.catchAsync(
     async (req: Request, res: Response) => {
       const reviewToId = req.params.reviewToId as unknown as Types.ObjectId;
-      const data = await ReviewService.getAllReviewByReviewTo(reviewToId);
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+      const data = await ReviewService.getAllReviewByReviewTo(
+        reviewToId,
+        page,
+        limit
+      );
       this.apiResponse(res, {
         statusCode: 200,
         success: true,

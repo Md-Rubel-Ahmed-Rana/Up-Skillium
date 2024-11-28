@@ -66,7 +66,9 @@ class Controller extends rootController_1.default {
         }));
         this.getAllReviewByReviewTo = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const reviewToId = req.params.reviewToId;
-            const data = yield service_1.ReviewService.getAllReviewByReviewTo(reviewToId);
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 10;
+            const data = yield service_1.ReviewService.getAllReviewByReviewTo(reviewToId, page, limit);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,

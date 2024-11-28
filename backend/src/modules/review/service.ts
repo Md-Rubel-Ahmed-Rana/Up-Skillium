@@ -73,20 +73,31 @@ class Service {
       },
     ]);
   }
-  async getAllReviewByReviewTo(reviewToId: Types.ObjectId): Promise<IReview[]> {
-    const reviews = await Review.find({ reviewTo: reviewToId }).populate([
-      {
-        path: "reviewer",
-        model: "User",
-        select: { password: 0 },
-      },
-      {
-        path: "reviewTo",
-        select: { password: 0 },
-      },
-    ]);
+  async getAllReviewByReviewTo(
+    reviewToId: Types.ObjectId,
+    page: number,
+    limit: number
+  ): Promise<{ reviews: IReview[]; totalReviews: number }> {
+    const skip = (page - 1) * limit;
+    const reviews = await Review.find({ reviewTo: reviewToId })
+      .populate([
+        {
+          path: "reviewer",
+          model: "User",
+          select: { password: 0 },
+        },
+        {
+          path: "reviewTo",
+          select: { password: 0 },
+        },
+      ])
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
 
-    return reviews;
+    const total = await Review.countDocuments({ reviewTo: reviewToId });
+
+    return { reviews, totalReviews: total };
   }
   async updateReview(
     reviewId: Types.ObjectId,
