@@ -59,6 +59,15 @@ const courseApi = apiSlice.injectEndpoints({
       keepUnusedDataFor: 0,
       providesTags: ["course"],
     }),
+    getRelatedCourses: builder.query({
+      query: ({ relatableText = "" }: { relatableText: string }) => ({
+        method: "GET",
+        url: `/course/related-courses`,
+        params: { relatableText },
+      }),
+      keepUnusedDataFor: 0,
+      providesTags: ["course"],
+    }),
     getSingleCourse: builder.query({
       query: ({ id }: { id: string }) => ({
         method: "GET",
@@ -171,4 +180,5 @@ export const {
   useLazyGetAllPublishedCoursesQuery,
   useReAssignInstructorMutation,
   useGetCoursesByCategoryQuery,
+  useGetRelatedCoursesQuery,
 } = courseApi;
