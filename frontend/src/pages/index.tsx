@@ -17,7 +17,7 @@ const HomePage = () => {
 };
 
 HomePage.getLayout = function (page: ReactElement) {
-  return <RootLayout>{page}</RootLayout>;
+  return <RootLayout maxWidth="10000px">{page}</RootLayout>;
 };
 
 export default HomePage;
