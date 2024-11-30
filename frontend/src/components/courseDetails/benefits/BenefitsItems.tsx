@@ -1,36 +1,42 @@
 import gsap from "gsap";
-// import ScrollTrigger from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import { benefits } from "./benefitsData";
 
-// gsap.registerPlugin(ScrollTrigger);
-
 const Benefits = () => {
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]); 
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    cardsRef.current.forEach((card, index) => {
-      if (!card) return; 
-      gsap.fromTo(
-        card,
-        {
-          x: index % 2 === 0 ? -200 : 200,
-          opacity: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 3,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: card,
-            start: "top 85%",
-            end: "top 50%",
-            toggleActions: "play none none reverse",
+    
+    const loadGsap = async () => {
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      gsap.registerPlugin(ScrollTrigger);
+
+     
+      cardsRef.current.forEach((card, index) => {
+        if (!card) return;
+        gsap.fromTo(
+          card,
+          {
+            x: index % 2 === 0 ? -200 : 200,
+            opacity: 0,
           },
-        }
-      );
-    });
+          {
+            x: 0,
+            opacity: 1,
+            duration: 3,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              end: "top 50%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      });
+    };
+
+    loadGsap(); // Call the async function to load and register ScrollTrigger
   }, []);
 
   return (
@@ -43,7 +49,7 @@ const Benefits = () => {
           <div
             key={index}
             ref={(el) => {
-              cardsRef.current[index] = el; 
+              cardsRef.current[index] = el;
             }}
             className={`p-6 ${benefit.bgColor} text-white rounded-lg shadow-lg relative`}
           >
