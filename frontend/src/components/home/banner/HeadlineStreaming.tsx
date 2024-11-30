@@ -8,7 +8,7 @@ const hotOffers = [
 
 const HeadlineStreaming = () => {
   return (
-    <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 py-3">
+    <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 py-2 border-b">
       <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-red-500 to-purple-500 blur-md h-full w-full -z-10 opacity-50"></div>
 
       <motion.div

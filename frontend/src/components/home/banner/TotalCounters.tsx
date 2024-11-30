@@ -3,20 +3,21 @@ import CountUp from "react-countup";
 
 const TotalCounters = () => {
   return (
-    <div className="w-full bg-gray-100 py-10">
+    <div className="w-full py-10">
       <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-4">
         {totalCountersData.map((item) => (
           <div
             key={item.id}
-            className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center border-t-4 border-gradient-to-r from-purple-500 to-pink-500 hover:shadow-xl transition-shadow duration-300"
+            className="relative bg-gradient-to-b from-purple-500 to-pink-500 shadow-lg rounded-lg p-6 flex flex-col items-center text-center transition-transform transform hover:scale-105 hover:shadow-2xl"
           >
-            <div className="text-4xl font-bold text-purple-600">
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-white/10 via-white/5 to-transparent pointer-events-none"></div>
+            <div className="text-5xl font-bold text-white">
               <CountUp end={item.totalCount} duration={3} />
             </div>
-            <h3 className="text-lg font-semibold mt-2 text-gray-800">
+            <h3 className="text-lg font-semibold mt-3 text-white">
               {item.title}
             </h3>
-            <p className="text-sm text-gray-600 mt-1">{item.description}</p>
+            <p className="text-sm text-white/80 mt-2">{item.description}</p>
           </div>
         ))}
       </div>
