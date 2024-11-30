@@ -24,10 +24,10 @@ const ImpressiveTextChanger = () => {
       } else if (isDeleting && displayedText.length > 0) {
         setDisplayedText(currentText.slice(0, displayedText.length - 1));
       } else if (!isDeleting && displayedText.length === currentText.length) {
-        timeout = setTimeout(() => setIsDeleting(true), 2000); // Pause before deleting
+        timeout = setTimeout(() => setIsDeleting(true), 2000);
       } else if (isDeleting && displayedText.length === 0) {
         setIsDeleting(false);
-        setTextIndex((prevIndex) => (prevIndex + 1) % changeableTexts.length); // Move to next text
+        setTextIndex((prevIndex) => (prevIndex + 1) % changeableTexts.length);
       }
     };
 

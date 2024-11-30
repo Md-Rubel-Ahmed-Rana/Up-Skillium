@@ -1,9 +1,11 @@
 import store from "@/app/store";
 import "@/styles/globals.css";
 import "animate.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { type ReactElement, type ReactNode } from "react";
+import { useEffect, type ReactElement, type ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import "react-quill/dist/quill.snow.css";
 import { Provider } from "react-redux";
@@ -18,6 +20,14 @@ export type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: false,
+    });
+  }, []);
 
   return (
     <Provider store={store}>
