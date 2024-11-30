@@ -1,11 +1,12 @@
-import { type ReactElement, type ReactNode } from "react";
+import store from "@/app/store";
+import "@/styles/globals.css";
+import "animate.css";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { Provider } from "react-redux";
+import { type ReactElement, type ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
-import "@/styles/globals.css";
 import "react-quill/dist/quill.snow.css";
-import store from "@/app/store";
+import { Provider } from "react-redux";
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

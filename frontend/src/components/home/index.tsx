@@ -4,7 +4,7 @@ import Banner from "./banner";
 
 const Home = () => {
   return (
-    <div>
+    <div className="w-full">
       <Banner />
       <PopularCourse />
       <StudentPanel />
