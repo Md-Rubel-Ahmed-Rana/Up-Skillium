@@ -1,6 +1,6 @@
 import PopularCourse from "../popularCourses";
 import StudentPanel from "../StudentPanel";
-import Banner from "./Banner";
+import Banner from "./banner";
 
 const Home = () => {
   return (
