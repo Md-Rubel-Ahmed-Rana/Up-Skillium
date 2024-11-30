@@ -36,7 +36,7 @@ const ImpressiveTextChanger = () => {
   }, [displayedText, isDeleting, textIndex]);
 
   return (
-    <div className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 pb-10 pt-5 text-white">
+    <div className="w-full py-5 text-white">
       <div className="max-w-4xl mx-auto text-center px-4">
         <motion.h1
           className="text-2xl lg:text-5xl font-bold mb-4"
@@ -58,7 +58,7 @@ const ImpressiveTextChanger = () => {
           </motion.div>
         </div>
         <motion.p
-          className="mt-6 text-lg text-gray-200"
+          className="mt-3 text-lg text-gray-200"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5 }}
