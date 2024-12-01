@@ -5,20 +5,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import navbarLogo from "../../../public/assets/images/navbarLogo.webp";
+import UserLoading from "./UserLoading";
 
 const Navbar = () => {
-  const { data } = useGetLoggedInUserQuery({});
+  const { data, isLoading } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
-
   const router = useRouter();
   const isHomePage = router.pathname === "/";
 
-  const navbarStyle = isHomePage
-    ? "cinematic-navbar"
-    : "bg-gray-50 text-black shadow-md";
-
   return (
-    <nav className={`animate__animated animate__fadeInDown ${navbarStyle}`}>
+    <nav
+      className={`animate__animated animate__fadeInDown ${
+        isHomePage
+          ? "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600  text-white"
+          : "bg-gray-50 text-black shadow-md"
+      }`}
+    >
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -37,7 +39,13 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="sm:hidden">
-            <NavbarDropdown isToggleIcon={true} />
+            <>
+              {isLoading ? (
+                <UserLoading />
+              ) : (
+                <NavbarDropdown isToggleIcon={true} />
+              )}
+            </>
           </div>
           <div className="hidden sm:flex items-center space-x-4">
             <div className="font-sans font-extrabold text-xl flex space-x-4">
@@ -63,7 +71,13 @@ const Navbar = () => {
               )}
             </div>
             {user && user?.id ? (
-              <NavbarDropdown isToggleIcon={false} />
+              <>
+                {isLoading ? (
+                  <UserLoading />
+                ) : (
+                  <NavbarDropdown isToggleIcon={false} />
+                )}
+              </>
             ) : (
               <>
                 <Link
@@ -88,5 +102,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-

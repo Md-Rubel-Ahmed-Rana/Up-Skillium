@@ -2,7 +2,7 @@ import ServiceContainer from "./ServiceContainer";
 
 const OurServicesAndMissions = () => {
   return (
-    <section className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 py-20 text-white relative">
+    <section className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600  text-white py-20 relative">
       <div className="container mx-auto px-6">
         <h2 className="text-xl lg:text-4xl font-bold text-center text-white mb-4">
           Our Dedicated Services & Mission
