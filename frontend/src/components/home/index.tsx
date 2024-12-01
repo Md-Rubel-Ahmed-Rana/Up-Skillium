@@ -1,5 +1,5 @@
-import StudentPanel from "../StudentPanel";
 import Banner from "./banner";
+import Opportunities from "./opportunities";
 import PopularCourses from "./popularCourses";
 import OurServicesAndMissions from "./servicesMissions";
 
@@ -9,7 +9,7 @@ const Home = () => {
       <Banner />
       <OurServicesAndMissions />
       <PopularCourses />
-      <StudentPanel />
+      <Opportunities />
     </div>
   );
 };

@@ -19,7 +19,7 @@ const PopularCourseContainer = () => {
   const courses = (data?.data as ICourse[]) || [];
 
   return (
-    <div className="mt-10 px-5 md:px-20">
+    <div className="mt-10">
       {isLoading ? (
         <div className="flex justify-center items-center w-full">
           <CourseSkeleton />

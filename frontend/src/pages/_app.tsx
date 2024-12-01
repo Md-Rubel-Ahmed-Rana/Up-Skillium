@@ -1,5 +1,6 @@
 import store from "@/app/store";
 import "@/styles/globals.css";
+import Lenis from "@studio-freight/lenis";
 import "animate.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -28,6 +29,17 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       once: false,
     });
   }, []);
+
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+  });
 
   return (
     <Provider store={store}>

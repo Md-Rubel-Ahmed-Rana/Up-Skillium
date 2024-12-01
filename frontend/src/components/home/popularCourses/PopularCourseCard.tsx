@@ -26,7 +26,7 @@ const PopularCourseCard = ({ course, index }: Props) => {
     <motion.div
       data-aos="fade-up"
       key={course?.id}
-      className="bg-white/10 rounded-lg shadow-md hover:shadow-lg border border-white/20 p-5 transition-all transform hover:scale-105 bg-gradient-to-b from-purple-500 to-pink-500"
+      className="bg-white/10 rounded-lg shadow-md hover:shadow-lg border border-white/20 p-2 lg:p-4 transition-all transform hover:scale-105 bg-gradient-to-b from-purple-500 to-pink-500"
       custom={index}
       variants={cardVariants}
     >

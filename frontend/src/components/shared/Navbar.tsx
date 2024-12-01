@@ -17,7 +17,7 @@ const Navbar = () => {
     <nav
       className={`animate__animated animate__fadeInDown ${
         isHomePage
-          ? "bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600  text-white"
+          ? "bg-gradient-to-r from-blue-600  border-b border-gray-400 via-purple-600 to-pink-600  text-white"
           : "bg-gray-50 text-black shadow-md"
       }`}
     >
