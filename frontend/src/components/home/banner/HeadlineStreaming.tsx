@@ -8,7 +8,7 @@ const hotOffers = [
 
 const HeadlineStreaming = () => {
   return (
-    <div className="relative w-full overflow-hidden py-2 border-b">
+    <div className="relative w-full overflow-hidden py-2 border-b border-gray-400">
       <div className="absolute inset-0  blur-md h-full w-full -z-10 opacity-50"></div>
 
       <motion.div
