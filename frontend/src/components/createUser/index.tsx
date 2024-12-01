@@ -1,10 +1,9 @@
 import { useUserRegisterMutation } from "@/features/auth";
 import passwordValidationRegx from "@/utils/verifyStrongPassword";
-import type { FormProps } from "antd";
-import { Button, Form, Input } from "antd/lib";
+import { Button, Form, FormProps, Input, Tooltip } from "antd/lib";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
-import { FaUserCircle } from "react-icons/fa";
+import { FaExclamationCircle, FaUserCircle } from "react-icons/fa";
 import { IoMdCheckmarkCircle, IoMdClose } from "react-icons/io";
 import { MdEmail, MdLock } from "react-icons/md";
 
@@ -67,7 +66,14 @@ const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
         {formTitle}
       </h2>
       <Form.Item<FieldType>
-        label="Name"
+        label={
+          <span className="flex items-center gap-2">
+            Name{" "}
+            <Tooltip title="Name cannot be changed in the future">
+              <FaExclamationCircle style={{ color: "#faad14" }} />
+            </Tooltip>
+          </span>
+        }
         name="name"
         rules={[
           { required: true, message: "Name is required" },
@@ -80,13 +86,20 @@ const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
           size="large"
           name="name"
           autoFocus
-          placeholder="Enter instructor name"
+          placeholder="Enter name"
           prefix={<FaUserCircle />}
         />
       </Form.Item>
 
       <Form.Item<FieldType>
-        label="Email"
+        label={
+          <span className="flex items-center gap-2">
+            Email{" "}
+            <Tooltip title="Email cannot be changed in the future">
+              <FaExclamationCircle style={{ color: "#faad14" }} />
+            </Tooltip>
+          </span>
+        }
         name="email"
         rules={[
           { required: true, message: "Email is required" },
@@ -97,7 +110,7 @@ const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
           type="email"
           size="large"
           name="email"
-          placeholder="Enter instructor email"
+          placeholder="Enter email"
           prefix={<MdEmail />}
         />
       </Form.Item>
@@ -123,8 +136,8 @@ const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
         {({ getFieldValue }) => {
           const password = getFieldValue("password") || "";
           return (
-            <ul>
-              <li className="flex items-center gap-2">
+            <ul className="flex flex-wrap gap-2">
+              <li className="flex items-center gap-2 border px-1 rounded-md">
                 {password.match(passwordValidationRegx[0].pattern) ? (
                   <IoMdCheckmarkCircle color="green" />
                 ) : (
@@ -132,7 +145,7 @@ const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
                 )}
                 Number
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2 border px-1 rounded-md">
                 {password.match(passwordValidationRegx[1].pattern) ? (
                   <IoMdCheckmarkCircle color="green" />
                 ) : (
@@ -140,7 +153,7 @@ const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
                 )}
                 Uppercase
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2 border px-1 rounded-md">
                 {password.match(passwordValidationRegx[2].pattern) ? (
                   <IoMdCheckmarkCircle color="green" />
                 ) : (
@@ -148,7 +161,7 @@ const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
                 )}
                 Lowercase
               </li>
-              <li className="flex items-center gap-2">
+              <li className="flex items-center gap-2 border px-1 rounded-md">
                 {password.match(passwordValidationRegx[3].pattern) ? (
                   <IoMdCheckmarkCircle color="green" />
                 ) : (
