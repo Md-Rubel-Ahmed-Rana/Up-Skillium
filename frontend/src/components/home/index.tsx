@@ -1,6 +1,6 @@
-import PopularCourse from "../popularCourses";
 import StudentPanel from "../StudentPanel";
 import Banner from "./banner";
+import PopularCourses from "./popularCourses";
 import OurServicesAndMissions from "./servicesMissions";
 
 const Home = () => {
@@ -8,7 +8,7 @@ const Home = () => {
     <div className="w-full">
       <Banner />
       <OurServicesAndMissions />
-      <PopularCourse />
+      <PopularCourses />
       <StudentPanel />
     </div>
   );
