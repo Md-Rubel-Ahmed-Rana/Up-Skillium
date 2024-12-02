@@ -33,7 +33,7 @@ const iconMapping: Record<string, any> = {
 const HowItWorks = () => {
   return (
     <div className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-20 relative border-t border-gray-400 px-2 lg:px-5">
-      <h2 className="text-center text-3xl font-bold mb-10">
+      <h2 className="text-center text-xl lg:text-3xl font-bold mb-10">
         How <span className="text-yellow-300">Up Skillium</span> Works
       </h2>
       <VerticalTimeline>

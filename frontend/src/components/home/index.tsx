@@ -3,6 +3,7 @@ import HowItWorks from "./howItWorks";
 import Opportunities from "./opportunities";
 import PopularCourses from "./popularCourses";
 import OurServicesAndMissions from "./servicesMissions";
+import TeamContainer from "./team";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <PopularCourses />
       <Opportunities />
       <HowItWorks />
+      <TeamContainer />
     </div>
   );
 };
