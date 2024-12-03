@@ -15,10 +15,10 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`animate__animated animate__fadeInDown ${
+      className={`sticky top-0 z-50 animate__animated animate__fadeInDown backdrop-blur-lg ${
         isHomePage
-          ? "bg-gradient-to-r from-blue-600  border-b border-gray-400 via-purple-600 to-pink-600  text-white"
-          : "bg-gray-50 text-black shadow-md"
+          ? "bg-gradient-to-r from-blue-600 border-b border-gray-400 via-purple-600 to-pink-600 bg-opacity-80 text-white"
+          : "bg-gray-50 bg-opacity-80 text-black shadow-md"
       }`}
     >
       <div className="px-4 sm:px-6 lg:px-8">
@@ -39,13 +39,11 @@ const Navbar = () => {
             </Link>
           </div>
           <div className="sm:hidden">
-            <>
-              {isLoading ? (
-                <UserLoading />
-              ) : (
-                <NavbarDropdown isToggleIcon={true} />
-              )}
-            </>
+            {isLoading ? (
+              <UserLoading />
+            ) : (
+              <NavbarDropdown isToggleIcon={true} />
+            )}
           </div>
           <div className="hidden sm:flex items-center space-x-4">
             <div className="font-sans font-extrabold text-xl flex space-x-4">
@@ -71,13 +69,11 @@ const Navbar = () => {
               )}
             </div>
             {user && user?.id ? (
-              <>
-                {isLoading ? (
-                  <UserLoading />
-                ) : (
-                  <NavbarDropdown isToggleIcon={false} />
-                )}
-              </>
+              isLoading ? (
+                <UserLoading />
+              ) : (
+                <NavbarDropdown isToggleIcon={false} />
+              )
             ) : (
               <>
                 <Link
