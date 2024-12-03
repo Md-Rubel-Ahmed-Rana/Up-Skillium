@@ -11,7 +11,7 @@ const BenefitsOpportunitiesContainer = () => {
   });
 
   return (
-    <div ref={container}>
+    <div className="-mt-20" ref={container}>
       {benefitsOpportunitiesData.map((item, index) => {
         const targetScale =
           1 - (benefitsOpportunitiesData.length - index) * 0.05;
