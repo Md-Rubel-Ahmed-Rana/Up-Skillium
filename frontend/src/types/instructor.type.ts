@@ -1,0 +1,23 @@
+import { IUser } from "./user.type";
+
+type ICourse = {
+  id: string;
+  title: string;
+  category: string;
+  image: string;
+};
+
+type IRatings = {
+  averageRating: number;
+  totalReviews: number;
+};
+
+export type IInstructor = {
+  id: string;
+  user: IUser;
+  ratings: IRatings;
+  teacherId: string;
+  courses: ICourse[];
+  createdAt: string;
+  updatedAt: string;
+};
