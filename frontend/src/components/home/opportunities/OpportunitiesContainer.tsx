@@ -3,7 +3,7 @@ import { useScroll } from "framer-motion";
 import { useRef } from "react";
 import OpportunityCard from "./OpportunityCard";
 
-const BenefitsOpportunitiesContainer = () => {
+const OpportunitiesContainer = () => {
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
     target: container,
@@ -30,4 +30,4 @@ const BenefitsOpportunitiesContainer = () => {
   );
 };
 
-export default BenefitsOpportunitiesContainer;
+export default OpportunitiesContainer;
