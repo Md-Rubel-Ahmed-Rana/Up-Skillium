@@ -1,12 +1,7 @@
 import { gsap } from "gsap";
+import Link from "next/link";
 import { useEffect } from "react";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaGithub, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const FooterPage = () => {
   useEffect(() => {
@@ -73,33 +68,28 @@ const FooterPage = () => {
               We are dedicated to providing the best programming resources and
               community support for developers worldwide.
             </p>
-            <a href="#" className="text-yellow-400 hover:underline">
+            <Link href="#" className="text-yellow-400 hover:underline">
               Read more
-            </a>
+            </Link>
           </div>
 
           <div>
             <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
             <ul>
               <li className="mb-2">
-                <a href="#" className="hover:text-yellow-400">
+                <Link href="/" className="hover:text-yellow-400">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="mb-2">
-                <a href="#" className="hover:text-yellow-400">
-                  Tutorials
-                </a>
+                <Link href="/courses" className="hover:text-yellow-400">
+                  Courses
+                </Link>
               </li>
               <li className="mb-2">
-                <a href="#" className="hover:text-yellow-400">
-                  Community
-                </a>
-              </li>
-              <li className="mb-2">
-                <a href="#" className="hover:text-yellow-400">
+                <Link href="/contact" className="hover:text-yellow-400">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -107,23 +97,33 @@ const FooterPage = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Follow Us</h2>
             <div className="flex gap-4">
-              <a href="#" className="text-blue-500 hover:text-blue-700">
-                <FaFacebook size={30} />
-              </a>
-              <a href="#" className="text-blue-300 hover:text-blue-500">
+              <Link
+                href="https://www.youtube.com/"
+                className="text-blue-300 hover:text-blue-500"
+              >
                 <FaTwitter size={30} />
-              </a>
-              <a href="#" className="text-pink-400 hover:text-pink-600">
+              </Link>
+              <Link
+                href="https://www.instagram.com/"
+                className="text-pink-400 hover:text-pink-600"
+              >
                 <FaInstagram size={30} />
-              </a>
-              <a href="#" className="text-blue-700 hover:text-blue-900">
+              </Link>
+              <Link
+                href="https://bd.linkedin.com/"
+                className="text-blue-700 hover:text-blue-900"
+              >
                 <FaLinkedin size={30} />
-              </a>
-              <a href="#" className="text-red-600 hover:text-red-800">
-                <FaYoutube size={30} />
-              </a>
+              </Link>
+              <Link
+                href="https://github.com/Md-Rubel-Ahmed-Rana"
+                className="text-black"
+              >
+                <FaGithub size={30} />
+              </Link>
             </div>
           </div>
+
           <div>
             <h2 className="text-xl font-semibold mb-4">Subscribe</h2>
             <p className="mb-4">
