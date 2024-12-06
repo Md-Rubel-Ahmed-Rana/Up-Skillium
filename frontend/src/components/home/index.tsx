@@ -4,6 +4,7 @@ import HowItWorks from "./howItWorks";
 import Opportunities from "./opportunities";
 import PopularCourses from "./popularCourses";
 import OurServicesAndMissions from "./servicesMissions";
+import SuccessStudents from "./successStudents";
 import TeamContainer from "./team";
 
 type Props = {
@@ -19,6 +20,7 @@ const Home = ({ courses }: Props) => {
       <Opportunities />
       <HowItWorks />
       <TeamContainer />
+      <SuccessStudents />
     </div>
   );
 };

@@ -1,23 +1,20 @@
-import { useGetAllCoursesQuery } from "@/features/course";
 import { ICourse } from "@/types/course.type";
 import makeCategoryAsUrl from "@/utils/makeCategoryAsUrl";
 import { Button, Carousel } from "antd/lib";
 import Link from "next/link";
 import banner from "../../../public/assets/courseImages/courseBanner.jpg";
 
-const CoursesBanner: React.FC = () => {
-  const { data } = useGetAllCoursesQuery({});
-  const courses = (data?.data as ICourse[]) || [];
+type Props = {
+  courses: ICourse[];
+};
 
+const CoursesBanner: React.FC<Props> = ({ courses }) => {
   const availableCategories = Array.from(
     new Set(courses?.map((course) => course?.category))
   );
 
   return (
-    <div
-      // style={{ maxHeight: "80vh", height: "100%", overflow: "hidden" }}
-      className="relative lg:max-h-[80vh] lg:h-[100%] h-screen overflow-hidden"
-    >
+    <div className="relative lg:max-h-[80vh] lg:h-[100%] h-screen overflow-hidden">
       <Carousel
         arrows={false}
         dots={false}

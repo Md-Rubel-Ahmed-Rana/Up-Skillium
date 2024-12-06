@@ -1,15 +1,14 @@
-import { ITeamMember } from "@/types/instructor";
 import { animate, motion, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
 import useMeasure from "react-use-measure";
-import MemberCard from "./MemberCard";
+import StudentCard from "./StudentCard";
 
 type Props = {
   direction: "left-to-right" | "right-to-left";
-  members: ITeamMember[];
+  students: any[];
 };
 
-const TeamMembers = ({ direction, members }: Props) => {
+const StudentContainer = ({ direction, students }: Props) => {
   const FAST_DURATION = 25;
   const SLOW_DURATION = 100;
 
@@ -48,7 +47,6 @@ const TeamMembers = ({ direction, members }: Props) => {
 
     return controls?.stop;
   }, [rerender, xTranslation, duration, width, mustFinish, direction]);
-
   return (
     <div className="relative overflow-hidden h-[300px]">
       <motion.div
@@ -64,12 +62,12 @@ const TeamMembers = ({ direction, members }: Props) => {
           setDuration(FAST_DURATION);
         }}
       >
-        {members.map((member) => (
-          <MemberCard member={member} key={member.id} />
+        {students.map((student) => (
+          <StudentCard student={student} key={student?.id} />
         ))}
       </motion.div>
     </div>
   );
 };
 
-export default TeamMembers;
+export default StudentContainer;

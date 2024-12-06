@@ -1,7 +1,12 @@
 import { gsap } from "gsap";
 import { useEffect } from "react";
-import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter, FaYoutube } from "react-icons/fa";
-
+import {
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+  FaYoutube,
+} from "react-icons/fa";
 
 const FooterPage = () => {
   useEffect(() => {
@@ -19,8 +24,7 @@ const FooterPage = () => {
   }, []);
 
   return (
-    <footer className="relative bg-gradient-to-b from-blue-900 via-indigo-800 to-gray-900 text-white py-20 overflow-hidden">
-    
+    <footer className="relative bg-gradient-to-b from-blue-900 via-indigo-800 to-gray-900 text-white pb-20 pt-40 overflow-hidden">
       <div className="absolute top-0 w-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +38,6 @@ const FooterPage = () => {
         </svg>
       </div>
 
-    
       <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-0 opacity-80">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +51,6 @@ const FooterPage = () => {
         </svg>
       </div>
 
-    
       <div className="absolute inset-0 pointer-events-none z-0">
         {[...Array(10)].map((_, i) => (
           <div
@@ -63,17 +65,13 @@ const FooterPage = () => {
         ))}
       </div>
 
-
       <div className="container mx-auto text-center relative z-10">
-        {/*  */}
-
-  <h1 className="text-5xl mb-4">Up Skillium LMS</h1>
-
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 text-left text-sm px-5">
           <div>
             <h2 className="text-xl font-semibold mb-4">About Us</h2>
             <p className="mb-2">
-              We are dedicated to providing the best programming resources and community support for developers worldwide.
+              We are dedicated to providing the best programming resources and
+              community support for developers worldwide.
             </p>
             <a href="#" className="text-yellow-400 hover:underline">
               Read more
@@ -128,7 +126,9 @@ const FooterPage = () => {
           </div>
           <div>
             <h2 className="text-xl font-semibold mb-4">Subscribe</h2>
-            <p className="mb-4">Get updates about the latest tutorials and offers.</p>
+            <p className="mb-4">
+              Get updates about the latest tutorials and offers.
+            </p>
             <form>
               <input
                 type="email"
@@ -145,7 +145,7 @@ const FooterPage = () => {
           </div>
         </div>
         <p className="mt-16 text-xs text-gray-400">
-          © 2024 Programming Universe. All Rights Reserved.
+          &copy; All Rights Reserved by Up Skillium.
         </p>
       </div>
     </footer>

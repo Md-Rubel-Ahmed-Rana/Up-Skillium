@@ -1,11 +1,16 @@
+import { ICourse } from "@/types/course.type";
 import CoursesBanner from "./CourseBanner";
 import CourseContainer from "./CourseContainer";
 
-const Courses = () => {
+type Props = {
+  courses: ICourse[];
+};
+
+const Courses = ({ courses }: Props) => {
   return (
     <div className="pb-20">
       <div className="max-h-[10%] h-full">
-        <CoursesBanner />
+        <CoursesBanner courses={courses} />
       </div>
       <CourseContainer />
     </div>
