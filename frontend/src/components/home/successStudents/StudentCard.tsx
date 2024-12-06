@@ -23,8 +23,6 @@ const StudentCard = ({ student }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { amount: 0.5 });
 
-  console.log(`${student.name} is ${isInView ? "in view" : "out of view"}`);
-
   return (
     <motion.div
       ref={ref}

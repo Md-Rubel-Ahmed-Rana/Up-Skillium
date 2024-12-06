@@ -1,5 +1,6 @@
 import { ICourse } from "@/types/course.type";
 import Banner from "./banner";
+import ContactUs from "./contact";
 import HowItWorks from "./howItWorks";
 import Opportunities from "./opportunities";
 import PopularCourses from "./popularCourses";
@@ -21,6 +22,7 @@ const Home = ({ courses }: Props) => {
       <HowItWorks />
       <TeamContainer />
       <SuccessStudents />
+      <ContactUs />
     </div>
   );
 };
