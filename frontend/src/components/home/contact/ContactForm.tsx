@@ -20,7 +20,7 @@ const ContactForm = () => {
       form={form}
       layout="vertical"
       onFinish={handleContact}
-      className="space-y-4 max-w-3xl mx-auto mt-10 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-lg shadow-lg p-8"
+      className="space-y-4 max-w-3xl mx-auto mt-10 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-lg shadow-lg lg:p-8"
       size="large"
     >
       <Form.Item

@@ -32,7 +32,7 @@ const iconMapping: Record<string, any> = {
 
 const VerticalCards = () => {
   return (
-    <VerticalTimeline animate={true}>
+    <VerticalTimeline className="w-full overflow-hidden" animate={true}>
       {howItWorksData.map((item, index) => (
         <VerticalTimelineElement
           key={item.id}

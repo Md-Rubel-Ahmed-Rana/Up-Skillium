@@ -37,7 +37,7 @@ const StudentCard = ({ student }: Props) => {
         src={student?.image}
         alt={student?.name}
       />
-      <h3>{student?.name}</h3>
+      <h3 className="text-xl font-bold mt-3">{student?.name}</h3>
       <p>Score: {student?.score}</p>
       <p>Course: {student?.course}</p>
     </motion.div>
