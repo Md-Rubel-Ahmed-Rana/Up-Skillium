@@ -1,3 +1,4 @@
+import TopSellingCourses from "../topSellingCourses";
 import CoursesBanner from "./CourseBanner";
 import CourseContainer from "./CourseContainer";
 
@@ -8,6 +9,7 @@ const Courses = () => {
         <CoursesBanner />
       </div>
       <CourseContainer />
+      <TopSellingCourses />
     </div>
   );
 };
