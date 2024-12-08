@@ -1,38 +1,61 @@
+import { ICourse } from "@/types/course.type";
 import { FaStar } from "react-icons/fa";
-import LearnMoreBtn from "./LearnMoreBtn";
-import SidebarIcons from "./SidebarIcons";
-import SmallCourseRaitings from "./TopCoursesRaitings";
+import CheckoutRedirectButton from "../courses/CheckoutRedirectButton";
+import CourseDetailsRedirectButton from "../courses/CourseDetailsRedirectButton";
 
-interface SmallCardProps {
-    course: {
-        id: number;
-        imageUrl: string;
-        title: string;
-        description: string;
-        rating: number;
-    };
-}
-
-const handleLeraMore = () => {
-    alert("Hi learn more button");
+type Props = {
+  courses: ICourse[];
 };
 
-const SmallCourses = ({ course }: SmallCardProps) => (
-    <div className="bg-gray-100 rounded-lg shadow-lg overflow-hidden relative group">
-        <img
-            src={course.imageUrl}
-            alt={course.title}
-            className="w-full h-40 object-cover"
-        />
-        <FaStar className="text-6xl text-yellow-500 absolute top-0 right-0" />
-        <div className="p-4">
-            <h3 className="text-lg font-bold">{course.title}</h3>
-            <p className="text-sm mt-2">{course.description}</p>
-            <SmallCourseRaitings key={course.id} course={course} />
-            <LearnMoreBtn onClick={handleLeraMore} />
-        </div>
-        <SidebarIcons />
+const TopCourses = ({ courses }: Props) => {
+  return (
+    <>
+      {courses?.map((course) => (
+        <div
+          key={course?.id}
+          className="bg-white rounded-lg shadow-md overflow-hidden relative group transition-transform transform hover:-translate-y-2 hover:shadow-xl"
+        >
+          <div className="relative">
+            <img
+              src={course?.image}
+              alt={course?.title}
+              className="w-full h-40 object-cover rounded-t-lg"
+            />
+            <div className="absolute top-4 left-4 bg-yellow-500 text-white text-sm font-semibold py-1 px-3 rounded-full shadow-md">
+              Popular
+            </div>
+          </div>
+          <FaStar className="text-4xl text-yellow-500 absolute top-4 right-4" />
+          <div className="p-6">
+            <h3 className="text-lg font-bold text-gray-800 mb-2">
+              {course?.title}
+            </h3>
+            <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+              {course?.description}
+            </p>
+         <div className="mt-4 flex justify-between items-center gap-2">
+      <CourseDetailsRedirectButton
+        buttonSize="large"
+        buttonStyles="flex-1 bg-cyan-500 text-white text-center text-lg rounded-lg hover:bg-yellow-600 transition duration-300"
+        buttonType="dashed"
+        course={course}
+        isButton={true}
+        text="See Details"
+        key={"1"}
+      />
+      <CheckoutRedirectButton
+        course={course}
+        buttonText="Buy Now"
+        key={"2"}
+        buttonSize="large"
+        styles="flex-1 bg-blue-500 text-white text-center text-lg rounded-lg hover:bg-blue-600 transition duration-300"
+      />
     </div>
-);
+          </div>
+        </div>
+      ))}
+    </>
+  );
+};
 
-export default SmallCourses;
+export default TopCourses;
