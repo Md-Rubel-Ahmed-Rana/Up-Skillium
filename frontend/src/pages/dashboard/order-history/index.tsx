@@ -1,4 +1,4 @@
-import OrderHistories from "@/components/dashboard/studentOrderHistory";
+import OrderHistories from "@/components/studentOrderHistory";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
