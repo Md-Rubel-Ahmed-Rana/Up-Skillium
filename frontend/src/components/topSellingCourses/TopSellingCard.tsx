@@ -1,40 +1,83 @@
-import { useLazyGetAllPublishedCoursesQuery } from "@/features/course";
-import CourseSkeleton from "@/skeletons/courseSkeleton";
 import { ICourse } from "@/types/course.type";
-import { useEffect } from "react";
-import TopCourses from "./TopCoures";
+import { Card, Rate, Space, Tag } from "antd/lib";
+import { FaStar } from "react-icons/fa";
+import CheckoutRedirectButton from "../courses/CheckoutRedirectButton";
+import CourseDetailsRedirectButton from "../courses/CourseDetailsRedirectButton";
 
-const TopSellingCard = () => {
-  const [trigger, { data, isLoading }] = useLazyGetAllPublishedCoursesQuery({
-    refetchOnReconnect: true,
-    refetchOnFocus: true,
-  });
-  console.log(data);
-  useEffect(() => {
-    trigger({});
-  }, [trigger]);
+const { Meta } = Card;
 
-  const courses = (data?.data?.courses as ICourse[]) || [];
-  const sortedCourses = [...courses]
-    .sort((a, b) => b.students.length - a.students.length)
-    .slice(0, 3);
+type Props = {
+  course: ICourse;
+};
 
-  if (isLoading) {
-    return <CourseSkeleton />;
-  }
-
+const TopSellingCard = ({ course }: Props) => {
   return (
-    <section className="px-6 lg:px-20 py-10">
-      <h1 className="text-4xl lg:text-5xl font-sans font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-gray-700 to-red-500 mb-4 animate-gradient">
-        Best Selling Courses
-      </h1>
-      <h3 className="text-base lg:text-lg font-medium text-gray-700 mb-8 max-w-3xl">
-        Dream big, learn smart, and achieve more—your success story starts here! Take the first step towards unlocking your true potential with courses designed to inspire, empower, and transform your future.
-      </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <TopCourses courses={sortedCourses} />
-      </div>
-    </section>
+    <Card
+      hoverable
+      className="rounded-lg overflow-hidden relative group"
+      cover={
+        <div className="relative overflow-hidden">
+          <img
+            src={course?.image}
+            alt={course?.title}
+            className="w-full h-40 object-cover transition-all duration-300 group-hover:scale-105 rounded-t-lg"
+          />
+          <Tag
+            color="gold"
+            className="absolute top-4 left-4 font-semibold py-1 px-3 shadow-md"
+          >
+            Top Pick
+          </Tag>
+        </div>
+      }
+    >
+      <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+        <Meta
+          title={
+            <h3 className="text-lg font-bold text-gray-800">{course?.title}</h3>
+          }
+          description={
+            <div className="flex flex-col">
+              <div className="flex items-center text-gray-600 text-sm mb-2">
+                <span className="flex items-center gap-1">
+                  <Rate
+                    disabled
+                    allowHalf
+                    defaultValue={course?.ratings?.averageRating || 0}
+                    style={{ fontSize: "16px" }}
+                  />
+                  <span className="ml-1">
+                    ({course?.ratings?.totalReviews || 0} Reviews)
+                  </span>
+                </span>
+              </div>
+              <span className="text-gray-600 text-sm">
+                {course?.students?.length || 0} Students Enrolled
+              </span>
+            </div>
+          }
+        />
+        <Space direction="horizontal" size="middle" className="w-full">
+          <CourseDetailsRedirectButton
+            buttonSize="middle"
+            buttonStyles="w-full bg-yellow-500 text-white"
+            buttonType="default"
+            course={course}
+            isButton={true}
+            text="See Details"
+            key="1"
+          />
+          <CheckoutRedirectButton
+            course={course}
+            buttonText="Buy Now"
+            key="2"
+            buttonSize="middle"
+            styles="w-full"
+          />
+        </Space>
+      </Space>
+      <FaStar className="text-4xl text-yellow-500 absolute top-4 right-4" />
+    </Card>
   );
 };
 

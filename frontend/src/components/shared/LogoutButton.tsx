@@ -9,7 +9,7 @@ type Props = {
 };
 
 const LogoutButton = ({ isButton, buttonStyles }: Props) => {
-  const [logout] = useLogoutMutation();
+  const [logout, { isLoading }] = useLogoutMutation();
 
   const handleLogout = async () => {
     try {
@@ -33,13 +33,16 @@ const LogoutButton = ({ isButton, buttonStyles }: Props) => {
     <>
       {isButton ? (
         <Button
+          disabled={isLoading}
           onClick={handleLogout}
           className={`${buttonStyles && buttonStyles}`}
         >
-          Logout
+          {isLoading ? "Logging out..." : "Logout"}
         </Button>
       ) : (
-        <Text onClick={handleLogout}>Logout</Text>
+        <Text disabled={isLoading} onClick={handleLogout}>
+          {isLoading ? "Logging out..." : "Logout"}
+        </Text>
       )}
     </>
   );

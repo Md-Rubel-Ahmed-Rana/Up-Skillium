@@ -1,9 +1,12 @@
-import BenefitsItems from "./BenefitsItems";
+import BenefitContainer from "./BenefitContainer";
 
 const BenefitsPage = () => {
   return (
-    <div>
-      <BenefitsItems />
+    <div className="py-20 overflow-hidden px-5">
+      <h1 className="text-lg lg:text-3xl font-semibold ml-3  mb-16">
+        Benefits of Learning With Us
+      </h1>
+      <BenefitContainer />
     </div>
   );
 };

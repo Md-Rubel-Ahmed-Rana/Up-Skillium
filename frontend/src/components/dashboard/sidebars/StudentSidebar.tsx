@@ -10,7 +10,6 @@ import {
   FaCommentDots,
   FaShoppingCart,
   FaSignOutAlt,
-  FaTachometerAlt,
   FaUserCircle,
   FaVideo,
 } from "react-icons/fa";
@@ -19,14 +18,9 @@ const StudentSidebar = () => {
   const router = useRouter();
   const studentItems: MenuProps["items"] = [
     {
-      key: "0",
-      icon: <FaTachometerAlt />,
-      label: <Link href={"/dashboard"}>Dashboard</Link>,
-    },
-    {
       key: "1",
       icon: <FaUserCircle />,
-      label: <Link href={"/dashboard/profile"}>Profile</Link>,
+      label: <Link href={"/dashboard/profile-info"}>Profile</Link>,
     },
     {
       key: "2",
@@ -39,27 +33,27 @@ const StudentSidebar = () => {
       label: <Link href={"/dashboard/live-classes"}>Live Classes</Link>,
     },
     {
-      key: "5",
+      key: "4",
       icon: <FaShoppingCart />,
       label: <Link href={"/dashboard/order-history"}>Order History</Link>,
     },
     {
-      key: "6",
+      key: "5",
       icon: <FaChartLine />,
       label: <Link href={"/dashboard/progress"}>Progress</Link>,
     },
     {
-      key: "7",
+      key: "6",
       icon: <FaCommentDots />,
       label: <Link href={"/dashboard/discussions"}>Discussions</Link>,
     },
     {
-      key: "8",
+      key: "7",
       icon: <FaClipboardList />,
       label: <Link href={"/dashboard/certificates"}>Certificates</Link>,
     },
     {
-      key: "9",
+      key: "8",
       icon: <FaSignOutAlt />,
       label: <LogoutButton />,
     },

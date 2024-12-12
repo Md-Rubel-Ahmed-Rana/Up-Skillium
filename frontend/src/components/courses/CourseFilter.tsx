@@ -10,7 +10,10 @@ type Props = {
 
 const CourseFilter: React.FC<Props> = ({ setFilters, filters }) => {
   const { data } = useGetAllCategoriesQuery({});
-  const categories = (data?.data as ICategory[]) || [];
+  const categories = (data?.data as ICategory[]) || [
+    { id: "1", name: "Web Development" },
+    { id: "2", name: "Design" },
+  ];
   const [priceRange, setPriceRange] = useState<[number, number]>([
     filters?.minPrice || 0,
     filters?.maxPrice || 1000,

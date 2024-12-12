@@ -1,5 +1,6 @@
 import CourseDetailsRedirectButton from "@/components/courses/CourseDetailsRedirectButton";
 import { ICourse } from "@/types/course.type";
+import Image from "next/image";
 
 type Props = {
   course: ICourse;
@@ -9,14 +10,18 @@ const PopularCourseCard = ({ course }: Props) => {
   return (
     <div
       key={course?.id}
-      className="bg-white/10 rounded-lg shadow-md hover:shadow-lg border border-white/20 p-2 lg:p-4 transition-all transform hover:scale-105 bg-gradient-to-b from-purple-500 to-pink-500"
+      className="bg-white/10 rounded-lg shadow-md hover:shadow-lg border border-white/20 p-2 lg:p-4 transition-all transform hover:scale-105 bg-gradient-to-b from-purple-500 to-pink-500 flex flex-col justify-between"
     >
-      <img
-        src={course?.image}
-        alt={course?.title}
-        className="w-full h-40 object-cover rounded-md mb-4"
-      />
-      <h3 className="text-lg font-semibold mb-2">{course?.title}</h3>
+      <div className="w-full h-40 relative mb-4">
+        <Image
+          src={course?.image}
+          alt={course?.title}
+          layout="fill"
+          objectFit="cover"
+          className="rounded-md"
+        />
+      </div>
+      <h3 className="text-lg font-semibold mb-2 capitalize">{course?.title}</h3>
       <p className="text-sm text-gray-300 mb-3 capitalize">
         {course?.category} - {course.level}
       </p>
