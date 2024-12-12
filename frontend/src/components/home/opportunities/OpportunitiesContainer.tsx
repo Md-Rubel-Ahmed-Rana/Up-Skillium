@@ -1,4 +1,4 @@
-import benefitsOpportunitiesData from "@/constants/benefits";
+import opportunitiesData from "@/constants/opportunities";
 import { useScroll } from "framer-motion";
 import { useRef } from "react";
 import OpportunityCard from "./OpportunityCard";
@@ -12,9 +12,8 @@ const OpportunitiesContainer = () => {
 
   return (
     <div className="-mt-20" ref={container}>
-      {benefitsOpportunitiesData.map((item, index) => {
-        const targetScale =
-          1 - (benefitsOpportunitiesData.length - index) * 0.05;
+      {opportunitiesData.map((item, index) => {
+        const targetScale = 1 - (opportunitiesData.length - index) * 0.05;
         return (
           <OpportunityCard
             key={item?.id}

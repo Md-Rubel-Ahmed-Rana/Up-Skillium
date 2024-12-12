@@ -1,6 +1,8 @@
 import LogoutButton from "@/components/shared/LogoutButton";
+import buildPathToKeyMap from "@/utils/buildPathToKeyMapSidebar";
 import { Menu, MenuProps } from "antd/lib";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   FaBookOpen,
   FaCalendarAlt,
@@ -19,11 +21,12 @@ import {
 } from "react-icons/fa";
 
 const InstructorSidebar = () => {
+  const router = useRouter();
   const InstructorItems: MenuProps["items"] = [
     {
       key: "1",
       icon: <FaUserCircle />,
-      label: <Link href={"/dashboard/profile"}>Profile</Link>,
+      label: <Link href={"/dashboard/profile-info"}>Profile</Link>,
     },
     {
       key: "2",
@@ -111,12 +114,15 @@ const InstructorSidebar = () => {
     },
   ];
 
+  const pathToKeyMap = buildPathToKeyMap(InstructorItems);
+  const selectedKey = pathToKeyMap[router.pathname] || "1";
+
   return (
     <Menu
       theme="light"
       className="w-full lg:min-h-screen h-full mt-3 flex lg:flex-col flex-row overflow-x-auto lg:overflow-visible space-x-3 lg:space-x-0"
       mode="inline"
-      defaultSelectedKeys={["1"]}
+      selectedKeys={[selectedKey]}
       items={InstructorItems}
     />
   );

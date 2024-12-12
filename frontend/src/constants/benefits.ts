@@ -1,46 +1,69 @@
 import { v4 as uuidv4 } from "uuid";
 
-const benefitsOpportunitiesData = [
+const benefitsData = [
   {
     id: uuidv4(),
-    title: "State-of-the-Art Learning Platform",
+    title: "Scholarship Opportunities",
     description:
-      "Experience a cutting-edge learning platform equipped with the latest tools, interactive lessons, and real-world projects. Our platform is designed to help you grasp concepts faster, stay engaged, and apply your knowledge effectively. It’s your gateway to mastering skills that align with industry standards and future-proof your career.",
-    icon: "",
-    color: "#4A90E2",
+      "We offer exclusive scholarships to deserving students who want to pursue their programming education. These scholarships aim to make learning more accessible and affordable for all.",
+    bgColor: "bg-blue-500",
+    ballColor: "bg-yellow-400",
+    cornerColor: "bg-red-400",
   },
   {
     id: uuidv4(),
-    title: "Globally Recognized Certifications",
+    title: "Advanced Courses",
     description:
-      "Earn certifications that are highly regarded across industries and internationally recognized. These credentials showcase your expertise, make your resume stand out, and open doors to better job opportunities and career advancements. Prove your competence with qualifications that truly matter.",
-    icon: "",
-    color: "#F5A623",
+      "Our advanced programming courses are designed for those who want to dive deep into complex topics such as Machine Learning, Artificial Intelligence, and Blockchain. Perfect for those looking to level up their skills.",
+    bgColor: "bg-green-500",
+    ballColor: "bg-purple-400",
+    cornerColor: "bg-pink-400",
   },
   {
     id: uuidv4(),
-    title: "Exclusive Industry Referrals",
+    title: "Skill Development",
     description:
-      "Tap into our extensive network of top companies and recruiters to secure referrals for internships and jobs. We help bridge the gap between your education and professional aspirations by connecting you with hiring managers actively looking for skilled professionals like you.",
-    icon: "",
-    color: "#7ED321",
+      "With access to cutting-edge tools and hands-on practice, our platform helps you enhance your coding, debugging, and problem-solving skills. Prepare for real-world challenges with the skills you develop here.",
+    bgColor: "bg-orange-500",
+    ballColor: "bg-cyan-400",
+    cornerColor: "bg-blue-400",
   },
   {
     id: uuidv4(),
-    title: "Freelance on Global Marketplaces",
+    title: "Expert Mentorship",
     description:
-      "Gain the skills and confidence to work independently as a freelancer on leading platforms like Upwork, Fiverr, and more. Our programs guide you on how to pitch your services, win projects, and build a sustainable freelance career while working from anywhere in the world.",
-    icon: "",
-    color: "#BD10E0",
+      "Get personalized guidance from industry experts. Our mentorship program allows you to learn from professionals, get feedback on your projects, and stay on the right track towards achieving your goals.",
+    bgColor: "bg-teal-500",
+    ballColor: "bg-indigo-400",
+    cornerColor: "bg-yellow-500",
   },
   {
     id: uuidv4(),
-    title: "Community of Like-Minded Learners",
+    title: "Project-Based Learning",
     description:
-      "Become part of an active and vibrant community of learners, professionals, and mentors. Share insights, seek guidance, and collaborate on projects to accelerate your growth. Surround yourself with people who inspire and motivate you to achieve your goals.",
-    icon: "",
-    color: "#417505",
+      "Learn by doing! Our curriculum is built around real-world projects where you can apply what you’ve learned to build actual applications. This hands-on experience makes you job-ready and confident.",
+    bgColor: "bg-purple-500",
+    ballColor: "bg-pink-400",
+    cornerColor: "bg-teal-400",
+  },
+  {
+    id: uuidv4(),
+    title: "Collaborative Community",
+    description:
+      "Join a community of like-minded learners and professionals. Share knowledge, collaborate on projects, and solve problems together. Our community is supportive and collaborative, making learning more engaging.",
+    bgColor: "bg-red-500",
+    ballColor: "bg-orange-400",
+    cornerColor: "bg-yellow-400",
+  },
+  {
+    id: uuidv4(),
+    title: "Career Support",
+    description:
+      "We don’t just teach programming; we help you build your career. With job placement assistance, resume workshops, and interview prep, we guide you towards your dream job in the tech industry.",
+    bgColor: "bg-pink-500",
+    ballColor: "bg-yellow-400",
+    cornerColor: "bg-indigo-400",
   },
 ];
 
-export default benefitsOpportunitiesData;
+export default benefitsData;

@@ -3,7 +3,7 @@ import { useGetRelatedCoursesQuery } from "@/features/course";
 import { ICourse } from "@/types/course.type";
 import { useRouter } from "next/router";
 
-const RecommendedCourses = () => {
+const RelatedCourses = () => {
   const { query } = useRouter();
   const courseId = query?.courseId as string;
   const courseTitle = query?.courseTitle as string;
@@ -19,11 +19,11 @@ const RecommendedCourses = () => {
   return (
     <div className="py-10 max-w-[1200px] mx-auto">
       <h2 className="lg:text-2xl text-lg ml-3 -mb-7 font-bold text-gray-800">
-        Recommended Courses
+        Related Courses
       </h2>
       <CourseGridContainer courses={filteredCourses} isLoading={isLoading} />
     </div>
   );
 };
 
-export default RecommendedCourses;
+export default RelatedCourses;
