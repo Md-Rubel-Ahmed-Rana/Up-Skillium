@@ -1,39 +1,23 @@
 import LogoutButton from "@/components/shared/LogoutButton";
+import buildPathToKeyMap from "@/utils/buildPathToKeyMapSidebar";
 import { Menu, MenuProps } from "antd/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
 import {
+  FaBook,
+  FaChartLine,
+  FaClipboardList,
+  FaCommentDots,
+  FaShoppingCart,
+  FaSignOutAlt,
   FaTachometerAlt,
   FaUserCircle,
-  FaBook,
   FaVideo,
-  FaChartLine,
-  FaCommentDots,
-  FaCertificate,
-  FaShoppingCart,
-  FaClipboardList,
-  FaSignOutAlt,
 } from "react-icons/fa";
 
 const StudentSidebar = () => {
   const router = useRouter();
-
-  const pathToKeyMap: { [key: string]: string } = {
-    "/dashboard": "0",
-    "/dashboard/profile": "1",
-    "/dashboard/my-courses": "2",
-    "/dashboard/live-classes": "3",
-    "/dashboard/enrollments": "4",
-    "/dashboard/order-history": "5",
-    "/dashboard/progress": "6",
-    "/dashboard/discussions": "7",
-    "/dashboard/certificates": "8",
-  };
-
-  const selectedKey = pathToKeyMap[router.pathname] || "1";
-
-  const defaultItems: MenuProps["items"] = [
+  const studentItems: MenuProps["items"] = [
     {
       key: "0",
       icon: <FaTachometerAlt />,
@@ -53,11 +37,6 @@ const StudentSidebar = () => {
       key: "3",
       icon: <FaVideo />,
       label: <Link href={"/dashboard/live-classes"}>Live Classes</Link>,
-    },
-    {
-      key: "4",
-      icon: <FaCertificate />,
-      label: <Link href={"/dashboard/enrollments"}>Enrollments</Link>,
     },
     {
       key: "5",
@@ -86,12 +65,15 @@ const StudentSidebar = () => {
     },
   ];
 
+  const pathToKeyMap = buildPathToKeyMap(studentItems);
+  const selectedKey = pathToKeyMap[router.pathname] || "1";
+
   return (
     <Menu
       theme="light"
       className="w-full lg:min-h-screen h-full mt-3 flex lg:flex-col flex-row overflow-x-auto lg:overflow-visible space-x-3 lg:space-x-0"
       selectedKeys={[selectedKey]}
-      items={defaultItems}
+      items={studentItems}
     />
   );
 };
