@@ -1,8 +1,7 @@
-import React from "react";
 import Link from "next/link";
 import LoginForm from "./LoginForm";
 
-const Login: React.FC = () => {
+const Login = () => {
   return (
     <div className="min-h-screen flex flex-col gap-10 justify-center items-center px-4 max-w-md mx-auto">
       <div className="bg-gray-100 p-5 rounded-md flex flex-col gap-10 justify-center items-center w-full">
