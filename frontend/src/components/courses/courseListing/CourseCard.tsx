@@ -1,6 +1,6 @@
-import { fallbackImageUrl } from "@/constants/fallback";
 import { ICourse } from "@/types/course.type";
-import { Avatar, Card, Image, Rate, Typography } from "antd/lib";
+import { Avatar, Card, Rate, Typography } from "antd/lib";
+import Image from "next/image";
 import CheckoutRedirectButton from "./CheckoutRedirectButton";
 import CourseDetailsRedirectButton from "./CourseDetailsRedirectButton";
 
@@ -17,21 +17,13 @@ const CourseCard = ({ course }: Props) => {
       className="shadow-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
       styles={{ body: { padding: "10px" } }}
       cover={
-        course?.image ? (
-          <img
-            alt="course thumbnail"
-            src={course?.image}
-            className="h-[200px]"
-          />
-        ) : (
-          <Image
-            src="error"
-            height={200}
-            fallback={fallbackImageUrl}
-            preview={false}
-            alt="Placeholder Image"
-          />
-        )
+        <Image
+          alt={course?.title}
+          src={course?.image}
+          height={160}
+          width={300}
+          className="object-cover rounded-lg"
+        />
       }
       actions={[
         <CourseDetailsRedirectButton

@@ -2,7 +2,7 @@ import { useGetCoursesByCategoryQuery } from "@/features/course";
 import CourseSkeleton from "@/skeletons/courseSkeleton";
 import { ICourse } from "@/types/course.type";
 import { useRouter } from "next/router";
-import CourseCard from "../courses/CourseCard";
+import CourseCard from "../courses/courseListing/CourseCard";
 import AvailableCategoryList from "./AvailableCategoryList";
 
 const CategorizedCourses = () => {

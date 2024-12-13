@@ -1,4 +1,4 @@
-import CourseDetailsRedirectButton from "@/components/courses/CourseDetailsRedirectButton";
+import CourseDetailsRedirectButton from "@/components/courses/courseListing/CourseDetailsRedirectButton";
 import { ICourse } from "@/types/course.type";
 import Image from "next/image";
 
@@ -9,7 +9,7 @@ type Props = {
 const PopularCourseCard = ({ course }: Props) => {
   return (
     <div
-      key={course?.id}
+      data-aos="zoom-in-up"
       className="bg-white/10 rounded-lg shadow-md hover:shadow-lg border border-white/20 p-2 lg:p-4 transition-all transform hover:scale-105 bg-gradient-to-b from-purple-500 to-pink-500 flex flex-col justify-between"
     >
       <div className="w-full h-40 relative mb-4">

@@ -1,4 +1,4 @@
-import CheckoutRedirectButton from "@/components/courses/CheckoutRedirectButton";
+import CheckoutRedirectButton from "@/components/courses/courseListing/CheckoutRedirectButton";
 import { ICourseForOutline } from "@/types/courseOutline.type";
 import { Card, Typography } from "antd/lib";
 

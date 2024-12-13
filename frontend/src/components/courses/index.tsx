@@ -1,7 +1,7 @@
 import { ICourse } from "@/types/course.type";
-import TopSellingCourses from "../topSellingCourses";
-import CoursesBanner from "./CourseBanner";
-import CourseContainer from "./CourseContainer";
+import CoursesBanner from "./banner";
+import CourseContainer from "./courseListing";
+import TopSellingCourses from "./topSellingCourses";
 
 type Props = {
   courses: ICourse[];

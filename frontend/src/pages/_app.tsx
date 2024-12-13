@@ -1,7 +1,6 @@
 import store from "@/app/store";
 import "@/styles/globals.css";
 import Lenis from "@studio-freight/lenis";
-import "animate.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import type { NextPage } from "next";

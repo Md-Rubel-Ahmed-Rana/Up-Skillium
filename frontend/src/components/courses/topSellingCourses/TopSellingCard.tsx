@@ -1,8 +1,9 @@
 import { ICourse } from "@/types/course.type";
 import { Card, Rate, Space, Tag } from "antd/lib";
+import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import CheckoutRedirectButton from "../courses/CheckoutRedirectButton";
-import CourseDetailsRedirectButton from "../courses/CourseDetailsRedirectButton";
+import CheckoutRedirectButton from "../courseListing/CheckoutRedirectButton";
+import CourseDetailsRedirectButton from "../courseListing/CourseDetailsRedirectButton";
 
 const { Meta } = Card;
 
@@ -17,11 +18,14 @@ const TopSellingCard = ({ course }: Props) => {
       className="rounded-lg overflow-hidden relative group"
       cover={
         <div className="relative overflow-hidden">
-          <img
-            src={course?.image}
+          <Image
             alt={course?.title}
+            src={course?.image}
+            height={160}
+            width={300}
             className="w-full h-40 object-cover transition-all duration-300 group-hover:scale-105 rounded-t-lg"
           />
+
           <Tag
             color="gold"
             className="absolute top-4 left-4 font-semibold py-1 px-3 shadow-md"

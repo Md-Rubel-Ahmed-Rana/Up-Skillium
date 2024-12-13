@@ -1,4 +1,4 @@
-import CourseGridContainer from "@/components/courses/CourseGridContainer";
+import CourseGridContainer from "@/components/courses/courseListing/CourseGridContainer";
 import { useGetRelatedCoursesQuery } from "@/features/course";
 import { ICourse } from "@/types/course.type";
 import { useRouter } from "next/router";
