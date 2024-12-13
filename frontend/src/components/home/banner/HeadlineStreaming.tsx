@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 const hotOffers = [
-  "🔥 Get 50-70% discount this December on all courses!",
+  "🔥 Get 50-70% discount this month on all courses!",
   "🎓 Learn and grow with our end-of-year deals — up to 70% off!",
   "📚 Limited time only: Join now and save big on your learning journey!",
 ];

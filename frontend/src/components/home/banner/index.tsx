@@ -1,8 +1,8 @@
 import { hostedImages } from "@/constants/images";
 import HeadlineStreaming from "./HeadlineStreaming";
-import ImpressiveTextChanger from "./ImpressiveTextChanger";
 import NavigatorButton from "./NavigatorButton";
 import TotalCounters from "./TotalCounters";
+import WelcomeContainer from "./WelcomeContainer";
 
 const Banner = () => {
   return (
@@ -16,8 +16,7 @@ const Banner = () => {
           backgroundRepeat: "no-repeat",
           opacity: 0.3,
         }}
-      ></div>
-
+      />
       <div
         className="absolute inset-y-0 right-0 w-1/2 z-0  animate__animated animate__fadeInUp"
         style={{
@@ -27,11 +26,10 @@ const Banner = () => {
           backgroundRepeat: "no-repeat",
           opacity: 0.3,
         }}
-      ></div>
-
+      />
       <div className="relative w-full z-10 mx-auto">
         <HeadlineStreaming />
-        <ImpressiveTextChanger />
+        <WelcomeContainer />
         <div className="flex justify-center">
           <NavigatorButton />
         </div>

@@ -1,5 +1,5 @@
+import useTextWritingStream from "@/hooks/useTextWritingStream";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 
 const changeableTexts = [
   "Explore our wide range of courses",
@@ -8,33 +8,8 @@ const changeableTexts = [
   "Join our 500+ successful graduates",
 ];
 
-const ImpressiveTextChanger = () => {
-  const [textIndex, setTextIndex] = useState(0);
-  const [displayedText, setDisplayedText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  useEffect(() => {
-    let timeout: string | number | NodeJS.Timeout | undefined;
-    const currentText = changeableTexts[textIndex];
-    const typingSpeed = isDeleting ? 50 : 100;
-
-    const handleTyping = () => {
-      if (!isDeleting && displayedText.length < currentText.length) {
-        setDisplayedText(currentText.slice(0, displayedText.length + 1));
-      } else if (isDeleting && displayedText.length > 0) {
-        setDisplayedText(currentText.slice(0, displayedText.length - 1));
-      } else if (!isDeleting && displayedText.length === currentText.length) {
-        timeout = setTimeout(() => setIsDeleting(true), 2000);
-      } else if (isDeleting && displayedText.length === 0) {
-        setIsDeleting(false);
-        setTextIndex((prevIndex) => (prevIndex + 1) % changeableTexts.length);
-      }
-    };
-
-    timeout = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(timeout);
-  }, [displayedText, isDeleting, textIndex]);
-
+const WelcomeContainer = () => {
+  const { text } = useTextWritingStream(changeableTexts);
   return (
     <div className="w-full py-5 text-white">
       <div className="max-w-4xl mx-auto text-center px-4">
@@ -53,7 +28,7 @@ const ImpressiveTextChanger = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5 }}
           >
-            <span className="typing">{displayedText}</span>
+            <span className="typing">{text}</span>
             <span className="blinking-cursor">|</span>
           </motion.div>
         </div>
@@ -71,4 +46,4 @@ const ImpressiveTextChanger = () => {
   );
 };
 
-export default ImpressiveTextChanger;
+export default WelcomeContainer;
