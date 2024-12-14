@@ -1,5 +1,6 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useGetInstructorCoursesQuery } from "@/features/course";
+import CourseSkeleton from "@/skeletons/courseSkeleton";
 import { ICourse } from "@/types/course.type";
 import { IUser } from "@/types/user.type";
 import MyClassContainer from "./MyClassContainer";
@@ -13,15 +14,13 @@ const MyClasses = () => {
   });
   const courses = instructorCourses?.data as ICourse[];
   return (
-    <div>
+    <>
       {isLoading ? (
-        <div className="h-screen flex justify-center items-center">
-          <h2 className="text-2xl font-bold">Courses Loading...</h2>
-        </div>
+        <CourseSkeleton />
       ) : (
         <>
           {courses?.length <= 0 ? (
-            <div className="h-screen flex justify-center items-center">
+            <div className="h-screen flex justify-center items-center pb-20">
               <h2 className="text-2xl font-bold">No Course Found</h2>
             </div>
           ) : (
@@ -29,7 +28,7 @@ const MyClasses = () => {
           )}
         </>
       )}
-    </div>
+    </>
   );
 };
 

@@ -25,10 +25,6 @@ const NavbarDropdown = ({ isToggleIcon }: Props) => {
       label: <Link href={"/dashboard"}>Dashboard</Link>,
     },
     {
-      key: "3",
-      label: <Link href="/dashboard/my-courses">My Courses</Link>,
-    },
-    {
       key: "4",
       label: <Link href={"/courses"}>Courses</Link>,
     },
