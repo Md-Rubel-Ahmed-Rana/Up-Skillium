@@ -40,4 +40,19 @@ router.delete("/:id", LessonController.deleteLesson);
 
 router.get("/module/:moduleId", LessonController.getLessonsByModule);
 
+router.get(
+  "/by-instructor/lessons/:instructorId",
+  LessonController.getAllLessonsByInstructor
+);
+
+router.get(
+  "/by-instructor/quizzes/:instructorId",
+  LessonController.getAllQuizLessonsByInstructor
+);
+
+router.get(
+  "/by-instructor/assignments/:instructorId",
+  LessonController.getAllAssignmentLessonsByInstructor
+);
+
 export const LessonRoutes = router;

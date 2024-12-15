@@ -11,4 +11,5 @@ router.get("/by-course/:courseId", controller_1.ModuleController.getModuleByCour
 router.get("/classes/:courseId", controller_1.ModuleController.getFullClassByCourseId);
 router.patch("/:id", controller_1.ModuleController.updateModule);
 router.delete("/:id", controller_1.ModuleController.deleteModule);
+router.get("/by-instructor/modules/:instructorId", controller_1.ModuleController.deleteModule);
 exports.ModuleRoutes = router;

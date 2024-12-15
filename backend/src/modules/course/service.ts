@@ -142,6 +142,12 @@ class Service {
     const courses = await Course.find({ instructor: instructorId });
     return courses;
   }
+  async getCourseIdsByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<Types.ObjectId[]> {
+    const courses = await Course.find({ instructor: instructorId });
+    return courses.map((course) => course?.id);
+  }
   async getMyStudentsByInstructor(instructorId: Types.ObjectId): Promise<any> {
     const courses = await Course.find({ instructor: instructorId }).populate(
       "students",

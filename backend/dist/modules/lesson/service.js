@@ -14,7 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LessonService = void 0;
 const apiError_1 = __importDefault(require("../../shared/apiError"));
-const service_1 = require("../quiz/service");
+const service_1 = require("../module/service");
+const service_2 = require("../quiz/service");
 const model_1 = require("./model");
 const mongoose_1 = require("mongoose");
 class Service {
@@ -32,7 +33,7 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
             if ((data === null || data === void 0 ? void 0 : data.quizQuestions) && ((_a = data === null || data === void 0 ? void 0 : data.quizQuestions) === null || _a === void 0 ? void 0 : _a.length) > 0) {
-                const createdQuizzes = yield service_1.QuizService.createQuizzes(data === null || data === void 0 ? void 0 : data.quizQuestions);
+                const createdQuizzes = yield service_2.QuizService.createQuizzes(data === null || data === void 0 ? void 0 : data.quizQuestions);
                 yield model_1.Lesson.create(Object.assign(Object.assign({}, data), { quizQuestions: createdQuizzes }));
             }
             else {
@@ -97,9 +98,9 @@ class Service {
                     newQuizzes.push(quiz);
                 }
             });
-            yield service_1.QuizService.updateManyQuizzes(oldQuizzes);
+            yield service_2.QuizService.updateManyQuizzes(oldQuizzes);
             const oldQuizIds = oldQuizzes.map((quiz) => new mongoose_1.Types.ObjectId(quiz === null || quiz === void 0 ? void 0 : quiz.id));
-            const newQuizIds = yield service_1.QuizService.createNewQuizFromLessonUpdate(newQuizzes);
+            const newQuizIds = yield service_2.QuizService.createNewQuizFromLessonUpdate(newQuizzes);
             const finalQuizIds = oldQuizIds.concat(newQuizIds);
             yield model_1.Lesson.findByIdAndUpdate(lessonId, {
                 $set: { quizQuestions: finalQuizIds },
@@ -113,6 +114,44 @@ class Service {
                 .skip(skip)
                 .limit(limit)
                 .exec();
+        });
+    }
+    getAllLessonsByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const modules = yield service_1.ModuleService.getAllModulesByInstructor(instructorId);
+            const moduleIds = modules.map((module) => module === null || module === void 0 ? void 0 : module.id);
+            const lessons = yield model_1.Lesson.find({ module: { $in: moduleIds } })
+                .populate("module", "title serial")
+                .populate({
+                path: "quizQuestions",
+            });
+            return lessons;
+        });
+    }
+    getAllQuizLessonsByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const modules = yield service_1.ModuleService.getAllModulesByInstructor(instructorId);
+            const moduleIds = modules.map((module) => module === null || module === void 0 ? void 0 : module.id);
+            const lessons = yield model_1.Lesson.find({
+                module: { $in: moduleIds },
+                type: "quiz",
+            })
+                .populate("module", "title serial")
+                .populate({
+                path: "quizQuestions",
+            });
+            return lessons;
+        });
+    }
+    getAllAssignmentLessonsByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const modules = yield service_1.ModuleService.getAllModulesByInstructor(instructorId);
+            const moduleIds = modules.map((module) => module === null || module === void 0 ? void 0 : module.id);
+            const lessons = yield model_1.Lesson.find({
+                module: { $in: moduleIds },
+                type: "assignment",
+            }).populate("module", "title serial");
+            return lessons;
         });
     }
 }

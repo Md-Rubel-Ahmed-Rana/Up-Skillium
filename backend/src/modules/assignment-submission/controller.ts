@@ -93,6 +93,36 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getPendingAssignmentByInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      const data =
+        await AssignmentSubmissionService.getPendingAssignmentByInstructor(
+          instructorId
+        );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Pending assignments retrieved successfully",
+        data: data,
+      });
+    }
+  );
+  getCompletedAssignmentByInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      const data =
+        await AssignmentSubmissionService.getCompletedAssignmentByInstructor(
+          instructorId
+        );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Completed assignments retrieved successfully",
+        data: data,
+      });
+    }
+  );
 }
 
 export const AssignmentSubmissionController = new Controller();

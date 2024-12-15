@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CourseOutlineService = void 0;
 const apiError_1 = __importDefault(require("../../shared/apiError"));
 const model_1 = require("./model");
+const service_1 = require("../course/service");
 class Service {
     createOutline(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -126,6 +127,21 @@ class Service {
             }
             module.name = updatedName;
             yield outline.save();
+        });
+    }
+    getOutlinesByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const courseIds = yield service_1.CourseService.getCourseIdsByInstructor(instructorId);
+            const outlines = yield model_1.CourseOutline.find({
+                course: { $in: courseIds },
+            }).populate([
+                {
+                    path: "course",
+                    model: "Course",
+                    select: { title: 1, image: 1 },
+                },
+            ]);
+            return outlines;
         });
     }
 }

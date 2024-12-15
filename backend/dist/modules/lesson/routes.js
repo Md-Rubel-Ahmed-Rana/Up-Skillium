@@ -21,4 +21,7 @@ router.patch("/:id", controller_1.LessonController.updateLesson);
 router.patch("/update-quizzes/:lessonId", controller_1.LessonController.updateQuizzesInLesson);
 router.delete("/:id", controller_1.LessonController.deleteLesson);
 router.get("/module/:moduleId", controller_1.LessonController.getLessonsByModule);
+router.get("/by-instructor/lessons/:instructorId", controller_1.LessonController.getAllLessonsByInstructor);
+router.get("/by-instructor/quizzes/:instructorId", controller_1.LessonController.getAllQuizLessonsByInstructor);
+router.get("/by-instructor/assignments/:instructorId", controller_1.LessonController.getAllAssignmentLessonsByInstructor);
 exports.LessonRoutes = router;

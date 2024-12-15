@@ -110,6 +110,12 @@ class Service {
             return courses;
         });
     }
+    getCourseIdsByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const courses = yield model_1.Course.find({ instructor: instructorId });
+            return courses.map((course) => course === null || course === void 0 ? void 0 : course.id);
+        });
+    }
     getMyStudentsByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
             const courses = yield model_1.Course.find({ instructor: instructorId }).populate("students", "name email image");

@@ -83,6 +83,18 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getAllModulesByInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      const data = await ModuleService.getAllModulesByInstructor(instructorId);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Modules retrieved successfully",
+        data: data,
+      });
+    }
+  );
 }
 
 export const ModuleController = new Controller();

@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { StudentProgressService } from "../student-progress/service";
 import { IAssignmentSubmission } from "./interface";
 import { AssignmentSubmission } from "./model";
+import { ModuleService } from "../module/service";
 
 class Service {
   async submit(
@@ -84,6 +85,28 @@ class Service {
     await AssignmentSubmission.findByIdAndUpdate(id, {
       $set: { ...updatedData },
     });
+  }
+  async getPendingAssignmentByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<IAssignmentSubmission[]> {
+    const modules = await ModuleService.getAllModulesByInstructor(instructorId);
+    const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];
+    const assignments = await AssignmentSubmission.find({
+      "lesson.module": { $in: moduleIds },
+      status: "pending",
+    });
+    return assignments;
+  }
+  async getCompletedAssignmentByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<IAssignmentSubmission[]> {
+    const modules = await ModuleService.getAllModulesByInstructor(instructorId);
+    const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];
+    const assignments = await AssignmentSubmission.find({
+      "lesson.module": { $in: moduleIds },
+      status: "checked",
+    });
+    return assignments;
   }
 }
 

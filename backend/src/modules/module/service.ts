@@ -66,6 +66,18 @@ class Service {
   async deleteModule(id: Types.ObjectId): Promise<void> {
     await Module.findByIdAndDelete(id);
   }
+  async getAllModulesByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<IModule[]> {
+    const courseIds = await CourseService.getCourseIdsByInstructor(
+      instructorId
+    );
+    const modules = await Module.find({ course: { $in: courseIds } }).populate(
+      "course",
+      "title image category"
+    );
+    return modules;
+  }
 }
 
 export const ModuleService = new Service();
