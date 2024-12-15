@@ -24,6 +24,16 @@ router.get(
 
 router.patch("/review", AssignmentSubmissionController.updateAssignmentReview);
 
-router.patch("/id", AssignmentSubmissionController.updateSubmission);
+router.patch("/:id", AssignmentSubmissionController.updateSubmission);
+
+router.get(
+  "/by-instructor/pending/:instructorId",
+  AssignmentSubmissionController.getPendingAssignmentByInstructor
+);
+
+router.get(
+  "/by-instructor/completed/:instructorId",
+  AssignmentSubmissionController.getCompletedAssignmentByInstructor
+);
 
 export const AssignmentSubmissionRoutes = router;

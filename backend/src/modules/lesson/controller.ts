@@ -123,6 +123,48 @@ class Controller extends RootController {
       data: lessons,
     });
   });
+  getAllLessonsByInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      const lessons = await LessonService.getAllLessonsByInstructor(
+        instructorId
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Lessons retrieved successfully",
+        data: lessons,
+      });
+    }
+  );
+  getAllQuizLessonsByInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      const lessons = await LessonService.getAllQuizLessonsByInstructor(
+        instructorId
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Quizzes retrieved successfully",
+        data: lessons,
+      });
+    }
+  );
+  getAllAssignmentLessonsByInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      const lessons = await LessonService.getAllAssignmentLessonsByInstructor(
+        instructorId
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Assignments retrieved successfully",
+        data: lessons,
+      });
+    }
+  );
 }
 
 export const LessonController = new Controller();

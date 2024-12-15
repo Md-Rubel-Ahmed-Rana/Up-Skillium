@@ -13,4 +13,5 @@ router.patch("/update-module-name/:courseId/:moduleId", controller_1.CourseOutli
 router.delete("/delete-module/:courseId/:moduleId", controller_1.CourseOutlineController.deleteModule);
 router.patch("/:id", controller_1.CourseOutlineController.updateOutlineModules);
 router.delete("/:id", controller_1.CourseOutlineController.deleteOutline);
+router.get("/by-instructor/outlines/:instructorId", controller_1.CourseOutlineController.getOutlinesByInstructor);
 exports.CourseOutlineRoutes = router;

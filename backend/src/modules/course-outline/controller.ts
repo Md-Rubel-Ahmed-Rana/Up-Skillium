@@ -105,6 +105,20 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getOutlinesByInstructor = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const instructorId = req.params.instructorId as unknown as Types.ObjectId;
+      const data = await CourseOutlineService.getOutlinesByInstructor(
+        instructorId
+      );
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Outlines retrieved successfully",
+        data: data,
+      });
+    }
+  );
 }
 
 export const CourseOutlineController = new Controller();

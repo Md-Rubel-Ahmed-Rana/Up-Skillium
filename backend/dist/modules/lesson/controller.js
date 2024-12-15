@@ -116,6 +116,36 @@ class Controller extends rootController_1.default {
                 data: lessons,
             });
         }));
+        this.getAllLessonsByInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const instructorId = req.params.instructorId;
+            const lessons = yield service_1.LessonService.getAllLessonsByInstructor(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Lessons retrieved successfully",
+                data: lessons,
+            });
+        }));
+        this.getAllQuizLessonsByInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const instructorId = req.params.instructorId;
+            const lessons = yield service_1.LessonService.getAllQuizLessonsByInstructor(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Quizzes retrieved successfully",
+                data: lessons,
+            });
+        }));
+        this.getAllAssignmentLessonsByInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const instructorId = req.params.instructorId;
+            const lessons = yield service_1.LessonService.getAllAssignmentLessonsByInstructor(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Assignments retrieved successfully",
+                data: lessons,
+            });
+        }));
     }
 }
 exports.LessonController = new Controller();

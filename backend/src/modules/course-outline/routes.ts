@@ -30,4 +30,9 @@ router.patch("/:id", CourseOutlineController.updateOutlineModules);
 
 router.delete("/:id", CourseOutlineController.deleteOutline);
 
+router.get(
+  "/by-instructor/outlines/:instructorId",
+  CourseOutlineController.getOutlinesByInstructor
+);
+
 export const CourseOutlineRoutes = router;

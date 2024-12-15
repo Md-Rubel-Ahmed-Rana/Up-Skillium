@@ -75,5 +75,12 @@ class Service {
             yield model_1.Module.findByIdAndDelete(id);
         });
     }
+    getAllModulesByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const courseIds = yield service_1.CourseService.getCourseIdsByInstructor(instructorId);
+            const modules = yield model_1.Module.find({ course: { $in: courseIds } }).populate("course", "title image category");
+            return modules;
+        });
+    }
 }
 exports.ModuleService = new Service();

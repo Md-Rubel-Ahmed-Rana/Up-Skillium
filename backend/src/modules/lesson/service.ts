@@ -1,4 +1,5 @@
 import ApiError from "../../shared/apiError";
+import { ModuleService } from "../module/service";
 import { IQuizQuestion } from "../quiz/interface";
 import { QuizService } from "../quiz/service";
 import { ICreateQuizLesson, ILesson, IQuizUpdateOnLesson } from "./interface";
@@ -60,6 +61,7 @@ class Service {
       })
       .exec();
   }
+
   async getLessonByIdWithQuizCorrectAnswer(
     id: Types.ObjectId
   ): Promise<ILesson | null> {
@@ -116,6 +118,47 @@ class Service {
       .skip(skip)
       .limit(limit)
       .exec();
+  }
+
+  async getAllLessonsByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<ILesson[]> {
+    const modules = await ModuleService.getAllModulesByInstructor(instructorId);
+    const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];
+    const lessons = await Lesson.find({ module: { $in: moduleIds } })
+      .populate("module", "title serial")
+      .populate({
+        path: "quizQuestions",
+      });
+    return lessons;
+  }
+
+  async getAllQuizLessonsByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<ILesson[]> {
+    const modules = await ModuleService.getAllModulesByInstructor(instructorId);
+    const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];
+    const lessons = await Lesson.find({
+      module: { $in: moduleIds },
+      type: "quiz",
+    })
+      .populate("module", "title serial")
+      .populate({
+        path: "quizQuestions",
+      });
+    return lessons;
+  }
+
+  async getAllAssignmentLessonsByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<ILesson[]> {
+    const modules = await ModuleService.getAllModulesByInstructor(instructorId);
+    const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];
+    const lessons = await Lesson.find({
+      module: { $in: moduleIds },
+      type: "assignment",
+    }).populate("module", "title serial");
+    return lessons;
   }
 }
 

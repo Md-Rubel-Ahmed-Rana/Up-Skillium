@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AssignmentSubmissionService = void 0;
 const service_1 = require("../student-progress/service");
 const model_1 = require("./model");
+const service_2 = require("../module/service");
 class Service {
     submit(userId, courseId, moduleId, lessonId, data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -86,6 +87,28 @@ class Service {
             yield model_1.AssignmentSubmission.findByIdAndUpdate(id, {
                 $set: Object.assign({}, updatedData),
             });
+        });
+    }
+    getPendingAssignmentByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const modules = yield service_2.ModuleService.getAllModulesByInstructor(instructorId);
+            const moduleIds = modules.map((module) => module === null || module === void 0 ? void 0 : module.id);
+            const assignments = yield model_1.AssignmentSubmission.find({
+                "lesson.module": { $in: moduleIds },
+                status: "pending",
+            });
+            return assignments;
+        });
+    }
+    getCompletedAssignmentByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const modules = yield service_2.ModuleService.getAllModulesByInstructor(instructorId);
+            const moduleIds = modules.map((module) => module === null || module === void 0 ? void 0 : module.id);
+            const assignments = yield model_1.AssignmentSubmission.find({
+                "lesson.module": { $in: moduleIds },
+                status: "checked",
+            });
+            return assignments;
         });
     }
 }

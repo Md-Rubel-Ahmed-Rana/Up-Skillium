@@ -90,6 +90,16 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.getAllModulesByInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const instructorId = req.params.instructorId;
+            const data = yield service_1.ModuleService.getAllModulesByInstructor(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Modules retrieved successfully",
+                data: data,
+            });
+        }));
     }
 }
 exports.ModuleController = new Controller();

@@ -6,6 +6,7 @@ import {
   IModuleSerialUpdate,
 } from "./interface";
 import { CourseOutline } from "./model";
+import { CourseService } from "../course/service";
 
 class Service {
   async createOutline(data: ICourseOutline | ICourseOutline[]): Promise<void> {
@@ -132,6 +133,25 @@ class Service {
     module.name = updatedName;
 
     await outline.save();
+  }
+
+  async getOutlinesByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<ICourseOutline[]> {
+    const courseIds = await CourseService.getCourseIdsByInstructor(
+      instructorId
+    );
+    const outlines = await CourseOutline.find({
+      course: { $in: courseIds },
+    }).populate([
+      {
+        path: "course",
+        model: "Course",
+        select: { title: 1, image: 1 },
+      },
+    ]);
+
+    return outlines;
   }
 }
 

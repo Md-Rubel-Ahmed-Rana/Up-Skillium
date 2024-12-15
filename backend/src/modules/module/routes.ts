@@ -17,4 +17,9 @@ router.patch("/:id", ModuleController.updateModule);
 
 router.delete("/:id", ModuleController.deleteModule);
 
+router.get(
+  "/by-instructor/modules/:instructorId",
+  ModuleController.deleteModule
+);
+
 export const ModuleRoutes = router;
