@@ -15,7 +15,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 animate__animated animate__fadeInDown backdrop-blur-lg ${
+      data-aos="fade-down"
+      className={`sticky top-0 z-50 backdrop-blur-lg ${
         isHomePage
           ? "bg-gradient-to-r from-blue-600 border-b border-gray-400 via-purple-600 to-pink-600 bg-opacity-80 text-white"
           : "bg-gray-50 bg-opacity-80 text-black shadow-md"
@@ -59,12 +60,12 @@ const Navbar = () => {
               >
                 Courses
               </Link>
-              {user && user?.id && user?.role?.name !== "admin" && (
+              {user && user?.id && user?.role?.name === "student" && (
                 <Link
                   href={"/dashboard/my-courses"}
                   className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
                 >
-                  My Courses
+                  My Classes
                 </Link>
               )}
             </div>

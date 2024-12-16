@@ -1,9 +1,9 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
+import { useGetStudentMyCoursesQuery } from "@/features/studentProgress";
+import MyCourseSkeleton from "@/skeletons/courseSkeleton";
+import { ICourseProgress } from "@/types/studentProgress.type";
 import { IUser } from "@/types/user.type";
 import MyCourseCard from "./MyCourseCard";
-import MyCourseSkeleton from "@/skeletons/courseSkeleton";
-import { useGetStudentMyCoursesQuery } from "@/features/studentProgress";
-import { ICourseProgress } from "@/types/studentProgress.type";
 
 const MyCourses = () => {
   const { data } = useGetLoggedInUserQuery({});

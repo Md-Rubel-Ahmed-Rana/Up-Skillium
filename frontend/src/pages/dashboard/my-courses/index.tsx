@@ -1,4 +1,4 @@
-import MyCoursePageRenderer from "@/components/dashboard/my-courses";
+import MyCourses from "@/components/myCourses";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
@@ -12,7 +12,7 @@ const MyCoursesPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <MyCoursePageRenderer />
+      <MyCourses />
     </>
   );
 };
