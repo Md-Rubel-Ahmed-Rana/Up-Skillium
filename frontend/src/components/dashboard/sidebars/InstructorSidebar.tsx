@@ -20,6 +20,7 @@ import {
   FaSignOutAlt,
   FaTasks,
   FaUserCircle,
+  FaUsers,
 } from "react-icons/fa";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import {
@@ -198,18 +199,23 @@ const InstructorSidebar = () => {
     },
     {
       key: "8",
+      icon: <FaUsers />,
+      label: <Link href="/dashboard/my-students">My Students</Link>,
+    },
+    {
+      key: "9",
       icon: <MdOutlineMeetingRoom />,
       label: "Manage Meetings",
       children: [
         {
-          key: "8-1",
+          key: "9-1",
           icon: <MdSchedule />,
           label: (
             <Link href="/dashboard/meetings/upcoming">Upcoming Meetings</Link>
           ),
         },
         {
-          key: "8-2",
+          key: "9-2",
           icon: <MdDoneAll />,
           label: (
             <Link href="/dashboard/meetings/completed">Completed Meetings</Link>
@@ -218,7 +224,7 @@ const InstructorSidebar = () => {
       ],
     },
     {
-      key: "9",
+      key: "10",
       icon: <FaSignOutAlt />,
       label: <LogoutButton />,
     },

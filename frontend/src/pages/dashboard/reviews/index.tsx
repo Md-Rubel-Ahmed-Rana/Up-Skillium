@@ -1,28 +1,28 @@
-import DashboardRenderer from "@/components/dashboard";
+import InstructorReviewViews from "@/components/instructorReviewViews";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
-const DashboardPage = () => {
+const ReviewsPage = () => {
   return (
     <>
       <PageMetadata
-        title="Dashboard - Up Skillium"
+        title="Reviews - Up Skillium"
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <DashboardRenderer />
+      <InstructorReviewViews />
     </>
   );
 };
 
-export default DashboardPage;
-
-DashboardPage.getLayout = function (page: ReactElement) {
+ReviewsPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
       <DashboardLayout>{page}</DashboardLayout>
     </RootLayout>
   );
 };
+
+export default ReviewsPage;
