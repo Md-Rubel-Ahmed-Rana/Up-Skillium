@@ -24,7 +24,7 @@ const benefitsData = [
     title: "Skill Development",
     description:
       "With access to cutting-edge tools and hands-on practice, our platform helps you enhance your coding, debugging, and problem-solving skills. Prepare for real-world challenges with the skills you develop here.",
-    bgColor: "bg-orange-500",
+    bgColor: "bg-purple-500",
     ballColor: "bg-cyan-400",
     cornerColor: "bg-blue-400",
   },
@@ -33,7 +33,7 @@ const benefitsData = [
     title: "Expert Mentorship",
     description:
       "Get personalized guidance from industry experts. Our mentorship program allows you to learn from professionals, get feedback on your projects, and stay on the right track towards achieving your goals.",
-    bgColor: "bg-teal-500",
+    bgColor: "bg-red-400",
     ballColor: "bg-indigo-400",
     cornerColor: "bg-yellow-500",
   },
@@ -54,15 +54,6 @@ const benefitsData = [
     bgColor: "bg-red-500",
     ballColor: "bg-orange-400",
     cornerColor: "bg-yellow-400",
-  },
-  {
-    id: uuidv4(),
-    title: "Career Support",
-    description:
-      "We don’t just teach programming; we help you build your career. With job placement assistance, resume workshops, and interview prep, we guide you towards your dream job in the tech industry.",
-    bgColor: "bg-pink-500",
-    ballColor: "bg-yellow-400",
-    cornerColor: "bg-indigo-400",
   },
 ];
 
