@@ -15,6 +15,20 @@ const lessonApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["lesson"],
     }),
+    getAllLessonsByInstructor: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/lesson/by-instructor/lessons/${instructorId}?limit=100&page=1`,
+      }),
+      providesTags: ["lesson"],
+    }),
+    getAllQuizzesByInstructor: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/lesson/by-instructor/quizzes/${instructorId}`,
+      }),
+      providesTags: ["lesson"],
+    }),
     getSingleLesson: builder.query({
       query: ({ lessonId }: { lessonId: string }) => ({
         method: "GET",
@@ -112,4 +126,6 @@ export const {
   useCreateVideoLessonMutation,
   useCreateAssignmentOrInstructionLessonMutation,
   useCreateQuizLessonMutation,
+  useGetAllLessonsByInstructorQuery,
+  useGetAllQuizzesByInstructorQuery,
 } = lessonApi;

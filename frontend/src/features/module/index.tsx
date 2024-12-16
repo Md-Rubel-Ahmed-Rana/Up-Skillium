@@ -33,6 +33,31 @@ const moduleApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["lesson", "module"],
     }),
+    getAllModulesByInstructor: builder.query({
+      query: ({
+        instructorId,
+        searchText = "",
+        filters = {},
+        page = 1,
+        limit = 100,
+      }: {
+        instructorId: string;
+        searchText?: string;
+        filters?: Record<string, string>;
+        page?: number;
+        limit?: number;
+      }) => ({
+        method: "GET",
+        url: `/module/by-instructor/modules/${instructorId}`,
+        params: {
+          searchText,
+          page,
+          limit,
+          filters: JSON.stringify(filters),
+        },
+      }),
+      providesTags: ["lesson", "module"],
+    }),
     createModule: builder.mutation({
       query: ({ modules }: { modules: ICreateModule[] }) => ({
         method: "POST",
@@ -48,4 +73,5 @@ export const {
   useGetModulesByCourseIdQuery,
   useGetAllModulesQuery,
   useCreateModuleMutation,
+  useGetAllModulesByInstructorQuery,
 } = moduleApi;
