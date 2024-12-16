@@ -29,6 +29,13 @@ const lessonApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["lesson"],
     }),
+    getAllAssignmentByInstructor: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/lesson/by-instructor/assignments/${instructorId}`,
+      }),
+      providesTags: ["lesson"],
+    }),
     getSingleLesson: builder.query({
       query: ({ lessonId }: { lessonId: string }) => ({
         method: "GET",
@@ -128,4 +135,5 @@ export const {
   useCreateQuizLessonMutation,
   useGetAllLessonsByInstructorQuery,
   useGetAllQuizzesByInstructorQuery,
+  useGetAllAssignmentByInstructorQuery,
 } = lessonApi;
