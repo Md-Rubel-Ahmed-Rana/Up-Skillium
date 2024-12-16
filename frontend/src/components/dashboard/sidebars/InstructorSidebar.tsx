@@ -125,7 +125,7 @@ const InstructorSidebar = () => {
           key: "4-2",
           icon: <FaHourglassHalf />,
           label: (
-            <Link href="/dashboard/pending-assignments">
+            <Link href="/dashboard/assignments/pending">
               Pending Assignments
             </Link>
           ),
@@ -134,7 +134,7 @@ const InstructorSidebar = () => {
           key: "4-3",
           icon: <FaCheckCircle />,
           label: (
-            <Link href="/dashboard/reviewed-assignments">
+            <Link href="/dashboard/assignments/reviewed">
               Reviewed Assignments
             </Link>
           ),
