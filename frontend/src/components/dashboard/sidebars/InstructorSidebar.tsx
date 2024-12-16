@@ -97,7 +97,9 @@ const InstructorSidebar = () => {
           key: "3-7",
           icon: <HiOutlineDocumentText />,
           label: (
-            <Link href="/dashboard/course-outlines">Courses Outlines</Link>
+            <Link href="/dashboard/course/course-outlines">
+              Courses Outlines
+            </Link>
           ),
         },
         {

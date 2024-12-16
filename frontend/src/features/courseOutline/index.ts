@@ -21,6 +21,13 @@ const courseOutlineApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["course-outline"],
     }),
+    getCourseOutlineByInstructor: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/course-outline/by-instructor/outlines/${instructorId}`,
+      }),
+      providesTags: ["course-outline"],
+    }),
     getSingleCourseOutline: builder.query({
       query: ({ id }: { id: string }) => ({
         method: "GET",
@@ -107,4 +114,5 @@ export const {
   useCreateCourseOutlineMutation,
   useGetSingleCourseOutlineQuery,
   useUpdateOutlineModulesMutation,
+  useGetCourseOutlineByInstructorQuery,
 } = courseOutlineApi;
