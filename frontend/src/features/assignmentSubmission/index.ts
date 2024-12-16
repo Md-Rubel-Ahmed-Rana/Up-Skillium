@@ -47,6 +47,20 @@ const assignmentSubmissionApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["assignment", "assignment-submission"],
     }),
+    getInstructorPendingAssignments: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/assignment-submission/by-instructor/pending/${instructorId}`,
+      }),
+      providesTags: ["assignment", "assignment-submission"],
+    }),
+    getInstructorCompleteAssignments: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/assignment-submission/by-instructor/completed/${instructorId}`,
+      }),
+      providesTags: ["assignment", "assignment-submission"],
+    }),
   }),
 });
 
@@ -55,4 +69,6 @@ export const {
   useGetSubmittedAssignmentQuery,
   useGetAllPendingAssignmentsQuery,
   useGetAllReviewedAssignmentsQuery,
+  useGetInstructorPendingAssignmentsQuery,
+  useGetInstructorCompleteAssignmentsQuery,
 } = assignmentSubmissionApi;
