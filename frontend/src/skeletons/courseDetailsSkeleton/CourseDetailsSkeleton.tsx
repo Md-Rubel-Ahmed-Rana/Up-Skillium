@@ -126,7 +126,8 @@ const CourseDetailsSkeleton = () => {
           </div>
         ))}
       </div>
-      <div className="border p-2 rounded-md">
+      <div className="border p-2 rounded-md flex flex-col gap-4">
+        <Skeleton paragraph={{ rows: 2 }} />
         <CourseFeedbackSkeleton />
       </div>
     </div>

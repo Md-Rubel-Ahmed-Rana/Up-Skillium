@@ -14,7 +14,7 @@ const CategorizedCourses = () => {
   return (
     <div className="p-2 lg:p-5">
       <div>
-        <h2 className="text-3xl font-semibold mb-4">
+        <h2 className="text-lg lg:text-3xl font-semibold mb-4">
           Explore Courses in the Category:{" "}
           <span className="text-blue-600">{category}</span>
         </h2>
