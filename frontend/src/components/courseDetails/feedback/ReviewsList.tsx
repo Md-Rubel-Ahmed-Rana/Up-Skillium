@@ -1,6 +1,7 @@
 import FeedbackEditModal from "@/components/feedbackReviews/FeedbackEditModal";
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useGetAllReviewsByReviewToQuery } from "@/features/review";
+import { CourseFeedbackSkeleton } from "@/skeletons/courseDetailsSkeleton";
 import { IReview } from "@/types/review.type";
 import { IUser } from "@/types/user.type";
 import { Button, Rate } from "antd/lib";
@@ -31,11 +32,7 @@ const ReviewsList = ({ courseId }: Props) => {
     <>
       <div className="mt-3">
         {isLoading ? (
-          <div className="w-full flex justify-center">
-            <h3 className="text-lg lg:text-2xl font-semibold">
-              Feedbacks loading...
-            </h3>
-          </div>
+          <CourseFeedbackSkeleton />
         ) : (
           <>
             <div className="flex flex-col gap-2">
