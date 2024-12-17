@@ -12,7 +12,7 @@ const CourseOutline = () => {
   const outline = data?.data as ICourseOutline;
   return (
     <>
-      {!isLoading ? (
+      {isLoading ? (
         <CourseDetailsOutlineSkeleton />
       ) : (
         <div className="p-2">

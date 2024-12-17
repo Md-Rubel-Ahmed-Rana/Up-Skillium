@@ -32,6 +32,7 @@ const CourseDetailsOutlineSkeleton = () => {
       <Skeleton.Button
         size="large"
         active
+        shape="round"
         block
         className="mt-3"
         style={{ width: "100%" }}
@@ -63,7 +64,7 @@ const CourseDetailsOutlineSkeleton = () => {
             width: "100%",
           }}
         />
-        {Array.from({ length: 20 }).map((_, index) => {
+        {Array.from({ length: 30 }).map((_, index) => {
           const randomWidth = `${
             Math.floor(Math.random() * (90 - 50 + 1)) + 60
           }%`;
