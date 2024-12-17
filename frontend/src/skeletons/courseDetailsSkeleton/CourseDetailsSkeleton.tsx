@@ -1,4 +1,4 @@
-import { Skeleton } from "antd";
+import { Skeleton } from "antd/lib";
 import { FaPlay } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 import CourseFeedbackSkeleton from "./CourseFeedbackSkeleton";
