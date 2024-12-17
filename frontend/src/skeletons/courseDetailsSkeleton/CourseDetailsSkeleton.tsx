@@ -1,17 +1,21 @@
 import { Skeleton } from "antd";
 import { FaPlay } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
 import CourseFeedbackSkeleton from "./CourseFeedbackSkeleton";
 
 const CourseDetailsSkeleton = () => {
+  const isLargeDevice = useMediaQuery({ minWidth: "992px" });
   return (
-    <div style={{ width: "800px" }}>
-      <div className="border p-2 rounded-md">
+    <div
+      style={{ width: isLargeDevice ? "800px" : "320px", margin: "0px auto" }}
+    >
+      <div className="border w-full p-2 rounded-md">
         <div className="w-full flex justify-center relative">
           <Skeleton.Image
             active
             style={{
-              width: "780px",
-              height: "300px",
+              width: isLargeDevice ? "780px" : "300px",
+              height: isLargeDevice ? "300px" : "180px",
             }}
           />
           <div className="absolute inset-0 flex items-center justify-center">
@@ -93,7 +97,7 @@ const CourseDetailsSkeleton = () => {
       <div className="w-full flex flex-col gap-4 my-5 border p-2 rounded-md">
         {Array.from({ length: 5 }).map((_, index) => (
           <div
-            style={{ width: "500px" }}
+            style={{ width: isLargeDevice ? "500px" : "300px" }}
             key={index}
             className=" flex items-center gap-2"
           >

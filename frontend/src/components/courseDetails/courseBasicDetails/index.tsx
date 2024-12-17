@@ -16,7 +16,7 @@ const CourseBasicDetails = () => {
 
   return (
     <>
-      {!isLoading ? (
+      {isLoading ? (
         <CourseDetailsSkeleton />
       ) : (
         <div className="p-2 max-w-4xl mx-auto space-y-6 bg-gray-50 rounded-lg shadow-md">

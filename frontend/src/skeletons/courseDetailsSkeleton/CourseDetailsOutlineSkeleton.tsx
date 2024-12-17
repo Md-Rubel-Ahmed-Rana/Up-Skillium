@@ -1,6 +1,8 @@
 import { Divider, Skeleton } from "antd/lib";
+import { useMediaQuery } from "react-responsive";
 
 const CourseDetailsOutlineSkeleton = () => {
+  const isLargeDevice = useMediaQuery({ minWidth: "992px" });
   return (
     <div className="w-full border rounded-md p-2">
       {/* course card start */}
@@ -8,8 +10,8 @@ const CourseDetailsOutlineSkeleton = () => {
         <Skeleton.Image
           active
           style={{
-            width: "400px",
-            height: "250px",
+            width: isLargeDevice ? "400px" : "320px",
+            height: isLargeDevice ? "250px" : "170px",
           }}
         />
       </div>

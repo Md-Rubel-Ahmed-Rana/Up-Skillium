@@ -1,6 +1,8 @@
 import { Skeleton } from "antd/lib";
+import { useMediaQuery } from "react-responsive";
 
 const CourseFeedbackSkeleton = () => {
+  const isLargeDevice = useMediaQuery({ minWidth: "992px" });
   return (
     <div className="flex flex-col gap-4">
       <Skeleton paragraph={{ rows: 2 }} />
@@ -20,7 +22,7 @@ const CourseFeedbackSkeleton = () => {
                   title={false}
                   paragraph={{
                     rows: 1,
-                    width: "50%",
+                    width: isLargeDevice ? "50%" : "100%",
                   }}
                   style={{
                     width: "100%",
@@ -32,7 +34,7 @@ const CourseFeedbackSkeleton = () => {
                   title={false}
                   paragraph={{
                     rows: 1,
-                    width: "40%",
+                    width: isLargeDevice ? "40%" : "80%",
                   }}
                   style={{
                     width: "100%",
@@ -46,7 +48,7 @@ const CourseFeedbackSkeleton = () => {
               title={false}
               paragraph={{
                 rows: 1,
-                width: "80%",
+                width: isLargeDevice ? "80%" : "100%",
               }}
               style={{
                 width: "100%",
