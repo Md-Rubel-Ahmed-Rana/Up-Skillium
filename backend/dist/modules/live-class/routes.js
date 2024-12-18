@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LiveClassRoutes = void 0;
+const express_1 = require("express");
+const controller_1 = require("./controller");
+const router = (0, express_1.Router)();
+router.post("/create", controller_1.LiveClassController.createLiveClass);
+router.get("/", controller_1.LiveClassController.getAllLiveClasses);
+router.get("/:id", controller_1.LiveClassController.getSingleClass);
+router.get("/by-instructor/classes/:instructorId", controller_1.LiveClassController.getLiveClassesByInstructor);
+router.patch("/:id", controller_1.LiveClassController.updateClass);
+router.delete("/:id", controller_1.LiveClassController.deleteClass);
+exports.LiveClassRoutes = router;

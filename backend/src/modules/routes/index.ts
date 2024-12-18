@@ -20,6 +20,7 @@ import { AssignmentSubmissionRoutes } from "../assignment-submission/routes";
 import { StripePaymentRoutes } from "../stripe-payment/routes";
 import { ReviewRoutes } from "../review/routes";
 import { AssignmentRoutes } from "../assignment/routes";
+import { LiveClassRoutes } from "../live-class/routes";
 
 const router = Router();
 
@@ -64,5 +65,7 @@ router.use("/assignment", AssignmentRoutes);
 router.use("/stripe", StripePaymentRoutes);
 
 router.use("/review", ReviewRoutes);
+
+router.use("/live-class", LiveClassRoutes);
 
 export const RootRoutes = router;
