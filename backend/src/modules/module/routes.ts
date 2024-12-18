@@ -19,7 +19,7 @@ router.delete("/:id", ModuleController.deleteModule);
 
 router.get(
   "/by-instructor/modules/:instructorId",
-  ModuleController.deleteModule
+  ModuleController.getAllModulesByInstructor
 );
 
 export const ModuleRoutes = router;
