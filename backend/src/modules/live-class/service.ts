@@ -3,25 +3,19 @@ import ILiveClass from "./interface";
 import LiveClass from "./model";
 import { GoogleService } from "../google/service";
 import { ICreateMeetLink } from "../google/interface";
-import { UserService } from "../user/service";
 
 class Service {
   async createLiveClass(data: ILiveClass): Promise<void> {
     if (data?.meetingLink) {
-      console.log("Meet link found", data?.meetingLink);
+      console.log("Meet link provided", data?.meetingLink);
       await LiveClass.create(data);
     } else {
-      console.log("Meet link not found. Creating...");
-      const creator = await UserService.findUserById(data?.creator);
+      console.log("Meet link was not provided. Creating link...");
       const meetData: ICreateMeetLink = {
         summary: data.title,
         description: data.description as string,
         startDateTime: data.startDateTime,
         endDateTime: data.endDateTime,
-        creator: {
-          name: creator?.name as string,
-          email: creator?.email as string,
-        },
       };
       const meetLink = await GoogleService.createMeetLink(meetData);
       console.log("Meet link created.", meetLink);

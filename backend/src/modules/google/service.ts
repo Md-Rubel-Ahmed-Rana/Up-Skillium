@@ -17,7 +17,6 @@ class Service {
       endDateTime,
       timeZone = "America/Los_Angeles",
       attendees,
-      creator,
     } = data;
     oauth2Client.setCredentials({
       access_token: googleCredentials.accessToken,
@@ -29,7 +28,7 @@ class Service {
       auth: oauth2Client,
     });
 
-    const response: any = calendar.events.insert({
+    const response: any = await calendar.events.insert({
       calendarId: "primary",
       conferenceDataVersion: 1,
       sendUpdates: "all",
@@ -47,20 +46,16 @@ class Service {
         attendees: attendees || [],
         visibility: "public",
         anyoneCanAddSelf: true,
-        creator: {
-          displayName: creator?.name,
-          email: creator?.email,
-          self: true,
-        },
-        organizer: {
-          displayName: creator?.name,
-          email: creator?.email,
-          self: true,
+        conferenceData: {
+          createRequest: {
+            requestId: `req-${Date.now()}`,
+            conferenceSolutionKey: { type: "hangoutsMeet" },
+          },
         },
       },
     });
 
-    const meetLink = response.data.conferenceData.entryPoints[0].uri;
+    const meetLink = response?.data?.hangoutLink;
     return meetLink;
   }
 }

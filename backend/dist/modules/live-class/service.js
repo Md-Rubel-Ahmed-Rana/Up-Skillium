@@ -15,26 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LiveClassService = void 0;
 const model_1 = __importDefault(require("./model"));
 const service_1 = require("../google/service");
-const service_2 = require("../user/service");
 class Service {
     createLiveClass(data) {
         return __awaiter(this, void 0, void 0, function* () {
             if (data === null || data === void 0 ? void 0 : data.meetingLink) {
-                console.log("Meet link found", data === null || data === void 0 ? void 0 : data.meetingLink);
+                console.log("Meet link provided", data === null || data === void 0 ? void 0 : data.meetingLink);
                 yield model_1.default.create(data);
             }
             else {
-                console.log("Meet link not found. Creating...");
-                const creator = yield service_2.UserService.findUserById(data === null || data === void 0 ? void 0 : data.creator);
+                console.log("Meet link was not provided. Creating link...");
                 const meetData = {
                     summary: data.title,
                     description: data.description,
                     startDateTime: data.startDateTime,
                     endDateTime: data.endDateTime,
-                    creator: {
-                        name: creator === null || creator === void 0 ? void 0 : creator.name,
-                        email: creator === null || creator === void 0 ? void 0 : creator.email,
-                    },
                 };
                 const meetLink = yield service_1.GoogleService.createMeetLink(meetData);
                 console.log("Meet link created.", meetLink);

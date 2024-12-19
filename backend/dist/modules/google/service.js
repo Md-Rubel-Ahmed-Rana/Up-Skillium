@@ -19,8 +19,9 @@ const { google: googleCredentials } = envConfig_1.default;
 class Service {
     createMeetLink(data) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const oauth2Client = new googleapis_1.google.auth.OAuth2(googleCredentials.clientId, googleCredentials.clientSecret);
-            const { summary = "Up-Skillium Live Class", description = "Join the live class on Google Meet", startDateTime, endDateTime, timeZone = "America/Los_Angeles", attendees, creator, } = data;
+            const { summary = "Up-Skillium Live Class", description = "Join the live class on Google Meet", startDateTime, endDateTime, timeZone = "America/Los_Angeles", attendees, } = data;
             oauth2Client.setCredentials({
                 access_token: googleCredentials.accessToken,
                 refresh_token: googleCredentials.refreshToken,
@@ -29,7 +30,7 @@ class Service {
                 version: "v3",
                 auth: oauth2Client,
             });
-            const response = calendar.events.insert({
+            const response = yield calendar.events.insert({
                 calendarId: "primary",
                 conferenceDataVersion: 1,
                 sendUpdates: "all",
@@ -47,19 +48,15 @@ class Service {
                     attendees: attendees || [],
                     visibility: "public",
                     anyoneCanAddSelf: true,
-                    creator: {
-                        displayName: creator === null || creator === void 0 ? void 0 : creator.name,
-                        email: creator === null || creator === void 0 ? void 0 : creator.email,
-                        self: true,
-                    },
-                    organizer: {
-                        displayName: creator === null || creator === void 0 ? void 0 : creator.name,
-                        email: creator === null || creator === void 0 ? void 0 : creator.email,
-                        self: true,
+                    conferenceData: {
+                        createRequest: {
+                            requestId: `req-${Date.now()}`,
+                            conferenceSolutionKey: { type: "hangoutsMeet" },
+                        },
                     },
                 },
             });
-            const meetLink = response.data.conferenceData.entryPoints[0].uri;
+            const meetLink = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.hangoutLink;
             return meetLink;
         });
     }

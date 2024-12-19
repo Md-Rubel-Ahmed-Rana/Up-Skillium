@@ -4,11 +4,6 @@ type IAttendee = {
   organizer: boolean;
 };
 
-type ICreator = {
-  name: string;
-  email: string;
-};
-
 export type ICreateMeetLink = {
   summary: string;
   description: string;
@@ -16,5 +11,4 @@ export type ICreateMeetLink = {
   endDateTime: string;
   timeZone?: "America/Los_Angeles";
   attendees?: IAttendee[];
-  creator: ICreator;
 };
