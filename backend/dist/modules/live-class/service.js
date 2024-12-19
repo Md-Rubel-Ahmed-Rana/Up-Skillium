@@ -14,10 +14,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LiveClassService = void 0;
 const model_1 = __importDefault(require("./model"));
+const service_1 = require("../google/service");
+const service_2 = require("../user/service");
 class Service {
     createLiveClass(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield model_1.default.create(data);
+            if (data === null || data === void 0 ? void 0 : data.meetingLink) {
+                console.log("Meet link found", data === null || data === void 0 ? void 0 : data.meetingLink);
+                yield model_1.default.create(data);
+            }
+            else {
+                console.log("Meet link not found. Creating...");
+                const creator = yield service_2.UserService.findUserById(data === null || data === void 0 ? void 0 : data.creator);
+                const meetData = {
+                    summary: data.title,
+                    description: data.description,
+                    startDateTime: data.startDateTime,
+                    endDateTime: data.endDateTime,
+                    creator: {
+                        name: creator === null || creator === void 0 ? void 0 : creator.name,
+                        email: creator === null || creator === void 0 ? void 0 : creator.email,
+                    },
+                };
+                const meetLink = yield service_1.GoogleService.createMeetLink(meetData);
+                console.log("Meet link created.", meetLink);
+                yield model_1.default.create(Object.assign(Object.assign({}, data), { meetingLink: meetLink }));
+            }
         });
     }
     getAllLiveClasses(filters) {

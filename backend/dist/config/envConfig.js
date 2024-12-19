@@ -61,5 +61,11 @@ const config = {
         successUrl: process.env.SUCCESS_URL,
         cancelUrl: process.env.CANCEL_URL,
     },
+    google: {
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        accessToken: process.env.GOOGLE_ACCESS_TOKEN,
+        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+    },
 };
 exports.default = config;

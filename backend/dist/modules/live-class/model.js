@@ -28,13 +28,16 @@ const liveClassSchema = new mongoose_1.Schema({
         ref: "Course",
         required: true,
     },
-    scheduledDate: {
-        type: Date,
+    startDateTime: {
+        type: String,
+        required: true,
+    },
+    endDateTime: {
+        type: String,
         required: true,
     },
     duration: {
         type: Number,
-        required: true,
     },
     status: {
         type: String,

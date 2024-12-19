@@ -6,7 +6,8 @@ type ILiveClass = {
   instructor: Types.ObjectId;
   course: Types.ObjectId;
   creator: Types.ObjectId;
-  scheduledDate: Date;
+  startDateTime: string;
+  endDateTime: string;
   duration: number;
   status?: "upcoming" | "ongoing" | "completed" | "cancelled";
   meetingLink: string;
