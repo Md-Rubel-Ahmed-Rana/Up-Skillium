@@ -156,8 +156,10 @@ const InstructorSidebar = () => {
       children: [
         {
           key: "5-1",
-          icon: <MdHistory />,
-          label: <Link href="/dashboard/previous-live-classes">Previous</Link>,
+          icon: <MdAddToQueue />,
+          label: (
+            <Link href="/dashboard/create-live-class">Create Live Class</Link>
+          ),
         },
         {
           key: "5-2",
@@ -166,10 +168,8 @@ const InstructorSidebar = () => {
         },
         {
           key: "5-3",
-          icon: <MdAddToQueue />,
-          label: (
-            <Link href="/dashboard/create-live-class">Create Live Class</Link>
-          ),
+          icon: <MdHistory />,
+          label: <Link href="/dashboard/previous-live-classes">Previous</Link>,
         },
       ],
     },
