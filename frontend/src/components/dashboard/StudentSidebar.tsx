@@ -7,7 +7,6 @@ import {
   FaBook,
   FaChartLine,
   FaClipboardList,
-  FaCommentDots,
   FaShoppingCart,
   FaSignOutAlt,
   FaUserCircle,
@@ -41,11 +40,6 @@ const StudentSidebar = () => {
       key: "5",
       icon: <FaChartLine />,
       label: <Link href={"/dashboard/progress"}>Progress</Link>,
-    },
-    {
-      key: "6",
-      icon: <FaCommentDots />,
-      label: <Link href={"/dashboard/discussions"}>Discussions</Link>,
     },
     {
       key: "7",

@@ -1,8 +1,8 @@
-import Profile from "@/components/dashboard/profile";
+import Profile from "@/components/profile";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 const ProfilePage = () => {
   return (

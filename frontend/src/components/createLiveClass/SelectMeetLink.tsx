@@ -11,9 +11,6 @@ const SelectMeetLink = ({ form }: Props) => {
   const handleCheckboxChange = (e: any) => {
     const isChecked = e.target.checked;
     setIsAutoCreate(isChecked);
-    if (isChecked) {
-      form.setFieldValue("meetingLink", "");
-    }
   };
 
   return (
