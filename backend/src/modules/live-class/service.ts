@@ -22,6 +22,7 @@ class Service {
       await LiveClass.create({ ...data, meetingLink: meetLink });
     }
   }
+
   async getAllLiveClasses(filters: {
     title?: string;
     instructor?: Types.ObjectId;
@@ -76,6 +77,7 @@ class Service {
       .populate("course", "title image category");
     return classes;
   }
+
   async getSingleClass(id: Types.ObjectId): Promise<ILiveClass | null> {
     const singleClass = await LiveClass.findById(id)
       .populate("instructor", "name email image")
@@ -83,6 +85,7 @@ class Service {
       .populate("course", "title image category");
     return singleClass;
   }
+
   async getLiveClassesByInstructor(
     instructorId: Types.ObjectId
   ): Promise<ILiveClass[]> {
@@ -112,6 +115,69 @@ class Service {
     );
     return classes;
   }
+
+  async getUpcomingLiveClassesByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<ILiveClass[]> {
+    const classes = await LiveClass.find({
+      instructor: instructorId,
+      status: "upcoming",
+    }).populate([
+      {
+        path: "course",
+        model: "Course",
+        select: "title image",
+      },
+      {
+        path: "instructor",
+        model: "User",
+        select: "name email image",
+      },
+      {
+        path: "creator",
+        model: "User",
+        select: "name email image",
+      },
+      {
+        path: "students",
+        model: "User",
+        select: "name email image",
+      },
+    ]);
+    return classes;
+  }
+
+  async getCompletedLiveClassesByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<ILiveClass[]> {
+    const classes = await LiveClass.find({
+      instructor: instructorId,
+      status: "completed",
+    }).populate([
+      {
+        path: "course",
+        model: "Course",
+        select: "title image",
+      },
+      {
+        path: "instructor",
+        model: "User",
+        select: "name email image",
+      },
+      {
+        path: "creator",
+        model: "User",
+        select: "name email image",
+      },
+      {
+        path: "students",
+        model: "User",
+        select: "name email image",
+      },
+    ]);
+    return classes;
+  }
+
   async getLiveClassesByStudent(
     studentId: Types.ObjectId
   ): Promise<ILiveClass[]> {
@@ -135,6 +201,7 @@ class Service {
   ): Promise<void> {
     await LiveClass.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
+
   async deleteClass(id: Types.ObjectId): Promise<void> {
     await LiveClass.findByIdAndDelete(id);
   }

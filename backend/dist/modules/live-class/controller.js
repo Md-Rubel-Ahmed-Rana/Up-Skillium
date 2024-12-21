@@ -56,6 +56,36 @@ class Controller extends rootController_1.default {
                 data: classes,
             });
         }));
+        this.getUpcomingLiveClassesByInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const instructorId = req.params.instructor;
+            const classes = yield service_1.LiveClassService.getUpcomingLiveClassesByInstructor(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Upcoming live classes retrieved successfully!",
+                data: classes,
+            });
+        }));
+        this.getCompletedLiveClassesByInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const instructorId = req.params.instructor;
+            const classes = yield service_1.LiveClassService.getCompletedLiveClassesByInstructor(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Completed live classes retrieved successfully!",
+                data: classes,
+            });
+        }));
+        this.getLiveClassesByStudent = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const studentId = req.params.studentId;
+            const classes = yield service_1.LiveClassService.getLiveClassesByStudent(studentId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Live classes retrieved successfully!",
+                data: classes,
+            });
+        }));
         this.getSingleClass = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             const data = yield service_1.LiveClassService.getSingleClass(id);

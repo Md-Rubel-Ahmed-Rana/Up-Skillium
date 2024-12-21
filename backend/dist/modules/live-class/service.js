@@ -25,10 +25,10 @@ class Service {
             else {
                 console.log("Meet link was not provided. Creating link...");
                 const meetData = {
-                    summary: data.title,
-                    description: data.description,
-                    startDateTime: data.startDateTime,
-                    endDateTime: data.endDateTime,
+                    summary: data === null || data === void 0 ? void 0 : data.title,
+                    description: data === null || data === void 0 ? void 0 : data.description,
+                    startDateTime: data === null || data === void 0 ? void 0 : data.startDateTime,
+                    endDateTime: data === null || data === void 0 ? void 0 : data.endDateTime,
                 };
                 const meetLink = yield service_1.GoogleService.createMeetLink(meetData);
                 console.log("Meet link created.", meetLink);
@@ -87,8 +87,105 @@ class Service {
     }
     getLiveClassesByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const classes = yield model_1.default.find({ instructor: instructorId });
+            const classes = yield model_1.default.find({ instructor: instructorId }).populate([
+                {
+                    path: "course",
+                    model: "Course",
+                    select: "title image",
+                },
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: "name email image",
+                },
+                {
+                    path: "creator",
+                    model: "User",
+                    select: "name email image",
+                },
+                {
+                    path: "students",
+                    model: "User",
+                    select: "name email image",
+                },
+            ]);
             return classes;
+        });
+    }
+    getUpcomingLiveClassesByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const classes = yield model_1.default.find({
+                instructor: instructorId,
+                status: "upcoming",
+            }).populate([
+                {
+                    path: "course",
+                    model: "Course",
+                    select: "title image",
+                },
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: "name email image",
+                },
+                {
+                    path: "creator",
+                    model: "User",
+                    select: "name email image",
+                },
+                {
+                    path: "students",
+                    model: "User",
+                    select: "name email image",
+                },
+            ]);
+            return classes;
+        });
+    }
+    getCompletedLiveClassesByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const classes = yield model_1.default.find({
+                instructor: instructorId,
+                status: "completed",
+            }).populate([
+                {
+                    path: "course",
+                    model: "Course",
+                    select: "title image",
+                },
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: "name email image",
+                },
+                {
+                    path: "creator",
+                    model: "User",
+                    select: "name email image",
+                },
+                {
+                    path: "students",
+                    model: "User",
+                    select: "name email image",
+                },
+            ]);
+            return classes;
+        });
+    }
+    getLiveClassesByStudent(studentId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.default.find({ students: studentId }).populate([
+                {
+                    path: "course",
+                    model: "Course",
+                    select: "name description instructor",
+                },
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: "name email",
+                },
+            ]);
         });
     }
     updateClass(id, updatedData) {
