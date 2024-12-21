@@ -118,9 +118,7 @@ class Service {
     }
     getMyStudentsByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("My student-1", { instructorId });
             const courses = yield model_1.Course.find({ instructor: instructorId }).populate("students", "name email image");
-            console.log("My student-2", { courses });
             const studentMap = new Map();
             courses.forEach((course) => {
                 var _a;
@@ -147,9 +145,7 @@ class Service {
                     }
                 });
             });
-            console.log("My student-3", { studentMap });
             const organizedData = Array.from(studentMap.values());
-            console.log("My student-4", { organizedData });
             return organizedData;
         });
     }

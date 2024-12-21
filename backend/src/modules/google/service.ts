@@ -7,8 +7,6 @@ const { google: googleCredentials } = config;
 
 class Service {
   async createMeetLink(data: ICreateMeetLink): Promise<string> {
-    console.log("Inside create meet link-1", { data });
-    console.log("Inside create meet link-2", { googleCredentials });
     const oauth2Client = new google.auth.OAuth2(
       googleCredentials.clientId,
       googleCredentials.clientSecret
@@ -48,8 +46,6 @@ class Service {
             timeZone: timeZone,
           },
           attendees: attendees || [],
-          visibility: "public",
-          anyoneCanAddSelf: true,
           conferenceData: {
             createRequest: {
               requestId: `req-${Date.now()}`,
@@ -58,16 +54,10 @@ class Service {
           },
         },
       });
-      console.log("Inside create meet link-3", { response });
-      console.log("Inside create meet link-4", {
-        "response.data": response.data,
-      });
-
       const meetLink = response?.data?.hangoutLink;
-      console.log("Inside create meet link-5", { meetLink });
       return meetLink;
     } catch (error: any) {
-      console.log(`Failed to create meet link. Error: ${error?.message}`);
+      console.log(`Failed to create meet link. Error: ${error}`);
       throw new ApiError(
         400,
         `Failed to create meet link. Error: ${error?.message}`

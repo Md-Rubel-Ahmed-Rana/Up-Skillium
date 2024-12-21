@@ -149,12 +149,10 @@ class Service {
     return courses.map((course) => course?.id);
   }
   async getMyStudentsByInstructor(instructorId: Types.ObjectId): Promise<any> {
-    console.log("My student-1", { instructorId });
     const courses = await Course.find({ instructor: instructorId }).populate(
       "students",
       "name email image"
     );
-    console.log("My student-2", { courses });
     const studentMap = new Map();
 
     courses.forEach((course) => {
@@ -182,11 +180,8 @@ class Service {
       });
     });
 
-    console.log("My student-3", { studentMap });
-
     const organizedData = Array.from(studentMap.values());
 
-    console.log("My student-4", { organizedData });
     return organizedData;
   }
   async updateCourse(
