@@ -4,6 +4,7 @@ import { ICertificate } from "./interface";
 import { Certificate } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { IPdfCertificate } from "../pdf-creator/interface";
+import { CourseService } from "../course/service";
 
 class Service {
   async createCertificate(data: ICertificate) {
@@ -58,6 +59,28 @@ class Service {
       },
     ]);
   }
+  async getCertificatesByInstructor(
+    instructorId: Types.ObjectId
+  ): Promise<ICertificate[]> {
+    const courseIds = await CourseService.getCourseIdsByInstructor(
+      instructorId
+    );
+    const certificates = await Certificate.find({
+      course: { $in: courseIds },
+    }).populate([
+      {
+        path: "user",
+        model: "User",
+        select: { password: 0 },
+      },
+      {
+        path: "course",
+        model: "Course",
+      },
+    ]);
+    return certificates;
+  }
+
   async updateCertificate(
     id: Types.ObjectId,
     updateData: IPdfCertificate

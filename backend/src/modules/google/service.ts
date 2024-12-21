@@ -1,11 +1,14 @@
 import { google } from "googleapis";
 import { ICreateMeetLink } from "./interface";
 import config from "../../config/envConfig";
+import ApiError from "../../shared/apiError";
 
 const { google: googleCredentials } = config;
 
 class Service {
   async createMeetLink(data: ICreateMeetLink): Promise<string> {
+    console.log("Inside create meet link-1", { data });
+    console.log("Inside create meet link-2", { googleCredentials });
     const oauth2Client = new google.auth.OAuth2(
       googleCredentials.clientId,
       googleCredentials.clientSecret
@@ -28,35 +31,48 @@ class Service {
       auth: oauth2Client,
     });
 
-    const response: any = await calendar.events.insert({
-      calendarId: "primary",
-      conferenceDataVersion: 1,
-      sendUpdates: "all",
-      requestBody: {
-        summary,
-        description,
-        start: {
-          dateTime: startDateTime,
-          timeZone: timeZone,
-        },
-        end: {
-          dateTime: endDateTime,
-          timeZone: timeZone,
-        },
-        attendees: attendees || [],
-        visibility: "public",
-        anyoneCanAddSelf: true,
-        conferenceData: {
-          createRequest: {
-            requestId: `req-${Date.now()}`,
-            conferenceSolutionKey: { type: "hangoutsMeet" },
+    try {
+      const response: any = await calendar.events.insert({
+        calendarId: "primary",
+        conferenceDataVersion: 1,
+        sendUpdates: "all",
+        requestBody: {
+          summary,
+          description,
+          start: {
+            dateTime: startDateTime,
+            timeZone: timeZone,
+          },
+          end: {
+            dateTime: endDateTime,
+            timeZone: timeZone,
+          },
+          attendees: attendees || [],
+          visibility: "public",
+          anyoneCanAddSelf: true,
+          conferenceData: {
+            createRequest: {
+              requestId: `req-${Date.now()}`,
+              conferenceSolutionKey: { type: "hangoutsMeet" },
+            },
           },
         },
-      },
-    });
+      });
+      console.log("Inside create meet link-3", { response });
+      console.log("Inside create meet link-4", {
+        "response.data": response.data,
+      });
 
-    const meetLink = response?.data?.hangoutLink;
-    return meetLink;
+      const meetLink = response?.data?.hangoutLink;
+      console.log("Inside create meet link-5", { meetLink });
+      return meetLink;
+    } catch (error: any) {
+      console.log(`Failed to create meet link. Error: ${error?.message}`);
+      throw new ApiError(
+        400,
+        `Failed to create meet link. Error: ${error?.message}`
+      );
+    }
   }
 }
 
