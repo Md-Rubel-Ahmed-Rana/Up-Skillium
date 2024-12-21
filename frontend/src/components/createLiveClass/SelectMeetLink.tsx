@@ -1,11 +1,7 @@
-import { Checkbox, Form, FormInstance, Input } from "antd/lib";
+import { Checkbox, Form, Input } from "antd/lib";
 import { useState } from "react";
 
-type Props = {
-  form: FormInstance;
-};
-
-const SelectMeetLink = ({ form }: Props) => {
+const SelectMeetLink = () => {
   const [isAutoCreate, setIsAutoCreate] = useState(false);
 
   const handleCheckboxChange = (e: any) => {
@@ -26,10 +22,10 @@ const SelectMeetLink = ({ form }: Props) => {
         </div>
       }
     >
-      {!isAutoCreate ? (
-        <Input type="url" placeholder="Enter meeting link" />
-      ) : (
+      {isAutoCreate ? (
         <p className="font-semibold">Meet link will be created automatically</p>
+      ) : (
+        <Input type="url" placeholder="Enter meeting link" />
       )}
     </Form.Item>
   );
