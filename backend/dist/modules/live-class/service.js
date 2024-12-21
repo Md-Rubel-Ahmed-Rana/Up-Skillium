@@ -70,6 +70,7 @@ class Service {
                 ];
             }
             const classes = yield model_1.default.find(query)
+                .sort({ createdAt: -1 })
                 .populate("instructor", "name email image")
                 .populate("creator", "name email image")
                 .populate("course", "title image category");
@@ -87,7 +88,9 @@ class Service {
     }
     getLiveClassesByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const classes = yield model_1.default.find({ instructor: instructorId }).populate([
+            const classes = yield model_1.default.find({ instructor: instructorId })
+                .sort({ createdAt: -1 })
+                .populate([
                 {
                     path: "course",
                     model: "Course",
@@ -117,7 +120,9 @@ class Service {
             const classes = yield model_1.default.find({
                 instructor: instructorId,
                 status: "upcoming",
-            }).populate([
+            })
+                .sort({ createdAt: -1 })
+                .populate([
                 {
                     path: "course",
                     model: "Course",
@@ -147,7 +152,9 @@ class Service {
             const classes = yield model_1.default.find({
                 instructor: instructorId,
                 status: "completed",
-            }).populate([
+            })
+                .sort({ createdAt: -1 })
+                .populate([
                 {
                     path: "course",
                     model: "Course",
@@ -174,7 +181,9 @@ class Service {
     }
     getLiveClassesByStudent(studentId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield model_1.default.find({ students: studentId }).populate([
+            return yield model_1.default.find({ students: studentId })
+                .sort({ createdAt: -1 })
+                .populate([
                 {
                     path: "course",
                     model: "Course",

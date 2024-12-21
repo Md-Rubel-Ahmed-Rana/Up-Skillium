@@ -72,6 +72,7 @@ class Service {
     }
 
     const classes = await LiveClass.find(query)
+      .sort({ createdAt: -1 })
       .populate("instructor", "name email image")
       .populate("creator", "name email image")
       .populate("course", "title image category");
@@ -89,8 +90,9 @@ class Service {
   async getLiveClassesByInstructor(
     instructorId: Types.ObjectId
   ): Promise<ILiveClass[]> {
-    const classes = await LiveClass.find({ instructor: instructorId }).populate(
-      [
+    const classes = await LiveClass.find({ instructor: instructorId })
+      .sort({ createdAt: -1 })
+      .populate([
         {
           path: "course",
           model: "Course",
@@ -111,8 +113,7 @@ class Service {
           model: "User",
           select: "name email image",
         },
-      ]
-    );
+      ]);
     return classes;
   }
 
@@ -122,28 +123,30 @@ class Service {
     const classes = await LiveClass.find({
       instructor: instructorId,
       status: "upcoming",
-    }).populate([
-      {
-        path: "course",
-        model: "Course",
-        select: "title image",
-      },
-      {
-        path: "instructor",
-        model: "User",
-        select: "name email image",
-      },
-      {
-        path: "creator",
-        model: "User",
-        select: "name email image",
-      },
-      {
-        path: "students",
-        model: "User",
-        select: "name email image",
-      },
-    ]);
+    })
+      .sort({ createdAt: -1 })
+      .populate([
+        {
+          path: "course",
+          model: "Course",
+          select: "title image",
+        },
+        {
+          path: "instructor",
+          model: "User",
+          select: "name email image",
+        },
+        {
+          path: "creator",
+          model: "User",
+          select: "name email image",
+        },
+        {
+          path: "students",
+          model: "User",
+          select: "name email image",
+        },
+      ]);
     return classes;
   }
 
@@ -153,46 +156,50 @@ class Service {
     const classes = await LiveClass.find({
       instructor: instructorId,
       status: "completed",
-    }).populate([
-      {
-        path: "course",
-        model: "Course",
-        select: "title image",
-      },
-      {
-        path: "instructor",
-        model: "User",
-        select: "name email image",
-      },
-      {
-        path: "creator",
-        model: "User",
-        select: "name email image",
-      },
-      {
-        path: "students",
-        model: "User",
-        select: "name email image",
-      },
-    ]);
+    })
+      .sort({ createdAt: -1 })
+      .populate([
+        {
+          path: "course",
+          model: "Course",
+          select: "title image",
+        },
+        {
+          path: "instructor",
+          model: "User",
+          select: "name email image",
+        },
+        {
+          path: "creator",
+          model: "User",
+          select: "name email image",
+        },
+        {
+          path: "students",
+          model: "User",
+          select: "name email image",
+        },
+      ]);
     return classes;
   }
 
   async getLiveClassesByStudent(
     studentId: Types.ObjectId
   ): Promise<ILiveClass[]> {
-    return await LiveClass.find({ students: studentId }).populate([
-      {
-        path: "course",
-        model: "Course",
-        select: "name description instructor",
-      },
-      {
-        path: "instructor",
-        model: "User",
-        select: "name email",
-      },
-    ]);
+    return await LiveClass.find({ students: studentId })
+      .sort({ createdAt: -1 })
+      .populate([
+        {
+          path: "course",
+          model: "Course",
+          select: "name description instructor",
+        },
+        {
+          path: "instructor",
+          model: "User",
+          select: "name email",
+        },
+      ]);
   }
 
   async updateClass(
