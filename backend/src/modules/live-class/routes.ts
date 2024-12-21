@@ -15,6 +15,16 @@ router.get(
 );
 
 router.get(
+  "/instructor/classes/completed/:instructorId",
+  LiveClassController.getCompletedLiveClassesByInstructor
+);
+
+router.get(
+  "/instructor/classes/upcoming/:instructorId",
+  LiveClassController.getUpcomingLiveClassesByInstructor
+);
+
+router.get(
   "/student/classes/:studentId",
   LiveClassController.getLiveClassesByStudent
 );

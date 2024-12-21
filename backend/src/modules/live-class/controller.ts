@@ -50,6 +50,32 @@ class Controller extends RootController {
       data: classes,
     });
   });
+  getUpcomingLiveClassesByInstructor = this.catchAsync(async (req, res) => {
+    const instructorId = req.params.instructor as unknown as Types.ObjectId;
+    const classes = await LiveClassService.getUpcomingLiveClassesByInstructor(
+      instructorId
+    );
+
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Upcoming live classes retrieved successfully!",
+      data: classes,
+    });
+  });
+  getCompletedLiveClassesByInstructor = this.catchAsync(async (req, res) => {
+    const instructorId = req.params.instructor as unknown as Types.ObjectId;
+    const classes = await LiveClassService.getCompletedLiveClassesByInstructor(
+      instructorId
+    );
+
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Completed live classes retrieved successfully!",
+      data: classes,
+    });
+  });
   getLiveClassesByStudent = this.catchAsync(async (req, res) => {
     const studentId = req.params.studentId as unknown as Types.ObjectId;
     const classes = await LiveClassService.getLiveClassesByStudent(studentId);

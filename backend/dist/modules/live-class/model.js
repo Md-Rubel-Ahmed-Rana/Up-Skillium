@@ -28,6 +28,10 @@ const liveClassSchema = new mongoose_1.Schema({
         ref: "Course",
         required: true,
     },
+    students: {
+        type: [mongoose_1.Schema.Types.ObjectId],
+        ref: "User",
+    },
     startDateTime: {
         type: String,
         required: true,
