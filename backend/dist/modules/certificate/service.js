@@ -13,6 +13,7 @@ exports.CertificateService = void 0;
 const service_1 = require("../pdf-creator/service");
 const model_1 = require("./model");
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
+const service_2 = require("../course/service");
 class Service {
     createCertificate(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -70,6 +71,25 @@ class Service {
                     model: "Course",
                 },
             ]);
+        });
+    }
+    getCertificatesByInstructor(instructorId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const courseIds = yield service_2.CourseService.getCourseIdsByInstructor(instructorId);
+            const certificates = yield model_1.Certificate.find({
+                course: { $in: courseIds },
+            }).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { password: 0 },
+                },
+                {
+                    path: "course",
+                    model: "Course",
+                },
+            ]);
+            return certificates;
         });
     }
     updateCertificate(id, updateData) {

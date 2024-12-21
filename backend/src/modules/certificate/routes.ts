@@ -14,6 +14,11 @@ router.get(
   CertificateController.getCertificatesByUserId
 );
 
+router.get(
+  "/instructor/:instructorId",
+  CertificateController.getCertificatesByInstructor
+);
+
 router.patch("/:id", CertificateController.updateCertificate);
 
 router.delete("/:id", CertificateController.deleteCertificate);

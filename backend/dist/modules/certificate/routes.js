@@ -8,6 +8,7 @@ router.post("/create", controller_1.CertificateController.createCertificate);
 router.get("/", controller_1.CertificateController.getAllCertificate);
 router.get("/:id", controller_1.CertificateController.getSingleCertificate);
 router.get("/my-certificates/:userId", controller_1.CertificateController.getCertificatesByUserId);
+router.get("/instructor/:instructorId", controller_1.CertificateController.getCertificatesByInstructor);
 router.patch("/:id", controller_1.CertificateController.updateCertificate);
 router.delete("/:id", controller_1.CertificateController.deleteCertificate);
 exports.CertificateRoutes = router;

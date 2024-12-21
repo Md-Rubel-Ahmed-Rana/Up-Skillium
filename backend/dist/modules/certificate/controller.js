@@ -57,6 +57,16 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
+        this.getCertificatesByInstructor = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const instructorId = req.params.instructorId;
+            const data = yield service_1.CertificateService.getCertificatesByInstructor(instructorId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Certificates retrieved successfully",
+                data: data,
+            });
+        }));
         this.updateCertificate = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const id = req.params.id;
             yield service_1.CertificateService.updateCertificate(id, req.body);
