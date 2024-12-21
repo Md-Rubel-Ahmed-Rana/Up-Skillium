@@ -20,12 +20,9 @@ const CreateLiveClass = () => {
   const [createLive, { isLoading }] = useCreateLiveClassMutation();
 
   const handleSubmit = (values: any) => {
-    const startDateTime = dayjs(values.dateRange[0]).format(
-      "YYYY-MM-DD HH:mm:ss"
-    );
-    const endDateTime = dayjs(values.dateRange[1]).format(
-      "YYYY-MM-DD HH:mm:ss"
-    );
+    const startDateTime = dayjs(values.dateRange[0]).toISOString();
+    const endDateTime = dayjs(values.dateRange[1]).toISOString();
+
     const duration = dayjs(values.dateRange[1]).diff(
       values.dateRange[0],
       "minute"
@@ -37,6 +34,7 @@ const CreateLiveClass = () => {
       endDateTime,
       duration,
       creator: user?.id,
+      meetingLink: "",
     };
     if (user?.role?.name !== "admin") {
       formData.instructor = user?.id;
@@ -45,9 +43,9 @@ const CreateLiveClass = () => {
     handleCreateLiveClass(formData);
   };
 
-  const handleCreateLiveClass = async (data: ICreateLiveClass) => {
+  const handleCreateLiveClass = async (formData: ICreateLiveClass) => {
     try {
-      const result: any = await createLive({ data });
+      const result: any = await createLive({ data: formData });
       if (result?.data?.statusCode === 201) {
         toast.success(
           result?.data?.message || "Live class created successfully!"
@@ -68,7 +66,7 @@ const CreateLiveClass = () => {
   };
 
   return (
-    <div className="mt-3">
+    <div className="mt-3 p-2">
       <h2 className="text-lg lg:text-2xl font-semibold mb-6">
         Create Live Class
       </h2>
@@ -84,9 +82,9 @@ const CreateLiveClass = () => {
 
         <SelectDateTimeDuration />
 
-        <SelectMeetLink form={form} />
+        <SelectMeetLink />
 
-        <TopicsAndTags form={form} />
+        <TopicsAndTags />
 
         <Form.Item>
           <Button
@@ -95,6 +93,7 @@ const CreateLiveClass = () => {
             type="primary"
             htmlType="submit"
             className="w-full"
+            size="large"
           >
             {isLoading ? "Creating..." : " Create Live Class"}
           </Button>

@@ -1,16 +1,7 @@
-import { Form, FormInstance, Select } from "antd/lib";
-
+import { Form, Select } from "antd/lib";
 const { Option } = Select;
 
-type Props = {
-  form: FormInstance;
-};
-
-const TopicsAndTags = ({ form }: Props) => {
-  const handleSelect = (field: string, values: string[]) => {
-    form.setFieldValue(field, values);
-  };
-
+const TopicsAndTags = () => {
   return (
     <>
       <Form.Item
@@ -25,7 +16,6 @@ const TopicsAndTags = ({ form }: Props) => {
           placeholder="Enter or select topics"
           className="w-full"
           tokenSeparators={[","]}
-          onChange={(values) => handleSelect("topics", values)}
         >
           <Option value="React">React</Option>
           <Option value="JavaScript">JavaScript</Option>
@@ -43,7 +33,6 @@ const TopicsAndTags = ({ form }: Props) => {
           placeholder="Enter or select tags"
           className="w-full"
           tokenSeparators={[","]}
-          onChange={(values) => handleSelect("tags", values)}
         >
           <Option value="Live">Live</Option>
           <Option value="Education">Education</Option>
