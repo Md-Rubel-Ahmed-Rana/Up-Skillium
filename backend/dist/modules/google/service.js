@@ -15,11 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GoogleService = void 0;
 const googleapis_1 = require("googleapis");
 const envConfig_1 = __importDefault(require("../../config/envConfig"));
+const apiError_1 = __importDefault(require("../../shared/apiError"));
 const { google: googleCredentials } = envConfig_1.default;
 class Service {
     createMeetLink(data) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
+            console.log("Inside create meet link-1", { data });
+            console.log("Inside create meet link-2", { googleCredentials });
             const oauth2Client = new googleapis_1.google.auth.OAuth2(googleCredentials.clientId, googleCredentials.clientSecret);
             const { summary = "Up-Skillium Live Class", description = "Join the live class on Google Meet", startDateTime, endDateTime, timeZone = "America/Los_Angeles", attendees, } = data;
             oauth2Client.setCredentials({
@@ -30,34 +33,45 @@ class Service {
                 version: "v3",
                 auth: oauth2Client,
             });
-            const response = yield calendar.events.insert({
-                calendarId: "primary",
-                conferenceDataVersion: 1,
-                sendUpdates: "all",
-                requestBody: {
-                    summary,
-                    description,
-                    start: {
-                        dateTime: startDateTime,
-                        timeZone: timeZone,
-                    },
-                    end: {
-                        dateTime: endDateTime,
-                        timeZone: timeZone,
-                    },
-                    attendees: attendees || [],
-                    visibility: "public",
-                    anyoneCanAddSelf: true,
-                    conferenceData: {
-                        createRequest: {
-                            requestId: `req-${Date.now()}`,
-                            conferenceSolutionKey: { type: "hangoutsMeet" },
+            try {
+                const response = yield calendar.events.insert({
+                    calendarId: "primary",
+                    conferenceDataVersion: 1,
+                    sendUpdates: "all",
+                    requestBody: {
+                        summary,
+                        description,
+                        start: {
+                            dateTime: startDateTime,
+                            timeZone: timeZone,
+                        },
+                        end: {
+                            dateTime: endDateTime,
+                            timeZone: timeZone,
+                        },
+                        attendees: attendees || [],
+                        visibility: "public",
+                        anyoneCanAddSelf: true,
+                        conferenceData: {
+                            createRequest: {
+                                requestId: `req-${Date.now()}`,
+                                conferenceSolutionKey: { type: "hangoutsMeet" },
+                            },
                         },
                     },
-                },
-            });
-            const meetLink = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.hangoutLink;
-            return meetLink;
+                });
+                console.log("Inside create meet link-3", { response });
+                console.log("Inside create meet link-4", {
+                    "response.data": response.data,
+                });
+                const meetLink = (_a = response === null || response === void 0 ? void 0 : response.data) === null || _a === void 0 ? void 0 : _a.hangoutLink;
+                console.log("Inside create meet link-5", { meetLink });
+                return meetLink;
+            }
+            catch (error) {
+                console.log(`Failed to create meet link. Error: ${error === null || error === void 0 ? void 0 : error.message}`);
+                throw new apiError_1.default(400, `Failed to create meet link. Error: ${error === null || error === void 0 ? void 0 : error.message}`);
+            }
         });
     }
 }
