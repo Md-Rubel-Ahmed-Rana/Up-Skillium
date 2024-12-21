@@ -1,4 +1,4 @@
-import DashboardSidebar from "@/components/dashboard/sidebars/DashboardSidebar";
+import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import React, { ReactNode } from "react";
 
 type DashboardLayoutProps = {

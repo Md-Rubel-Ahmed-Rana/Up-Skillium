@@ -25,10 +25,8 @@ import {
 import { HiOutlineDocumentText } from "react-icons/hi";
 import {
   MdAddToQueue,
-  MdDoneAll,
   MdHistory,
   MdOutlineLibraryBooks,
-  MdOutlineMeetingRoom,
   MdPassword,
   MdSchedule,
   MdVideoCameraFront,
@@ -181,7 +179,9 @@ const InstructorSidebar = () => {
         {
           key: "6-1",
           icon: <FaFileAlt />,
-          label: <Link href="/dashboard/certificates">Certificates</Link>,
+          label: (
+            <Link href="/dashboard/students-certificates">Certificates</Link>
+          ),
         },
         {
           key: "6-2",
@@ -201,27 +201,6 @@ const InstructorSidebar = () => {
       key: "8",
       icon: <FaUsers />,
       label: <Link href="/dashboard/my-students">My Students</Link>,
-    },
-    {
-      key: "9",
-      icon: <MdOutlineMeetingRoom />,
-      label: "Manage Meetings",
-      children: [
-        {
-          key: "9-1",
-          icon: <MdSchedule />,
-          label: (
-            <Link href="/dashboard/meetings/upcoming">Upcoming Meetings</Link>
-          ),
-        },
-        {
-          key: "9-2",
-          icon: <MdDoneAll />,
-          label: (
-            <Link href="/dashboard/meetings/completed">Completed Meetings</Link>
-          ),
-        },
-      ],
     },
     {
       key: "10",

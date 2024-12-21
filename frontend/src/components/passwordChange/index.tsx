@@ -2,7 +2,6 @@ import { useGetLoggedInUserQuery, useLogoutMutation } from "@/features/auth";
 import { useChangePasswordMutation } from "@/features/user";
 import { IUser } from "@/types/user.type";
 import { Button, Form, Input } from "antd/lib";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -12,7 +11,6 @@ const PasswordChange = () => {
   const [updatePassword, { isLoading }] = useChangePasswordMutation();
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
-  const router = useRouter();
   const [logout] = useLogoutMutation();
 
   const handleValuesChange = (
@@ -42,8 +40,8 @@ const PasswordChange = () => {
           toast.success(
             result?.data?.message || "Password changed successfully!"
           );
-          window.location.replace("/login");
           await logout({});
+          window.location.replace("/login");
         } else {
           toast.error(
             result?.error?.message ||

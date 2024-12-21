@@ -38,16 +38,20 @@ import {
   FaUsers,
   FaUserShield,
   FaUserTie,
-  FaVideo,
   FaWrench,
 } from "react-icons/fa";
 import { GiTeacher } from "react-icons/gi";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import {
+  MdAddToQueue,
+  MdHistory,
   MdOutlineLibraryBooks,
   MdPassword,
   MdPublishedWithChanges,
+  MdSchedule,
+  MdVideoCameraFront,
 } from "react-icons/md";
+import { RiLiveFill } from "react-icons/ri";
 
 const AdminSidebar = () => {
   const router = useRouter();
@@ -348,30 +352,34 @@ const AdminSidebar = () => {
         },
       ],
     },
-
     {
       key: "10",
-      icon: <FaVideo />,
-      label: "Manage Meetings",
+      icon: <MdVideoCameraFront />,
+      label: "Live Classes",
       children: [
         {
           key: "10-1",
-          icon: <FaVideo />,
+          icon: <RiLiveFill />,
           label: (
-            <Link href="/dashboard/meetings/scheduled">Scheduled Meetings</Link>
+            <Link href="/dashboard/live-classes/manage">All Live classes</Link>
           ),
         },
         {
           key: "10-2",
-          icon: <FaVideo />,
-          label: (
-            <Link href="/dashboard/meetings/completed">Completed Meetings</Link>
-          ),
+          icon: <MdSchedule />,
+          label: <Link href="/dashboard/live-classes/upcoming">Upcoming</Link>,
         },
         {
           key: "10-3",
-          icon: <FaVideo />,
-          label: <Link href="/dashboard/meetings/create">Create Meeting</Link>,
+          icon: <MdHistory />,
+          label: <Link href="/dashboard/live-classes/previous">Previous</Link>,
+        },
+        {
+          key: "10-4",
+          icon: <MdAddToQueue />,
+          label: (
+            <Link href="/dashboard/create-live-class">Create Live Class</Link>
+          ),
         },
       ],
     },

@@ -1,7 +1,7 @@
 import { useGetSingleUserQuery } from "@/features/user";
 import { IUser } from "@/types/user.type";
 import { useRouter } from "next/router";
-import ProfileInfo from "../dashboard/profile/ProfileInfo";
+import ProfileInfo from "../profile/ProfileInfo";
 
 const PublicProfile = () => {
   const { query } = useRouter();
