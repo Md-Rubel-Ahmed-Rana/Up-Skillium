@@ -11,7 +11,25 @@ const liveClassApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["live-class"],
     }),
+    getUpcomingLiveClassesByInstructor: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/live-class/instructor/classes/upcoming/${instructorId}`,
+      }),
+      providesTags: ["live-class"],
+    }),
+    getCompletedLiveClassesByInstructor: builder.query({
+      query: ({ instructorId }: { instructorId: string }) => ({
+        method: "GET",
+        url: `/live-class/instructor/classes/completed/${instructorId}`,
+      }),
+      providesTags: ["live-class"],
+    }),
   }),
 });
 
-export const { useCreateLiveClassMutation } = liveClassApi;
+export const {
+  useCreateLiveClassMutation,
+  useGetUpcomingLiveClassesByInstructorQuery,
+  useGetCompletedLiveClassesByInstructorQuery,
+} = liveClassApi;
