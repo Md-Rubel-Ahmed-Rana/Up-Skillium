@@ -87,36 +87,6 @@ class Service {
     return singleClass;
   }
 
-  async getLiveClassesByInstructor(
-    instructorId: Types.ObjectId
-  ): Promise<ILiveClass[]> {
-    const classes = await LiveClass.find({ instructor: instructorId })
-      .sort({ createdAt: -1 })
-      .populate([
-        {
-          path: "course",
-          model: "Course",
-          select: "title image",
-        },
-        {
-          path: "instructor",
-          model: "User",
-          select: "name email image",
-        },
-        {
-          path: "creator",
-          model: "User",
-          select: "name email image",
-        },
-        {
-          path: "students",
-          model: "User",
-          select: "name email image",
-        },
-      ]);
-    return classes;
-  }
-
   async getUpcomingLiveClassesByInstructor(
     instructorId: Types.ObjectId
   ): Promise<ILiveClass[]> {
