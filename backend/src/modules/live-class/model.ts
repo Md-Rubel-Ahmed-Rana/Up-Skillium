@@ -26,6 +26,10 @@ const liveClassSchema = new Schema<ILiveClass>(
       ref: "Course",
       required: true,
     },
+    students: {
+      type: [Schema.Types.ObjectId],
+      ref: "User",
+    },
     startDateTime: {
       type: String,
       required: true,
