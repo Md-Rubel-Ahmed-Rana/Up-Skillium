@@ -10,8 +10,13 @@ router.get("/", LiveClassController.getAllLiveClasses);
 router.get("/:id", LiveClassController.getSingleClass);
 
 router.get(
-  "/by-instructor/classes/:instructorId",
+  "/instructor/classes/:instructorId",
   LiveClassController.getLiveClassesByInstructor
+);
+
+router.get(
+  "/student/classes/:studentId",
+  LiveClassController.getLiveClassesByStudent
 );
 
 router.patch("/:id", LiveClassController.updateClass);

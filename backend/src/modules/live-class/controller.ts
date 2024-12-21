@@ -50,6 +50,17 @@ class Controller extends RootController {
       data: classes,
     });
   });
+  getLiveClassesByStudent = this.catchAsync(async (req, res) => {
+    const studentId = req.params.studentId as unknown as Types.ObjectId;
+    const classes = await LiveClassService.getLiveClassesByStudent(studentId);
+
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Live classes retrieved successfully!",
+      data: classes,
+    });
+  });
   getSingleClass = this.catchAsync(async (req, res) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const data = await LiveClassService.getSingleClass(id);

@@ -12,10 +12,10 @@ class Service {
     } else {
       console.log("Meet link was not provided. Creating link...");
       const meetData: ICreateMeetLink = {
-        summary: data.title,
-        description: data.description as string,
-        startDateTime: data.startDateTime,
-        endDateTime: data.endDateTime,
+        summary: data?.title,
+        description: data?.description as string,
+        startDateTime: data?.startDateTime,
+        endDateTime: data?.endDateTime,
       };
       const meetLink = await GoogleService.createMeetLink(meetData);
       console.log("Meet link created.", meetLink);
@@ -86,9 +86,49 @@ class Service {
   async getLiveClassesByInstructor(
     instructorId: Types.ObjectId
   ): Promise<ILiveClass[]> {
-    const classes = await LiveClass.find({ instructor: instructorId });
+    const classes = await LiveClass.find({ instructor: instructorId }).populate(
+      [
+        {
+          path: "course",
+          model: "Course",
+          select: "title image",
+        },
+        {
+          path: "instructor",
+          model: "User",
+          select: "name email image",
+        },
+        {
+          path: "creator",
+          model: "User",
+          select: "name email image",
+        },
+        {
+          path: "students",
+          model: "User",
+          select: "name email image",
+        },
+      ]
+    );
     return classes;
   }
+  async getLiveClassesByStudent(
+    studentId: Types.ObjectId
+  ): Promise<ILiveClass[]> {
+    return await LiveClass.find({ students: studentId }).populate([
+      {
+        path: "course",
+        model: "Course",
+        select: "name description instructor",
+      },
+      {
+        path: "instructor",
+        model: "User",
+        select: "name email",
+      },
+    ]);
+  }
+
   async updateClass(
     id: Types.ObjectId,
     updatedData: Partial<ILiveClass>

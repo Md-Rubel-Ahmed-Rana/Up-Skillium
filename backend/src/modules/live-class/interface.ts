@@ -6,6 +6,7 @@ type ILiveClass = {
   instructor: Types.ObjectId;
   course: Types.ObjectId;
   creator: Types.ObjectId;
+  students: Types.ObjectId[];
   startDateTime: string;
   endDateTime: string;
   duration: number;
