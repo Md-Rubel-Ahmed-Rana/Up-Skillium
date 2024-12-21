@@ -7,7 +7,6 @@ const router = (0, express_1.Router)();
 router.post("/create", controller_1.LiveClassController.createLiveClass);
 router.get("/", controller_1.LiveClassController.getAllLiveClasses);
 router.get("/:id", controller_1.LiveClassController.getSingleClass);
-router.get("/instructor/classes/:instructorId", controller_1.LiveClassController.getLiveClassesByInstructor);
 router.get("/instructor/classes/completed/:instructorId", controller_1.LiveClassController.getCompletedLiveClassesByInstructor);
 router.get("/instructor/classes/upcoming/:instructorId", controller_1.LiveClassController.getUpcomingLiveClassesByInstructor);
 router.get("/student/classes/:studentId", controller_1.LiveClassController.getLiveClassesByStudent);

@@ -37,21 +37,8 @@ class Controller extends RootController {
       data: classes,
     });
   });
-  getLiveClassesByInstructor = this.catchAsync(async (req, res) => {
-    const instructorId = req.params.instructor as unknown as Types.ObjectId;
-    const classes = await LiveClassService.getLiveClassesByInstructor(
-      instructorId
-    );
-
-    this.apiResponse(res, {
-      statusCode: 200,
-      success: true,
-      message: "Live classes retrieved successfully!",
-      data: classes,
-    });
-  });
   getUpcomingLiveClassesByInstructor = this.catchAsync(async (req, res) => {
-    const instructorId = req.params.instructor as unknown as Types.ObjectId;
+    const instructorId = req.params.instructorId as unknown as Types.ObjectId;
     const classes = await LiveClassService.getUpcomingLiveClassesByInstructor(
       instructorId
     );
@@ -64,7 +51,7 @@ class Controller extends RootController {
     });
   });
   getCompletedLiveClassesByInstructor = this.catchAsync(async (req, res) => {
-    const instructorId = req.params.instructor as unknown as Types.ObjectId;
+    const instructorId = req.params.instructorId as unknown as Types.ObjectId;
     const classes = await LiveClassService.getCompletedLiveClassesByInstructor(
       instructorId
     );

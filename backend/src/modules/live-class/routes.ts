@@ -10,11 +10,6 @@ router.get("/", LiveClassController.getAllLiveClasses);
 router.get("/:id", LiveClassController.getSingleClass);
 
 router.get(
-  "/instructor/classes/:instructorId",
-  LiveClassController.getLiveClassesByInstructor
-);
-
-router.get(
   "/instructor/classes/completed/:instructorId",
   LiveClassController.getCompletedLiveClassesByInstructor
 );

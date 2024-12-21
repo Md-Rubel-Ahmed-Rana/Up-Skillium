@@ -86,35 +86,6 @@ class Service {
             return singleClass;
         });
     }
-    getLiveClassesByInstructor(instructorId) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const classes = yield model_1.default.find({ instructor: instructorId })
-                .sort({ createdAt: -1 })
-                .populate([
-                {
-                    path: "course",
-                    model: "Course",
-                    select: "title image",
-                },
-                {
-                    path: "instructor",
-                    model: "User",
-                    select: "name email image",
-                },
-                {
-                    path: "creator",
-                    model: "User",
-                    select: "name email image",
-                },
-                {
-                    path: "students",
-                    model: "User",
-                    select: "name email image",
-                },
-            ]);
-            return classes;
-        });
-    }
     getUpcomingLiveClassesByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
             const classes = yield model_1.default.find({
