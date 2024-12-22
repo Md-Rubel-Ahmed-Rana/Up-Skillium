@@ -1,5 +1,20 @@
+import { useGetAllLiveClassesQuery } from "@/features/liveClass";
+import { IGetLiveClass } from "@/types/liveClass.type";
+import LiveClassTable from "../liveClasses";
+
 const PreviousClasses = () => {
-  return <div></div>;
+  const { data, isLoading } = useGetAllLiveClassesQuery({
+    status: "completed",
+  });
+  const liveClasses = data?.data as IGetLiveClass[];
+  return (
+    <div className="mt-3 lg:px-0 px-2">
+      <h2 className="text-lg lg:text-2xl font-semibold mb-3">
+        Previous live classes
+      </h2>
+      <LiveClassTable classes={liveClasses} isLoading={isLoading} />
+    </div>
+  );
 };
 
 export default PreviousClasses;
