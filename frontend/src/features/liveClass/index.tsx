@@ -18,10 +18,16 @@ const liveClassApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["live-class"],
     }),
+
     getAllLiveClasses: builder.query({
-      query: () => ({
+      query: ({
+        status,
+      }: {
+        status?: "upcoming" | "ongoing" | "completed" | "cancelled";
+      }) => ({
         method: "GET",
         url: `/live-class`,
+        params: { status },
       }),
       providesTags: ["live-class"],
     }),
