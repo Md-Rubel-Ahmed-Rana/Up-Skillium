@@ -1,3 +1,4 @@
+import { ICourse } from "./course.type";
 import { IUser } from "./user.type";
 
 export type ICreateLiveClass = {
@@ -8,7 +9,6 @@ export type ICreateLiveClass = {
   creator: string;
   startDateTime: string;
   endDateTime: string;
-  duration: number;
   meetingLink: string;
   topics?: string[];
   tags?: string[];
@@ -19,14 +19,14 @@ export type IGetLiveClass = {
   title: string;
   description: string;
   instructor: IUser;
-  course: IUser;
+  course: ICourse;
   creator: IUser;
   startDateTime: Date;
   endDateTime: Date;
-  duration: number;
   meetingLink: string;
   topics: string[];
   tags: string[];
+  status: "upcoming" | "ongoing" | "completed" | "cancelled";
   createdAt: Date;
   updatedAt: Date;
 };
