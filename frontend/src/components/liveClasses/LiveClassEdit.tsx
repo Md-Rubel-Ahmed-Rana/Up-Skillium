@@ -26,7 +26,17 @@ const LiveClassEdit = ({
       {isButton ? (
         <Link
           className={`${buttonStyles}`}
-          href={`/dashboard/live-classes/edit/${liveClass?.id}`}
+          href={`/dashboard/live-classes/edit/${liveClass?.id}?title=${
+            liveClass?.title
+          }&course=${liveClass?.course?.title}&instructor=${
+            liveClass?.instructor?.name
+          }&startDateTime=${liveClass?.startDateTime}&endDateTime=${
+            liveClass?.endDateTime
+          }&duration=${liveClass?.duration}&meetingLink=${
+            liveClass?.meetingLink
+          }&topics=${liveClass?.topics?.join(",")}&tags=${liveClass?.tags?.join(
+            ","
+          )}`}
         >
           <Button type={buttonType} size={buttonSize} className="w-full">
             {editText}
@@ -35,7 +45,17 @@ const LiveClassEdit = ({
       ) : (
         <Link
           className={`${linkStyles}`}
-          href={`/dashboard/live-classes/edit/${liveClass?.id}`}
+          href={`/dashboard/live-classes/edit/${liveClass?.id}?title=${
+            liveClass?.title
+          }&course=${liveClass?.course?.title}&instructor=${
+            liveClass?.instructor?.name
+          }&startDateTime=${liveClass?.startDateTime}&endDateTime=${
+            liveClass?.endDateTime
+          }&duration=${liveClass?.duration}&meetingLink=${
+            liveClass?.meetingLink
+          }&topics=${liveClass?.topics?.join(",")}&tags=${liveClass?.tags?.join(
+            ","
+          )}`}
         >
           {editText}
         </Link>
