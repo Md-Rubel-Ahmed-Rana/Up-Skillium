@@ -1,5 +1,8 @@
+import { useGetLoggedInUserQuery } from "@/features/auth";
 import { IGetLiveClass } from "@/types/liveClass.type";
-import { Table, Tag } from "antd/lib";
+import { IUser } from "@/types/user.type";
+import { Button, Table, Tooltip } from "antd/lib";
+import DeleteLiveClass from "./DeleteLiveClass";
 
 type Props = {
   classes: IGetLiveClass[];
@@ -7,6 +10,8 @@ type Props = {
 };
 
 const LiveClassTable = ({ classes, isLoading }: Props) => {
+  const { data: userData } = useGetLoggedInUserQuery({});
+  const user = userData?.data as IUser;
   const columns = [
     {
       title: "Title",
@@ -19,28 +24,20 @@ const LiveClassTable = ({ classes, isLoading }: Props) => {
       dataIndex: "description",
       key: "description",
       render: (description: string) => (
-        <span className="text-gray-600">{description}</span>
+        <Tooltip title={description} placement="topLeft">
+          <Button type="default" size="small">
+            Show
+          </Button>
+        </Tooltip>
       ),
     },
     {
-      title: "Start Time",
-      dataIndex: "startDateTime",
-      key: "startDateTime",
-      render: (startDateTime: Date) => new Date(startDateTime).toLocaleString(),
-    },
-    {
-      title: "Duration (mins)",
-      dataIndex: "duration",
-      key: "duration",
-    },
-    {
-      title: "Meeting Link",
-      dataIndex: "meetingLink",
-      key: "meetingLink",
-      render: (meetingLink: string) => (
-        <a href={meetingLink} target="_blank" rel="noreferrer">
-          Join Meeting
-        </a>
+      title: "Schedule",
+      render: (_: Date, liveClass: IGetLiveClass) => (
+        <div className="space-y-1 text-xs">
+          <p>{new Date(liveClass?.startDateTime).toLocaleString()}</p>
+          <p>{new Date(liveClass?.endDateTime).toLocaleString()}</p>
+        </div>
       ),
     },
     {
@@ -48,13 +45,11 @@ const LiveClassTable = ({ classes, isLoading }: Props) => {
       dataIndex: "topics",
       key: "topics",
       render: (topics: string[]) => (
-        <div>
-          {topics.map((topic) => (
-            <Tag key={topic} color="green" className="mr-1">
-              {topic}
-            </Tag>
-          ))}
-        </div>
+        <Tooltip title={topics.join(", ")} placement="topLeft">
+          <Button type="default" size="small">
+            {`Show ${topics?.length}`}
+          </Button>
+        </Tooltip>
       ),
     },
     {
@@ -62,13 +57,60 @@ const LiveClassTable = ({ classes, isLoading }: Props) => {
       dataIndex: "tags",
       key: "tags",
       render: (tags: string[]) => (
-        <div>
-          {tags.map((tag) => (
-            <Tag key={tag} color="blue" className="mr-1">
-              {tag}
-            </Tag>
-          ))}
-        </div>
+        <Tooltip title={tags.join(", ")} placement="topLeft">
+          <Button type="default" size="small">
+            {`Show ${tags?.length}`}
+          </Button>
+        </Tooltip>
+      ),
+    },
+    {
+      title: "Meeting",
+      dataIndex: "meetingLink",
+      key: "meetingLink",
+      render: (meetingLink: string) => (
+        <a href={meetingLink} target="_blank" rel="noreferrer">
+          <Button type="primary" size="small">
+            Join now
+          </Button>
+        </a>
+      ),
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (status: string) => (
+        <Button
+          size="small"
+          type="primary"
+          className={`${
+            status === "upcoming"
+              ? "bg-yellow-500"
+              : status === "completed"
+              ? "bg-green-500"
+              : "bg-red-500"
+          }`}
+        >
+          {status}
+        </Button>
+      ),
+    },
+    {
+      title: "Actions",
+      render: (_: any, liveClass: IGetLiveClass) => (
+        <>
+          {user?.role?.name === "student" ? (
+            <small>Null</small>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <Button className="w-full" type="primary" size="small">
+                Edit
+              </Button>
+              <DeleteLiveClass liveClass={liveClass} />
+            </div>
+          )}
+        </>
       ),
     },
   ];

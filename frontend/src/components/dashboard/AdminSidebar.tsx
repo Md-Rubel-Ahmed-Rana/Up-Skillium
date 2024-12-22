@@ -361,7 +361,7 @@ const AdminSidebar = () => {
           key: "10-1",
           icon: <RiLiveFill />,
           label: (
-            <Link href="/dashboard/live-classes/manage">All Live classes</Link>
+            <Link href="/dashboard/live-classes/all">All Live classes</Link>
           ),
         },
         {
