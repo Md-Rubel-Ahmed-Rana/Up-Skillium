@@ -3,6 +3,7 @@ import { IGetLiveClass } from "@/types/liveClass.type";
 import { IUser } from "@/types/user.type";
 import { Button, Table, Tooltip } from "antd/lib";
 import DeleteLiveClass from "./DeleteLiveClass";
+import LiveClassEdit from "./LiveClassEdit";
 
 type Props = {
   classes: IGetLiveClass[];
@@ -12,6 +13,7 @@ type Props = {
 const LiveClassTable = ({ classes, isLoading }: Props) => {
   const { data: userData } = useGetLoggedInUserQuery({});
   const user = userData?.data as IUser;
+
   const columns = [
     {
       title: "Title",
@@ -104,9 +106,7 @@ const LiveClassTable = ({ classes, isLoading }: Props) => {
             <small>Null</small>
           ) : (
             <div className="flex flex-col items-center gap-2">
-              <Button className="w-full" type="primary" size="small">
-                Edit
-              </Button>
+              <LiveClassEdit liveClass={liveClass} />
               <DeleteLiveClass liveClass={liveClass} />
             </div>
           )}

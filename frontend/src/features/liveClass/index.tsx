@@ -38,6 +38,13 @@ const liveClassApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["live-class"],
     }),
+    deleteLiveClass: builder.mutation({
+      query: ({ id }: { id: string }) => ({
+        method: "DELETE",
+        url: `/live-class/${id}`,
+      }),
+      invalidatesTags: ["live-class"],
+    }),
   }),
 });
 
@@ -46,4 +53,5 @@ export const {
   useGetUpcomingLiveClassesByInstructorQuery,
   useGetCompletedLiveClassesByInstructorQuery,
   useGetAllLiveClassesQuery,
+  useDeleteLiveClassMutation,
 } = liveClassApi;
