@@ -1,9 +1,10 @@
-import { ILesson } from "@/types/lesson.type";
-import { Form, Input, Button } from "antd/lib";
-import { useEffect, useState } from "react";
 import { useUpdateLessonMutation } from "@/features/lesson";
-import toast from "react-hot-toast";
+import { ILesson } from "@/types/lesson.type";
+import { Button, Form, Input } from "antd/lib";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 };
 
 const InstructionLessonUpdate = ({ lesson }: Props) => {
+  const router = useRouter();
   const [form] = Form.useForm();
   const [content, setContent] = useState("");
   const [updateLesson, { isLoading }] = useUpdateLessonMutation();
@@ -32,6 +34,7 @@ const InstructionLessonUpdate = ({ lesson }: Props) => {
         toast.success(
           result?.data?.message || "Lesson was updated successfully!"
         );
+        router.back();
       } else {
         toast.error(
           result?.error?.message ||

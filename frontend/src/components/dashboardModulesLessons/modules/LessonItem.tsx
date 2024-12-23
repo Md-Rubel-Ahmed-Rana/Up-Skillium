@@ -1,32 +1,29 @@
+import DeleteLesson from "@/components/lessons/DeleteLesson";
+import EditLesson from "@/components/lessons/EditLesson";
 import { ILesson } from "@/types/lesson.type";
-import { FiEdit } from "react-icons/fi";
-import LessonVideo from "./video";
-import LessonIntro from "./introduction";
 import LessonAssignment from "./assignment";
+import LessonIntro from "./introduction";
 import LessonQuiz from "./quiz";
-import Link from "next/link";
-import LessonDeleteButton from "./LessonDeleteButton";
+import LessonVideo from "./video";
 
 type Props = {
   lesson: ILesson;
 };
 
 const LessonItem = ({ lesson }: Props) => {
-  const path = `/dashboard/lesson/update/${lesson?.id}?id=${lesson?.id}&&lessonType=${lesson?.type}&lessonTitle=${lesson?.title}`;
   return (
     <div className="border rounded-md shadow-sm p-4 hover:bg-gray-50 transition duration-200">
       <div className="flex justify-between items-center mb-4">
         <h5 className="font-semibold lg:text-lg">
           {lesson?.serial}. {lesson?.title}
         </h5>
-        <div className="flex gap-2">
-          <Link
-            href={path}
-            className="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
-          >
-            <FiEdit size={16} />
-          </Link>
-          <LessonDeleteButton lesson={lesson} />
+        <div className="flex items-center gap-2">
+          <EditLesson isButton={false} lesson={lesson} />
+          <DeleteLesson
+            lessonId={lesson?.id}
+            lessonTitle={lesson?.title}
+            shouldAddIcon={true}
+          />
         </div>
       </div>
 
