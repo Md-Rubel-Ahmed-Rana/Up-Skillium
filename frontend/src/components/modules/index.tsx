@@ -1,6 +1,7 @@
 import { IGetModule } from "@/types/module.type";
 import { Table, TableProps } from "antd/lib";
-import ModuleActions from "./ModuleActions";
+import DeleteModuleModal from "../manageModules/DeleteModuleModal";
+import EditModuleModal from "../manageModules/EditModuleModal";
 import ViewLessonButton from "./ViewLessonButton";
 
 type Props = {
@@ -54,15 +55,25 @@ const ModulesTable = ({ modules, isLoading }: Props) => {
       render: (date: Date) => new Date(date).toLocaleDateString(),
     },
     {
-      title: "Updated At",
-      key: "updatedAt",
-      dataIndex: "updatedAt",
-      render: (date: Date) => new Date(date).toLocaleDateString(),
-    },
-    {
       title: "Actions",
       key: "actions",
-      render: (_: any, record: IGetModule) => <ModuleActions />,
+      render: (_: any, module: IGetModule) => (
+        <div className="flex flex-col items-center gap-1">
+          <EditModuleModal
+            module={module}
+            isButton={true}
+            buttonStyles="w-full"
+            buttonSize="small"
+          />
+          <DeleteModuleModal
+            moduleId={module?.id}
+            moduleTitle={module?.title}
+            isButton={true}
+            buttonStyles="w-full"
+            buttonSize="small"
+          />
+        </div>
+      ),
     },
   ];
   return (
