@@ -19,13 +19,13 @@ const SelectInstructor = ({ form }: Props) => {
   };
   return (
     <Form.Item
-      name="course"
-      label="Course"
-      rules={[{ required: true, message: "Please select a course!" }]}
+      name="instructor"
+      label="Instructor"
+      rules={[{ required: true, message: "Please select an instructor!" }]}
     >
       <Select
         onChange={handleSelectInstructor}
-        placeholder="Select your course"
+        placeholder="Select an instructor"
         className="w-full"
         loading={isLoading}
       >

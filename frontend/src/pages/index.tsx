@@ -3,7 +3,8 @@ import baseApi from "@/features/api";
 import RootLayout from "@/layout/RootLayout";
 import { ICourse } from "@/types/course.type";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
+import Lenis from "@studio-freight/lenis";
+import { ReactElement, useEffect } from "react";
 
 const apiUrl = `${baseApi}/course/published/courses`;
 
@@ -12,6 +13,17 @@ type HomePageProps = {
 };
 
 const HomePage = ({ courses }: HomePageProps) => {
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    const raf = (time: number) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+  });
+
   return (
     <>
       <PageMetadata
