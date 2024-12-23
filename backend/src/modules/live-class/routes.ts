@@ -26,6 +26,11 @@ router.get(
 
 router.patch("/:id", LiveClassController.updateClass);
 
+router.patch(
+  "/update-students-attendees/:liveClassId",
+  LiveClassController.updateStudentsAttendees
+);
+
 router.delete("/:id", LiveClassController.deleteClass);
 
 export const LiveClassRoutes = router;

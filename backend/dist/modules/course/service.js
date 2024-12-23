@@ -291,5 +291,12 @@ class Service {
             return { courses, otherCourses };
         });
     }
+    getStudentsFromCourse(courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const course = yield model_1.Course.findById(courseId).populate("students", "name email image");
+            const students = course === null || course === void 0 ? void 0 : course.students;
+            return students;
+        });
+    }
 }
 exports.CourseService = new Service();

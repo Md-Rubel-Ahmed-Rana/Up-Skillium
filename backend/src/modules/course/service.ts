@@ -10,6 +10,7 @@ import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { InstructorService } from "../instructor/service";
 import incrementAverageRating from "../../utils/incrementAverageRating";
 import ApiError from "../../shared/apiError";
+import { IUser } from "../user/interface";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -331,6 +332,14 @@ class Service {
       .limit(6);
 
     return { courses, otherCourses };
+  }
+  async getStudentsFromCourse(courseId: Types.ObjectId): Promise<IUser[]> {
+    const course = await Course.findById(courseId).populate(
+      "students",
+      "name email image"
+    );
+    const students = course?.students as unknown as IUser[];
+    return students;
   }
 }
 

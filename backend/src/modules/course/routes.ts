@@ -33,6 +33,8 @@ router.get(
   CourseController.getCoursesByInstructor
 );
 
+router.get("/students/:courseId", CourseController.getStudentsFromCourse);
+
 router.delete("/:id", CourseController.deleteCourse);
 
 router.patch("/update-basic-info/:id", CourseController.updateCourseBasicInfo);

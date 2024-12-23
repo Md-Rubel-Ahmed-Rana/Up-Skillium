@@ -3,22 +3,22 @@ import ILiveClass from "./interface";
 import LiveClass from "./model";
 import { GoogleService } from "../google/service";
 import { ICreateMeetLink } from "../google/interface";
+import { UserService } from "../user/service";
 
 class Service {
   async createLiveClass(data: ILiveClass): Promise<void> {
-    if (data?.meetingLink) {
-      console.log("Meet link provided", data?.meetingLink);
+    if (data?.meetingLink && data?.meetingLink !== "") {
       await LiveClass.create(data);
     } else {
-      console.log("Meet link was not provided. Creating link...");
+      const attendees = await UserService.getUsersEmailByIds(data?.students);
       const meetData: ICreateMeetLink = {
         summary: data?.title,
         description: data?.description as string,
         startDateTime: data?.startDateTime,
         endDateTime: data?.endDateTime,
+        attendees: attendees,
       };
       const meetLink = await GoogleService.createMeetLink(meetData);
-      console.log("Meet link created.", meetLink);
       await LiveClass.create({ ...data, meetingLink: meetLink });
     }
   }
@@ -181,6 +181,15 @@ class Service {
 
   async deleteClass(id: Types.ObjectId): Promise<void> {
     await LiveClass.findByIdAndDelete(id);
+  }
+
+  async updateStudentsAttendees(
+    liveClassId: Types.ObjectId,
+    studentsIds: Types.ObjectId[]
+  ): Promise<void> {
+    await LiveClass.findByIdAndUpdate(liveClassId, {
+      $set: { students: studentsIds },
+    });
   }
 }
 
