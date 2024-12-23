@@ -15,7 +15,7 @@ const LiveClassStudentModal = ({ title, students = [] }: Props) => {
         type="primary"
         onClick={() => setIsModalOpen(true)}
         size="small"
-        className="bg-yellow-400"
+        className="bg-yellow-400 w-full"
       >
         Students
       </Button>
