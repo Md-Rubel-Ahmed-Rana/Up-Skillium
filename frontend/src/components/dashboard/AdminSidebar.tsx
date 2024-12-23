@@ -159,20 +159,6 @@ const AdminSidebar = () => {
             <Link href="/dashboard/published-courses">Published Courses</Link>
           ),
         },
-        {
-          key: "3-6",
-          icon: <HiOutlineDocumentText />,
-          label: (
-            <Link href="/dashboard/course-outlines">Courses Outlines</Link>
-          ),
-        },
-        {
-          key: "3-7",
-          icon: <FaPlusCircle />,
-          label: (
-            <Link href="/dashboard/create-course-outline">Create Outline</Link>
-          ),
-        },
       ],
     },
     {
@@ -216,6 +202,20 @@ const AdminSidebar = () => {
           key: "4-7",
           icon: <FaPenFancy />,
           label: <Link href="/dashboard/create-quiz">Create Quiz</Link>,
+        },
+        {
+          key: "4-8",
+          icon: <HiOutlineDocumentText />,
+          label: (
+            <Link href="/dashboard/course-outlines">Courses Outlines</Link>
+          ),
+        },
+        {
+          key: "4-9",
+          icon: <FaPlusCircle />,
+          label: (
+            <Link href="/dashboard/create-course-outline">Create Outline</Link>
+          ),
         },
       ],
     },

@@ -36,7 +36,7 @@ const NewModuleForm = ({ modules, setModules }: Props) => {
       form={form}
       layout="inline"
       onFinish={handleAddModule}
-      className=" bg-white flex items-center rounded-md p-5 shadow-md"
+      className=" bg-white flex rounded-md p-5 shadow-md"
     >
       <Form.Item
         name="serial"

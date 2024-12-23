@@ -19,7 +19,6 @@ interface DataType {
 const CreateCourseOutline = () => {
   const [form] = Form.useForm();
   const { query } = useRouter();
-  const courseId = query?.courseId as string;
   const courseTitle = query?.courseTitle as string;
   const [modules, setModules] = useState<DataType[]>([]);
   const [editingKey, setEditingKey] = useState("");
