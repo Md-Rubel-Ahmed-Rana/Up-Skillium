@@ -25,26 +25,32 @@ const LiveClassStudentModal = ({ title, students = [] }: Props) => {
         onCancel={() => setIsModalOpen(false)}
         footer={null}
       >
-        <div className="space-y-2">
-          {students.map((student) => (
-            <div
-              key={student?.id}
-              className="flex items-center gap-2 p-2 border rounded-md"
-            >
-              <div className="w-12 h-12 rounded-full overflow-hidden">
-                <img
-                  className="w-full h-full rounded-full ring-1"
-                  src={student?.id}
-                  alt={student?.name}
-                />
+        {students?.length <= 0 ? (
+          <div className="text-center my-3">
+            <p className="text-md font-semibold">No students found</p>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {students.map((student) => (
+              <div
+                key={student?.id}
+                className="flex items-center gap-2 p-2 border rounded-md"
+              >
+                <div className="w-12 h-12 rounded-full overflow-hidden">
+                  <img
+                    className="w-full h-full rounded-full ring-1"
+                    src={student?.id}
+                    alt={student?.name}
+                  />
+                </div>
+                <div>
+                  <p className="text-md font-semibold">{student?.name}</p>
+                  <p>{student?.email}</p>
+                </div>
               </div>
-              <div>
-                <p className="text-md font-semibold">{student?.name}</p>
-                <p>{student?.email}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </Modal>
     </>
   );
