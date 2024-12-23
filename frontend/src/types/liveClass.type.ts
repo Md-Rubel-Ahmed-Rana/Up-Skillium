@@ -19,6 +19,7 @@ export type IGetLiveClass = {
   title: string;
   description: string;
   instructor: IUser;
+  students: IUser[];
   course: ICourse;
   creator: IUser;
   startDateTime: Date;

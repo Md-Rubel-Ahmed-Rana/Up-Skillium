@@ -4,6 +4,7 @@ import { IUser } from "@/types/user.type";
 import { Button, Table, Tooltip } from "antd/lib";
 import DeleteLiveClass from "./DeleteLiveClass";
 import LiveClassEdit from "./LiveClassEdit";
+import LiveClassStudentModal from "./LiveClassStudentModal";
 
 type Props = {
   classes: IGetLiveClass[];
@@ -103,11 +104,15 @@ const LiveClassTable = ({ classes, isLoading }: Props) => {
       render: (_: any, liveClass: IGetLiveClass) => (
         <>
           {user?.role?.name === "student" ? (
-            <small>Null</small>
+            <p>Null</p>
           ) : (
             <div className="flex flex-col items-center gap-2">
               <LiveClassEdit liveClass={liveClass} />
               <DeleteLiveClass liveClass={liveClass} />
+              <LiveClassStudentModal
+                students={liveClass?.students}
+                title={liveClass?.title}
+              />
             </div>
           )}
         </>
@@ -122,6 +127,7 @@ const LiveClassTable = ({ classes, isLoading }: Props) => {
       rowKey={(record) => record?.id}
       loading={isLoading}
       locale={{ emptyText: "No upcoming live classes" }}
+      bordered
     />
   );
 };
