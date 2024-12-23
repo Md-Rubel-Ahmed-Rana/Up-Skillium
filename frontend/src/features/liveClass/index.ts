@@ -38,6 +38,13 @@ const liveClassApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["live-class"],
     }),
+    getStudentLiveClasses: builder.query({
+      query: ({ studentId }: { studentId: string }) => ({
+        method: "GET",
+        url: `/live-class/student/classes/${studentId}`,
+      }),
+      providesTags: ["live-class"],
+    }),
     getSingleLiveClass: builder.query({
       query: ({ id }: { id: string }) => ({
         method: "GET",
@@ -71,4 +78,5 @@ export const {
   useDeleteLiveClassMutation,
   useGetSingleLiveClassQuery,
   useUpdateLiveClassMutation,
+  useGetStudentLiveClassesQuery,
 } = liveClassApi;
