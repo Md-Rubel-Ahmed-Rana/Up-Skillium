@@ -1,20 +1,35 @@
 import { useDeleteLessonMutation } from "@/features/lesson";
-import { ILesson } from "@/types/lesson.type";
-import { message, Modal, Spin } from "antd/lib";
+import { Button, message, Modal, Spin } from "antd/lib";
 import { useState } from "react";
 import { FiTrash } from "react-icons/fi";
 
 type Props = {
-  lesson: ILesson;
+  lessonId: string;
+  lessonTitle: string;
+  isButton?: boolean;
+  buttonSize?: "small" | "middle" | "large";
+  shouldAddIcon?: boolean;
+  buttonText?: string;
+  iconSize?: number;
+  iconStyles?: string;
 };
 
-const LessonDeleteButton = ({ lesson }: Props) => {
+const DeleteLesson = ({
+  lessonId,
+  lessonTitle,
+  isButton,
+  buttonSize = "middle",
+  shouldAddIcon = false,
+  buttonText = "Delete",
+  iconSize = 16,
+  iconStyles,
+}: Props) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [deleteLesson, { isLoading }] = useDeleteLessonMutation();
 
   const handleDeleteLesson = async () => {
     try {
-      const result: any = await deleteLesson({ lessonId: lesson?.id });
+      const result: any = await deleteLesson({ lessonId });
       if (result.data.statusCode === 200) {
         message.success(
           result?.data?.message || "Lesson has been deleted successfully."
@@ -39,18 +54,42 @@ const LessonDeleteButton = ({ lesson }: Props) => {
 
   return (
     <>
-      <button
-        className={`p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition ${
-          isLoading ? "cursor-not-allowed opacity-70" : ""
-        }`}
-        onClick={() => setIsModalVisible(true)}
-        disabled={isLoading}
-      >
-        {isLoading ? <Spin size="small" /> : <FiTrash size={16} />}
-      </button>
+      {isButton ? (
+        <Button
+          type="primary"
+          danger
+          size={buttonSize}
+          onClick={() => setIsModalVisible(true)}
+          disabled={isLoading}
+          loading={isLoading}
+          iconPosition="end"
+        >
+          {shouldAddIcon ? (
+            <FiTrash className={iconStyles} size={iconSize} />
+          ) : (
+            buttonText
+          )}
+        </Button>
+      ) : (
+        <Button
+          type="primary"
+          danger
+          size={buttonSize}
+          onClick={() => setIsModalVisible(true)}
+          disabled={isLoading}
+          loading={isLoading}
+          iconPosition="end"
+        >
+          <FiTrash
+            size={iconSize}
+            className={iconStyles}
+            onClick={() => setIsModalVisible(true)}
+          />
+        </Button>
+      )}
 
       <Modal
-        title="Delete Lesson"
+        title={`Delete Lesson: ${lessonTitle}`}
         open={isModalVisible}
         onOk={handleDeleteLesson}
         onCancel={handleCancel}
@@ -70,7 +109,7 @@ const LessonDeleteButton = ({ lesson }: Props) => {
           </div>
         ) : (
           <p>
-            Are you sure you want to delete the lesson: <b>{lesson?.title}</b>?
+            Are you sure you want to delete the lesson: <b>{lessonTitle}</b>?
           </p>
         )}
       </Modal>
@@ -78,4 +117,4 @@ const LessonDeleteButton = ({ lesson }: Props) => {
   );
 };
 
-export default LessonDeleteButton;
+export default DeleteLesson;

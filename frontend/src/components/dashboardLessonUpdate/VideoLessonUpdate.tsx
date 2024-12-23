@@ -1,6 +1,7 @@
 import { useUpdateLessonMutation } from "@/features/lesson";
 import { ILesson } from "@/types/lesson.type";
 import { Button, Form, Input } from "antd/lib";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import LessonVideoUploadModal from "./LessonVideoUploadModal";
@@ -10,6 +11,7 @@ type Props = {
 };
 
 const VideoLessonUpdate = ({ lesson }: Props) => {
+  const router = useRouter();
   const [form] = Form.useForm();
   const [uploadVideo, setUploadVideo] = useState(false);
   const [newVideoUrl, setNewVideoUrl] = useState("");
@@ -33,6 +35,7 @@ const VideoLessonUpdate = ({ lesson }: Props) => {
         toast.success(
           result?.data?.message || "Lesson was updated successfully!"
         );
+        router.back();
       } else {
         toast.error(
           result?.error?.message ||

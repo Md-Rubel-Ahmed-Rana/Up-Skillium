@@ -2,6 +2,7 @@ import { useUpdateLessonMutation } from "@/features/lesson";
 import { ILesson } from "@/types/lesson.type";
 import { Button, Divider, Form, Input } from "antd/lib";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import QuizQuestionUpdate from "./QuizQuestionUpdate";
@@ -12,6 +13,7 @@ type Props = {
 };
 
 const QuizLessonUpdate = ({ lesson }: Props) => {
+  const router = useRouter();
   const [form] = Form.useForm();
   const [content, setContent] = useState("");
   const [updateLesson, { isLoading }] = useUpdateLessonMutation();
@@ -33,6 +35,7 @@ const QuizLessonUpdate = ({ lesson }: Props) => {
         toast.success(
           result?.data?.message || "Lesson was updated successfully!"
         );
+        router.back();
       } else {
         toast.error(
           result?.error?.message ||

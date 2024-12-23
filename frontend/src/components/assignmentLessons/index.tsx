@@ -1,7 +1,7 @@
 import { IGetLesson as IAssignment } from "@/types/lesson.type";
-import { Button, Table, TableProps } from "antd/lib";
-import Link from "next/link";
-import AssignmentDeleteModal from "./AssignmentDeleteModal";
+import { Table, TableProps } from "antd/lib";
+import DeleteLesson from "../lessons/DeleteLesson";
+import EditLesson from "../lessons/EditLesson";
 
 type Props = {
   assignments: IAssignment[];
@@ -41,13 +41,19 @@ const AssignmentLessonTable = ({ assignments, isLoading }: Props) => {
       title: "Actions",
       key: "actions",
       render: (_: any, assignment: IAssignment) => (
-        <div className="flex items-center gap-2">
-          <Link
-            href={`/dashboard/update-assignment/${assignment?.id}?title=${assignment?.title}&module=${assignment?.module?.title}&content=${assignment?.content}`}
-          >
-            <Button type="primary">Edit</Button>
-          </Link>
-          <AssignmentDeleteModal assignment={assignment} />
+        <div className="flex flex-col gap-2">
+          <EditLesson
+            lesson={assignment}
+            isButton={true}
+            buttonSize="small"
+            buttonStyles="w-full"
+          />
+          <DeleteLesson
+            lessonId={assignment?.id}
+            lessonTitle={assignment?.title}
+            shouldAddIcon={false}
+            buttonSize="small"
+          />
         </div>
       ),
     },

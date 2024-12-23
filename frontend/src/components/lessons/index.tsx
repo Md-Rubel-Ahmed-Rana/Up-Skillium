@@ -1,6 +1,7 @@
 import { IGetLesson } from "@/types/lesson.type";
 import { Table, TableProps } from "antd/lib";
-import LessonEditModal from "./LessonEditModal";
+import DeleteLesson from "./DeleteLesson";
+import EditLesson from "./EditLesson";
 
 type Props = {
   lessons: IGetLesson[];
@@ -45,7 +46,20 @@ const LessonTable = ({ lessons, isLoading }: Props) => {
       title: "Actions",
       key: "actions",
       render: (_: any, lesson: IGetLesson) => (
-        <LessonEditModal lesson={lesson} />
+        <div className="flex flex-col gap-2">
+          <EditLesson
+            lesson={lesson}
+            isButton={true}
+            buttonSize="small"
+            buttonStyles="w-full"
+          />
+          <DeleteLesson
+            lessonId={lesson?.id}
+            lessonTitle={lesson?.title}
+            shouldAddIcon={false}
+            buttonSize="small"
+          />
+        </div>
       ),
     },
   ];
