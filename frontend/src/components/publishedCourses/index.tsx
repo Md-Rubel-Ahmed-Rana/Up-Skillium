@@ -22,6 +22,7 @@ const PublishedCourses = () => {
     filters: { status: "published" },
   });
   const courses = data?.data as ICourse[];
+
   const tableDataCourse: TableDataType[] = courses?.map((course) => ({
     id: course?.id,
     image: course?.image,
@@ -150,6 +151,7 @@ const PublishedCourses = () => {
           bordered
           loading={isLoading}
           className="shadow-md rounded-lg w-full min-w-[900px]"
+          locale={{ emptyText: "No courses found" }}
         />
       </div>
     </div>

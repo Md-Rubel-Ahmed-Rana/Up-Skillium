@@ -87,6 +87,7 @@ const CertificateTable = ({ certificates, isLoading }: Props) => {
       rowKey={(record) => record?.id}
       loading={isLoading}
       className="shadow-md rounded-lg w-full min-w-[900px]"
+      locale={{ emptyText: "No certificates found" }}
     />
   );
 };

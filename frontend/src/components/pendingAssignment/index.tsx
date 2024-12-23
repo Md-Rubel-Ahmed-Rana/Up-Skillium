@@ -73,6 +73,7 @@ const PendingAssignmentTable = ({ assignments, isLoading }: Props) => {
       bordered
       pagination={{ pageSize: 10 }}
       className="shadow-md rounded-lg w-full min-w-[900px]"
+      locale={{ emptyText: "No assignments found" }}
     />
   );
 };

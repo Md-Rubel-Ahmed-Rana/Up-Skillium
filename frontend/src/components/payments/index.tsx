@@ -87,12 +87,13 @@ const PaymentTable = ({ enrollments }: Props) => {
           pagination={false}
           bordered
           className="w-full min-w-[500px] md:min-w-[700px] lg:min-w-[900px]"
+          locale={{ emptyText: "No enrollments found" }}
         />
       </div>
 
       <Modal
         title="Payment Session Details"
-        visible={isModalOpen}
+        open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={null}
       >

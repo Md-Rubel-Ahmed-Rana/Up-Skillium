@@ -104,6 +104,7 @@ const ManageUsers = () => {
         bordered
         loading={isLoading}
         className="shadow-md rounded-lg w-full min-w-[900px]"
+        locale={{ emptyText: "No users found" }}
       />
     </div>
   );
