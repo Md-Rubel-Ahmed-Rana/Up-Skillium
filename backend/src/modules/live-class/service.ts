@@ -75,7 +75,8 @@ class Service {
       .sort({ createdAt: -1 })
       .populate("instructor", "name email image")
       .populate("creator", "name email image")
-      .populate("course", "title image category");
+      .populate("course", "title image category")
+      .populate("students", "name email image");
     return classes;
   }
 
@@ -83,7 +84,8 @@ class Service {
     const singleClass = await LiveClass.findById(id)
       .populate("instructor", "name email image")
       .populate("creator", "name email image")
-      .populate("course", "title image category");
+      .populate("course", "title image category")
+      .populate("students", "name email image");
     return singleClass;
   }
 
@@ -95,28 +97,10 @@ class Service {
       status: "upcoming",
     })
       .sort({ createdAt: -1 })
-      .populate([
-        {
-          path: "course",
-          model: "Course",
-          select: "title image",
-        },
-        {
-          path: "instructor",
-          model: "User",
-          select: "name email image",
-        },
-        {
-          path: "creator",
-          model: "User",
-          select: "name email image",
-        },
-        {
-          path: "students",
-          model: "User",
-          select: "name email image",
-        },
-      ]);
+      .populate("instructor", "name email image")
+      .populate("creator", "name email image")
+      .populate("course", "title image category")
+      .populate("students", "name email image");
     return classes;
   }
 
@@ -128,28 +112,10 @@ class Service {
       status: "completed",
     })
       .sort({ createdAt: -1 })
-      .populate([
-        {
-          path: "course",
-          model: "Course",
-          select: "title image",
-        },
-        {
-          path: "instructor",
-          model: "User",
-          select: "name email image",
-        },
-        {
-          path: "creator",
-          model: "User",
-          select: "name email image",
-        },
-        {
-          path: "students",
-          model: "User",
-          select: "name email image",
-        },
-      ]);
+      .populate("instructor", "name email image")
+      .populate("creator", "name email image")
+      .populate("course", "title image category")
+      .populate("students", "name email image");
     return classes;
   }
 
