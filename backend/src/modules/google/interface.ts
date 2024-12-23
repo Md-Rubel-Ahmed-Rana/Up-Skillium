@@ -1,7 +1,7 @@
 type IAttendee = {
   email: string;
-  responseStatus: string;
-  organizer: boolean;
+  responseStatus?: string;
+  organizer?: boolean;
 };
 
 export type ICreateMeetLink = {

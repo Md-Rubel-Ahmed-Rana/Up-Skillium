@@ -15,23 +15,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LiveClassService = void 0;
 const model_1 = __importDefault(require("./model"));
 const service_1 = require("../google/service");
+const service_2 = require("../user/service");
 class Service {
     createLiveClass(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (data === null || data === void 0 ? void 0 : data.meetingLink) {
-                console.log("Meet link provided", data === null || data === void 0 ? void 0 : data.meetingLink);
+            if ((data === null || data === void 0 ? void 0 : data.meetingLink) && (data === null || data === void 0 ? void 0 : data.meetingLink) !== "") {
                 yield model_1.default.create(data);
             }
             else {
-                console.log("Meet link was not provided. Creating link...");
+                const attendees = yield service_2.UserService.getUsersEmailByIds(data === null || data === void 0 ? void 0 : data.students);
                 const meetData = {
                     summary: data === null || data === void 0 ? void 0 : data.title,
                     description: data === null || data === void 0 ? void 0 : data.description,
                     startDateTime: data === null || data === void 0 ? void 0 : data.startDateTime,
                     endDateTime: data === null || data === void 0 ? void 0 : data.endDateTime,
+                    attendees: attendees,
                 };
                 const meetLink = yield service_1.GoogleService.createMeetLink(meetData);
-                console.log("Meet link created.", meetLink);
                 yield model_1.default.create(Object.assign(Object.assign({}, data), { meetingLink: meetLink }));
             }
         });
@@ -176,6 +176,13 @@ class Service {
     deleteClass(id) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.default.findByIdAndDelete(id);
+        });
+    }
+    updateStudentsAttendees(liveClassId, studentsIds) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.default.findByIdAndUpdate(liveClassId, {
+                $set: { students: studentsIds },
+            });
         });
     }
 }

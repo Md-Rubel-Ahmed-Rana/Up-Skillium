@@ -60,7 +60,6 @@ class Service {
                 return meetLink;
             }
             catch (error) {
-                console.log(`Failed to create meet link. Error: ${error}`);
                 throw new apiError_1.default(400, `Failed to create meet link. Error: ${error === null || error === void 0 ? void 0 : error.message}`);
             }
         });

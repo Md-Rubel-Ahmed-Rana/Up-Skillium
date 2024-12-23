@@ -57,7 +57,6 @@ class Service {
       const meetLink = response?.data?.hangoutLink;
       return meetLink;
     } catch (error: any) {
-      console.log(`Failed to create meet link. Error: ${error}`);
       throw new ApiError(
         400,
         `Failed to create meet link. Error: ${error?.message}`

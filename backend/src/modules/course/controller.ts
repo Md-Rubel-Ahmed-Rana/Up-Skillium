@@ -197,6 +197,18 @@ class Controller extends RootController {
       });
     }
   );
+  getStudentsFromCourse = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const courseId = req.params?.courseId as unknown as Types.ObjectId;
+      const students = await CourseService.getStudentsFromCourse(courseId);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Students retrieved from a course successfully",
+        data: students,
+      });
+    }
+  );
 }
 
 export const CourseController = new Controller();

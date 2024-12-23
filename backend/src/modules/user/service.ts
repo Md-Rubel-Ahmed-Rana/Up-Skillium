@@ -77,6 +77,17 @@ class Service {
   async findUserByEmailWithPassword(email: string) {
     return User.findOne({ email: email });
   }
+  async getUsersEmailByIds(
+    ids: Types.ObjectId[]
+  ): Promise<{ email: string }[]> {
+    const users = await User.find({ _id: { $in: ids } }).select({
+      email: 1,
+    });
+    const usersEmails = users.map((user) => {
+      return { email: user?.email };
+    });
+    return usersEmails;
+  }
   async updateUser(
     id: string,
     updatedData: Partial<ICreateUser>

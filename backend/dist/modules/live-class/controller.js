@@ -106,6 +106,16 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.updateStudentsAttendees = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const liveClassId = req.params.liveClassId;
+            yield service_1.LiveClassService.updateStudentsAttendees(liveClassId, req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Students attendees updated successfully!",
+                data: null,
+            });
+        }));
     }
 }
 exports.LiveClassController = new Controller();

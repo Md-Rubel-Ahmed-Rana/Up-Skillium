@@ -11,5 +11,6 @@ router.get("/instructor/classes/completed/:instructorId", controller_1.LiveClass
 router.get("/instructor/classes/upcoming/:instructorId", controller_1.LiveClassController.getUpcomingLiveClassesByInstructor);
 router.get("/student/classes/:studentId", controller_1.LiveClassController.getLiveClassesByStudent);
 router.patch("/:id", controller_1.LiveClassController.updateClass);
+router.patch("/update-students-attendees/:liveClassId", controller_1.LiveClassController.updateStudentsAttendees);
 router.delete("/:id", controller_1.LiveClassController.deleteClass);
 exports.LiveClassRoutes = router;

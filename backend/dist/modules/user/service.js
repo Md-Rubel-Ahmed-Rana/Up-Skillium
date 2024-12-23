@@ -81,6 +81,17 @@ class Service {
             return model_1.User.findOne({ email: email });
         });
     }
+    getUsersEmailByIds(ids) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const users = yield model_1.User.find({ _id: { $in: ids } }).select({
+                email: 1,
+            });
+            const usersEmails = users.map((user) => {
+                return { email: user === null || user === void 0 ? void 0 : user.email };
+            });
+            return usersEmails;
+        });
+    }
     updateUser(id, updatedData) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.User.findByIdAndUpdate(id, { $set: Object.assign({}, updatedData) });
