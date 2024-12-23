@@ -1,7 +1,7 @@
 import { IModule } from "@/types/module.type";
 import { Collapse, CollapseProps } from "antd/lib";
-import LessonItem from "./LessonItem";
 import { BiError } from "react-icons/bi";
+import LessonItem from "./LessonItem";
 
 type Props = {
   modules: IModule[];
@@ -30,15 +30,12 @@ const ModulesContainer = ({ modules }: Props) => {
   return (
     <div>
       {moduleList?.length <= 0 ? (
-        <div className="">
-          <h2></h2>
-          <div className="max-w-md w-full mx-auto flex flex-col justify-center items-center text-center p-8 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
-            <BiError className="text-6xl text-red-400 mb-4" />
-            <p className="text-lg text-gray-600 font-semibold">
-              No modules & lessons found!
-            </p>
-            <p className="text-gray-500">Try selecting another course</p>
-          </div>
+        <div className="max-w-md w-full mx-auto flex flex-col justify-center items-center text-center p-8 bg-gray-50 border border-gray-200 rounded-lg shadow-md">
+          <BiError className="text-6xl text-red-400 mb-4" />
+          <p className="text-lg text-gray-600 font-semibold">
+            No modules & lessons found!
+          </p>
+          <p className="text-gray-500">Try selecting another course</p>
         </div>
       ) : (
         <Collapse items={moduleList} />
