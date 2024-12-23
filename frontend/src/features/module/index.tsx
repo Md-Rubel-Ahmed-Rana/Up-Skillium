@@ -66,6 +66,20 @@ const moduleApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["lesson", "module"],
     }),
+    updateModule: builder.mutation({
+      query: ({
+        moduleId,
+        module,
+      }: {
+        moduleId: string;
+        module: { title: string; serial: number };
+      }) => ({
+        method: "PATCH",
+        url: `/module/${moduleId}`,
+        body: module,
+      }),
+      invalidatesTags: ["lesson", "module"],
+    }),
   }),
 });
 
@@ -74,4 +88,5 @@ export const {
   useGetAllModulesQuery,
   useCreateModuleMutation,
   useGetAllModulesByInstructorQuery,
+  useUpdateModuleMutation,
 } = moduleApi;

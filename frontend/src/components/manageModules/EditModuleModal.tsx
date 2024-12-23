@@ -1,6 +1,8 @@
+import { useUpdateModuleMutation } from "@/features/module";
 import { IGetModule } from "@/types/module.type";
 import { Button, Form, Input, Modal } from "antd/lib";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
   module: IGetModule;
@@ -22,9 +24,36 @@ const EditModuleModal = ({
   spanStyles,
 }: Props) => {
   const [show, setShow] = useState(false);
+  const [updateModule, { isLoading }] = useUpdateModuleMutation();
 
-  const handleUpdateModule = (values: { title: string; serial: number }) => {
-    console.log("Update Module", values);
+  const handleUpdateModule = async (values: {
+    title: string;
+    serial: number;
+  }) => {
+    try {
+      const response: any = await updateModule({
+        moduleId: module?.id,
+        module: values,
+      });
+      if (response?.data?.statusCode === 200) {
+        toast.success(response?.data?.message);
+        setShow(false);
+      } else {
+        toast.error(
+          response?.data?.message ||
+            response?.data?.error?.message ||
+            response?.error?.message ||
+            "Failed to update module"
+        );
+      }
+    } catch (error: any) {
+      toast.error(
+        error?.data?.message ||
+          error?.data?.error?.message ||
+          error?.error?.message ||
+          "Failed to update module"
+      );
+    }
   };
 
   return (
@@ -49,6 +78,7 @@ const EditModuleModal = ({
         open={show}
         footer={false}
         onCancel={() => setShow(false)}
+        maskClosable={!isLoading}
       >
         <Form
           name="editModule"
@@ -82,11 +112,18 @@ const EditModuleModal = ({
                 type="default"
                 htmlType="button"
                 onClick={() => setShow(false)}
+                disabled={isLoading}
               >
                 Cancel
               </Button>
-              <Button type="primary" htmlType="submit">
-                Save changes
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isLoading}
+                disabled={isLoading}
+                iconPosition="end"
+              >
+                {isLoading ? "Updating..." : "Save changes"}
               </Button>
             </div>
           </Form.Item>
