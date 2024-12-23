@@ -113,6 +113,7 @@ const CourseOutlineTable = ({ outlines, isLoading, courses }: Props) => {
       pagination={{ pageSize: 5 }}
       className="shadow-md rounded-lg w-full min-w-[900px]"
       expandable={{ expandedRowRender: handleShowModules }}
+      locale={{ emptyText: "No course outline found" }}
     />
   );
 };

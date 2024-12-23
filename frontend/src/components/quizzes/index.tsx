@@ -69,6 +69,8 @@ const QuizTable = ({ quizzes, isLoading }: Props) => {
       pagination={{ pageSize: 10 }}
       className="shadow-md rounded-lg w-full min-w-[900px]"
       loading={isLoading}
+      rowKey="id"
+      locale={{ emptyText: "No quizzes found" }}
     />
   );
 };

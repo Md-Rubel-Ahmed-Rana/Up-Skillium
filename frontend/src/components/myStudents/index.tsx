@@ -83,6 +83,7 @@ const MyStudents = () => {
         bordered
         loading={isLoading}
         className="shadow-md rounded-lg w-full min-w-[900px]"
+        locale={{ emptyText: "No students found" }}
       />
     </div>
   );

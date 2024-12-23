@@ -72,6 +72,7 @@ const EducationTable = ({ educations, isLoading, isProfileOwner }: Props) => {
       className="shadow-md rounded-lg w-full min-w-[900px]"
       pagination={false}
       bordered
+      locale={{ emptyText: "No educations found" }}
     />
   );
 };

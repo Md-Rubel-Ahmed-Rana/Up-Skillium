@@ -1,5 +1,10 @@
-import { useGetAllCoursesQuery } from "@/features/course";
+import { useGetLoggedInUserQuery } from "@/features/auth";
+import {
+  useGetAllCoursesQuery,
+  useGetInstructorCoursesQuery,
+} from "@/features/course";
 import { ICourse } from "@/types/course.type";
+import { IUser } from "@/types/user.type";
 import { Button, Dropdown, MenuProps } from "antd/lib";
 
 type Props = {
@@ -11,8 +16,17 @@ type Props = {
 };
 
 const CourseList = ({ setSelectedCourse }: Props) => {
+  const { data: userData } = useGetLoggedInUserQuery({});
+  const user = userData?.data as IUser;
+  const { data: instructorCourse } = useGetInstructorCoursesQuery({
+    instructorId: user?.id,
+  });
+  const instructorCourses = instructorCourse?.data as ICourse[];
   const { data } = useGetAllCoursesQuery({});
-  const courses = data?.data as ICourse[];
+  const adminCourses = data?.data as ICourse[];
+
+  const courses =
+    user?.role?.name === "admin" ? adminCourses : instructorCourses;
 
   const handleSelectCourse = (course: ICourse) => {
     setSelectedCourse({

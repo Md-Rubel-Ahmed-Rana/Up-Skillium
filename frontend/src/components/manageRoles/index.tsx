@@ -70,6 +70,7 @@ const ManageRoles = () => {
         pagination={{ pageSize: 5 }}
         className="custom-ant-table"
         loading={isLoading}
+        locale={{ emptyText: "No roles found" }}
       />
     </div>
   );
