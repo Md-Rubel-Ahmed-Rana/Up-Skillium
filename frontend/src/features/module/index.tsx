@@ -80,6 +80,13 @@ const moduleApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["lesson", "module"],
     }),
+    deleteModule: builder.mutation({
+      query: ({ moduleId }: { moduleId: string }) => ({
+        method: "DELETE",
+        url: `/module/${moduleId}`,
+      }),
+      invalidatesTags: ["lesson", "module"],
+    }),
   }),
 });
 
@@ -89,4 +96,5 @@ export const {
   useCreateModuleMutation,
   useGetAllModulesByInstructorQuery,
   useUpdateModuleMutation,
+  useDeleteModuleMutation,
 } = moduleApi;
