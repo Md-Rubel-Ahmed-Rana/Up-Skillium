@@ -1,4 +1,4 @@
-import { ICreateLiveClass, IGetLiveClass } from "@/types/liveClass.type";
+import { ICreateLiveClass, IUpdateLiveClass } from "@/types/liveClass.type";
 import apiSlice from "../api/apiSlice";
 
 const liveClassApi = apiSlice.injectEndpoints({
@@ -60,7 +60,7 @@ const liveClassApi = apiSlice.injectEndpoints({
       invalidatesTags: ["live-class"],
     }),
     updateLiveClass: builder.mutation({
-      query: ({ id, data }: { id: string; data: IGetLiveClass }) => ({
+      query: ({ id, data }: { id: string; data: IUpdateLiveClass }) => ({
         method: "PATCH",
         url: `/live-class/${id}`,
         body: data,

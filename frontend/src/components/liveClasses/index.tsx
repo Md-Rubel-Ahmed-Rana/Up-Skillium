@@ -23,6 +23,12 @@ const LiveClassTable = ({ classes, isLoading }: Props) => {
       render: (title: string) => <span className="font-semibold">{title}</span>,
     },
     {
+      title: "Course",
+      dataIndex: ["course", "title"],
+      key: "title",
+      render: (title: string) => <span className="font-semibold">{title}</span>,
+    },
+    {
       title: "Description",
       dataIndex: "description",
       key: "description",
@@ -104,7 +110,15 @@ const LiveClassTable = ({ classes, isLoading }: Props) => {
       render: (_: any, liveClass: IGetLiveClass) => (
         <>
           {user?.role?.name === "student" ? (
-            <p>Null</p>
+            <>
+              {liveClass?.recordingLink && liveClass?.recordingLink !== "" ? (
+                <a href={liveClass?.recordingLink}>
+                  <Button>Download Video</Button>
+                </a>
+              ) : (
+                <p>Null</p>
+              )}
+            </>
           ) : (
             <div className="flex flex-col items-center gap-2">
               <LiveClassEdit liveClass={liveClass} />

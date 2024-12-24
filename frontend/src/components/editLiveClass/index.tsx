@@ -4,7 +4,7 @@ import {
   useUpdateLiveClassMutation,
 } from "@/features/liveClass";
 import LiveClassEditSkeleton from "@/skeletons/liveClassEditSkeleton";
-import { IGetLiveClass } from "@/types/liveClass.type";
+import { IGetLiveClass, IUpdateLiveClass } from "@/types/liveClass.type";
 import { IUser } from "@/types/user.type";
 import handleValidationErrors from "@/utils/handleValidationErrors";
 import { Button, DatePicker, Form, Input, Select } from "antd/lib";
@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import SelectStudentsAttendees from "../createLiveClass/SelectStudentsAttendees";
 
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -24,6 +25,7 @@ const EditLiveClass = () => {
   const user = userData?.data as IUser;
   const { query, push } = useRouter();
   const id = query?.id as string;
+  const [reSelectStudent, setReSelectStudents] = useState(false);
   const { data, isLoading } = useGetSingleLiveClassQuery({ id });
   const liveClass = data?.data as IGetLiveClass;
   const [updateLiveClass, { isLoading: isUpdating }] =
@@ -34,7 +36,7 @@ const EditLiveClass = () => {
   const [topics, setTopics] = useState<string[]>(liveClass?.topics || []);
 
   const handleUpdateLiveClass = async (values: any) => {
-    const payload: IGetLiveClass = {
+    const payload: IUpdateLiveClass = {
       ...values,
       course: liveClass?.course?.id,
       instructor: liveClass?.instructor?.id,
@@ -113,7 +115,6 @@ const EditLiveClass = () => {
             >
               <Input placeholder="Enter class title" />
             </Form.Item>
-
             <Form.Item
               label="Description"
               name="description"
@@ -123,6 +124,28 @@ const EditLiveClass = () => {
             >
               <TextArea placeholder="Enter class description" rows={4} />
             </Form.Item>
+            {reSelectStudent ? (
+              <SelectStudentsAttendees courseId={liveClass?.course?.id || ""} />
+            ) : (
+              <div className="mb-3">
+                <h2 className="flex items-center gap-2 mb-2">
+                  <span className="font-semibold">Students:</span>
+                  <Button
+                    onClick={() => setReSelectStudents(true)}
+                    size="small"
+                  >
+                    Reselect
+                  </Button>
+                </h2>
+                <div className="flex items-center flex-wrap gap-2 text-gray-500 text-sm ">
+                  {liveClass?.students?.map((student) => (
+                    <h5 className="border px-1 rounded-sm" key={student?.id}>
+                      {student?.name}
+                    </h5>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <Form.Item
               label="Date & Time"
@@ -149,7 +172,9 @@ const EditLiveClass = () => {
             >
               <Input placeholder="Enter meeting link" />
             </Form.Item>
-
+            <Form.Item label="Recorded class link" name="recordingLink">
+              <Input placeholder="Enter recorded class link" />
+            </Form.Item>
             <Form.Item label="Topics" name="topics">
               <Select
                 mode="tags"
@@ -164,7 +189,6 @@ const EditLiveClass = () => {
                 ))}
               </Select>
             </Form.Item>
-
             <Form.Item label="Tags" name="tags">
               <Select
                 mode="tags"
@@ -194,7 +218,6 @@ const EditLiveClass = () => {
                 ))}
               </Select>
             </Form.Item>
-
             <Form.Item>
               <Button
                 type="primary"
