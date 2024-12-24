@@ -10,6 +10,7 @@ import CourseSelection from "./CourseSelection";
 import SelectDateTimeDuration from "./SelectDateTimeDuration";
 import SelectInstructor from "./SelectInstructor";
 import SelectMeetLink from "./SelectMeetLink";
+import SelectStudentsAttendees from "./SelectStudentsAttendees";
 import TitleDescription from "./TitleDescription";
 import TopicsAndTags from "./TopicsAndTags";
 
@@ -77,8 +78,17 @@ const CreateLiveClass = () => {
         initialValues={{ topics: [], tags: [] }}
       >
         <TitleDescription />
-        <CourseSelection form={form} />
+
         {user?.role?.name === "admin" && <SelectInstructor form={form} />}
+
+        <CourseSelection form={form} />
+
+        <Form.Item shouldUpdate={(prev, curr) => prev?.course !== curr?.course}>
+          {({ getFieldValue }) => {
+            const courseId = getFieldValue("course");
+            return <SelectStudentsAttendees courseId={courseId || ""} />;
+          }}
+        </Form.Item>
 
         <SelectDateTimeDuration />
 

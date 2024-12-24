@@ -162,6 +162,12 @@ const courseApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["course"],
     }),
+    getStudentsByCourse: builder.query({
+      query: ({ courseId }: { courseId: string }) => ({
+        method: "GET",
+        url: `/course/students/${courseId}`,
+      }),
+    }),
   }),
 });
 
@@ -181,4 +187,5 @@ export const {
   useReAssignInstructorMutation,
   useGetCoursesByCategoryQuery,
   useGetRelatedCoursesQuery,
+  useGetStudentsByCourseQuery,
 } = courseApi;
