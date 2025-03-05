@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { PdfCreatorService } from "../pdf-creator/service";
+import { PdfCreatorService } from "../pdf-creator/certificate.service";
 import { ICertificate } from "./interface";
 import { Certificate } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
