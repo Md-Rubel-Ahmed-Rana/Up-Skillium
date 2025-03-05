@@ -14,6 +14,9 @@ class InvoiceCreator {
     // Add header slogan
     await this.AddHeaderSlogan(page);
 
+    // Add Order ID and Issue Date
+    await this.addOrderIdIssueDate(page, "123456", new Date());
+
     // save pdf
     await this.savePdf(pdfDoc, "Web Development");
   }
@@ -55,6 +58,56 @@ class InvoiceCreator {
     page.drawText(headerSlogan, {
       x: 60,
       y: 515,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+  }
+
+  private formateIssueDate(date: Date): string {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const hour = date.getHours();
+    const hourWithZero = hour < 10 ? `0${hour}` : hour;
+    const minute = date.getMinutes();
+    const minuteWithZero = minute < 10 ? `0${minute}` : minute;
+    const ampm = hour >= 12 ? "pm" : "am";
+    return `${day}/${month}/${year}, ${hourWithZero}:${minuteWithZero}${ampm}`;
+  }
+
+  // Add Order ID and Issue Date
+  private async addOrderIdIssueDate(
+    page: PDFPage,
+    orderId: string,
+    issueDate: Date
+  ): Promise<void> {
+    const paidText = "PAID";
+    const orderIdText = `Order ID: #${orderId}`;
+    const issueDateText = `Date of issue: ${this.formateIssueDate(issueDate)}`;
+    const paidTextWidth = 40;
+    const paidTextHeight = 20;
+    page.drawRectangle({
+      x: 500,
+      y: 555 - paidTextHeight,
+      width: paidTextWidth,
+      height: paidTextHeight,
+      color: rgb(0, 1, 0),
+    });
+    page.drawText(paidText, {
+      x: 505,
+      y: 540,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+    page.drawText(orderIdText, {
+      x: 500,
+      y: 520,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+    page.drawText(issueDateText, {
+      x: 500,
+      y: 500,
       size: 12,
       color: rgb(0, 0, 0),
     });
