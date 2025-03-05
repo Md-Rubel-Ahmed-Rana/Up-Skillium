@@ -17,6 +17,12 @@ class InvoiceCreator {
     // Add Order ID and Issue Date
     await this.addOrderIdIssueDate(page, "123456", new Date());
 
+    // Add Recipient Text
+    await this.addRecipientText(page);
+
+    // Draw horizontal line
+    await this.drawHorizontalLine(page, 50, 440, 700, rgb(0, 0, 0));
+
     // save pdf
     await this.savePdf(pdfDoc, "Web Development");
   }
@@ -110,6 +116,42 @@ class InvoiceCreator {
       y: 500,
       size: 12,
       color: rgb(0, 0, 0),
+    });
+  }
+
+  private async addRecipientText(page: PDFPage): Promise<void> {
+    const recipientText = "Recipient";
+    const recipientTextWidth = 80;
+    const recipientTextHeight = 25;
+    const middleOfPage = page.getWidth() / 2 - recipientTextWidth / 2;
+    const yPosition = 470 - recipientTextHeight;
+    page.drawRectangle({
+      x: middleOfPage,
+      y: yPosition,
+      width: recipientTextWidth,
+      height: recipientTextHeight,
+      color: rgb(0, 0, 1),
+    });
+    page.drawText(recipientText, {
+      x: middleOfPage + 7,
+      y: yPosition + 7,
+      size: 16,
+      color: rgb(1, 1, 1),
+    });
+  }
+
+  private async drawHorizontalLine(
+    page: PDFPage,
+    x: number,
+    y: number,
+    width: number,
+    color: RGB
+  ) {
+    page.drawLine({
+      start: { x, y },
+      end: { x: x + width, y },
+      thickness: 1,
+      color,
     });
   }
 
