@@ -23,6 +23,9 @@ class InvoiceCreator {
     // Draw horizontal line
     await this.drawHorizontalLine(page, 50, 440, 700, rgb(0, 0, 0));
 
+    // Add Customer Details
+    await this.AddCustomerDetails(page);
+
     // save pdf
     await this.savePdf(pdfDoc, "Web Development");
   }
@@ -81,7 +84,6 @@ class InvoiceCreator {
     return `${day}/${month}/${year}, ${hourWithZero}:${minuteWithZero}${ampm}`;
   }
 
-  // Add Order ID and Issue Date
   private async addOrderIdIssueDate(
     page: PDFPage,
     orderId: string,
@@ -137,6 +139,39 @@ class InvoiceCreator {
       y: yPosition + 7,
       size: 16,
       color: rgb(1, 1, 1),
+    });
+  }
+
+  private async AddCustomerDetails(page: PDFPage): Promise<void> {
+    const customerName = "John Doe";
+    const customerEmail = "john@gmail.com";
+    const studentId = "123456";
+    const customerNameText = `Name: ${customerName}`;
+    const customerEmailText = `Email: ${customerEmail}`;
+    const studentIdText = `Student ID: ${studentId}`;
+    page.drawText("Customer info", {
+      x: 50,
+      y: 420,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+    page.drawText(customerNameText, {
+      x: 50,
+      y: 405,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+    page.drawText(customerEmailText, {
+      x: 50,
+      y: 390,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+    page.drawText(studentIdText, {
+      x: 50,
+      y: 375,
+      size: 12,
+      color: rgb(0, 0, 0),
     });
   }
 
