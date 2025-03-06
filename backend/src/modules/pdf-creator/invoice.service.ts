@@ -24,7 +24,10 @@ class InvoiceCreator {
     await this.drawHorizontalLine(page, 50, 440, 700, rgb(0, 0, 0));
 
     // Add Customer Details
-    await this.AddCustomerDetails(page);
+    await this.AddCustomerDetails(page, pdfDoc);
+
+    // Add Platform Details
+    await this.addPlatformDetails(page, pdfDoc);
 
     // save pdf
     await this.savePdf(pdfDoc, "Web Development");
@@ -142,7 +145,10 @@ class InvoiceCreator {
     });
   }
 
-  private async AddCustomerDetails(page: PDFPage): Promise<void> {
+  private async AddCustomerDetails(
+    page: PDFPage,
+    pdfDoc: PDFDocument
+  ): Promise<void> {
     const customerName = "John Doe";
     const customerEmail = "john@gmail.com";
     const studentId = "123456";
@@ -152,24 +158,63 @@ class InvoiceCreator {
     page.drawText("Customer info", {
       x: 50,
       y: 420,
-      size: 12,
+      size: 14,
       color: rgb(0, 0, 0),
+      font: await pdfDoc.embedFont("Helvetica-Bold"),
     });
     page.drawText(customerNameText, {
       x: 50,
-      y: 405,
+      y: 400,
       size: 12,
       color: rgb(0, 0, 0),
     });
     page.drawText(customerEmailText, {
       x: 50,
-      y: 390,
+      y: 380,
       size: 12,
       color: rgb(0, 0, 0),
     });
     page.drawText(studentIdText, {
       x: 50,
-      y: 375,
+      y: 360,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+  }
+
+  private async addPlatformDetails(
+    page: PDFPage,
+    pdfDoc: PDFDocument
+  ): Promise<void> {
+    const platformName = "Up Skillium";
+    const address = "1234 Main Street, New York, NY 10001";
+    const platformEmail = "upskillium@office.com";
+    const platformPhone = "+1234567890";
+    const addressText = `Address: ${address}`;
+    const platformEmailText = `Email: ${platformEmail}`;
+    const platformPhoneText = `Phone: ${platformPhone}`;
+    page.drawText(platformName, {
+      x: 500,
+      y: 420,
+      size: 14,
+      color: rgb(0, 0, 0),
+      font: await pdfDoc.embedFont("Helvetica-Bold"),
+    });
+    page.drawText(addressText, {
+      x: 500,
+      y: 400,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+    page.drawText(platformEmailText, {
+      x: 500,
+      y: 380,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+    page.drawText(platformPhoneText, {
+      x: 500,
+      y: 360,
       size: 12,
       color: rgb(0, 0, 0),
     });
