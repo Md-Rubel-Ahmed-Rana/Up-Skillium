@@ -1,10 +1,10 @@
-import { PDFDocument, PDFFont, PDFPage, RGB, rgb } from "pdf-lib";
+import { PDFDocument, PDFPage, RGB, rgb } from "pdf-lib";
 import config from "../../config/envConfig";
 import fs from "fs";
 import path from "path";
 
 class InvoiceCreator {
-  async createInvoice(): Promise<any> {
+  public async createInvoice(): Promise<any> {
     const pdfDoc = await PDFDocument.create();
     const page = this.createPage(pdfDoc);
 
@@ -32,14 +32,19 @@ class InvoiceCreator {
     // add item and price header
     await this.addItemAndPriceHeader(page, pdfDoc);
 
+    // add course name and price
+    await this.addCourseNameAndPrice(page, "Web Development", 100, 10);
+
     // save pdf
     await this.savePdf(pdfDoc, "Web Development");
   }
+
   private createPage(pdfDoc: PDFDocument): PDFPage {
     const pageWidth = 792;
     const pageHeight = 612;
     return pdfDoc.addPage([pageWidth, pageHeight]);
   }
+
   private async addLogo(pdfDoc: PDFDocument, page: PDFPage) {
     let logoImageUrl = config.app.logo;
 
@@ -61,6 +66,7 @@ class InvoiceCreator {
       height: logoHeight / 2,
     });
   }
+
   private async AddHeaderSlogan(page: PDFPage) {
     const header = "Up Skillium";
     const headerSlogan = "Where Meet Skills Success";
@@ -250,6 +256,44 @@ class InvoiceCreator {
       size: 12,
       color: rgb(0, 0, 0),
       font: await pdfDoc.embedFont("Helvetica-Bold"),
+    });
+  }
+
+  private async addCourseNameAndPrice(
+    page: PDFPage,
+    courseName: string,
+    price: number,
+    discount: number
+  ): Promise<void> {
+    const yPosition = 270;
+    const xPosition = 650;
+    page.drawText(courseName, {
+      x: 55,
+      y: yPosition,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+    page.drawText(`Price: $${price}`, {
+      x: xPosition,
+      y: yPosition,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+
+    page.drawText(`Discount: ${discount}%`, {
+      x: xPosition,
+      y: yPosition - 20,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+
+    await this.drawHorizontalLine(page, 55, yPosition - 30, 700, rgb(0, 0, 0));
+
+    page.drawText(`Total: $${price - (price * discount) / 100}`, {
+      x: xPosition,
+      y: yPosition - 50,
+      size: 12,
+      color: rgb(0, 0, 0),
     });
   }
 
