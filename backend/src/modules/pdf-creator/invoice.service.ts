@@ -29,6 +29,9 @@ class InvoiceCreator {
     // Add Platform Details
     await this.addPlatformDetails(page, pdfDoc);
 
+    // add item and price header
+    await this.addItemAndPriceHeader(page, pdfDoc);
+
     // save pdf
     await this.savePdf(pdfDoc, "Web Development");
   }
@@ -220,6 +223,36 @@ class InvoiceCreator {
     });
   }
 
+  private async addItemAndPriceHeader(
+    page: PDFPage,
+    pdfDoc: PDFDocument
+  ): Promise<void> {
+    const itemText = "Item";
+    const priceText = "Price";
+    const yPosition = 300;
+    page.drawRectangle({
+      x: 50,
+      y: yPosition,
+      width: 700,
+      height: 30,
+      color: await this.addColor(200, 255, 255),
+    });
+    page.drawText(itemText, {
+      x: 55,
+      y: yPosition + 10,
+      size: 12,
+      color: rgb(0, 0, 0),
+      font: await pdfDoc.embedFont("Helvetica-Bold"),
+    });
+    page.drawText(priceText, {
+      x: 705,
+      y: yPosition + 10,
+      size: 12,
+      color: rgb(0, 0, 0),
+      font: await pdfDoc.embedFont("Helvetica-Bold"),
+    });
+  }
+
   private async drawHorizontalLine(
     page: PDFPage,
     x: number,
@@ -233,6 +266,14 @@ class InvoiceCreator {
       thickness: 1,
       color,
     });
+  }
+
+  private async addColor(
+    color1: number,
+    color2: number,
+    color3: number
+  ): Promise<RGB> {
+    return rgb(color1 / 255, color2 / 255, color3 / 255);
   }
 
   private async savePdf(pdfDoc: PDFDocument, courseName: string) {
