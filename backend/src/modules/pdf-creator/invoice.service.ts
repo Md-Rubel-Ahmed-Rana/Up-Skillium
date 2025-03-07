@@ -35,6 +35,9 @@ class InvoiceCreator {
     // add course name and price
     await this.addCourseNameAndPrice(page, "Web Development", 100, 10);
 
+    // add concluding text
+    await this.addConcludingText(page, pdfDoc);
+
     // save pdf
     await this.savePdf(pdfDoc, "Web Development");
   }
@@ -292,6 +295,29 @@ class InvoiceCreator {
     page.drawText(`Total: $${price - (price * discount) / 100}`, {
       x: xPosition,
       y: yPosition - 50,
+      size: 12,
+      color: rgb(0, 0, 0),
+    });
+  }
+
+  private async addConcludingText(page: PDFPage, pdfDoc: PDFDocument) {
+    const concludingText = {
+      firstLine: "Thank you for purchasing our course!",
+      secondLine:
+        "We appreciate your support and look forward to helping you on your learning journey.",
+    };
+    const yPosition = 100;
+    const xPosition = page.getWidth() / 2 - 150;
+    page.drawText(concludingText.firstLine, {
+      x: xPosition,
+      y: yPosition,
+      size: 14,
+      color: rgb(0, 0, 0),
+      font: await pdfDoc.embedFont("Helvetica-Bold"),
+    });
+    page.drawText(concludingText.secondLine, {
+      x: xPosition - 100,
+      y: yPosition - 20,
       size: 12,
       color: rgb(0, 0, 0),
     });
