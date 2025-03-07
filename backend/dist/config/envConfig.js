@@ -10,6 +10,7 @@ const config = {
         port: Number(process.env.PORT),
         env: process.env.NODE_ENV,
         corsOrigins: process.env.CORS_ORIGINS,
+        logo: process.env.APP_LOGO,
     },
     database: {
         url: process.env.DATABASE_URL,
