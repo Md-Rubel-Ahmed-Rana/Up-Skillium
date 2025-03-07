@@ -2,9 +2,10 @@ import { PDFDocument, PDFPage, RGB, rgb } from "pdf-lib";
 import config from "../../config/envConfig";
 import fs from "fs";
 import path from "path";
+import { CourseInfo, CustomerInfo, IPdfInvoice } from "./interface";
 
 class InvoiceCreator {
-  public async createInvoice(): Promise<any> {
+  public async createInvoice(invoiceData: IPdfInvoice): Promise<any> {
     const pdfDoc = await PDFDocument.create();
     const page = this.createPage(pdfDoc);
 
@@ -15,7 +16,7 @@ class InvoiceCreator {
     await this.AddHeaderSlogan(page);
 
     // Add Order ID and Issue Date
-    await this.addOrderIdIssueDate(page, "123456", new Date());
+    await this.addOrderIdIssueDate(page);
 
     // Add Recipient Text
     await this.addRecipientText(page);
@@ -24,7 +25,7 @@ class InvoiceCreator {
     await this.drawHorizontalLine(page, 50, 440, 700, rgb(0, 0, 0));
 
     // Add Customer Details
-    await this.AddCustomerDetails(page, pdfDoc);
+    await this.AddCustomerDetails(page, pdfDoc, invoiceData.customerInfo);
 
     // Add Platform Details
     await this.addPlatformDetails(page, pdfDoc);
@@ -33,7 +34,7 @@ class InvoiceCreator {
     await this.addItemAndPriceHeader(page, pdfDoc);
 
     // add course name and price
-    await this.addCourseNameAndPrice(page, "Web Development", 100, 10);
+    await this.addCourseNameAndPrice(page, invoiceData.courseInfo);
 
     // add concluding text
     await this.addConcludingText(page, pdfDoc);
@@ -99,14 +100,11 @@ class InvoiceCreator {
     return `${day}/${month}/${year}, ${hourWithZero}:${minuteWithZero}${ampm}`;
   }
 
-  private async addOrderIdIssueDate(
-    page: PDFPage,
-    orderId: string,
-    issueDate: Date
-  ): Promise<void> {
+  private async addOrderIdIssueDate(page: PDFPage): Promise<void> {
     const paidText = "PAID";
-    const orderIdText = `Order ID: #${orderId}`;
-    const issueDateText = `Date of issue: ${this.formateIssueDate(issueDate)}`;
+    // fetch order id from database
+    const orderIdText = `Order ID: #${Math.floor(Math.random() * 1000000)}`;
+    const issueDateText = `Date of issue: ${this.formateIssueDate(new Date())}`;
     const paidTextWidth = 40;
     const paidTextHeight = 20;
     page.drawRectangle({
@@ -159,14 +157,12 @@ class InvoiceCreator {
 
   private async AddCustomerDetails(
     page: PDFPage,
-    pdfDoc: PDFDocument
+    pdfDoc: PDFDocument,
+    customerInfo: CustomerInfo
   ): Promise<void> {
-    const customerName = "John Doe";
-    const customerEmail = "john@gmail.com";
-    const studentId = "123456";
-    const customerNameText = `Name: ${customerName}`;
-    const customerEmailText = `Email: ${customerEmail}`;
-    const studentIdText = `Student ID: ${studentId}`;
+    const customerNameText = `Name: ${customerInfo.name}`;
+    const customerEmailText = `Email: ${customerInfo.email}`;
+    const studentIdText = `Student ID: ${customerInfo.studentId}`;
     page.drawText("Customer info", {
       x: 50,
       y: 420,
@@ -199,9 +195,9 @@ class InvoiceCreator {
     pdfDoc: PDFDocument
   ): Promise<void> {
     const platformName = "Up Skillium";
-    const address = "1234 Main Street, New York, NY 10001";
+    const address = "Amborkhana, Sylhet, Bangladesh";
     const platformEmail = "upskillium@office.com";
-    const platformPhone = "+1234567890";
+    const platformPhone = "+8801758049882";
     const addressText = `Address: ${address}`;
     const platformEmailText = `Email: ${platformEmail}`;
     const platformPhoneText = `Phone: ${platformPhone}`;
@@ -264,26 +260,24 @@ class InvoiceCreator {
 
   private async addCourseNameAndPrice(
     page: PDFPage,
-    courseName: string,
-    price: number,
-    discount: number
+    courseData: CourseInfo
   ): Promise<void> {
     const yPosition = 270;
     const xPosition = 650;
-    page.drawText(courseName, {
+    page.drawText(courseData.name, {
       x: 55,
       y: yPosition,
       size: 12,
       color: rgb(0, 0, 0),
     });
-    page.drawText(`Price: $${price}`, {
+    page.drawText(`Price: $${courseData.price}`, {
       x: xPosition,
       y: yPosition,
       size: 12,
       color: rgb(0, 0, 0),
     });
 
-    page.drawText(`Discount: ${discount}%`, {
+    page.drawText(`Discount: ${courseData.discount}%`, {
       x: xPosition,
       y: yPosition - 20,
       size: 12,
@@ -292,12 +286,17 @@ class InvoiceCreator {
 
     await this.drawHorizontalLine(page, 55, yPosition - 30, 700, rgb(0, 0, 0));
 
-    page.drawText(`Total: $${price - (price * discount) / 100}`, {
-      x: xPosition,
-      y: yPosition - 50,
-      size: 12,
-      color: rgb(0, 0, 0),
-    });
+    page.drawText(
+      `Total: $${
+        courseData.price - (courseData.price * courseData.discount) / 100
+      }`,
+      {
+        x: xPosition,
+        y: yPosition - 50,
+        size: 12,
+        color: rgb(0, 0, 0),
+      }
+    );
   }
 
   private async addConcludingText(page: PDFPage, pdfDoc: PDFDocument) {
