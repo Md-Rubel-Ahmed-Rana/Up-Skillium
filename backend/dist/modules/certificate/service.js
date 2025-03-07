@@ -10,10 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CertificateService = void 0;
-const service_1 = require("../pdf-creator/service");
+const certificate_service_1 = require("../pdf-creator/certificate.service");
 const model_1 = require("./model");
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
-const service_2 = require("../course/service");
+const service_1 = require("../course/service");
 class Service {
     createCertificate(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -23,7 +23,7 @@ class Service {
                 score: data === null || data === void 0 ? void 0 : data.score,
                 technologies: data === null || data === void 0 ? void 0 : data.technologies,
             };
-            const certificateUrl = yield service_1.PdfCreatorService.createCertificate(certificatePdfData);
+            const certificateUrl = yield certificate_service_1.PdfCreatorService.createCertificate(certificatePdfData);
             yield model_1.Certificate.create(Object.assign(Object.assign({}, data), { certificateUrl: certificateUrl }));
         });
     }
@@ -75,7 +75,7 @@ class Service {
     }
     getCertificatesByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const courseIds = yield service_2.CourseService.getCourseIdsByInstructor(instructorId);
+            const courseIds = yield service_1.CourseService.getCourseIdsByInstructor(instructorId);
             const certificates = yield model_1.Certificate.find({
                 course: { $in: courseIds },
             }).populate([
@@ -98,7 +98,7 @@ class Service {
             if (certificate && (certificate === null || certificate === void 0 ? void 0 : certificate.certificateUrl)) {
                 yield fileUploaderMiddleware_1.FileUploadMiddleware.deleteSingle(certificate === null || certificate === void 0 ? void 0 : certificate.certificateUrl);
             }
-            const certificateUrl = yield service_1.PdfCreatorService.createCertificate(updateData);
+            const certificateUrl = yield certificate_service_1.PdfCreatorService.createCertificate(updateData);
             yield model_1.Certificate.findByIdAndUpdate(id, {
                 certificateUrl: certificateUrl,
             });
