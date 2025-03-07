@@ -22,7 +22,7 @@ app.use("/api/v1", RootRoutes);
 
 app.post("/create-invoice", async (req, res) => {
   try {
-    await InvoiceService.createInvoice();
+    await InvoiceService.createInvoice(req.body);
     res.status(200).json({ message: "Invoice created successfully" });
   } catch (error: any) {
     res.status(500).json({
