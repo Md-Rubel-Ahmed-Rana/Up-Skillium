@@ -61,7 +61,7 @@ class Service {
                 paymentSessionId: sessionId,
                 paymentSessionUrl: sessionUrl,
             }));
-            yield service_1.EnrollmentService.createEnrollment(enrollmentData);
+            yield service_1.EnrollmentService.createEnrollment(enrollmentData[0]);
             return { url: sessionUrl };
         });
     }

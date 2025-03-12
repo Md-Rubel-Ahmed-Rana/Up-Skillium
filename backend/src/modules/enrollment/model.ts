@@ -22,6 +22,10 @@ const EnrollmentSchema = new Schema<IEnrollment & Document>(
       type: Number,
       required: true,
     },
+    orderId: {
+      type: String,
+      required: true,
+    },
     paymentSessionId: {
       type: String,
       required: true,

@@ -13,10 +13,13 @@ exports.EnrollmentService = void 0;
 const service_1 = require("../student-progress/service");
 const model_1 = require("./model");
 const service_2 = require("../student/service");
+const trackOrderId_1 = require("../../utils/trackOrderId");
 class Service {
     createEnrollment(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield model_1.Enrollment.create(data);
+            const lastEnrollment = yield model_1.Enrollment.findOne().sort({ _id: -1 });
+            const newOrderId = yield trackOrderId_1.TrackOrderId.generateOrderId(lastEnrollment, data.course.toString());
+            yield model_1.Enrollment.create(Object.assign(Object.assign({}, data), { orderId: newOrderId }));
         });
     }
     getEnrollmentById(id) {
@@ -24,6 +27,14 @@ class Service {
             return yield model_1.Enrollment.findById(id)
                 .populate("user", "-password")
                 .populate("course");
+        });
+    }
+    getLastEnrollmentByCourseId(courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lastEnrolledCourse = yield model_1.Enrollment.findOne({
+                course: courseId,
+            }).sort({ _id: -1 });
+            return lastEnrolledCourse;
         });
     }
     updateEnrollment(id, data) {

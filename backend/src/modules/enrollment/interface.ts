@@ -5,6 +5,7 @@ export type IEnrollment = {
   course: Types.ObjectId;
   courseName: string;
   price: number;
+  orderId?: string;
   status?: "success" | "failed";
   paymentSessionId: string;
   paymentSessionUrl: string;

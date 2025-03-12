@@ -3,16 +3,32 @@ import { StudentProgressService } from "../student-progress/service";
 import { IEnrollment } from "./interface";
 import { Enrollment } from "./model";
 import { StudentService } from "../student/service";
+import { TrackOrderId } from "../../utils/trackOrderId";
 
 class Service {
-  async createEnrollment(data: IEnrollment | IEnrollment[]): Promise<void> {
-    await Enrollment.create(data);
+  async createEnrollment(data: IEnrollment): Promise<void> {
+    const lastEnrollment = await Enrollment.findOne().sort({ _id: -1 });
+    const newOrderId = await TrackOrderId.generateOrderId(
+      lastEnrollment as IEnrollment,
+      data.course.toString()
+    );
+    await Enrollment.create({ ...data, orderId: newOrderId });
   }
 
   async getEnrollmentById(id: Types.ObjectId): Promise<IEnrollment | null> {
     return await Enrollment.findById(id)
       .populate("user", "-password")
       .populate("course");
+  }
+
+  async getLastEnrollmentByCourseId(
+    courseId: Types.ObjectId
+  ): Promise<IEnrollment | null> {
+    const lastEnrolledCourse = await Enrollment.findOne({
+      course: courseId,
+    }).sort({ _id: -1 });
+
+    return lastEnrolledCourse;
   }
 
   async updateEnrollment(
