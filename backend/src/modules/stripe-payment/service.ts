@@ -56,7 +56,7 @@ class Service {
       })
     );
 
-    await EnrollmentService.createEnrollment(enrollmentData);
+    await EnrollmentService.createEnrollment(enrollmentData[0]);
 
     return { url: sessionUrl };
   }
