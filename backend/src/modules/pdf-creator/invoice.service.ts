@@ -6,7 +6,8 @@ import { CourseInfo, CustomerInfo, IPdfInvoice } from "./interface";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 
 class InvoiceCreator {
-  public async createInvoice(invoiceData: IPdfInvoice): Promise<any> {
+  public async createInvoice(invoiceData: IPdfInvoice): Promise<string> {
+    console.log("Creating invoice...", invoiceData);
     const pdfDoc = await PDFDocument.create();
     const page = this.createPage(pdfDoc);
 
@@ -43,8 +44,10 @@ class InvoiceCreator {
     // save pdf
     //await this.savePdf(pdfDoc, invoiceData.courseInfo.name);
 
+    console.log("Invoice created successfully.");
+
     // deploy invoice
-    await this.deployInvoice(
+    return await this.deployInvoice(
       pdfDoc,
       invoiceData.customerInfo.name,
       invoiceData.courseInfo.name
@@ -372,6 +375,7 @@ class InvoiceCreator {
     studentName: string,
     courseName: string
   ): Promise<string> {
+    console.log("Deploying invoice...", studentName, courseName);
     const pdfBytes = await pdfDoc.save();
     const filename = `Invoice-of-${courseName}-${studentName}-${Date.now()}.pdf`;
     const pdfBuffer = Buffer.from(pdfBytes);
@@ -382,6 +386,7 @@ class InvoiceCreator {
         pdfBuffer,
         filename
       );
+      console.log("Invoice deployed successfully.", fileUrl);
       return fileUrl;
     } catch (error) {
       console.error("Error uploading invoice:", error);

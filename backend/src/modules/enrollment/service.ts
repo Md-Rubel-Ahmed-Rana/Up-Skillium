@@ -13,7 +13,13 @@ class Service {
       lastEnrollment as IEnrollment,
       data.course.toString()
     );
-    await Enrollment.create({ ...data, orderId: newOrderId });
+
+    await Enrollment.create({
+      ...data,
+      orderId: newOrderId,
+      paymentSessionUrl: "this is a dummy url",
+      paymentSessionId: "this is a dummy session id",
+    });
   }
 
   async getEnrollmentById(id: Types.ObjectId): Promise<IEnrollment | null> {
@@ -64,12 +70,8 @@ class Service {
       .populate("user", "-password")
       .populate("course");
     if (enrollment) {
-      await Enrollment.updateOne(
-        { paymentSessionId: sessionId },
-        { $set: { status: "success" } }
-      );
       // generate PDF invoice here
-      await InvoiceService.createInvoice({
+      const invoiceUrl = await InvoiceService.createInvoice({
         courseInfo: {
           name: enrollment.course.title as string,
           price: enrollment.course.price.salePrice as number,
@@ -86,6 +88,12 @@ class Service {
           orderId: enrollment.orderId as string,
         },
       });
+
+      await Enrollment.updateOne(
+        { paymentSessionId: sessionId },
+        { $set: { status: "success", invoice: invoiceUrl } }
+      );
+
       await StudentProgressService.createOrUpdateStudentProgress({
         userId: enrollment?.user,
         courseId: enrollment?.course,

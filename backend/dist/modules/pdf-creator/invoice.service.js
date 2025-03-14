@@ -21,6 +21,7 @@ const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddlewa
 class InvoiceCreator {
     createInvoice(invoiceData) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("Creating invoice...", invoiceData);
             const pdfDoc = yield pdf_lib_1.PDFDocument.create();
             const page = this.createPage(pdfDoc);
             // Add logo
@@ -45,8 +46,9 @@ class InvoiceCreator {
             yield this.addConcludingText(page, pdfDoc);
             // save pdf
             //await this.savePdf(pdfDoc, invoiceData.courseInfo.name);
+            console.log("Invoice created successfully.");
             // deploy invoice
-            yield this.deployInvoice(pdfDoc, invoiceData.customerInfo.name, invoiceData.courseInfo.name);
+            return yield this.deployInvoice(pdfDoc, invoiceData.customerInfo.name, invoiceData.courseInfo.name);
         });
     }
     createPage(pdfDoc) {
@@ -334,11 +336,13 @@ class InvoiceCreator {
     }
     deployInvoice(pdfDoc, studentName, courseName) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("Deploying invoice...", studentName, courseName);
             const pdfBytes = yield pdfDoc.save();
             const filename = `Invoice-of-${courseName}-${studentName}-${Date.now()}.pdf`;
             const pdfBuffer = Buffer.from(pdfBytes);
             try {
                 const fileUrl = yield fileUploaderMiddleware_1.FileUploadMiddleware.uploadInvoice("invoices", pdfBuffer, filename);
+                console.log("Invoice deployed successfully.", fileUrl);
                 return fileUrl;
             }
             catch (error) {
