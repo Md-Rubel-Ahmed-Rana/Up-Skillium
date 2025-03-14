@@ -20,7 +20,7 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const lastEnrollment = yield model_1.Enrollment.findOne().sort({ _id: -1 });
             const newOrderId = yield trackOrderId_1.TrackOrderId.generateOrderId(lastEnrollment, data.course.toString());
-            yield model_1.Enrollment.create(Object.assign(Object.assign({}, data), { orderId: newOrderId, paymentSessionUrl: "this is a dummy url", paymentSessionId: "this is a dummy session id" }));
+            yield model_1.Enrollment.create(Object.assign(Object.assign({}, data), { orderId: newOrderId }));
         });
     }
     getEnrollmentById(id) {

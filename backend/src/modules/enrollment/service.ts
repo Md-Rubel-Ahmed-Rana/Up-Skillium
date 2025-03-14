@@ -17,8 +17,6 @@ class Service {
     await Enrollment.create({
       ...data,
       orderId: newOrderId,
-      paymentSessionUrl: "this is a dummy url",
-      paymentSessionId: "this is a dummy session id",
     });
   }
 
