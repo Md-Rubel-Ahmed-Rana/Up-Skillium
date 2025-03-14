@@ -23,7 +23,7 @@ class Service {
             const reOrganizedModules = modules.map((module) => ({
                 module: module.id,
                 isModuleCompleted: false,
-                lessons: module.lessons.map((lessonId) => ({
+                lessons: module === null || module === void 0 ? void 0 : module.lessons.map((lessonId) => ({
                     lesson: lessonId,
                     isLessonCompleted: false,
                 })),
@@ -177,7 +177,7 @@ class Service {
             if (!lesson)
                 return;
             lesson.isLessonCompleted = true;
-            if (module.lessons.every((l) => l.isLessonCompleted)) {
+            if (module === null || module === void 0 ? void 0 : module.lessons.every((l) => l.isLessonCompleted)) {
                 module.isModuleCompleted = true;
             }
             course.lastCompletedLesson = lessonId;

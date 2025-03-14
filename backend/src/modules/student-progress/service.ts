@@ -18,7 +18,7 @@ class Service {
     const reOrganizedModules = modules.map((module: any) => ({
       module: module.id,
       isModuleCompleted: false,
-      lessons: module.lessons.map((lessonId: Types.ObjectId) => ({
+      lessons: module?.lessons.map((lessonId: Types.ObjectId) => ({
         lesson: lessonId,
         isLessonCompleted: false,
       })),
@@ -189,7 +189,7 @@ class Service {
 
     lesson.isLessonCompleted = true;
 
-    if (module.lessons.every((l) => l.isLessonCompleted)) {
+    if (module?.lessons.every((l) => l.isLessonCompleted)) {
       module.isModuleCompleted = true;
     }
 

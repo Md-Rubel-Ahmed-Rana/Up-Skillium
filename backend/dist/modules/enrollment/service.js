@@ -61,6 +61,7 @@ class Service {
     }
     updateStatusAsSuccessByWebhook(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d;
             const enrollment = yield model_1.Enrollment.findOne({
                 paymentSessionId: sessionId,
             })
@@ -85,10 +86,10 @@ class Service {
                 });
                 yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success", invoice: invoiceUrl } });
                 yield service_1.StudentProgressService.createOrUpdateStudentProgress({
-                    userId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.user,
-                    courseId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.course,
+                    userId: (_a = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _a === void 0 ? void 0 : _a._id,
+                    courseId: (_b = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _b === void 0 ? void 0 : _b._id,
                 });
-                yield service_2.StudentService.addNewCourse(enrollment === null || enrollment === void 0 ? void 0 : enrollment.user, enrollment === null || enrollment === void 0 ? void 0 : enrollment.course);
+                yield service_2.StudentService.addNewCourse((_c = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _c === void 0 ? void 0 : _c._id, (_d = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _d === void 0 ? void 0 : _d._id);
             }
         });
     }

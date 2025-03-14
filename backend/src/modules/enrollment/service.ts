@@ -93,10 +93,13 @@ class Service {
       );
 
       await StudentProgressService.createOrUpdateStudentProgress({
-        userId: enrollment?.user,
-        courseId: enrollment?.course,
+        userId: enrollment?.user?._id,
+        courseId: enrollment?.course?._id,
       });
-      await StudentService.addNewCourse(enrollment?.user, enrollment?.course);
+      await StudentService.addNewCourse(
+        enrollment?.user?._id,
+        enrollment?.course?._id
+      );
     }
   }
 
