@@ -48,5 +48,11 @@ class Service {
             return data;
         });
     }
+    getStudentIdByUserId(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const student = yield model_1.Student.findOne({ user: id }).select("studentId");
+            return student ? student.studentId : "";
+        });
+    }
 }
 exports.StudentService = new Service();

@@ -17,6 +17,7 @@ const pdf_lib_1 = require("pdf-lib");
 const envConfig_1 = __importDefault(require("../../config/envConfig"));
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
+const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 class InvoiceCreator {
     createInvoice(invoiceData) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -27,7 +28,7 @@ class InvoiceCreator {
             // Add header slogan
             yield this.AddHeaderSlogan(page);
             // Add Order ID and Issue Date
-            yield this.addOrderIdIssueDate(page);
+            yield this.addOrderIdIssueDate(page, invoiceData.orderInfo.orderId);
             // Add Recipient Text
             yield this.addRecipientText(page);
             // Draw horizontal line
@@ -43,7 +44,9 @@ class InvoiceCreator {
             // add concluding text
             yield this.addConcludingText(page, pdfDoc);
             // save pdf
-            yield this.savePdf(pdfDoc, "Web Development");
+            //await this.savePdf(pdfDoc, invoiceData.courseInfo.name);
+            // deploy invoice
+            yield this.deployInvoice(pdfDoc, invoiceData.customerInfo.name, invoiceData.courseInfo.name);
         });
     }
     createPage(pdfDoc) {
@@ -86,7 +89,8 @@ class InvoiceCreator {
             });
         });
     }
-    formateIssueDate(date) {
+    formateIssueDate() {
+        const date = new Date();
         const day = date.getDate();
         const month = date.getMonth() + 1;
         const year = date.getFullYear();
@@ -97,12 +101,12 @@ class InvoiceCreator {
         const ampm = hour >= 12 ? "pm" : "am";
         return `${day}/${month}/${year}, ${hourWithZero}:${minuteWithZero}${ampm}`;
     }
-    addOrderIdIssueDate(page) {
+    addOrderIdIssueDate(page, orderId) {
         return __awaiter(this, void 0, void 0, function* () {
             const paidText = "PAID";
             // fetch order id from database
-            const orderIdText = `Order ID: #${Math.floor(Math.random() * 1000000)}`;
-            const issueDateText = `Date of issue: ${this.formateIssueDate(new Date())}`;
+            const orderIdText = `Order ID: #${orderId}`;
+            const issueDateText = `Date of issue: ${this.formateIssueDate()}`;
             const paidTextWidth = 40;
             const paidTextHeight = 20;
             page.drawRectangle({
@@ -326,6 +330,21 @@ class InvoiceCreator {
             fs_1.default.mkdirSync(path_1.default.dirname(filePath), { recursive: true });
             fs_1.default.writeFileSync(filePath, pdfBytes);
             return filePath;
+        });
+    }
+    deployInvoice(pdfDoc, studentName, courseName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const pdfBytes = yield pdfDoc.save();
+            const filename = `Invoice-of-${courseName}-${studentName}-${Date.now()}.pdf`;
+            const pdfBuffer = Buffer.from(pdfBytes);
+            try {
+                const fileUrl = yield fileUploaderMiddleware_1.FileUploadMiddleware.uploadInvoice("invoices", pdfBuffer, filename);
+                return fileUrl;
+            }
+            catch (error) {
+                console.error("Error uploading invoice:", error);
+                throw new Error("Invoice uploading failed.");
+            }
         });
     }
 }
