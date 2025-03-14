@@ -33,6 +33,10 @@ class Service {
 
     return data;
   }
+  async getStudentIdByUserId(id: Types.ObjectId): Promise<string> {
+    const student = await Student.findOne({ user: id }).select("studentId");
+    return student ? student.studentId : "";
+  }
 }
 
 export const StudentService = new Service();

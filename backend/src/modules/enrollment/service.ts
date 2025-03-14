@@ -4,6 +4,7 @@ import { IEnrollment } from "./interface";
 import { Enrollment } from "./model";
 import { StudentService } from "../student/service";
 import { TrackOrderId } from "../../utils/trackOrderId";
+import { InvoiceService } from "../pdf-creator/invoice.service";
 
 class Service {
   async createEnrollment(data: IEnrollment): Promise<void> {
@@ -57,14 +58,34 @@ class Service {
   }
 
   async updateStatusAsSuccessByWebhook(sessionId: string): Promise<void> {
-    const enrollment = await Enrollment.findOne({
+    const enrollment: any = await Enrollment.findOne({
       paymentSessionId: sessionId,
-    });
+    })
+      .populate("user", "-password")
+      .populate("course");
     if (enrollment) {
       await Enrollment.updateOne(
         { paymentSessionId: sessionId },
         { $set: { status: "success" } }
       );
+      // generate PDF invoice here
+      await InvoiceService.createInvoice({
+        courseInfo: {
+          name: enrollment.course.title as string,
+          price: enrollment.course.price.salePrice as number,
+          discount: enrollment.course.price.discount as number,
+        },
+        customerInfo: {
+          name: enrollment.user.name as string,
+          email: enrollment.user.email as string,
+          studentId: await StudentService.getStudentIdByUserId(
+            enrollment.user._id as Types.ObjectId
+          ),
+        },
+        orderInfo: {
+          orderId: enrollment.orderId as string,
+        },
+      });
       await StudentProgressService.createOrUpdateStudentProgress({
         userId: enrollment?.user,
         courseId: enrollment?.course,

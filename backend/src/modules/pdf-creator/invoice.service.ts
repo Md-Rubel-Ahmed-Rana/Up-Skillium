@@ -3,6 +3,7 @@ import config from "../../config/envConfig";
 import fs from "fs";
 import path from "path";
 import { CourseInfo, CustomerInfo, IPdfInvoice } from "./interface";
+import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 
 class InvoiceCreator {
   public async createInvoice(invoiceData: IPdfInvoice): Promise<any> {
@@ -16,7 +17,7 @@ class InvoiceCreator {
     await this.AddHeaderSlogan(page);
 
     // Add Order ID and Issue Date
-    await this.addOrderIdIssueDate(page);
+    await this.addOrderIdIssueDate(page, invoiceData.orderInfo.orderId);
 
     // Add Recipient Text
     await this.addRecipientText(page);
@@ -40,7 +41,14 @@ class InvoiceCreator {
     await this.addConcludingText(page, pdfDoc);
 
     // save pdf
-    await this.savePdf(pdfDoc, "Web Development");
+    //await this.savePdf(pdfDoc, invoiceData.courseInfo.name);
+
+    // deploy invoice
+    await this.deployInvoice(
+      pdfDoc,
+      invoiceData.customerInfo.name,
+      invoiceData.courseInfo.name
+    );
   }
 
   private createPage(pdfDoc: PDFDocument): PDFPage {
@@ -88,7 +96,8 @@ class InvoiceCreator {
     });
   }
 
-  private formateIssueDate(date: Date): string {
+  private formateIssueDate(): string {
+    const date = new Date();
     const day = date.getDate();
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
@@ -100,11 +109,14 @@ class InvoiceCreator {
     return `${day}/${month}/${year}, ${hourWithZero}:${minuteWithZero}${ampm}`;
   }
 
-  private async addOrderIdIssueDate(page: PDFPage): Promise<void> {
+  private async addOrderIdIssueDate(
+    page: PDFPage,
+    orderId: string
+  ): Promise<void> {
     const paidText = "PAID";
     // fetch order id from database
-    const orderIdText = `Order ID: #${Math.floor(Math.random() * 1000000)}`;
-    const issueDateText = `Date of issue: ${this.formateIssueDate(new Date())}`;
+    const orderIdText = `Order ID: #${orderId}`;
+    const issueDateText = `Date of issue: ${this.formateIssueDate()}`;
     const paidTextWidth = 40;
     const paidTextHeight = 20;
     page.drawRectangle({
@@ -353,6 +365,28 @@ class InvoiceCreator {
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
     fs.writeFileSync(filePath, pdfBytes);
     return filePath;
+  }
+
+  private async deployInvoice(
+    pdfDoc: PDFDocument,
+    studentName: string,
+    courseName: string
+  ): Promise<string> {
+    const pdfBytes = await pdfDoc.save();
+    const filename = `Invoice-of-${courseName}-${studentName}-${Date.now()}.pdf`;
+    const pdfBuffer = Buffer.from(pdfBytes);
+
+    try {
+      const fileUrl = await FileUploadMiddleware.uploadInvoice(
+        "invoices",
+        pdfBuffer,
+        filename
+      );
+      return fileUrl;
+    } catch (error) {
+      console.error("Error uploading invoice:", error);
+      throw new Error("Invoice uploading failed.");
+    }
   }
 }
 

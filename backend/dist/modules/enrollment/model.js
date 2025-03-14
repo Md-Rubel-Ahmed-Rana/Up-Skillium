@@ -29,6 +29,9 @@ const EnrollmentSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    invoice: {
+        type: String,
+    },
     paymentSessionId: {
         type: String,
         required: true,

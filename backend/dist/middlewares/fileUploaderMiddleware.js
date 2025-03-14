@@ -112,6 +112,34 @@ class FileUploader {
             });
         });
     }
+    uploadInvoice(folderName, buffer, filename) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const filePath = `${rootFolder}/${folderName}/${filename}`;
+            const blob = firebase_1.firebaseBucket.file(filePath);
+            const blobStream = blob.createWriteStream({
+                resumable: false,
+                contentType: "application/pdf",
+            });
+            return new Promise((resolve, reject) => {
+                blobStream.on("error", (err) => {
+                    reject(err);
+                });
+                blobStream.on("finish", () => __awaiter(this, void 0, void 0, function* () {
+                    try {
+                        const [url] = yield blob.getSignedUrl({
+                            action: "read",
+                            expires: "01-01-2030",
+                        });
+                        resolve(url);
+                    }
+                    catch (err) {
+                        reject(err);
+                    }
+                }));
+                blobStream.end(buffer);
+            });
+        });
+    }
     uploadCourseImageAndIntroVideo() {
         return (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             var _a, _b;

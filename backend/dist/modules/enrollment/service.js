@@ -14,6 +14,7 @@ const service_1 = require("../student-progress/service");
 const model_1 = require("./model");
 const service_2 = require("../student/service");
 const trackOrderId_1 = require("../../utils/trackOrderId");
+const invoice_service_1 = require("../pdf-creator/invoice.service");
 class Service {
     createEnrollment(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -62,9 +63,27 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const enrollment = yield model_1.Enrollment.findOne({
                 paymentSessionId: sessionId,
-            });
+            })
+                .populate("user", "-password")
+                .populate("course");
             if (enrollment) {
                 yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success" } });
+                // generate PDF invoice here
+                yield invoice_service_1.InvoiceService.createInvoice({
+                    courseInfo: {
+                        name: enrollment.course.title,
+                        price: enrollment.course.price.salePrice,
+                        discount: enrollment.course.price.discount,
+                    },
+                    customerInfo: {
+                        name: enrollment.user.name,
+                        email: enrollment.user.email,
+                        studentId: yield service_2.StudentService.getStudentIdByUserId(enrollment.user._id),
+                    },
+                    orderInfo: {
+                        orderId: enrollment.orderId,
+                    },
+                });
                 yield service_1.StudentProgressService.createOrUpdateStudentProgress({
                     userId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.user,
                     courseId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.course,

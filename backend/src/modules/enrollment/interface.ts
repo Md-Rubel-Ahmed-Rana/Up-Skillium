@@ -6,6 +6,7 @@ export type IEnrollment = {
   courseName: string;
   price: number;
   orderId?: string;
+  invoice?: string;
   status?: "success" | "failed";
   paymentSessionId: string;
   paymentSessionUrl: string;

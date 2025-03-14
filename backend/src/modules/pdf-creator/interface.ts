@@ -13,7 +13,7 @@ export type IPdfInvoice = {
 
 type OrderInfo = {
   orderId: string;
-  orderDate: Date;
+  orderDate?: Date;
 };
 
 export type CustomerInfo = {
