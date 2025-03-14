@@ -20,7 +20,7 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const lastEnrollment = yield model_1.Enrollment.findOne().sort({ _id: -1 });
             const newOrderId = yield trackOrderId_1.TrackOrderId.generateOrderId(lastEnrollment, data.course.toString());
-            yield model_1.Enrollment.create(Object.assign(Object.assign({}, data), { orderId: newOrderId }));
+            yield model_1.Enrollment.create(Object.assign(Object.assign({}, data), { orderId: newOrderId, paymentSessionUrl: "this is a dummy url", paymentSessionId: "this is a dummy session id" }));
         });
     }
     getEnrollmentById(id) {
@@ -67,9 +67,8 @@ class Service {
                 .populate("user", "-password")
                 .populate("course");
             if (enrollment) {
-                yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success" } });
                 // generate PDF invoice here
-                yield invoice_service_1.InvoiceService.createInvoice({
+                const invoiceUrl = yield invoice_service_1.InvoiceService.createInvoice({
                     courseInfo: {
                         name: enrollment.course.title,
                         price: enrollment.course.price.salePrice,
@@ -84,6 +83,7 @@ class Service {
                         orderId: enrollment.orderId,
                     },
                 });
+                yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success", invoice: invoiceUrl } });
                 yield service_1.StudentProgressService.createOrUpdateStudentProgress({
                     userId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.user,
                     courseId: enrollment === null || enrollment === void 0 ? void 0 : enrollment.course,
