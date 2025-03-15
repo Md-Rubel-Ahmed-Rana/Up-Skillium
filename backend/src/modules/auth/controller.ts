@@ -14,6 +14,7 @@ class Controller extends RootController {
       data: result,
     });
   });
+
   register = this.catchAsync(async (req: Request, res: Response) => {
     await AuthService.register(req.body);
     this.apiResponse(res, {
@@ -23,6 +24,7 @@ class Controller extends RootController {
       data: null,
     });
   });
+
   login = this.catchAsync(async (req: Request, res: Response) => {
     const { email, password } = req.body;
     const { accessToken, refreshToken } = await AuthService.login(
@@ -44,6 +46,18 @@ class Controller extends RootController {
       statusCode: 200,
       success: true,
       message: "Logout successful",
+      data: null,
+    });
+  });
+
+  forgetPassword = this.catchAsync(async (req: Request, res: Response) => {
+    const email = req.body.email as string;
+    await AuthService.forgetPassword(email);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message:
+        "A password reset link has been sent to your email. Please check your inbox or spam folder and follow the instructions to reset your password.",
       data: null,
     });
   });
