@@ -1,6 +1,7 @@
 import { useUserLoginMutation } from "@/features/auth";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd/lib";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import toast from "react-hot-toast";
@@ -72,7 +73,11 @@ const LoginForm: React.FC = () => {
           prefix={<MdLock />}
         />
       </Form.Item>
-
+      <p className="-mt-3 mb-3">
+        <Link className="text-blue-500 underline" href={"/forget-password"}>
+          Forget password?
+        </Link>
+      </p>
       <Form.Item>
         <Button
           loading={isLoading}
