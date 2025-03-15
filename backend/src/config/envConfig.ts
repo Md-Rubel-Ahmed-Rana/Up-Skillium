@@ -63,10 +63,12 @@ const config = {
     cancelUrl: process.env.CANCEL_URL as string,
   },
   google: {
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    accessToken: process.env.GOOGLE_ACCESS_TOKEN,
-    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+    clientId: process.env.GOOGLE_CLIENT_ID as string,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    accessToken: process.env.GOOGLE_ACCESS_TOKEN as string,
+    refreshToken: process.env.GOOGLE_REFRESH_TOKEN as string,
+    appUser: process.env.APP_USER as string,
+    appPass: process.env.APP_PASSWORD as string,
   },
 };
 

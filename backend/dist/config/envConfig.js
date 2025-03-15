@@ -67,6 +67,8 @@ const config = {
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         accessToken: process.env.GOOGLE_ACCESS_TOKEN,
         refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+        appUser: process.env.APP_USER,
+        appPass: process.env.APP_PASSWORD,
     },
 };
 exports.default = config;
