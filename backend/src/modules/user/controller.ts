@@ -48,6 +48,17 @@ class Controller extends RootController {
       data: null,
     });
   });
+  resetPassword = this.catchAsync(async (req: Request, res: Response) => {
+    const userId = req.body.id;
+    const newPassword = req.body.password;
+    await UserService.resetPassword(userId, newPassword);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Password has been reset successfully",
+      data: null,
+    });
+  });
   updateProfileImage = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await UserService.updateProfileImage(id, req.url);

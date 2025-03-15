@@ -20,6 +20,8 @@ router.patch(
 
 router.patch("/change-password/:userId", UserController.changePassword);
 
+router.post("/reset-password", UserController.resetPassword);
+
 router.patch("/update-basic-info/:id", UserController.updateUserBasicInfo);
 
 router.patch("/update-address/:id", UserController.updateUserAddress);

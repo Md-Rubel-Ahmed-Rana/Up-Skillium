@@ -134,6 +134,20 @@ class Service {
             }
         });
     }
+    resetPassword(userId, newPassword) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const isExist = yield model_1.User.findById(userId);
+            if (!isExist) {
+                throw new apiError_1.default(404, "User was not found!");
+            }
+            else {
+                const newHashedPassword = yield bcrypt_1.BcryptInstance.hash(newPassword);
+                yield model_1.User.findByIdAndUpdate(userId, {
+                    $set: { password: newHashedPassword },
+                });
+            }
+        });
+    }
     updateProfileImage(id, imageUrl) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield model_1.User.findById(id);

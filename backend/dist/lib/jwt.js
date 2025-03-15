@@ -114,6 +114,42 @@ class JWT {
                 data: null,
             });
         };
+        this.verifyResetPasswordToken = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            const resetToken = req === null || req === void 0 ? void 0 : req.query.token;
+            if (!resetToken) {
+                return res.status(400).json({
+                    statusCode: 400,
+                    success: false,
+                    message: "Reset token is required.",
+                });
+            }
+            try {
+                const decoded = jsonwebtoken_1.default.verify(resetToken, envConfig_1.default.jwt.accessTokenSecret);
+                console.log(decoded);
+                if (Date.now() >= decoded.exp * 1000) {
+                    return res.status(401).json({
+                        statusCode: 401,
+                        success: false,
+                        message: "The reset link has expired. Please request a new password reset link.",
+                    });
+                }
+                req.user = decoded;
+                next();
+            }
+            catch (error) {
+                return res.status(401).json({
+                    statusCode: 401,
+                    success: false,
+                    message: "Invalid or expired reset token. Please request a new password reset link.",
+                });
+            }
+        });
+    }
+    generatePasswordResetToken(id, email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const token = yield this.signToken({ id, email }, envConfig_1.default.jwt.accessTokenSecret, "10m");
+            return token;
+        });
     }
 }
 exports.JwtInstance = new JWT();

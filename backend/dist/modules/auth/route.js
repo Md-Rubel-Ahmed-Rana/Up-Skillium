@@ -9,4 +9,6 @@ router.post("/register", controller_1.AuthController.register);
 router.get("/", jwt_1.JwtInstance.verifyToken, controller_1.AuthController.auth);
 router.post("/login", controller_1.AuthController.login);
 router.delete("/logout", controller_1.AuthController.logout);
+router.post("/forget-password", controller_1.AuthController.forgetPassword);
+router.get("/verify-reset-password-token", jwt_1.JwtInstance.verifyResetPasswordToken, controller_1.AuthController.verifyResetPasswordToken);
 exports.AuthRoutes = router;
