@@ -134,6 +134,51 @@ class JWT {
 
     return token;
   }
+
+  public verifyResetPasswordToken = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const resetToken = req?.query.token as string;
+
+    if (!resetToken) {
+      return res.status(400).json({
+        statusCode: 400,
+        success: false,
+        message: "Reset token is required.",
+      });
+    }
+
+    try {
+      const decoded = jwt.verify(resetToken, config.jwt.accessTokenSecret) as {
+        id: string;
+        email: string;
+        exp: number;
+      };
+
+      console.log(decoded);
+
+      if (Date.now() >= decoded.exp * 1000) {
+        return res.status(401).json({
+          statusCode: 401,
+          success: false,
+          message:
+            "The reset link has expired. Please request a new password reset link.",
+        });
+      }
+
+      req.user = decoded;
+      next();
+    } catch (error) {
+      return res.status(401).json({
+        statusCode: 401,
+        success: false,
+        message:
+          "Invalid or expired reset token. Please request a new password reset link.",
+      });
+    }
+  };
 }
 
 export const JwtInstance = new JWT();
