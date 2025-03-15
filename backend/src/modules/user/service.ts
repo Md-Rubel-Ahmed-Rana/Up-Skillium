@@ -140,6 +140,17 @@ class Service {
       }
     }
   }
+  async resetPassword(userId: string, newPassword: string): Promise<void> {
+    const isExist = await User.findById(userId);
+    if (!isExist) {
+      throw new ApiError(404, "User was not found!");
+    } else {
+      const newHashedPassword = await BcryptInstance.hash(newPassword);
+      await User.findByIdAndUpdate(userId, {
+        $set: { password: newHashedPassword },
+      });
+    }
+  }
   async updateProfileImage(id: Types.ObjectId, imageUrl: string) {
     const user = await User.findById(id);
     if (user && user?.image) {

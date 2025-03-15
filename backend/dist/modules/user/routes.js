@@ -15,6 +15,7 @@ router.patch("/:id", controller_1.UserController.updateUser);
 router.delete("/:id", controller_1.UserController.deleteUserAccount);
 router.patch("/update-status/:id/:status", controller_1.UserController.activeOrInactiveAccount);
 router.patch("/change-password/:userId", controller_1.UserController.changePassword);
+router.post("/reset-password", controller_1.UserController.resetPassword);
 router.patch("/update-basic-info/:id", controller_1.UserController.updateUserBasicInfo);
 router.patch("/update-address/:id", controller_1.UserController.updateUserAddress);
 router.patch("/update-emergency-contact/:id", controller_1.UserController.updateEmergencyContact);

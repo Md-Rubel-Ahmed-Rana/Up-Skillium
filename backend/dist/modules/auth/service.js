@@ -17,6 +17,7 @@ const jwt_1 = require("../../lib/jwt");
 const apiError_1 = __importDefault(require("../../shared/apiError"));
 const bcrypt_1 = require("../../lib/bcrypt");
 const service_1 = require("../user/service");
+const mail_service_1 = require("../mail/mail.service");
 class Service {
     auth(id) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -54,6 +55,14 @@ class Service {
                 role: data.role,
                 password: data.password,
             });
+        });
+    }
+    forgetPassword(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield service_1.UserService.findUserByEmail(email);
+            const token = yield jwt_1.JwtInstance.generatePasswordResetToken(user === null || user === void 0 ? void 0 : user._id, user === null || user === void 0 ? void 0 : user.email);
+            const resetUrl = `https://upskillium.vercel.app/auth/reset-password?id=${user === null || user === void 0 ? void 0 : user._id}$name=${user === null || user === void 0 ? void 0 : user.name}&email${user === null || user === void 0 ? void 0 : user.email}&token=${token}`;
+            yield mail_service_1.MailService.resetPasswordLink(user === null || user === void 0 ? void 0 : user.email, resetUrl);
         });
     }
 }

@@ -97,5 +97,53 @@ class Mail {
             this.sendEmail("Enrollment Confirmation", receiver, content);
         });
     }
+    resetPasswordLink(receiver, resetUrl) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const content = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Reset Your Password</title>
+      </head>
+      <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 10px 5px;">
+          <table width="100%" cellspacing="0" cellpadding="0">
+              <tr>
+                  <td align="center">
+                      <table width="600px" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #cccccc;">
+                          <tr>
+                              <td align="center" style="padding: 10px;">
+                                  <h2 style="color: #333333;">🔒 Password Reset Request</h2>
+                                  <p style="color: #555555; font-size: 16px;">Hello,</p>
+                                  <p style="color: #555555; font-size: 16px;">We received a request to reset your password. Click the button below to reset your password.</p>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align="center" style="padding: 10px;">
+                                  <a href="${resetUrl}" style="background-color: #007BFF; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">🔑 Reset Password</a>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align="center" style="padding: 10px;">
+                                  <p style="color: #555555; font-size: 14px;">This link will expire in <strong>10 minutes</strong>. If you did not request a password reset, you can safely ignore this email.</p>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align="center" style="padding: 20px; font-size: 14px; color: #777777;">
+                                  <p>If you have any issues, please contact our support team at <a href="mailto:support@example.com">support@example.com</a></p>
+                                  <p>Thank you for using our service. Stay secure! 🔐</p>
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+              </tr>
+          </table>
+      </body>
+      </html>
+    `;
+            this.sendEmail("Reset Your Password", receiver, content);
+        });
+    }
 }
 exports.MailService = new Mail();

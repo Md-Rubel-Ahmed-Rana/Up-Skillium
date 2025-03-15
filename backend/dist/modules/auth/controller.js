@@ -58,6 +58,24 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.forgetPassword = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const email = req.body.email;
+            yield service_1.AuthService.forgetPassword(email);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "A password reset link has been sent to your email. Please check your inbox or spam folder and follow the instructions to reset your password.",
+                data: null,
+            });
+        }));
+        this.verifyResetPasswordToken = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Proceed to reset your password",
+                data: null,
+            });
+        }));
     }
 }
 exports.AuthController = new Controller();
