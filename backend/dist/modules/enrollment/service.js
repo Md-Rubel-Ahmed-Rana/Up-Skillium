@@ -15,6 +15,7 @@ const model_1 = require("./model");
 const service_2 = require("../student/service");
 const trackOrderId_1 = require("../../utils/trackOrderId");
 const invoice_service_1 = require("../pdf-creator/invoice.service");
+const mail_service_1 = require("../mail/mail.service");
 class Service {
     createEnrollment(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -85,6 +86,7 @@ class Service {
                     },
                 });
                 yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success", invoice: invoiceUrl } });
+                yield mail_service_1.MailService.enrollmentConfirmationMail(enrollment.user.email, enrollment.user.name, enrollment.course.title, invoiceUrl);
                 yield service_1.StudentProgressService.createOrUpdateStudentProgress({
                     userId: (_a = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _a === void 0 ? void 0 : _a._id,
                     courseId: (_b = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _b === void 0 ? void 0 : _b._id,

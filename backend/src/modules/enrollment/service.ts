@@ -5,6 +5,7 @@ import { Enrollment } from "./model";
 import { StudentService } from "../student/service";
 import { TrackOrderId } from "../../utils/trackOrderId";
 import { InvoiceService } from "../pdf-creator/invoice.service";
+import { MailService } from "../mail/mail.service";
 
 class Service {
   async createEnrollment(data: IEnrollment): Promise<void> {
@@ -90,6 +91,13 @@ class Service {
       await Enrollment.updateOne(
         { paymentSessionId: sessionId },
         { $set: { status: "success", invoice: invoiceUrl } }
+      );
+
+      await MailService.enrollmentConfirmationMail(
+        enrollment.user.email,
+        enrollment.user.name,
+        enrollment.course.title,
+        invoiceUrl
       );
 
       await StudentProgressService.createOrUpdateStudentProgress({
