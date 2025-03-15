@@ -121,6 +121,19 @@ class JWT {
       data: null,
     });
   };
+
+  public async generatePasswordResetToken(
+    id: string,
+    email: string
+  ): Promise<string> {
+    const token = await this.signToken(
+      { id, email },
+      config.jwt.accessTokenSecret,
+      "10m"
+    );
+
+    return token;
+  }
 }
 
 export const JwtInstance = new JWT();
