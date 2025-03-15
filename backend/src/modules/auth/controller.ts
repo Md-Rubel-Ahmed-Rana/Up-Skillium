@@ -61,6 +61,17 @@ class Controller extends RootController {
       data: null,
     });
   });
+
+  verifyResetPasswordToken = this.catchAsync(
+    async (req: Request, res: Response) => {
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Proceed to reset your password",
+        data: null,
+      });
+    }
+  );
 }
 
 export const AuthController = new Controller();

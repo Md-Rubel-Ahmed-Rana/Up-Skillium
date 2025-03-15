@@ -68,7 +68,7 @@ class Service {
       user?._id,
       user?.email
     );
-    const resetUrl = `https://upskillium.vercel.app/auth/reset-password?id=${user?._id}&${user?.email}&token=${token}`;
+    const resetUrl = `https://upskillium.vercel.app/auth/reset-password?id=${user?._id}$name=${user?.name}&email${user?.email}&token=${token}`;
     await MailService.resetPasswordLink(user?.email, resetUrl);
   }
 }
