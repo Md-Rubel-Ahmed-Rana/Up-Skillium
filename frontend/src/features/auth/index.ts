@@ -17,6 +17,14 @@ const authApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    forgetPassword: builder.mutation({
+      query: ({ email }: { email: string }) => ({
+        method: "POST",
+        url: "/auth/forget-password",
+        body: { email },
+      }),
+      invalidatesTags: ["user"],
+    }),
     userRegister: builder.mutation({
       query: ({
         name,
@@ -50,4 +58,5 @@ export const {
   useUserLoginMutation,
   useLogoutMutation,
   useUserRegisterMutation,
+  useForgetPasswordMutation,
 } = authApi;
