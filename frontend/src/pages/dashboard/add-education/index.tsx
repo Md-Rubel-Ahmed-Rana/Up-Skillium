@@ -1,6 +1,7 @@
 import AddEducation from "@/components/addEducation";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ AddEducationPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default AddEducationPage;
+export default isAuthenticate(AddEducationPage);

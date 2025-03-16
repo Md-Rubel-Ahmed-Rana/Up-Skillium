@@ -1,6 +1,7 @@
 import OrderHistories from "@/components/studentOrderHistory";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ OrderHistoryPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default OrderHistoryPage;
+export default isAuthenticate(OrderHistoryPage);

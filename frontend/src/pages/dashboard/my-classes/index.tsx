@@ -1,8 +1,9 @@
 import MyClasses from "@/components/myClasses";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 const MyClassesPage = () => {
   return (
@@ -25,4 +26,4 @@ MyClassesPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default MyClassesPage;
+export default isAuthenticate(MyClassesPage);

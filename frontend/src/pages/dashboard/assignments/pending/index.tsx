@@ -1,6 +1,7 @@
 import InstructorPendingAssignments from "@/components/instructorPendingAssignments";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -17,8 +18,6 @@ const InstructorPendingAssignmentPage = () => {
   );
 };
 
-export default InstructorPendingAssignmentPage;
-
 InstructorPendingAssignmentPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
@@ -26,3 +25,5 @@ InstructorPendingAssignmentPage.getLayout = function (page: ReactElement) {
     </RootLayout>
   );
 };
+
+export default isAuthenticate(InstructorPendingAssignmentPage);

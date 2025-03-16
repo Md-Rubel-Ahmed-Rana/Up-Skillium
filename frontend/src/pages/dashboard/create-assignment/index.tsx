@@ -1,6 +1,7 @@
 import CreateAssignment from "@/components/createAssignment";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -17,8 +18,6 @@ const CreateAssignmentPage = () => {
   );
 };
 
-export default CreateAssignmentPage;
-
 CreateAssignmentPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
@@ -26,3 +25,5 @@ CreateAssignmentPage.getLayout = function (page: ReactElement) {
     </RootLayout>
   );
 };
+
+export default isAuthenticate(CreateAssignmentPage);

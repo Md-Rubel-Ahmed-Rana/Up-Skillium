@@ -1,6 +1,7 @@
 import InstructorPreviousLiveClasses from "@/components/instructorPreviousLiveClasses";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ InstructorPreviousLiveClassesPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default InstructorPreviousLiveClassesPage;
+export default isAuthenticate(InstructorPreviousLiveClassesPage);

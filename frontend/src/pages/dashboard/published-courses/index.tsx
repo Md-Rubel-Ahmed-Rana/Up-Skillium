@@ -1,6 +1,7 @@
 import PublishedCourses from "@/components/publishedCourses";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ PublishedCoursesPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default PublishedCoursesPage;
+export default isAuthenticate(PublishedCoursesPage);

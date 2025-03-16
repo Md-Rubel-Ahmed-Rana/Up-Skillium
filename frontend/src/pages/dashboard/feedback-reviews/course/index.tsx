@@ -1,6 +1,7 @@
 import CourseFeedbackReviews from "@/components/courseReviews";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -17,8 +18,6 @@ const CourseFeedbackReviewsPage = () => {
   );
 };
 
-export default CourseFeedbackReviewsPage;
-
 CourseFeedbackReviewsPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
@@ -26,3 +25,5 @@ CourseFeedbackReviewsPage.getLayout = function (page: ReactElement) {
     </RootLayout>
   );
 };
+
+export default isAuthenticate(CourseFeedbackReviewsPage);

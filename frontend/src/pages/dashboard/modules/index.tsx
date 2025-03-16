@@ -1,6 +1,7 @@
 import InstructorModules from "@/components/instructorModules";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ ModulesPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default ModulesPage;
+export default isAuthenticate(ModulesPage);

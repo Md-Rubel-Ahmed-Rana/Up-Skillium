@@ -1,9 +1,10 @@
 import DashboardModulesLessons from "@/components/dashboardModulesLessons";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 const DashboardModulesLessonsPage = () => {
   const { query } = useRouter();
@@ -31,4 +32,4 @@ DashboardModulesLessonsPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default DashboardModulesLessonsPage;
+export default isAuthenticate(DashboardModulesLessonsPage);

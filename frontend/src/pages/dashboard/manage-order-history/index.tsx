@@ -1,6 +1,7 @@
 import ManageOrderHistories from "@/components/manageOrderHistory";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ ManageOrderHistoriesPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default ManageOrderHistoriesPage;
+export default isAuthenticate(ManageOrderHistoriesPage);

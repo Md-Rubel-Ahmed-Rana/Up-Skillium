@@ -1,6 +1,7 @@
 import InstructorCourseOutline from "@/components/instructorCourseOutline";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -17,8 +18,6 @@ const InstructorCourseOutlinePage = () => {
   );
 };
 
-export default InstructorCourseOutlinePage;
-
 InstructorCourseOutlinePage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
@@ -26,3 +25,5 @@ InstructorCourseOutlinePage.getLayout = function (page: ReactElement) {
     </RootLayout>
   );
 };
+
+export default isAuthenticate(InstructorCourseOutlinePage);
