@@ -9,6 +9,13 @@ const authApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    verifyResetToken: builder.query({
+      query: ({ token }: { token: string }) => ({
+        method: "GET",
+        url: `/auth/verify-reset-password-token?token=${token}`,
+      }),
+      providesTags: ["user"],
+    }),
     userLogin: builder.mutation({
       query: ({ email, password }: { email: string; password: string }) => ({
         method: "POST",
@@ -59,4 +66,5 @@ export const {
   useLogoutMutation,
   useUserRegisterMutation,
   useForgetPasswordMutation,
+  useVerifyResetTokenQuery,
 } = authApi;

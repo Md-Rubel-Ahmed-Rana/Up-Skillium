@@ -1,23 +1,23 @@
-import ForgetPassword from "@/components/forgetPassword";
+import ResetPassword from "@/components/resetPassword";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
-const ForgetPasswordPage = () => {
+const ResetPasswordPage = () => {
   return (
     <>
       <PageMetadata
-        title="Forget Password - Up Skillium"
+        title="Reset Password - Up Skillium"
         description="this is up skillium login page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <ForgetPassword />
+      <ResetPassword />
     </>
   );
 };
 
-ForgetPasswordPage.getLayout = function (page: ReactElement) {
+ResetPasswordPage.getLayout = function (page: ReactElement) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export default ForgetPasswordPage;
+export default ResetPasswordPage;
