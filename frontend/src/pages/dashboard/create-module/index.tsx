@@ -1,6 +1,7 @@
 import CreateModule from "@/components/createModule";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
@@ -20,8 +21,6 @@ const CreateModulePage = () => {
   );
 };
 
-export default CreateModulePage;
-
 CreateModulePage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
@@ -29,3 +28,5 @@ CreateModulePage.getLayout = function (page: ReactElement) {
     </RootLayout>
   );
 };
+
+export default isAuthenticate(CreateModulePage);

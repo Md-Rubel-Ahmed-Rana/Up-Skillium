@@ -1,6 +1,7 @@
 import InstructorAssignmentLesson from "@/components/instructorAssignmentLesson";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -17,8 +18,6 @@ const InstructorAssignmentLessonPage = () => {
   );
 };
 
-export default InstructorAssignmentLessonPage;
-
 InstructorAssignmentLessonPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
@@ -26,3 +25,5 @@ InstructorAssignmentLessonPage.getLayout = function (page: ReactElement) {
     </RootLayout>
   );
 };
+
+export default isAuthenticate(InstructorAssignmentLessonPage);

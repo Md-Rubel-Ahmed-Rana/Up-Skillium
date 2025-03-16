@@ -1,6 +1,7 @@
 import ManageStudents from "@/components/manageStudents";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ ManageStudentsPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default ManageStudentsPage;
+export default isAuthenticate(ManageStudentsPage);

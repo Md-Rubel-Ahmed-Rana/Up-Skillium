@@ -1,6 +1,7 @@
 import InstructorFeedbackReviews from "@/components/instructorReviews";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -17,8 +18,6 @@ const InstructorFeedbackReviewsPage = () => {
   );
 };
 
-export default InstructorFeedbackReviewsPage;
-
 InstructorFeedbackReviewsPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
@@ -26,3 +25,5 @@ InstructorFeedbackReviewsPage.getLayout = function (page: ReactElement) {
     </RootLayout>
   );
 };
+
+export default isAuthenticate(InstructorFeedbackReviewsPage);

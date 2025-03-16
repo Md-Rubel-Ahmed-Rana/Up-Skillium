@@ -1,5 +1,6 @@
 import CourseModuleLayout from "@/layout/CourseModuleLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import capitalizeLessonTitle from "@/utils/capitalizeLessonTitle";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
@@ -21,8 +22,8 @@ const CourseModuleLessonPage = () => {
   );
 };
 
-export default CourseModuleLessonPage;
-
 CourseModuleLessonPage.getLayout = function (page: ReactElement) {
   return <RootLayout>{page}</RootLayout>;
 };
+
+export default isAuthenticate(CourseModuleLessonPage);

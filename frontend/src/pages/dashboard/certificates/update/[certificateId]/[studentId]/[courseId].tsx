@@ -1,6 +1,7 @@
 import CertificateUpdate from "@/components/certificateUpdate";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
@@ -23,8 +24,6 @@ const CertificateUpdatePage = () => {
   );
 };
 
-export default CertificateUpdatePage;
-
 CertificateUpdatePage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
@@ -32,3 +31,5 @@ CertificateUpdatePage.getLayout = function (page: ReactElement) {
     </RootLayout>
   );
 };
+
+export default isAuthenticate(CertificateUpdatePage);

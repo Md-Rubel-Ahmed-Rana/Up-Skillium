@@ -1,6 +1,7 @@
 import ManagePendingAssignments from "@/components/managePendingAssignments";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ ManagePendingAssignmentsPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default ManagePendingAssignmentsPage;
+export default isAuthenticate(ManagePendingAssignmentsPage);

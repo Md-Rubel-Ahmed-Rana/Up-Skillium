@@ -28,6 +28,18 @@ const CheckoutButton = ({
 
   const handleCheckout = async () => {
     if (!user?.id) {
+      Swal.fire({
+        icon: "warning",
+        title: "Unauthenticated",
+        position: "center",
+        text: "You are not a logged in user. Please login first then try to checkout!",
+        showCloseButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Got it",
+        confirmButtonColor: "#d33",
+        backdrop: true,
+        timer: 10000,
+      });
       router.push("/login");
       return;
     } else {

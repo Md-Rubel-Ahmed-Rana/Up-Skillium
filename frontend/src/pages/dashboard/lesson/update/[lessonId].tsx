@@ -1,6 +1,7 @@
 import DashboardLessonUpdate from "@/components/dashboardLessonUpdate";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
@@ -28,4 +29,4 @@ DashboardLessonUpdatePage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default DashboardLessonUpdatePage;
+export default isAuthenticate(DashboardLessonUpdatePage);

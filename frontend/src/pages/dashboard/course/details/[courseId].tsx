@@ -1,9 +1,10 @@
 import DashboardCourseDetails from "@/components/dashboardCourseDetails";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 
 const DashboardCourseDetailsPage = () => {
   const { query } = useRouter();
@@ -30,4 +31,4 @@ DashboardCourseDetailsPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default DashboardCourseDetailsPage;
+export default isAuthenticate(DashboardCourseDetailsPage);

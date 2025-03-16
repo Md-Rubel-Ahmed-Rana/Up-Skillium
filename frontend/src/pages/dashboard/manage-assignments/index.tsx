@@ -1,6 +1,7 @@
 import ManageAssignments from "@/components/manageAssignments";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ ManageAssignmentsPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default ManageAssignmentsPage;
+export default isAuthenticate(ManageAssignmentsPage);

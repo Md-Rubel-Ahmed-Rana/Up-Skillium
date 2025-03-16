@@ -1,6 +1,7 @@
 import { UpcomingClasses } from "@/components/adminLiveClasses";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ UpcomingClassesPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default UpcomingClassesPage;
+export default isAuthenticate(UpcomingClassesPage);

@@ -1,5 +1,6 @@
 import PublicProfile from "@/components/publicProfile";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
@@ -23,4 +24,4 @@ PublicProfilePage.getLayout = function (page: ReactElement) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export default PublicProfilePage;
+export default isAuthenticate(PublicProfilePage);

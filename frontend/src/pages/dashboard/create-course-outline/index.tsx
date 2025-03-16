@@ -1,6 +1,7 @@
 import CreateCourseOutline from "@/components/createCourseOutline";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ CreateCourseOutlinePage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default CreateCourseOutlinePage;
+export default isAuthenticate(CreateCourseOutlinePage);

@@ -1,6 +1,7 @@
 import CreateAdmin from "@/components/createAdmin";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +26,4 @@ CreateAdminPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default CreateAdminPage;
+export default isAuthenticate(CreateAdminPage);

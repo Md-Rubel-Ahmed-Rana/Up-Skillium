@@ -1,6 +1,7 @@
 import StudentCourseProgress from "@/components/progress";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -27,4 +28,4 @@ StudentsProgressPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default StudentsProgressPage;
+export default isAuthenticate(StudentsProgressPage);

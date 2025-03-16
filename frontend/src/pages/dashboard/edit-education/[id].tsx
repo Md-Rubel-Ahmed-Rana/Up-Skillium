@@ -1,6 +1,7 @@
 import EditEducation from "@/components/editEducation";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 import { ReactElement } from "react";
@@ -28,4 +29,4 @@ EditEducationPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default EditEducationPage;
+export default isAuthenticate(EditEducationPage);
