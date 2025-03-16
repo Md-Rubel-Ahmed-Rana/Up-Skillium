@@ -96,6 +96,14 @@ const userApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    resetPassword: builder.mutation({
+      query: (data: { id: string; password: string }) => ({
+        method: "POST",
+        url: `/user/reset-password`,
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
     activeInactiveUserAccount: builder.mutation({
       query: ({
         userId,
@@ -129,4 +137,5 @@ export const {
   useGetSingleUserQuery,
   useActiveInactiveUserAccountMutation,
   useDeleteUserAccountMutation,
+  useResetPasswordMutation,
 } = userApi;
