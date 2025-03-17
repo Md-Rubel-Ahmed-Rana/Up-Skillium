@@ -14,9 +14,8 @@ const myCourseSchema = new Schema<IMyCourse>(
       required: true,
       ref: "Course",
     },
-    lastCompletedLesson: {
-      type: Schema.Types.ObjectId,
-      required: true,
+    completedLessons: {
+      type: [Schema.Types.ObjectId],
       ref: "Lesson",
     },
     completionPercentage: {

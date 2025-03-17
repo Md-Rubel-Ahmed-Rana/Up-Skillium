@@ -116,6 +116,14 @@ class Service {
                 .exec();
         });
     }
+    getLessonsByModules(moduleIds) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lessons = yield model_1.Lesson.find({ module: { $in: moduleIds } }).sort({
+                serial: 1,
+            });
+            return lessons;
+        });
+    }
     getAllLessonsByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
             const modules = yield service_1.ModuleService.getAllModulesByInstructor(instructorId);
