@@ -120,6 +120,13 @@ class Service {
       .exec();
   }
 
+  async getLessonsByModules(moduleIds: Types.ObjectId[]): Promise<ILesson[]> {
+    const lessons = await Lesson.find({ module: { $in: moduleIds } }).sort({
+      serial: 1,
+    });
+    return lessons;
+  }
+
   async getAllLessonsByInstructor(
     instructorId: Types.ObjectId
   ): Promise<ILesson[]> {
