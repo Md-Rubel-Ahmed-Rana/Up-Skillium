@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { IQuizQuestion } from "../quiz/interface";
 
 export type ILesson = {
+  id: Types.ObjectId;
   title: string;
   type: "video" | "instruction" | "quiz" | "assignment";
   module: Types.ObjectId;

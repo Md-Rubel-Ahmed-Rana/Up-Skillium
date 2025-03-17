@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import { CourseService } from "../course/service";
 import { IModule } from "./interface";
 import { Module } from "./model";
+import { ILesson } from "../lesson/interface";
 
 class Service {
   async createNewModule(data: IModule): Promise<void> {
@@ -53,7 +54,9 @@ class Service {
 
     return { course, modules };
   }
-  async getModulesLessonsByCourseId(courseId: Types.ObjectId) {
+  async getModulesLessonsByCourseId(
+    courseId: Types.ObjectId
+  ): Promise<IModule[]> {
     const modules = await Module.find({ course: courseId }).sort({ serial: 1 });
     return modules;
   }
@@ -77,6 +80,20 @@ class Service {
       "title image category"
     );
     return modules;
+  }
+  async getFirstLessonOfFirstModuleByCourse(
+    courseId: Types.ObjectId
+  ): Promise<ILesson | null> {
+    const firstModule = await Module.findOne({ course: courseId })
+      .sort({ serial: 1 })
+      .populate("lessons")
+      .lean();
+
+    if (!firstModule || !firstModule.lessons.length) {
+      return null;
+    }
+
+    return firstModule.lessons[0];
   }
 }
 

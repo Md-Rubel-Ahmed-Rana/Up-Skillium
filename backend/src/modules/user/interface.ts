@@ -37,6 +37,7 @@ export type IUser = {
   image: string;
   email: string;
   role: Types.ObjectId;
+  userRoleId: string; // adjust this new id
   dateOfBirth: Date;
   password: string;
   gender: string;
