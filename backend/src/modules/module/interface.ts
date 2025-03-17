@@ -3,6 +3,7 @@ import { ILesson } from "../lesson/interface";
 
 export type IModule = {
   id?: Types.ObjectId;
+  _id?: Types.ObjectId;
   course: Types.ObjectId;
   title: string;
   lessons: ILesson[];

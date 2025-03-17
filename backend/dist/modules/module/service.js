@@ -82,5 +82,17 @@ class Service {
             return modules;
         });
     }
+    getFirstLessonOfFirstModuleByCourse(courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const firstModule = yield model_1.Module.findOne({ course: courseId })
+                .sort({ serial: 1 })
+                .populate("lessons")
+                .lean();
+            if (!firstModule || !firstModule.lessons.length) {
+                return null;
+            }
+            return firstModule.lessons[0];
+        });
+    }
 }
 exports.ModuleService = new Service();
