@@ -1,19 +1,16 @@
-import { useGetSubmittedQuizResultQuery } from "@/features/quizSubmission";
 import { IQuizSubmissionResult } from "@/types/quizSubmission.type";
-import { Card, Typography, Button, Space } from "antd/lib";
+import { Button, Card, Space, Typography } from "antd/lib";
 import { useState } from "react";
 import ShowQuizAnswers from "./ShowQuizAnswers";
 
 const { Text, Title } = Typography;
 
 type Props = {
-  lessonId: string;
+  result: IQuizSubmissionResult;
 };
 
-const ShowQuizResult = ({ lessonId }: Props) => {
+const ShowQuizResult = ({ result }: Props) => {
   const [showAnswers, setShowAnswers] = useState(false);
-  const { data } = useGetSubmittedQuizResultQuery({ lessonId });
-  const result = data?.data as IQuizSubmissionResult;
 
   return (
     <Card

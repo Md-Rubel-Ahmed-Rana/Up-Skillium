@@ -1,4 +1,8 @@
+import { useGetLoggedInUserQuery } from "@/features/auth";
+import { useGetSubmittedQuizResultQuery } from "@/features/quizSubmission";
 import { ILesson } from "@/types/lesson.type";
+import { IQuizSubmissionResult } from "@/types/quizSubmission.type";
+import { IUser } from "@/types/user.type";
 import { Button } from "antd/lib";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -6,7 +10,6 @@ import ShowQuizResult from "./ShowQuizResult";
 
 type Props = {
   lesson: ILesson;
-  isQuizSubmitted: boolean;
 };
 
 type ISelectedAnswers = {
@@ -14,7 +17,15 @@ type ISelectedAnswers = {
   answer: string;
 };
 
-const ShowQuizQuestions = ({ lesson, isQuizSubmitted }: Props) => {
+const ShowQuizQuestions = ({ lesson }: Props) => {
+  const { data: userData } = useGetLoggedInUserQuery({});
+  const user = userData?.data as IUser;
+  const { data } = useGetSubmittedQuizResultQuery({
+    lessonId: lesson?.id,
+    userId: user?.id,
+  });
+  const result = data?.data as IQuizSubmissionResult;
+
   const questions = lesson?.quizQuestions;
   const [selectedAnswers, setSelectedAnswers] = useState<ISelectedAnswers[]>(
     []
@@ -55,8 +66,8 @@ const ShowQuizQuestions = ({ lesson, isQuizSubmitted }: Props) => {
 
   return (
     <>
-      {isQuizSubmitted ? (
-        <ShowQuizResult lessonId={lesson?.id} />
+      {result ? (
+        <ShowQuizResult result={result} />
       ) : (
         <div className="bg-white shadow-md rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">{question?.question}</h2>

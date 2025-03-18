@@ -36,11 +36,9 @@ const LessonContainer = ({ lessons, completedLessons }: Props) => {
               <LessonVideoPlayer videoUrl={lesson?.videoUrl} />
             )}
             {lesson?.type === "assignment" && (
-              <ShowAssignment lesson={lesson} isAssignmentSubmitted={false} />
+              <ShowAssignment lesson={lesson} />
             )}
-            {lesson?.type === "quiz" && (
-              <ShowQuizQuestions lesson={lesson} isQuizSubmitted={false} />
-            )}
+            {lesson?.type === "quiz" && <ShowQuizQuestions lesson={lesson} />}
             {lesson?.type === "instruction" && (
               <ShowInstruction lesson={lesson} />
             )}
