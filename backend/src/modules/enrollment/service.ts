@@ -6,9 +6,12 @@ import { StudentService } from "../student/service";
 import { TrackOrderId } from "../../utils/trackOrderId";
 import { InvoiceService } from "../pdf-creator/invoice.service";
 import { MailService } from "../mail/mail.service";
+import { MyCourseService } from "../my-courses/service";
+import ApiError from "../../shared/apiError";
 
 class Service {
   async createEnrollment(data: IEnrollment): Promise<void> {
+    await this.isExist(data.user, data.course);
     const lastEnrollment = await Enrollment.findOne().sort({ _id: -1 });
     const newOrderId = await TrackOrderId.generateOrderId(
       lastEnrollment as IEnrollment,
@@ -20,7 +23,20 @@ class Service {
       orderId: newOrderId,
     });
   }
+  async isExist(
+    userId: Types.ObjectId,
+    courseId: Types.ObjectId
+  ): Promise<void> {
+    const isExist = await Enrollment.findOne({
+      user: userId,
+      course: courseId,
+      status: "success",
+    });
 
+    if (isExist) {
+      throw new ApiError(400, "You already have enrolled to this course!");
+    }
+  }
   async getEnrollmentById(id: Types.ObjectId): Promise<IEnrollment | null> {
     return await Enrollment.findById(id)
       .populate("user", "-password")
@@ -93,20 +109,16 @@ class Service {
         { $set: { status: "success", invoice: invoiceUrl } }
       );
 
+      await MyCourseService.addNewCourse({
+        course: enrollment.course.id,
+        user: enrollment.user._id,
+      });
+
       await MailService.enrollmentConfirmationMail(
         enrollment.user.email,
         enrollment.user.name,
         enrollment.course.title,
         invoiceUrl
-      );
-
-      await StudentProgressService.createOrUpdateStudentProgress({
-        userId: enrollment?.user?._id,
-        courseId: enrollment?.course?._id,
-      });
-      await StudentService.addNewCourse(
-        enrollment?.user?._id,
-        enrollment?.course?._id
       );
     }
   }

@@ -25,6 +25,14 @@ const myCourseSchema = new mongoose_1.Schema({
         type: Number,
         default: 0,
     },
+    lastCompletedLesson: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Lesson",
+    },
+    nextLesson: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Lesson",
+    },
     isCourseCompleted: {
         type: Boolean,
         default: false,

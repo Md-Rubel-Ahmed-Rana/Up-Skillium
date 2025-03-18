@@ -10,3 +10,8 @@ export type IModule = {
   duration?: number;
   serial: number;
 };
+
+export type IGetModulesWithLessons = {
+  module: IModule;
+  lessons: ILesson[];
+};

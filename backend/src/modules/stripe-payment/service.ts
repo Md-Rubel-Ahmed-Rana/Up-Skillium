@@ -44,6 +44,8 @@ class Service {
   }
 
   async checkout(items: IStripeCheckout[]): Promise<{ url: string }> {
+    await EnrollmentService.isExist(items[0].userId, items[0].courseId);
+
     const { sessionId, sessionUrl } = await this.stripeCheckout(items);
     const enrollmentData: IEnrollment[] = items.map(
       (item: IStripeCheckout) => ({

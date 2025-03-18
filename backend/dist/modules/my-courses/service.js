@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyCourseService = void 0;
 const model_1 = require("./model");
 const service_1 = require("../module/service");
-const service_2 = require("../lesson/service");
 const apiError_1 = __importDefault(require("../../shared/apiError"));
 class Service {
     addNewCourse(data) {
@@ -38,6 +37,17 @@ class Service {
                 "user",
                 "course",
                 "lastCompletedLesson",
+                "nextLesson",
+            ]);
+        });
+    }
+    getMySingleCourse(userId, courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.MyCourse.findOne({ user: userId, course: courseId }).populate([
+                "user",
+                "course",
+                "lastCompletedLesson",
+                "nextLesson",
             ]);
         });
     }
@@ -51,10 +61,7 @@ class Service {
             let totalLessons = 0;
             let completedLessonsCount = 0;
             const modules = yield service_1.ModuleService.getModulesLessonsByCourseId(courseId);
-            const lessons = yield service_2.LessonService.getLessonsByModules(modules.map((module) => module === null || module === void 0 ? void 0 : module._id));
-            if (!lessons.length) {
-                return;
-            }
+            const lessons = modules.flatMap((module) => module.lessons);
             totalLessons = lessons.length;
             const myCourse = yield model_1.MyCourse.findOne({
                 user: userId,
@@ -71,8 +78,14 @@ class Service {
             completedLessonsCount = completedLessonIds.length;
             const completionPercentage = totalLessons > 0 ? (completedLessonsCount / totalLessons) * 100 : 0;
             const finalCount = Math.round(completionPercentage * 100) / 100;
+            const lastCompletedIndex = lessons.findIndex((lesson) => lesson._id.toString() === lastCompletedLessonId.toString());
+            const nextLesson = lastCompletedIndex !== -1 && lastCompletedIndex + 1 < lessons.length
+                ? lessons[lastCompletedIndex + 1]._id
+                : null;
             yield model_1.MyCourse.findByIdAndUpdate(myCourse._id, {
                 completionPercentage: finalCount,
+                lastCompletedLesson: lastCompletedLessonId,
+                nextLesson: nextLesson,
             });
         });
     }

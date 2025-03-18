@@ -3,9 +3,9 @@ import { MyCourseController } from "./controller";
 
 const router = Router();
 
-router.post("/add-new-course", MyCourseController.addNewCourse);
-
 router.get("/:userId", MyCourseController.getMyCourses);
+
+router.get("/single/:userId/:courseId", MyCourseController.getMySingleCourse);
 
 router.post(
   "/compete-lesson/:userId/:courseId/:lessonId",

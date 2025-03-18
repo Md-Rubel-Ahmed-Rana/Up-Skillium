@@ -22,6 +22,14 @@ const myCourseSchema = new Schema<IMyCourse>(
       type: Number,
       default: 0,
     },
+    lastCompletedLesson: {
+      type: Schema.Types.ObjectId,
+      ref: "Lesson",
+    },
+    nextLesson: {
+      type: Schema.Types.ObjectId,
+      ref: "Lesson",
+    },
     isCourseCompleted: {
       type: Boolean,
       default: false,

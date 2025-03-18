@@ -2,8 +2,8 @@ import { Types } from "mongoose";
 import { IMyCourse } from "./interface";
 import { MyCourse } from "./model";
 import { ModuleService } from "../module/service";
-import { LessonService } from "../lesson/service";
 import ApiError from "../../shared/apiError";
+import { IGetModulesWithLessons } from "../module/interface";
 
 class Service {
   async addNewCourse(data: IMyCourse): Promise<void> {
@@ -35,6 +35,19 @@ class Service {
       "user",
       "course",
       "lastCompletedLesson",
+      "nextLesson",
+    ]);
+  }
+
+  async getMySingleCourse(
+    userId: Types.ObjectId,
+    courseId: Types.ObjectId
+  ): Promise<IMyCourse | null> {
+    return await MyCourse.findOne({ user: userId, course: courseId }).populate([
+      "user",
+      "course",
+      "lastCompletedLesson",
+      "nextLesson",
     ]);
   }
 
@@ -54,15 +67,10 @@ class Service {
     let totalLessons = 0;
     let completedLessonsCount = 0;
 
-    const modules = await ModuleService.getModulesLessonsByCourseId(courseId);
-    const lessons = await LessonService.getLessonsByModules(
-      modules.map((module) => module?._id as Types.ObjectId)
-    );
+    const modules: IGetModulesWithLessons[] =
+      await ModuleService.getModulesLessonsByCourseId(courseId);
 
-    if (!lessons.length) {
-      return;
-    }
-
+    const lessons = modules.flatMap((module) => module.lessons);
     totalLessons = lessons.length;
 
     const myCourse: any = await MyCourse.findOne({
@@ -86,11 +94,21 @@ class Service {
 
     const completionPercentage =
       totalLessons > 0 ? (completedLessonsCount / totalLessons) * 100 : 0;
-
     const finalCount = Math.round(completionPercentage * 100) / 100;
+
+    const lastCompletedIndex = lessons.findIndex(
+      (lesson) => lesson._id.toString() === lastCompletedLessonId.toString()
+    );
+
+    const nextLesson =
+      lastCompletedIndex !== -1 && lastCompletedIndex + 1 < lessons.length
+        ? lessons[lastCompletedIndex + 1]._id
+        : null;
 
     await MyCourse.findByIdAndUpdate(myCourse._id, {
       completionPercentage: finalCount,
+      lastCompletedLesson: lastCompletedLessonId,
+      nextLesson: nextLesson,
     });
   }
 }
