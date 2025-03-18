@@ -1,19 +1,29 @@
+import { useGetSubmittedAssignmentQuery } from "@/features/assignmentSubmission";
+import { useGetLoggedInUserQuery } from "@/features/auth";
+import { IAssignmentSubmission } from "@/types/assignmentSubmission.type";
 import { ILesson } from "@/types/lesson.type";
+import { IUser } from "@/types/user.type";
 import { useState } from "react";
-import ShowAssignmentResult from "./ShowAssignmentResult";
 import AssignmentSubmitForm from "./AssignmentSubmitForm";
+import ShowAssignmentResult from "./ShowAssignmentResult";
 
 type Props = {
   lesson: ILesson;
-  isAssignmentSubmitted: boolean;
 };
 
-const ShowAssignment = ({ lesson, isAssignmentSubmitted }: Props) => {
+const ShowAssignment = ({ lesson }: Props) => {
+  const { data: userData } = useGetLoggedInUserQuery({});
+  const user = userData?.data as IUser;
+  const { data } = useGetSubmittedAssignmentQuery({
+    userId: user?.id,
+    lessonId: lesson?.id,
+  });
+  const assignment = data?.data as IAssignmentSubmission;
   const [isSubmit, setIsSubmit] = useState(false);
   return (
     <>
-      {isAssignmentSubmitted ? (
-        <ShowAssignmentResult lessonId={lesson?.id} />
+      {assignment ? (
+        <ShowAssignmentResult assignment={assignment} />
       ) : (
         <div className="p-6 bg-gray-50 rounded-lg shadow-md">
           {isSubmit ? (

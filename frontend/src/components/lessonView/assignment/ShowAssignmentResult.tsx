@@ -1,28 +1,18 @@
-import { useGetSubmittedAssignmentQuery } from "@/features/assignmentSubmission";
-import { useGetLoggedInUserQuery } from "@/features/auth";
 import { IAssignmentSubmission } from "@/types/assignmentSubmission.type";
-import { IUser } from "@/types/user.type";
-import { Card, Typography, Result, Button } from "antd/lib";
+import { Button, Card, Result, Typography } from "antd/lib";
 import { useState } from "react";
 import { AiOutlineCheckCircle, AiOutlineClockCircle } from "react-icons/ai";
 import ShowAssignmentSubmissionModal from "./ShowAssignmentSubmissionModal";
 
 type Props = {
-  lessonId: string;
+  assignment: IAssignmentSubmission;
 };
 
 const { Title } = Typography;
 
-const ShowAssignmentResult = ({ lessonId }: Props) => {
-  const { data: userData } = useGetLoggedInUserQuery({});
+const ShowAssignmentResult = ({ assignment }: Props) => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [showSubmission, setShowSubmission] = useState(false);
-  const user = userData?.data as IUser;
-  const { data } = useGetSubmittedAssignmentQuery({
-    userId: user?.id,
-    lessonId,
-  });
-  const assignment = data?.data as IAssignmentSubmission;
 
   return (
     <Card
