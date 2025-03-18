@@ -18,15 +18,6 @@ const service_1 = require("./service");
 class Controller extends rootController_1.default {
     constructor() {
         super(...arguments);
-        this.addNewCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            yield service_1.MyCourseService.addNewCourse(req.body);
-            this.apiResponse(res, {
-                statusCode: 200,
-                success: true,
-                message: "New course added successfully",
-                data: null,
-            });
-        }));
         this.getMyCourses = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const userId = req.params.userId;
             const courses = yield service_1.MyCourseService.getMyCourses(userId);
@@ -35,6 +26,17 @@ class Controller extends rootController_1.default {
                 success: true,
                 message: "My courses retrieved successfully",
                 data: courses,
+            });
+        }));
+        this.getMySingleCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.userId;
+            const courseId = req.params.courseId;
+            const course = yield service_1.MyCourseService.getMySingleCourse(userId, courseId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "My course retrieved successfully",
+                data: course,
             });
         }));
         this.completeLesson = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {

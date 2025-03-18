@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModuleService = void 0;
 const service_1 = require("../course/service");
 const model_1 = require("./model");
+const service_2 = require("../lesson/service");
 class Service {
     createNewModule(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -62,7 +63,11 @@ class Service {
     getModulesLessonsByCourseId(courseId) {
         return __awaiter(this, void 0, void 0, function* () {
             const modules = yield model_1.Module.find({ course: courseId }).sort({ serial: 1 });
-            return modules;
+            const modulesWithLessons = yield Promise.all(modules.map((module) => __awaiter(this, void 0, void 0, function* () {
+                const lessons = yield service_2.LessonService.getLessonsByModule(module.id, 1, 100000);
+                return { module, lessons };
+            })));
+            return modulesWithLessons;
         });
     }
     updateModule(id, updatedData) {

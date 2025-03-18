@@ -8,20 +8,37 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnrollmentService = void 0;
-const service_1 = require("../student-progress/service");
 const model_1 = require("./model");
-const service_2 = require("../student/service");
+const service_1 = require("../student/service");
 const trackOrderId_1 = require("../../utils/trackOrderId");
 const invoice_service_1 = require("../pdf-creator/invoice.service");
 const mail_service_1 = require("../mail/mail.service");
+const service_2 = require("../my-courses/service");
+const apiError_1 = __importDefault(require("../../shared/apiError"));
 class Service {
     createEnrollment(data) {
         return __awaiter(this, void 0, void 0, function* () {
+            yield this.isExist(data.user, data.course);
             const lastEnrollment = yield model_1.Enrollment.findOne().sort({ _id: -1 });
             const newOrderId = yield trackOrderId_1.TrackOrderId.generateOrderId(lastEnrollment, data.course.toString());
             yield model_1.Enrollment.create(Object.assign(Object.assign({}, data), { orderId: newOrderId }));
+        });
+    }
+    isExist(userId, courseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const isExist = yield model_1.Enrollment.findOne({
+                user: userId,
+                course: courseId,
+                status: "success",
+            });
+            if (isExist) {
+                throw new apiError_1.default(400, "You already have enrolled to this course!");
+            }
         });
     }
     getEnrollmentById(id) {
@@ -62,7 +79,6 @@ class Service {
     }
     updateStatusAsSuccessByWebhook(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c, _d;
             const enrollment = yield model_1.Enrollment.findOne({
                 paymentSessionId: sessionId,
             })
@@ -79,19 +95,18 @@ class Service {
                     customerInfo: {
                         name: enrollment.user.name,
                         email: enrollment.user.email,
-                        studentId: yield service_2.StudentService.getStudentIdByUserId(enrollment.user._id),
+                        studentId: yield service_1.StudentService.getStudentIdByUserId(enrollment.user._id),
                     },
                     orderInfo: {
                         orderId: enrollment.orderId,
                     },
                 });
                 yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success", invoice: invoiceUrl } });
-                yield mail_service_1.MailService.enrollmentConfirmationMail(enrollment.user.email, enrollment.user.name, enrollment.course.title, invoiceUrl);
-                yield service_1.StudentProgressService.createOrUpdateStudentProgress({
-                    userId: (_a = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _a === void 0 ? void 0 : _a._id,
-                    courseId: (_b = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _b === void 0 ? void 0 : _b._id,
+                yield service_2.MyCourseService.addNewCourse({
+                    course: enrollment.course.id,
+                    user: enrollment.user._id,
                 });
-                yield service_2.StudentService.addNewCourse((_c = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _c === void 0 ? void 0 : _c._id, (_d = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _d === void 0 ? void 0 : _d._id);
+                yield mail_service_1.MailService.enrollmentConfirmationMail(enrollment.user.email, enrollment.user.name, enrollment.course.title, invoiceUrl);
             }
         });
     }

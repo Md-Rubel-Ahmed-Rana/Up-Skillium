@@ -1,13 +1,15 @@
 import { Types } from "mongoose";
 import { CourseService } from "../course/service";
-import { IModule } from "./interface";
+import { IGetModulesWithLessons, IModule } from "./interface";
 import { Module } from "./model";
 import { ILesson } from "../lesson/interface";
+import { LessonService } from "../lesson/service";
 
 class Service {
   async createNewModule(data: IModule): Promise<void> {
     await Module.create(data);
   }
+
   async getAllModules(
     search: string = "",
     page: number = 1,
@@ -29,12 +31,15 @@ class Service {
 
     return modules;
   }
+
   async getSingleModule(moduleId: Types.ObjectId): Promise<IModule | null> {
     return await Module.findById(moduleId);
   }
+
   async getModuleByCourseId(courseId: Types.ObjectId): Promise<IModule[]> {
     return await Module.find({ courseId: courseId });
   }
+
   async getFullClassByCourseId(courseId: Types.ObjectId) {
     const course = await CourseService.getSingleCourse(courseId);
 
@@ -54,21 +59,37 @@ class Service {
 
     return { course, modules };
   }
+
   async getModulesLessonsByCourseId(
     courseId: Types.ObjectId
-  ): Promise<IModule[]> {
+  ): Promise<IGetModulesWithLessons[]> {
     const modules = await Module.find({ course: courseId }).sort({ serial: 1 });
-    return modules;
+
+    const modulesWithLessons = await Promise.all(
+      modules.map(async (module) => {
+        const lessons = await LessonService.getLessonsByModule(
+          module.id,
+          1,
+          100000
+        );
+        return { module, lessons };
+      })
+    );
+
+    return modulesWithLessons;
   }
+
   async updateModule(
     id: Types.ObjectId,
     updatedData: Partial<IModule>
   ): Promise<void> {
     await Module.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
+
   async deleteModule(id: Types.ObjectId): Promise<void> {
     await Module.findByIdAndDelete(id);
   }
+
   async getAllModulesByInstructor(
     instructorId: Types.ObjectId
   ): Promise<IModule[]> {
@@ -81,6 +102,7 @@ class Service {
     );
     return modules;
   }
+
   async getFirstLessonOfFirstModuleByCourse(
     courseId: Types.ObjectId
   ): Promise<ILesson | null> {

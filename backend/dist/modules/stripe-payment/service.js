@@ -52,6 +52,7 @@ class Service {
     }
     checkout(items) {
         return __awaiter(this, void 0, void 0, function* () {
+            yield service_1.EnrollmentService.isExist(items[0].userId, items[0].courseId);
             const { sessionId, sessionUrl } = yield this.stripeCheckout(items);
             const enrollmentData = items.map((item) => ({
                 user: item === null || item === void 0 ? void 0 : item.userId,

@@ -4,16 +4,6 @@ import { MyCourseService } from "./service";
 import { Types } from "mongoose";
 
 class Controller extends RootController {
-  addNewCourse = this.catchAsync(async (req: Request, res: Response) => {
-    await MyCourseService.addNewCourse(req.body);
-    this.apiResponse(res, {
-      statusCode: 200,
-      success: true,
-      message: "New course added successfully",
-      data: null,
-    });
-  });
-
   getMyCourses = this.catchAsync(async (req: Request, res: Response) => {
     const userId = req.params.userId as unknown as Types.ObjectId;
     const courses = await MyCourseService.getMyCourses(userId);
@@ -22,6 +12,17 @@ class Controller extends RootController {
       success: true,
       message: "My courses retrieved successfully",
       data: courses,
+    });
+  });
+  getMySingleCourse = this.catchAsync(async (req: Request, res: Response) => {
+    const userId = req.params.userId as unknown as Types.ObjectId;
+    const courseId = req.params.courseId as unknown as Types.ObjectId;
+    const course = await MyCourseService.getMySingleCourse(userId, courseId);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "My course retrieved successfully",
+      data: course,
     });
   });
 
