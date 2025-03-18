@@ -1,17 +1,19 @@
-import { ILessonDetails, ILessonProgress } from "@/types/studentProgress.type";
 import { useLessonMarkAsCompleteMutation } from "@/features/studentProgress";
-import Swal from "sweetalert2";
-import toast from "react-hot-toast";
+import { ILesson } from "@/types/lesson.type";
+import { ILessonDetails } from "@/types/studentProgress.type";
 import { IUser } from "@/types/user.type";
-import { useRouter } from "next/router";
 import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 type LessonHandlerProps = {
-  lessons: ILessonProgress[];
+  lessons: ILesson[];
   courseId: string;
   moduleId: string;
   user: IUser;
   lastCompletedLesson: ILessonDetails;
+  completedLessons: string[];
 };
 
 const useLessonHandler = ({
@@ -19,34 +21,29 @@ const useLessonHandler = ({
   moduleId,
   user,
   lastCompletedLesson,
+  completedLessons,
 }: LessonHandlerProps) => {
   const [lessonMarkAsComplete] = useLessonMarkAsCompleteMutation();
   const { query, push } = useRouter();
   const lessonId = query?.lessonId as string;
   const courseId = query?.courseId as string;
 
-  const handleChangeLesson = async (lesson: ILessonProgress) => {
-    const currentLessonIndex = lessons.findIndex(
-      (ls) => ls?.lesson?.id === lessonId
-    );
+  const handleChangeLesson = async (lesson: ILesson) => {
+    const currentLessonIndex = lessons.findIndex((ls) => ls?.id === lessonId);
     const nextLessonIndex = currentLessonIndex + 1;
-    const targetLessonIndex = lessons.findIndex(
-      (ls) => ls?.lesson?.id === lesson?.lesson?.id
-    );
-    const targetLesson = lessons.find(
-      (ls) => ls?.lesson?.id === lesson?.lesson?.id
-    );
+    const targetLessonIndex = lessons.findIndex((ls) => ls?.id === lesson?.id);
+    const targetLesson = lessons.find((ls) => ls?.id === lesson?.id);
     const lastCompletedLessonIndex = lessons.findIndex(
-      (ls) => ls?.lesson?.id === lastCompletedLesson?.id
+      (ls) => ls?.id === lastCompletedLesson?.id
     );
 
     const routePath = `/classes/course/${courseId}/module/${moduleId}/lesson/${
-      lesson?.lesson?.id
-    }/${makeLessonTitleAsParamsUrl(lesson?.lesson?.title)}`;
+      lesson?.id
+    }/${makeLessonTitleAsParamsUrl(lesson?.title)}`;
 
     if (
       targetLessonIndex <= currentLessonIndex ||
-      targetLesson?.isLessonCompleted
+      completedLessons.includes(targetLesson?.id as string)
     ) {
       push(routePath);
     } else if (targetLessonIndex === nextLessonIndex) {
@@ -65,13 +62,13 @@ const useLessonHandler = ({
     }
   };
 
-  const handleMarkNextLessonAsComplete = async (lesson: ILessonProgress) => {
+  const handleMarkNextLessonAsComplete = async (lesson: ILesson) => {
     try {
       await lessonMarkAsComplete({
         userId: user?.id,
         courseId: courseId,
         moduleId: moduleId,
-        lessonId: lesson?.lesson?.id,
+        lessonId: lesson?.id,
       });
     } catch (error: any) {
       toast.error(
@@ -81,7 +78,7 @@ const useLessonHandler = ({
         userId: user?.id,
         courseId: courseId,
         moduleId: moduleId,
-        lessonId: lesson?.lesson?.id,
+        lessonId: lesson?.id,
       });
     }
   };

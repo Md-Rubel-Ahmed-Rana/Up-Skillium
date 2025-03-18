@@ -1,20 +1,20 @@
-import { ILessonProgress } from "@/types/studentProgress.type";
+import { ILesson } from "@/types/lesson.type";
 import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
-import { Button, Input, Dropdown, MenuProps } from "antd/lib";
+import { Button, Dropdown, Input, MenuProps } from "antd/lib";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { IoSearch } from "react-icons/io5";
 
 type Props = {
-  lessons: ILessonProgress[];
+  lessons: ILesson[];
 };
 
 const LessonSearch = ({ lessons }: Props) => {
   const { query, push } = useRouter();
   const courseId = query?.courseId as string;
   const allLessons: { id: string; title: string }[] = lessons.map((ls) => ({
-    id: ls?.lesson?.id,
-    title: ls?.lesson?.title,
+    id: ls?.id,
+    title: ls?.title,
   }));
 
   const [searchText, setSearchText] = useState("");

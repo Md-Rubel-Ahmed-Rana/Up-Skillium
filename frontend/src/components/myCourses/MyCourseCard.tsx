@@ -1,15 +1,15 @@
-import { ICourseProgress } from "@/types/studentProgress.type";
 import makeLessonTitleAsParamsUrl from "@/utils/makeLessonTitleAsParamsUrl";
 import { Button, Card, Progress } from "antd/lib";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { RxCrossCircled } from "react-icons/rx";
 
+import { IMyCourse } from "@/types/myCourse.type";
 import Link from "next/link";
 
 const { Meta } = Card;
 
 type Props = {
-  course: ICourseProgress;
+  course: IMyCourse;
 };
 
 const MyCourseCard = ({ course }: Props) => {
