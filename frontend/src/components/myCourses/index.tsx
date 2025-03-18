@@ -1,17 +1,17 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
-import { useGetStudentMyCoursesQuery } from "@/features/studentProgress";
+import { useGetAllMyCoursesQuery } from "@/features/myCourse";
 import MyCourseSkeleton from "@/skeletons/courseSkeleton";
-import { ICourseProgress } from "@/types/studentProgress.type";
+import { IMyCourse } from "@/types/myCourse.type";
 import { IUser } from "@/types/user.type";
 import MyCourseCard from "./MyCourseCard";
 
 const MyCourses = () => {
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
-  const { data: coursesData, isLoading } = useGetStudentMyCoursesQuery({
+  const { data: coursesData, isLoading } = useGetAllMyCoursesQuery({
     userId: user?.id,
   });
-  const courses = (coursesData?.data as ICourseProgress[]) || [];
+  const courses = (coursesData?.data as IMyCourse[]) || [];
 
   return (
     <>

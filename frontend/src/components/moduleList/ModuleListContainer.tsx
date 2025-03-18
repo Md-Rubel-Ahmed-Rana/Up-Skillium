@@ -1,32 +1,37 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Collapse, CollapseProps } from "antd/lib";
-import {
-  ICourseProgress,
-  ILessonProgress,
-  IModuleProgress,
-} from "@/types/studentProgress.type";
-import LessonItem from "./LessonItem";
-import ShowCourseCompletedProgress from "./ShowCourseCompletedProgress";
-import LessonCount from "./LessonCount";
-import LessonSearch from "./LessonSearch";
-import { useRouter } from "next/router";
 import { useGetLoggedInUserQuery } from "@/features/auth";
-import { useGetCourseProgressQuery } from "@/features/studentProgress";
-import { IUser } from "@/types/user.type";
+import { useGetModulesByCourseIdQuery } from "@/features/module";
+import { useGetMySingleCourseQuery } from "@/features/myCourse";
 import ModuleListSkeleton from "@/skeletons/moduleListSkeleton";
+import { ILesson } from "@/types/lesson.type";
+import { IModule } from "@/types/module.type";
+import { IMyCourse } from "@/types/myCourse.type";
+import { IUser } from "@/types/user.type";
+import { Collapse, CollapseProps } from "antd/lib";
+import { useRouter } from "next/router";
+import LessonCount from "./LessonCount";
+import LessonItem from "./LessonItem";
+import LessonSearch from "./LessonSearch";
+import ShowCourseCompletedProgress from "./ShowCourseCompletedProgress";
 
 const ModuleListContainer = () => {
   const { query } = useRouter();
   const courseId = query?.courseId as string;
   const { data: userData } = useGetLoggedInUserQuery({});
   const user = userData?.data as IUser;
-  const { data: courseData, isLoading } = useGetCourseProgressQuery({
+  const { data: mySingleCourseData } = useGetMySingleCourseQuery({
     userId: user?.id,
-    courseId: courseId,
+    courseId,
   });
-  const course = courseData?.data as ICourseProgress;
-  const modules = course?.modules as IModuleProgress[];
-  const lessons: ILessonProgress[] = [];
+  const myCourse = mySingleCourseData?.data as IMyCourse;
+
+  const { data: modulesData, isLoading } = useGetModulesByCourseIdQuery({
+    courseId,
+  });
+
+  const modules = modulesData?.data?.modules as IModule[];
+
+  const lessons: ILesson[] = [];
 
   modules?.forEach((module) => {
     module?.lessons?.forEach((lesson) => {
@@ -35,11 +40,11 @@ const ModuleListContainer = () => {
   });
 
   const moduleList: CollapseProps["items"] = modules?.map((module, index) => ({
-    key: module?.module?.id,
+    key: module?.id,
     label: (
       <div className="flex justify-between items-center">
         <h4 className="font-semibold">
-          Module-{index + 1} : {module?.module?.title}
+          Module-{index + 1} : {module?.title}
         </h4>
         <span>{module?.lessons?.length}</span>
       </div>
@@ -48,13 +53,12 @@ const ModuleListContainer = () => {
       <div className="flex flex-col gap-2">
         {module?.lessons?.map((lesson, index) => (
           <LessonItem
-            key={lesson?.lesson?.id}
+            key={lesson?.id}
             lesson={lesson}
             index={index}
-            courseId={course?.course?.id}
-            moduleId={module?.module?.id}
-            lessons={lessons}
-            lastCompletedLesson={course?.lastCompletedLesson}
+            lastCompletedLesson={myCourse?.lastCompletedLesson}
+            completedLessons={myCourse?.completedLessons}
+            nextLesson={myCourse?.nextLesson}
           />
         ))}
       </div>
@@ -69,14 +73,17 @@ const ModuleListContainer = () => {
         <div className="h-[90%] border rounded-lg overflow-y-auto">
           <div className="flex justify-between bg-green-600 text-white items-center px-2 py-3">
             <ShowCourseCompletedProgress
-              percentage={course?.completionPercentage}
+              percentage={myCourse?.completionPercentage}
             />
-            <LessonCount modules={modules} />
+            <LessonCount
+              totalLessons={lessons?.length || 0}
+              completedLessons={myCourse?.completedLessons?.length || 0}
+            />
           </div>
           <LessonSearch lessons={lessons} />
           <Collapse
             items={moduleList}
-            defaultActiveKey={[course?.lastCompletedLesson?.module]}
+            defaultActiveKey={[myCourse?.lastCompletedLesson?.module]}
           />
         </div>
       )}

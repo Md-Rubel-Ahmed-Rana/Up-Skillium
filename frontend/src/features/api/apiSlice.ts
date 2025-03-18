@@ -25,6 +25,7 @@ const apiSlice = createApi({
     "assignment-submission",
     "role",
     "live-class",
+    "my-course",
   ],
   endpoints: () => ({}),
 });

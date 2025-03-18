@@ -1,21 +1,20 @@
-import { ILesson } from "@/types/lesson.type";
 import { useGetSingleLessonQuery } from "@/features/lesson";
 import SingleLessonSkeleton from "@/skeletons/singleLessonSkeleton";
+import { ILesson } from "@/types/lesson.type";
 import { useRouter } from "next/router";
-import { ILessonProgress } from "@/types/studentProgress.type";
+import ShowAssignment from "../assignment";
+import ShowInstruction from "../instruction";
+import ShowQuizQuestions from "../quiz";
 import LessonActions from "./LessonActions";
 import LessonVideoPlayer from "./LessonVideoPlayer";
-import ShowAssignment from "../assignment";
-import ShowQuizQuestions from "../quiz";
-import ShowInstruction from "../instruction";
 import NoLessonFoundError from "./NoLessonFoundError";
 
 type Props = {
-  currentLesson: ILessonProgress;
-  lessons: ILessonProgress[];
+  lessons: ILesson[];
+  completedLessons: string[];
 };
 
-const LessonContainer = ({ currentLesson, lessons }: Props) => {
+const LessonContainer = ({ lessons, completedLessons }: Props) => {
   const { query } = useRouter();
   const lessonId = query?.lessonId as string;
 
@@ -37,23 +36,18 @@ const LessonContainer = ({ currentLesson, lessons }: Props) => {
               <LessonVideoPlayer videoUrl={lesson?.videoUrl} />
             )}
             {lesson?.type === "assignment" && (
-              <ShowAssignment
-                lesson={lesson}
-                isAssignmentSubmitted={
-                  currentLesson?.isAssignmentSubmitted as boolean
-                }
-              />
+              <ShowAssignment lesson={lesson} isAssignmentSubmitted={false} />
             )}
             {lesson?.type === "quiz" && (
-              <ShowQuizQuestions
-                lesson={lesson}
-                isQuizSubmitted={currentLesson?.isQuizSubmitted as boolean}
-              />
+              <ShowQuizQuestions lesson={lesson} isQuizSubmitted={false} />
             )}
             {lesson?.type === "instruction" && (
               <ShowInstruction lesson={lesson} />
             )}
-            <LessonActions lessons={lessons} />
+            <LessonActions
+              lessons={lessons}
+              completedLessons={completedLessons}
+            />
           </div>
         </>
       )}
