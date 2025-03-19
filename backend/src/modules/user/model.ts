@@ -33,6 +33,14 @@ export const userSchema = new Schema<IUser>(
       required: true,
       ref: "Role",
     },
+    roleName: {
+      type: String,
+      required: true,
+    },
+    userRoleId: {
+      type: String,
+      required: true,
+    },
     password: {
       type: String,
       required: true,

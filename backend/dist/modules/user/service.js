@@ -17,10 +17,10 @@ const model_1 = require("./model");
 const bcrypt_1 = require("../../lib/bcrypt");
 const apiError_1 = __importDefault(require("../../shared/apiError"));
 const service_1 = require("../role/service");
-const service_2 = require("../student/service");
-const service_3 = require("../instructor/service");
-const service_4 = require("../admin/service");
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
+const generateStudentId_1 = __importDefault(require("../../utils/generateStudentId"));
+const generateAdminId_1 = __importDefault(require("../../utils/generateAdminId"));
+const generateTeacherId_1 = __importDefault(require("../../utils/generateTeacherId"));
 class Service {
     createUser(user) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -32,16 +32,55 @@ class Service {
             const role = yield service_1.RoleService.getRoleByRoleName(userRole);
             user.password = yield bcrypt_1.BcryptInstance.hash(user.password);
             user.role = role === null || role === void 0 ? void 0 : role.id;
-            const newUser = yield model_1.User.create(user);
             if ((role === null || role === void 0 ? void 0 : role.name) === "student") {
-                yield service_2.StudentService.createNewStudent(newUser === null || newUser === void 0 ? void 0 : newUser._id);
+                const studentId = yield this.createStudentId();
+                user.userRoleId = studentId;
+                user.roleName = "student";
             }
             else if ((role === null || role === void 0 ? void 0 : role.name) === "instructor") {
-                yield service_3.InstructorService.createNewInstructor(newUser === null || newUser === void 0 ? void 0 : newUser._id);
+                const instructorId = yield this.createInstructorId();
+                user.userRoleId = instructorId;
+                user.roleName = "instructor";
             }
             else if ((role === null || role === void 0 ? void 0 : role.name) === "admin") {
-                yield service_4.AdminService.createNewAdmin(newUser === null || newUser === void 0 ? void 0 : newUser._id);
+                const adminId = yield this.createAdminId();
+                user.userRoleId = adminId;
+                user.roleName = "admin";
             }
+            yield model_1.User.create(user);
+        });
+    }
+    createStudentId() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lastStudent = yield model_1.User.findOne({ roleName: "student" }).sort({
+                createdAt: -1,
+            });
+            const studentId = lastStudent
+                ? (0, generateStudentId_1.default)(lastStudent.userRoleId)
+                : (0, generateStudentId_1.default)("US-ST-0000");
+            return studentId;
+        });
+    }
+    createAdminId() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lastAdmin = yield model_1.User.findOne({ roleName: "admin" }).sort({
+                createdAt: -1,
+            });
+            const adminId = lastAdmin
+                ? (0, generateAdminId_1.default)(lastAdmin.userRoleId)
+                : (0, generateAdminId_1.default)("US-AD-0000");
+            return adminId;
+        });
+    }
+    createInstructorId() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const lastInstructor = yield model_1.User.findOne({ roleName: "instructor" }).sort({
+                createdAt: -1,
+            });
+            const instructorId = lastInstructor
+                ? (0, generateTeacherId_1.default)(lastInstructor.userRoleId)
+                : (0, generateTeacherId_1.default)("US-TE-0000");
+            return instructorId;
         });
     }
     findUserByEmail(email) {

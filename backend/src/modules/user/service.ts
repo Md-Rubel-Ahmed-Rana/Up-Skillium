@@ -10,10 +10,10 @@ import {
 import { BcryptInstance } from "../../lib/bcrypt";
 import ApiError from "../../shared/apiError";
 import { RoleService } from "../role/service";
-import { StudentService } from "../student/service";
-import { InstructorService } from "../instructor/service";
-import { AdminService } from "../admin/service";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
+import generateStudentId from "../../utils/generateStudentId";
+import generateAdminId from "../../utils/generateAdminId";
+import generateTeacherId from "../../utils/generateTeacherId";
 
 class Service {
   async createUser(user: ICreateUser): Promise<void> {
@@ -32,15 +32,48 @@ class Service {
     user.password = await BcryptInstance.hash(user.password);
     user.role = role?.id as Types.ObjectId;
 
-    const newUser = await User.create(user);
-
     if (role?.name === "student") {
-      await StudentService.createNewStudent(newUser?._id);
+      const studentId = await this.createStudentId();
+      user.userRoleId = studentId;
+      user.roleName = "student";
     } else if (role?.name === "instructor") {
-      await InstructorService.createNewInstructor(newUser?._id);
+      const instructorId = await this.createInstructorId();
+      user.userRoleId = instructorId;
+      user.roleName = "instructor";
     } else if (role?.name === "admin") {
-      await AdminService.createNewAdmin(newUser?._id);
+      const adminId = await this.createAdminId();
+      user.userRoleId = adminId;
+      user.roleName = "admin";
     }
+    await User.create(user);
+  }
+  async createStudentId(): Promise<string> {
+    const lastStudent = await User.findOne({ roleName: "student" }).sort({
+      createdAt: -1,
+    });
+    const studentId = lastStudent
+      ? generateStudentId(lastStudent.userRoleId)
+      : generateStudentId("US-ST-0000");
+    return studentId;
+  }
+
+  async createAdminId(): Promise<string> {
+    const lastAdmin = await User.findOne({ roleName: "admin" }).sort({
+      createdAt: -1,
+    });
+    const adminId = lastAdmin
+      ? generateAdminId(lastAdmin.userRoleId)
+      : generateAdminId("US-AD-0000");
+    return adminId;
+  }
+  async createInstructorId(): Promise<string> {
+    const lastInstructor = await User.findOne({ roleName: "instructor" }).sort({
+      createdAt: -1,
+    });
+    const instructorId = lastInstructor
+      ? generateTeacherId(lastInstructor.userRoleId)
+      : generateTeacherId("US-TE-0000");
+    return instructorId;
   }
   async findUserByEmail(email: string) {
     return User.findOne({ email: email });

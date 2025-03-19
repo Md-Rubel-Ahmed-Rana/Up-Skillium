@@ -3,10 +3,7 @@ import { AssignmentSubmissionController } from "./controller";
 
 const router = Router();
 
-router.post(
-  "/submit/:userId/:courseId/:moduleId/:lessonId",
-  AssignmentSubmissionController.submit
-);
+router.post("/submit", AssignmentSubmissionController.submit);
 
 router.get("/", AssignmentSubmissionController.getAllSubmission);
 

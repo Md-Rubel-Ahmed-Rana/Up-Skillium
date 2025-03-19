@@ -12,19 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ReviewService = void 0;
 const model_1 = require("./model");
 const service_1 = require("../course/service");
-const service_2 = require("../instructor/service");
 class Service {
     addReview(data) {
         return __awaiter(this, void 0, void 0, function* () {
             yield model_1.Review.create(data);
-            if ((data === null || data === void 0 ? void 0 : data.reviewToModel) === "User") {
-                yield service_2.InstructorService.incrementRatings(data === null || data === void 0 ? void 0 : data.reviewTo, data === null || data === void 0 ? void 0 : data.rating);
-            }
-            else if ((data === null || data === void 0 ? void 0 : data.reviewToModel) === "Course") {
+            if ((data === null || data === void 0 ? void 0 : data.reviewToModel) === "Course") {
                 yield service_1.CourseService.incrementRatings(data === null || data === void 0 ? void 0 : data.reviewTo, data === null || data === void 0 ? void 0 : data.rating);
-            }
-            else {
-                return;
             }
         });
     }

@@ -1,8 +1,6 @@
 import { Types } from "mongoose";
-import { StudentProgressService } from "../student-progress/service";
 import { IEnrollment } from "./interface";
 import { Enrollment } from "./model";
-import { StudentService } from "../student/service";
 import { TrackOrderId } from "../../utils/trackOrderId";
 import { InvoiceService } from "../pdf-creator/invoice.service";
 import { MailService } from "../mail/mail.service";
@@ -95,9 +93,7 @@ class Service {
         customerInfo: {
           name: enrollment.user.name as string,
           email: enrollment.user.email as string,
-          studentId: await StudentService.getStudentIdByUserId(
-            enrollment.user._id as Types.ObjectId
-          ),
+          studentId: enrollment?.user?.userRoleId,
         },
         orderInfo: {
           orderId: enrollment.orderId as string,

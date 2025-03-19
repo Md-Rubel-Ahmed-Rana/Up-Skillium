@@ -3,4 +3,6 @@ export type IRegister = {
   email: string;
   role: string;
   password: string;
+  userRoleId?: string;
+  roleName?: string;
 };

@@ -1,14 +1,11 @@
 import { Types } from "mongoose";
 import { IQuizSubmission, IQuizSubmitData } from "./interface";
 import { QuizSubmission } from "./model";
-import { StudentProgressService } from "../student-progress/service";
 import { QuizService } from "../quiz/service";
 
 class Service {
   async submitQuiz(
     userId: Types.ObjectId,
-    courseId: Types.ObjectId,
-    moduleId: Types.ObjectId,
     lessonId: Types.ObjectId,
     data: IQuizSubmitData[]
   ) {
@@ -19,12 +16,6 @@ class Service {
       lesson: lessonId,
     };
     await QuizSubmission.create(newData);
-    await StudentProgressService.quizLessonMarkAsSubmitted(
-      userId,
-      courseId,
-      moduleId,
-      lessonId
-    );
   }
   async getSubmittedQuizResultByLessonId(
     lessonId: Types.ObjectId
