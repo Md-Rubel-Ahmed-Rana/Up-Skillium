@@ -30,10 +30,8 @@ class Controller extends rootController_1.default {
         }));
         this.submitQuiz = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const userId = req.params.userId;
-            const courseId = req.params.courseId;
-            const moduleId = req.params.moduleId;
             const lessonId = req.params.lessonId;
-            const data = yield service_1.QuizSubmissionService.submitQuiz(userId, courseId, moduleId, lessonId, req.body);
+            const data = yield service_1.QuizSubmissionService.submitQuiz(userId, lessonId, req.body);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,

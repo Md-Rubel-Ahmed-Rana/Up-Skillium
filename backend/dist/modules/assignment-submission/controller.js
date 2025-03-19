@@ -19,11 +19,7 @@ class Controller extends rootController_1.default {
     constructor() {
         super(...arguments);
         this.submit = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
-            const userId = req.params.userId;
-            const courseId = req.params.courseId;
-            const moduleId = req.params.moduleId;
-            const lessonId = req.params.lessonId;
-            yield service_1.AssignmentSubmissionService.submit(userId, courseId, moduleId, lessonId, req.body);
+            yield service_1.AssignmentSubmissionService.submit(req.body);
             this.apiResponse(res, {
                 statusCode: 201,
                 success: true,

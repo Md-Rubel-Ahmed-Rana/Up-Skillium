@@ -10,14 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AssignmentSubmissionService = void 0;
-const service_1 = require("../student-progress/service");
 const model_1 = require("./model");
-const service_2 = require("../module/service");
+const service_1 = require("../module/service");
 class Service {
-    submit(userId, courseId, moduleId, lessonId, data) {
+    submit(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const result = yield model_1.AssignmentSubmission.create(data);
-            yield service_1.StudentProgressService.assignmentLessonMarkAsSubmitted(userId, courseId, moduleId, lessonId);
             return result;
         });
     }
@@ -91,7 +89,7 @@ class Service {
     }
     getPendingAssignmentByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const modules = yield service_2.ModuleService.getAllModulesByInstructor(instructorId);
+            const modules = yield service_1.ModuleService.getAllModulesByInstructor(instructorId);
             const moduleIds = modules.map((module) => module === null || module === void 0 ? void 0 : module.id);
             const assignments = yield model_1.AssignmentSubmission.find({
                 "lesson.module": { $in: moduleIds },
@@ -102,7 +100,7 @@ class Service {
     }
     getCompletedAssignmentByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const modules = yield service_2.ModuleService.getAllModulesByInstructor(instructorId);
+            const modules = yield service_1.ModuleService.getAllModulesByInstructor(instructorId);
             const moduleIds = modules.map((module) => module === null || module === void 0 ? void 0 : module.id);
             const assignments = yield model_1.AssignmentSubmission.find({
                 "lesson.module": { $in: moduleIds },

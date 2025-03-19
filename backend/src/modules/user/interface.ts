@@ -17,6 +17,8 @@ export type ICreateUser = {
   name: string;
   email: string;
   role: string | Types.ObjectId;
+  userRoleId?: string;
+  roleName?: string;
   password: string;
 };
 
@@ -26,6 +28,8 @@ export type IGetUser = {
   image: string;
   email: string;
   role: Types.ObjectId;
+  userRoleId: string;
+  roleName: string;
   dateOfBirth: Date;
   gender: string;
   address: IAddress;
@@ -37,7 +41,8 @@ export type IUser = {
   image: string;
   email: string;
   role: Types.ObjectId;
-  userRoleId: string; // adjust this new id
+  userRoleId: string;
+  roleName: string;
   dateOfBirth: Date;
   password: string;
   gender: string;

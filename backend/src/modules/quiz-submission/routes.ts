@@ -4,14 +4,11 @@ import { QuizSubmissionController } from "./controller";
 const router = Router();
 
 router.get(
-  "/result/:lessonId",
+  "/result/:userId/:lessonId",
   QuizSubmissionController.getSubmittedQuizResultByLessonId
 );
 
-router.post(
-  "/submit/:userId/:courseId/:moduleId/:lessonId",
-  QuizSubmissionController.submitQuiz
-);
+router.post("/submit/:userId/:lessonId", QuizSubmissionController.submitQuiz);
 
 router.get("/", QuizSubmissionController.getAllQuizSubmissions);
 

@@ -2,17 +2,12 @@ import { Types } from "mongoose";
 import { IReview } from "./interface";
 import { Review } from "./model";
 import { CourseService } from "../course/service";
-import { InstructorService } from "../instructor/service";
 
 class Service {
   async addReview(data: IReview): Promise<void> {
     await Review.create(data);
-    if (data?.reviewToModel === "User") {
-      await InstructorService.incrementRatings(data?.reviewTo, data?.rating);
-    } else if (data?.reviewToModel === "Course") {
+    if (data?.reviewToModel === "Course") {
       await CourseService.incrementRatings(data?.reviewTo, data?.rating);
-    } else {
-      return;
     }
   }
   async getAllReviews(): Promise<IReview[]> {

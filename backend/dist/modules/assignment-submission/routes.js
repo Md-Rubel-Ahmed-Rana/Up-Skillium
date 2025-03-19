@@ -4,7 +4,7 @@ exports.AssignmentSubmissionRoutes = void 0;
 const express_1 = require("express");
 const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
-router.post("/submit/:userId/:courseId/:moduleId/:lessonId", controller_1.AssignmentSubmissionController.submit);
+router.post("/submit", controller_1.AssignmentSubmissionController.submit);
 router.get("/", controller_1.AssignmentSubmissionController.getAllSubmission);
 router.get("/pending", controller_1.AssignmentSubmissionController.getAllPendingSubmissions);
 router.get("/reviewed", controller_1.AssignmentSubmissionController.getAllReviewedSubmissions);

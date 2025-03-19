@@ -14,11 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EnrollmentService = void 0;
 const model_1 = require("./model");
-const service_1 = require("../student/service");
 const trackOrderId_1 = require("../../utils/trackOrderId");
 const invoice_service_1 = require("../pdf-creator/invoice.service");
 const mail_service_1 = require("../mail/mail.service");
-const service_2 = require("../my-courses/service");
+const service_1 = require("../my-courses/service");
 const apiError_1 = __importDefault(require("../../shared/apiError"));
 class Service {
     createEnrollment(data) {
@@ -79,6 +78,7 @@ class Service {
     }
     updateStatusAsSuccessByWebhook(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const enrollment = yield model_1.Enrollment.findOne({
                 paymentSessionId: sessionId,
             })
@@ -95,14 +95,14 @@ class Service {
                     customerInfo: {
                         name: enrollment.user.name,
                         email: enrollment.user.email,
-                        studentId: yield service_1.StudentService.getStudentIdByUserId(enrollment.user._id),
+                        studentId: (_a = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _a === void 0 ? void 0 : _a.userRoleId,
                     },
                     orderInfo: {
                         orderId: enrollment.orderId,
                     },
                 });
                 yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success", invoice: invoiceUrl } });
-                yield service_2.MyCourseService.addNewCourse({
+                yield service_1.MyCourseService.addNewCourse({
                     course: enrollment.course.id,
                     user: enrollment.user._id,
                 });
