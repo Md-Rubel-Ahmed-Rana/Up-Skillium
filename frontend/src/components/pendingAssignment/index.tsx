@@ -56,7 +56,7 @@ const PendingAssignmentTable = ({ assignments, isLoading }: Props) => {
         <div className="flex items-center gap-2">
           <Button type="default">Submission</Button>
           <Link
-            href={`/dashboard/update-assignment/${assignment?.id}?lessonTitle=${assignment?.lesson?.title}`}
+            href={`/dashboard/assignments/review/${assignment?.id}?lessonTitle=${assignment?.lesson?.title}&lessonId=${assignment?.lesson?.id}&studentId=${assignment?.user?.id}`}
           >
             <Button type="primary">Review</Button>
           </Link>

@@ -1,3 +1,4 @@
+import { IReviewAssignment } from "@/types/assignmentSubmission.type";
 import apiSlice from "../api/apiSlice";
 
 const assignmentSubmissionApi = apiSlice.injectEndpoints({
@@ -18,10 +19,25 @@ const assignmentSubmissionApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["assignment", "assignment-submission"],
     }),
+    submitAssignmentFeedback: builder.mutation({
+      query: ({ data }: { data: IReviewAssignment }) => ({
+        method: "PATCH",
+        url: `/assignment-submission/review`,
+        body: data,
+      }),
+      invalidatesTags: ["assignment", "assignment-submission"],
+    }),
     getSubmittedAssignment: builder.query({
       query: ({ userId, lessonId }: { userId: string; lessonId: string }) => ({
         method: "GET",
         url: `/assignment-submission/by-lesson/${userId}/${lessonId}`,
+      }),
+      providesTags: ["assignment", "assignment-submission"],
+    }),
+    getSingleAssignmentSubmission: builder.query({
+      query: ({ id }: { id: string }) => ({
+        method: "GET",
+        url: `/assignment-submission/single/${id}`,
       }),
       providesTags: ["assignment", "assignment-submission"],
     }),
@@ -63,4 +79,6 @@ export const {
   useGetAllReviewedAssignmentsQuery,
   useGetInstructorPendingAssignmentsQuery,
   useGetInstructorCompleteAssignmentsQuery,
+  useGetSingleAssignmentSubmissionQuery,
+  useSubmitAssignmentFeedbackMutation,
 } = assignmentSubmissionApi;
