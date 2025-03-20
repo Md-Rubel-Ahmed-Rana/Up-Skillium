@@ -113,7 +113,7 @@ class Service {
             return yield model_1.Lesson.find({ module: moduleId })
                 .skip(skip)
                 .limit(limit)
-                .exec();
+                .sort({ serial: 1 });
         });
     }
     getLessonsByModules(moduleIds) {

@@ -117,7 +117,7 @@ class Service {
     return await Lesson.find({ module: moduleId })
       .skip(skip)
       .limit(limit)
-      .exec();
+      .sort({ serial: 1 });
   }
 
   async getLessonsByModules(moduleIds: Types.ObjectId[]): Promise<ILesson[]> {
