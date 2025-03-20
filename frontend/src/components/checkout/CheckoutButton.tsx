@@ -1,6 +1,8 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
+import { useGetAllMyCoursesQuery } from "@/features/myCourse";
 import { useMakeStripeCheckoutMutation } from "@/features/stripePayment";
 import { ICheckout } from "@/types/checkout.type";
+import { IMyCourse } from "@/types/myCourse.type";
 import { IUser } from "@/types/user.type";
 import handleValidationErrors from "@/utils/handleValidationErrors";
 import { Button } from "antd/lib";
@@ -25,6 +27,15 @@ const CheckoutButton = ({
   const user = userData?.data as IUser;
   const router = useRouter();
   const [checkout, { isLoading }] = useMakeStripeCheckoutMutation();
+
+  const { data: coursesData } = useGetAllMyCoursesQuery({
+    userId: user?.id,
+  });
+  const courses = (coursesData?.data as IMyCourse[]) || [];
+
+  const course = courses.find((course) => course?.course?.id === courseId);
+
+  const isAlreadyEnrolled = course?.course?.id ? true : (false as boolean);
 
   const handleCheckout = async () => {
     if (!user?.id) {
@@ -87,14 +98,18 @@ const CheckoutButton = ({
   return (
     <Button
       onClick={handleCheckout}
-      disabled={paymentMethod === "paypal" || isLoading}
+      disabled={paymentMethod === "paypal" || isLoading || isAlreadyEnrolled}
       type="primary"
       block
       size="large"
       loading={isLoading}
       iconPosition="end"
     >
-      {isLoading ? "Processing..." : "Checkout"}
+      {isLoading
+        ? "Processing..."
+        : isAlreadyEnrolled
+        ? "Already enrolled"
+        : "Checkout"}
     </Button>
   );
 };
