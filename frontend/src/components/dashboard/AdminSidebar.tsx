@@ -116,13 +116,13 @@ const AdminSidebar = () => {
           icon: <FaUserPlus />,
           label: <Link href="/dashboard/create-student">Create Student</Link>,
         },
-        {
-          key: "2-8",
-          icon: <FaChartLine />,
-          label: (
-            <Link href="/dashboard/students-progress">Students Progress</Link>
-          ),
-        },
+        // {
+        //   key: "2-8",
+        //   icon: <FaChartLine />,
+        //   label: (
+        //     <Link href="/dashboard/students-progress">Students Progress</Link>
+        //   ),
+        // },
       ],
     },
     {

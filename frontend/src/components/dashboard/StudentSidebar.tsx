@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import {
   FaBook,
-  FaChartLine,
   FaClipboardList,
   FaShoppingCart,
   FaSignOutAlt,
@@ -36,11 +35,11 @@ const StudentSidebar = () => {
       icon: <FaShoppingCart />,
       label: <Link href={"/dashboard/order-history"}>Order History</Link>,
     },
-    {
-      key: "5",
-      icon: <FaChartLine />,
-      label: <Link href={"/dashboard/progress"}>Progress</Link>,
-    },
+    // {
+    //   key: "5",
+    //   icon: <FaChartLine />,
+    //   label: <Link href={"/dashboard/progress"}>Progress</Link>,
+    // },
     {
       key: "7",
       icon: <FaClipboardList />,

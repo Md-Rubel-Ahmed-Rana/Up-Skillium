@@ -1,5 +1,8 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
-import { useGetSubmittedQuizResultQuery } from "@/features/quizSubmission";
+import {
+  useGetSubmittedQuizResultQuery,
+  useSubmitQuizMutation,
+} from "@/features/quizSubmission";
 import { ILesson } from "@/types/lesson.type";
 import { IQuizSubmissionResult } from "@/types/quizSubmission.type";
 import { IUser } from "@/types/user.type";
@@ -21,10 +24,11 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
   const { data: userData } = useGetLoggedInUserQuery({});
   const user = userData?.data as IUser;
   const { data } = useGetSubmittedQuizResultQuery({
-    lessonId: lesson?.id,
     userId: user?.id,
+    lessonId: lesson?.id,
   });
   const result = data?.data as IQuizSubmissionResult;
+  const [submitQuiz, { isLoading }] = useSubmitQuizMutation();
 
   const questions = lesson?.quizQuestions;
   const [selectedAnswers, setSelectedAnswers] = useState<ISelectedAnswers[]>(
@@ -52,8 +56,26 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
     });
   };
 
-  const handleSubmitQuiz = () => {
-    toast.success("Quiz submitted");
+  const handleSubmitQuiz = async () => {
+    try {
+      const res: any = await submitQuiz({
+        userId: user?.id,
+        lessonId: lesson?.id,
+        data: selectedAnswers,
+      });
+      if (res?.data?.statusCode === 200) {
+        toast.success(res?.data?.message || "Quiz submitted successfully!");
+      } else {
+        toast.error(
+          res?.error?.message ||
+            res?.error?.data?.message ||
+            res?.data?.error?.message ||
+            "Failed to submit quiz"
+        );
+      }
+    } catch (error: any) {
+      toast.error(error?.message || "Failed to submit quiz");
+    }
   };
 
   useEffect(() => {
@@ -86,11 +108,13 @@ const ShowQuizQuestions = ({ lesson }: Props) => {
           <div className="text-right my-2 pt-4">
             {currentIndex === questions?.length - 1 ? (
               <Button
-                disabled={!selectedOption}
+                disabled={!selectedOption || isLoading}
                 onClick={handleSubmitQuiz}
                 type="primary"
+                loading={isLoading}
+                iconPosition="end"
               >
-                Submit
+                {isLoading ? "submitting..." : "Submit"}
               </Button>
             ) : (
               <Button

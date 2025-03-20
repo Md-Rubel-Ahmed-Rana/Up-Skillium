@@ -21,7 +21,8 @@ type Props = {
     | "/dashboard/manage-students"
     | "/dashboard/manage-instructors"
     | "/dashboard/manage-admins"
-    | "/dashboard/profile-info";
+    | "/dashboard/profile-info"
+    | "/login";
   buttonText?: string;
 };
 
