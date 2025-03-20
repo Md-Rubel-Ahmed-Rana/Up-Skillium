@@ -1,6 +1,7 @@
 import { IAssignmentSubmission } from "@/types/assignmentSubmission.type";
-import { Button, Table, TableProps } from "antd/lib";
-import Link from "next/link";
+import { Table, TableProps } from "antd/lib";
+import AssignmentReviewButton from "../manageReviewedAssignments/AssignmentReviewButton";
+import AssignmentSubmissionModal from "../manageReviewedAssignments/AssignmentSubmissionModal";
 
 type Props = {
   assignments: IAssignmentSubmission[];
@@ -53,17 +54,23 @@ const PendingAssignmentTable = ({ assignments, isLoading }: Props) => {
       title: "Actions",
       key: "actions",
       render: (_: any, assignment: IAssignmentSubmission) => (
-        <div className="flex items-center gap-2">
-          <Button type="default">Submission</Button>
-          <Link
-            href={`/dashboard/assignments/review/${assignment?.id}?lessonTitle=${assignment?.lesson?.title}&lessonId=${assignment?.lesson?.id}&studentId=${assignment?.user?.id}`}
-          >
-            <Button type="primary">Review</Button>
-          </Link>
+        <div className="flex flex-col items-center gap-2">
+          <AssignmentSubmissionModal
+            submission={assignment?.submission}
+            buttonSize="middle"
+            buttonStyles="bg-yellow-600 text-white"
+          />
+          <AssignmentReviewButton
+            assignment={assignment}
+            buttonText="Review"
+            buttonSize="middle"
+            buttonType="primary"
+          />
         </div>
       ),
     },
   ];
+
   return (
     <Table
       rowKey="id"
