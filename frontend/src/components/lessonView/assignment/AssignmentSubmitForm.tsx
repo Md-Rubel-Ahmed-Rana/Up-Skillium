@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useSubmitAssignmentMutation } from "@/features/assignmentSubmission";
+import { useGetLoggedInUserQuery } from "@/features/auth";
+import { ILesson } from "@/types/lesson.type";
+import { IUser } from "@/types/user.type";
 import { Button } from "antd/lib";
 import dynamic from "next/dynamic";
-import { ILesson } from "@/types/lesson.type";
-import { useGetLoggedInUserQuery } from "@/features/auth";
-import { IUser } from "@/types/user.type";
-import { useRouter } from "next/router";
-import { useSubmitAssignmentMutation } from "@/features/assignmentSubmission";
+import { useState } from "react";
 import toast from "react-hot-toast";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
@@ -17,8 +16,6 @@ type Props = {
 const AssignmentSubmitForm = ({ setIsSubmit, lesson }: Props) => {
   const { data: userData } = useGetLoggedInUserQuery({});
   const user = userData?.data as IUser;
-  const { query } = useRouter();
-  const courseId = query?.id as string;
   const [content, setContent] = useState("");
   const [submitAssignment, { isLoading }] = useSubmitAssignmentMutation();
 
@@ -28,21 +25,14 @@ const AssignmentSubmitForm = ({ setIsSubmit, lesson }: Props) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = {
-      submission: {
-        content: content,
-      },
-      lessonId: lesson?.id,
-      userId: user?.id,
-    };
 
     try {
       const result: any = await submitAssignment({
-        formData,
-        userId: user?.id,
-        courseId,
-        moduleId: lesson?.module,
-        lessonId: lesson?.id,
+        user: user?.id,
+        lesson: lesson?.id,
+        submission: {
+          content: content,
+        },
       });
       if (result?.data?.statusCode === 201) {
         toast.success(

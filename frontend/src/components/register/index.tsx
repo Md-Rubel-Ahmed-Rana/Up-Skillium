@@ -7,7 +7,7 @@ const Register = () => {
       <CreateUser
         formTitle="Create your student account today!"
         role="student"
-        successRoute="/dashboard/profile-info"
+        successRoute="/login"
       />
       <p className="text-center text-gray-600">
         <span>Already have an account? </span>

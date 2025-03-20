@@ -4,25 +4,17 @@ const assignmentSubmissionApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     submitAssignment: builder.mutation({
       query: ({
-        formData,
-        userId,
-        courseId,
-        moduleId,
-        lessonId,
+        user,
+        lesson,
+        submission,
       }: {
-        formData: {
-          submission: { content: string };
-          userId: string;
-          lessonId: string;
-        };
-        userId: string;
-        courseId: string;
-        moduleId: string;
-        lessonId: string;
+        user: string;
+        lesson: string;
+        submission: { content: string; file?: any };
       }) => ({
         method: "POST",
-        url: `/assignment-submission/submit/${userId}/${courseId}/${moduleId}/${lessonId}`,
-        body: formData,
+        url: `/assignment-submission/submit`,
+        body: { user, lesson, submission },
       }),
       invalidatesTags: ["assignment", "assignment-submission"],
     }),
