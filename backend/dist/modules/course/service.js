@@ -46,6 +46,11 @@ class Service {
                     model: "User",
                     select: { password: 0 },
                 },
+                {
+                    path: "students",
+                    model: "User",
+                    select: { password: 0 },
+                },
             ])
                 .skip(skip)
                 .limit(limit);
@@ -72,6 +77,11 @@ class Service {
                 .populate([
                 {
                     path: "instructor",
+                    model: "User",
+                    select: { password: 0 },
+                },
+                {
+                    path: "students",
                     model: "User",
                     select: { password: 0 },
                 },
@@ -105,7 +115,18 @@ class Service {
     }
     getCoursesByInstructor(instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const courses = yield model_1.Course.find({ instructor: instructorId });
+            const courses = yield model_1.Course.find({ instructor: instructorId }).populate([
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: { password: 0 },
+                },
+                {
+                    path: "students",
+                    model: "User",
+                    select: { password: 0 },
+                },
+            ]);
             return courses;
         });
     }
@@ -242,6 +263,11 @@ class Service {
                     model: "User",
                     select: { password: 0 },
                 },
+                {
+                    path: "students",
+                    model: "User",
+                    select: { password: 0 },
+                },
             ])
                 .limit(5);
             if ((courses === null || courses === void 0 ? void 0 : courses.length) === 0) {
@@ -270,6 +296,11 @@ class Service {
                     model: "User",
                     select: { password: 0 },
                 },
+                {
+                    path: "students",
+                    model: "User",
+                    select: { password: 0 },
+                },
             ]);
             const otherCourses = yield model_1.Course.find({
                 category: { $ne: category },
@@ -278,6 +309,11 @@ class Service {
                 .populate([
                 {
                     path: "instructor",
+                    model: "User",
+                    select: { password: 0 },
+                },
+                {
+                    path: "students",
                     model: "User",
                     select: { password: 0 },
                 },
@@ -296,7 +332,18 @@ class Service {
     }
     getStudentsFromCourse(courseId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const course = yield model_1.Course.findById(courseId).populate("students", "name email image");
+            const course = yield model_1.Course.findById(courseId).populate([
+                {
+                    path: "instructor",
+                    model: "User",
+                    select: { password: 0 },
+                },
+                {
+                    path: "students",
+                    model: "User",
+                    select: { password: 0 },
+                },
+            ]);
             const students = course === null || course === void 0 ? void 0 : course.students;
             return students;
         });

@@ -33,6 +33,11 @@ router.get(
   CourseController.getCoursesByInstructor
 );
 
+router.get(
+  "/my-students/:instructorId",
+  CourseController.getMyStudentsByInstructor
+);
+
 router.get("/students/:courseId", CourseController.getStudentsFromCourse);
 
 router.delete("/:id", CourseController.deleteCourse);

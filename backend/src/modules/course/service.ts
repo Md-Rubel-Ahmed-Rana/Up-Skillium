@@ -15,6 +15,7 @@ class Service {
   async createCourse(data: ICourse): Promise<void> {
     await Course.create(data);
   }
+
   async getCourses(
     search: string = "",
     page: number = 1,
@@ -60,12 +61,18 @@ class Service {
           model: "User",
           select: { password: 0 },
         },
+        {
+          path: "students",
+          model: "User",
+          select: { password: 0 },
+        },
       ])
       .skip(skip)
       .limit(limit);
 
     return courses;
   }
+
   async getOnlyPublishedCourses(
     search: string = "",
     page: number = 1,
@@ -111,6 +118,11 @@ class Service {
           model: "User",
           select: { password: 0 },
         },
+        {
+          path: "students",
+          model: "User",
+          select: { password: 0 },
+        },
       ])
       .skip(skip)
       .limit(limit);
@@ -119,6 +131,7 @@ class Service {
 
     return { courses, totalCourse: total };
   }
+
   async getSingleCourse(id: Types.ObjectId): Promise<ICourse | null> {
     return await Course.findById(id).populate([
       {
@@ -138,21 +151,36 @@ class Service {
       },
     ]);
   }
+
   async getCoursesByInstructor(instructorId: Types.ObjectId) {
-    const courses = await Course.find({ instructor: instructorId });
+    const courses = await Course.find({ instructor: instructorId }).populate([
+      {
+        path: "instructor",
+        model: "User",
+        select: { password: 0 },
+      },
+      {
+        path: "students",
+        model: "User",
+        select: { password: 0 },
+      },
+    ]);
     return courses;
   }
+
   async getCourseIdsByInstructor(
     instructorId: Types.ObjectId
   ): Promise<Types.ObjectId[]> {
     const courses = await Course.find({ instructor: instructorId });
     return courses.map((course) => course?.id);
   }
+
   async getMyStudentsByInstructor(instructorId: Types.ObjectId): Promise<any> {
     const courses = await Course.find({ instructor: instructorId }).populate(
       "students",
       "name email image"
     );
+
     const studentMap = new Map();
 
     courses.forEach((course) => {
@@ -184,15 +212,18 @@ class Service {
 
     return organizedData;
   }
+
   async updateCourse(
     id: Types.ObjectId,
     updatedData: Partial<ICourse>
   ): Promise<void> {
     await Course.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
+
   async deleteCourse(id: Types.ObjectId): Promise<void> {
     await Course.findByIdAndDelete(id);
   }
+
   async updateCourseBasicInfo(
     courseId: Types.ObjectId,
     data: ICourseBasicInfo
@@ -208,11 +239,13 @@ class Service {
       },
     });
   }
+
   async updateCoursePrice(courseId: Types.ObjectId, data: IPriceUpdate) {
     await Course.findByIdAndUpdate(courseId, {
       $set: { price: { ...data } },
     });
   }
+
   async updateCourseTagsTechnologies(
     courseId: Types.ObjectId,
     data: ICourseTagsTechsUpdate
@@ -221,6 +254,7 @@ class Service {
       $set: { tags: data?.tags, technologies: data?.technologies },
     });
   }
+
   async updateCourseInstructor(
     courseId: Types.ObjectId,
     instructorId: Types.ObjectId
@@ -229,6 +263,7 @@ class Service {
       $set: { instructor: instructorId },
     });
   }
+
   async updateCourseImage(id: Types.ObjectId, imageUrl: string) {
     const course = await Course.findById(id);
     if (course && course?.image) {
@@ -236,6 +271,7 @@ class Service {
     }
     await Course.findByIdAndUpdate(id, { $set: { image: imageUrl } });
   }
+
   async updateCourseIntroductoryVideo(id: Types.ObjectId, videoUrl: string) {
     const course = await Course.findById(id);
     if (course && course?.introductoryVideo) {
@@ -245,6 +281,7 @@ class Service {
       $set: { introductoryVideo: videoUrl },
     });
   }
+
   async incrementRatings(id: Types.ObjectId, newRating: number): Promise<void> {
     const course = await Course.findById(id);
 
@@ -265,6 +302,7 @@ class Service {
       },
     });
   }
+
   async getMatchedRelatedCourses(relatableText: string): Promise<ICourse[]> {
     let courses = await Course.find({
       $text: { $search: relatableText, $caseSensitive: false },
@@ -273,6 +311,11 @@ class Service {
       .populate([
         {
           path: "instructor",
+          model: "User",
+          select: { password: 0 },
+        },
+        {
+          path: "students",
           model: "User",
           select: { password: 0 },
         },
@@ -294,6 +337,7 @@ class Service {
 
     return courses;
   }
+
   async getCoursesByCategory(
     category: string
   ): Promise<{ courses: ICourse[]; otherCourses: ICourse[] }> {
@@ -306,6 +350,11 @@ class Service {
         model: "User",
         select: { password: 0 },
       },
+      {
+        path: "students",
+        model: "User",
+        select: { password: 0 },
+      },
     ]);
 
     const otherCourses = await Course.find({
@@ -315,6 +364,11 @@ class Service {
       .populate([
         {
           path: "instructor",
+          model: "User",
+          select: { password: 0 },
+        },
+        {
+          path: "students",
           model: "User",
           select: { password: 0 },
         },
@@ -335,10 +389,18 @@ class Service {
   }
 
   async getStudentsFromCourse(courseId: Types.ObjectId): Promise<IUser[]> {
-    const course = await Course.findById(courseId).populate(
-      "students",
-      "name email image"
-    );
+    const course = await Course.findById(courseId).populate([
+      {
+        path: "instructor",
+        model: "User",
+        select: { password: 0 },
+      },
+      {
+        path: "students",
+        model: "User",
+        select: { password: 0 },
+      },
+    ]);
     const students = course?.students as unknown as IUser[];
     return students;
   }

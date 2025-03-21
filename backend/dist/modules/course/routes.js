@@ -19,6 +19,7 @@ router.get("/published/courses", controller_1.CourseController.getOnlyPublishedC
 router.get("/category/courses/:category", controller_1.CourseController.getCoursesByCategory);
 router.get("/:id", controller_1.CourseController.getSingleCourse);
 router.get("/instructor/:instructorId", controller_1.CourseController.getCoursesByInstructor);
+router.get("/my-students/:instructorId", controller_1.CourseController.getMyStudentsByInstructor);
 router.get("/students/:courseId", controller_1.CourseController.getStudentsFromCourse);
 router.delete("/:id", controller_1.CourseController.deleteCourse);
 router.patch("/update-basic-info/:id", controller_1.CourseController.updateCourseBasicInfo);
