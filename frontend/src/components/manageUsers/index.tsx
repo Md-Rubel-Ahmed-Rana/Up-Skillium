@@ -8,7 +8,8 @@ import UserDeleteButton from "./UserDeleteButton";
 const ManageUsers = () => {
   const { data, isLoading } = useGetAllUsersQuery({});
   const users = data?.data as IUser[];
-  const columns = [
+
+  const columns: any = [
     {
       title: "Image",
       dataIndex: "image",
@@ -45,12 +46,23 @@ const ManageUsers = () => {
       title: "Role",
       dataIndex: ["role", "name"],
       key: "role",
+      filters: [
+        { text: "Admin", value: "admin" },
+        { text: "Instructor", value: "instructor" },
+        { text: "Student", value: "student" },
+      ],
+      onFilter: (value: string, user: IUser) => user.role.name === value,
       render: (role: string) => <span className="text-blue-500">{role}</span>,
     },
     {
       title: "Gender",
       dataIndex: "gender",
       key: "gender",
+      filters: [
+        { text: "Male", value: "Male" },
+        { text: "Female", value: "Female" },
+      ],
+      onFilter: (value: string, user: IUser) => user?.gender === value,
       render: (gender: string) => (
         <span className="text-blue-500">{gender || "Empty"}</span>
       ),
@@ -93,6 +105,7 @@ const ManageUsers = () => {
       ),
     },
   ];
+
   return (
     <div className="lg:p-5 px-2 pb-20 overflow-x-auto">
       <h1 className="text-lg lg:text-2xl font-bold mb-4">Manage Users</h1>

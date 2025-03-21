@@ -1,6 +1,6 @@
 import { useReAssignInstructorMutation } from "@/features/course";
-import { useGetAllInstructorsQuery } from "@/features/instructor";
-import { IInstructor } from "@/types/instructor.type";
+import { useGetAllUsersQuery } from "@/features/user";
+import { IUser } from "@/types/user.type";
 import { Avatar, Modal, Select } from "antd/lib";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -11,25 +11,31 @@ const ReAssignInstructor = () => {
   const { query } = useRouter();
   const courseId = query?.courseId as string;
   const [isReAssign, setIsReAssign] = useState(false);
-  const { data, isLoading } = useGetAllInstructorsQuery({});
+  const { data, isLoading } = useGetAllUsersQuery({});
+  const instructors = data?.data as IUser[];
+  const instructorUsers = instructors.filter(
+    (user) => user?.role?.name === "instructor"
+  );
+
   const [reAssign, { isLoading: isAssigning }] =
     useReAssignInstructorMutation();
-  const instructors = (data?.data as IInstructor[]) || [];
-  const [selectedInstructor, setSelectedInstructor] =
-    useState<IInstructor | null>(null);
+
+  const [selectedInstructor, setSelectedInstructor] = useState<IUser | null>(
+    null
+  );
 
   const handleSelectInstructor = (instructorId: string) => {
-    const instructor = instructors?.find(
+    const instructor = instructorUsers?.find(
       (instructor) => instructor?.id === instructorId
     );
-    setSelectedInstructor(instructor as IInstructor);
+    setSelectedInstructor(instructor as IUser);
   };
 
   const handleReAssignInstructor = async () => {
     try {
       const result: any = await reAssign({
         courseId,
-        instructorId: selectedInstructor?.user?.id as string,
+        instructorId: selectedInstructor?.id as string,
       });
 
       if (result?.data?.statusCode === 200) {
@@ -76,32 +82,32 @@ const ReAssignInstructor = () => {
             className="w-full"
             placeholder="Select instructor"
           >
-            {instructors?.map((instructor) => (
+            {instructorUsers?.map((instructor) => (
               <Select.Option key={instructor?.id} value={instructor?.id}>
-                {instructor?.user?.name}
+                {instructor?.name}
               </Select.Option>
             ))}
           </Select>
           {selectedInstructor && (
             <div className="flex items-center gap-2 mt-4 border p-2 rounded-md">
-              {selectedInstructor?.user?.image ? (
+              {selectedInstructor?.image ? (
                 <img
                   className="h-10 w-10 rounded-full ring-1"
-                  src={selectedInstructor?.user?.image}
-                  alt={selectedInstructor?.user?.name}
+                  src={selectedInstructor?.image}
+                  alt={selectedInstructor?.name}
                 />
               ) : (
                 <Avatar className="h-10 w-10 rounded-full bg-blue-600 ring-1">
-                  {selectedInstructor?.user?.name?.slice(0, 1)?.toUpperCase()}
+                  {selectedInstructor?.name?.slice(0, 1)?.toUpperCase()}
                 </Avatar>
               )}
 
               <div>
                 <h3 className="text-lg font-semibold">
-                  {selectedInstructor?.user?.name}
+                  {selectedInstructor?.name}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  {selectedInstructor?.user?.email}
+                  {selectedInstructor?.email}
                 </p>
               </div>
             </div>

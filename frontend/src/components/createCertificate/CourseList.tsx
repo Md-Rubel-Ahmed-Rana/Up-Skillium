@@ -13,9 +13,10 @@ type Props = {
     name: string;
     technologies: string[];
   }) => void;
+  setStudents: (students: IUser[]) => void;
 };
 
-const CourseList = ({ setSelectedCourse }: Props) => {
+const CourseList = ({ setSelectedCourse, setStudents }: Props) => {
   const { data: userData } = useGetLoggedInUserQuery({});
   const user = userData?.data as IUser;
   const { data: instructorCourse } = useGetInstructorCoursesQuery({
@@ -34,6 +35,7 @@ const CourseList = ({ setSelectedCourse }: Props) => {
       name: course?.title,
       technologies: course?.technologies,
     });
+    setStudents(course?.students);
   };
 
   const courseList: MenuProps["items"] =
