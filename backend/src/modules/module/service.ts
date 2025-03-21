@@ -108,8 +108,7 @@ class Service {
   ): Promise<ILesson | null> {
     const firstModule = await Module.findOne({ course: courseId })
       .sort({ serial: 1 })
-      .populate("lessons")
-      .lean();
+      .populate("lessons");
 
     if (!firstModule || !firstModule.lessons.length) {
       return null;

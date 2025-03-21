@@ -324,6 +324,16 @@ class Service {
 
     return { courses, otherCourses };
   }
+
+  async addStudentToCourse(
+    courseId: Types.ObjectId,
+    studentId: Types.ObjectId
+  ) {
+    await Course.findByIdAndUpdate(courseId, {
+      $addToSet: { students: studentId },
+    });
+  }
+
   async getStudentsFromCourse(courseId: Types.ObjectId): Promise<IUser[]> {
     const course = await Course.findById(courseId).populate(
       "students",
