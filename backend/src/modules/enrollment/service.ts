@@ -6,6 +6,7 @@ import { InvoiceService } from "../pdf-creator/invoice.service";
 import { MailService } from "../mail/mail.service";
 import { MyCourseService } from "../my-courses/service";
 import ApiError from "../../shared/apiError";
+import { CourseService } from "../course/service";
 
 class Service {
   async createEnrollment(data: IEnrollment): Promise<void> {
@@ -109,6 +110,11 @@ class Service {
         course: enrollment.course.id,
         user: enrollment.user._id,
       });
+
+      await CourseService.addStudentToCourse(
+        enrollment?.course?.id,
+        enrollment?.user?._id
+      );
 
       await MailService.enrollmentConfirmationMail(
         enrollment.user.email,
