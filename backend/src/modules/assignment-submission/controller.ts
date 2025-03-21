@@ -22,6 +22,16 @@ class Controller extends RootController {
       data: data,
     });
   });
+  getSingleSubmission = this.catchAsync(async (req: Request, res: Response) => {
+    const id = req.params.id as unknown as Types.ObjectId;
+    const data = await AssignmentSubmissionService.getSingleSubmission(id);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Assignment submission retrieved successfully",
+      data: data,
+    });
+  });
   getAllPendingSubmissions = this.catchAsync(
     async (req: Request, res: Response) => {
       const data = await AssignmentSubmissionService.getAllPendingSubmissions();

@@ -21,6 +21,23 @@ class Service {
       },
     ]);
   }
+
+  async getSingleSubmission(
+    id: Types.ObjectId
+  ): Promise<IAssignmentSubmission | null> {
+    return await AssignmentSubmission.findById(id).populate([
+      {
+        path: "user",
+        model: "User",
+        select: { password: 0 },
+      },
+      {
+        path: "lesson",
+        model: "Lesson",
+      },
+    ]);
+  }
+
   async getAllPendingSubmissions(): Promise<IAssignmentSubmission[]> {
     return await AssignmentSubmission.find({ status: "pending" }).populate([
       {

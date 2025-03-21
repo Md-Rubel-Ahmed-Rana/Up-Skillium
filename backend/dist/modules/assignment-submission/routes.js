@@ -6,6 +6,7 @@ const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.post("/submit", controller_1.AssignmentSubmissionController.submit);
 router.get("/", controller_1.AssignmentSubmissionController.getAllSubmission);
+router.get("/single/:id", controller_1.AssignmentSubmissionController.getSingleSubmission);
 router.get("/pending", controller_1.AssignmentSubmissionController.getAllPendingSubmissions);
 router.get("/reviewed", controller_1.AssignmentSubmissionController.getAllReviewedSubmissions);
 router.get("/by-lesson/:userId/:lessonId", controller_1.AssignmentSubmissionController.getAssignmentSubmissionByLessonId);

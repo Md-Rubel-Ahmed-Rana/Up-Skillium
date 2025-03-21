@@ -91,8 +91,7 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const firstModule = yield model_1.Module.findOne({ course: courseId })
                 .sort({ serial: 1 })
-                .populate("lessons")
-                .lean();
+                .populate("lessons");
             if (!firstModule || !firstModule.lessons.length) {
                 return null;
             }

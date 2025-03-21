@@ -7,6 +7,8 @@ router.post("/submit", AssignmentSubmissionController.submit);
 
 router.get("/", AssignmentSubmissionController.getAllSubmission);
 
+router.get("/single/:id", AssignmentSubmissionController.getSingleSubmission);
+
 router.get("/pending", AssignmentSubmissionController.getAllPendingSubmissions);
 
 router.get(

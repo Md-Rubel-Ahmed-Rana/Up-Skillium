@@ -8,6 +8,8 @@ router.get(
   QuizSubmissionController.getSubmittedQuizResultByLessonId
 );
 
+router.get("/single/:id", QuizSubmissionController.getSingleQuizSubmission);
+
 router.post("/submit/:userId/:lessonId", QuizSubmissionController.submitQuiz);
 
 router.get("/", QuizSubmissionController.getAllQuizSubmissions);

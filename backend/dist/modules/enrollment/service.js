@@ -19,6 +19,7 @@ const invoice_service_1 = require("../pdf-creator/invoice.service");
 const mail_service_1 = require("../mail/mail.service");
 const service_1 = require("../my-courses/service");
 const apiError_1 = __importDefault(require("../../shared/apiError"));
+const service_2 = require("../course/service");
 class Service {
     createEnrollment(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -78,7 +79,7 @@ class Service {
     }
     updateStatusAsSuccessByWebhook(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
-            var _a;
+            var _a, _b, _c;
             const enrollment = yield model_1.Enrollment.findOne({
                 paymentSessionId: sessionId,
             })
@@ -106,6 +107,7 @@ class Service {
                     course: enrollment.course.id,
                     user: enrollment.user._id,
                 });
+                yield service_2.CourseService.addStudentToCourse((_b = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _b === void 0 ? void 0 : _b.id, (_c = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _c === void 0 ? void 0 : _c._id);
                 yield mail_service_1.MailService.enrollmentConfirmationMail(enrollment.user.email, enrollment.user.name, enrollment.course.title, invoiceUrl);
             }
         });

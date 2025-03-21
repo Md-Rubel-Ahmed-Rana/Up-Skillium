@@ -20,9 +20,24 @@ class Service {
             yield model_1.QuizSubmission.create(newData);
         });
     }
-    getSubmittedQuizResultByLessonId(lessonId) {
+    getSingleQuizSubmission(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.QuizSubmission.findOne({ lesson: lessonId }).populate([
+            return yield model_1.QuizSubmission.findById(id).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { password: 0 },
+                },
+                {
+                    path: "lesson",
+                    model: "Lesson",
+                },
+            ]);
+        });
+    }
+    getSubmittedQuizResultByLessonId(userId, lessonId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return model_1.QuizSubmission.findOne({ user: userId, lesson: lessonId }).populate([
                 {
                     path: "user",
                     model: "User",
