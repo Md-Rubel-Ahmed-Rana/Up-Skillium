@@ -1,5 +1,4 @@
-import { useGetAllInstructorsQuery } from "@/features/instructor";
-import { IInstructor } from "@/types/instructor.type";
+import { useGetAllUsersQuery } from "@/features/user";
 import { IUser } from "@/types/user.type";
 import { Form, FormInstance, Select } from "antd/lib";
 const { Option } = Select;
@@ -9,10 +8,11 @@ type Props = {
 };
 
 const SelectInstructor = ({ form }: Props) => {
-  const { data, isLoading } = useGetAllInstructorsQuery({});
-  const instructors = (data?.data as IInstructor[]) || [];
-  const instructorUsers: IUser[] =
-    instructors.map((instructor) => instructor?.user) || [];
+  const { data, isLoading } = useGetAllUsersQuery({});
+  const instructors = data?.data as IUser[];
+  const instructorUsers = instructors.filter(
+    (user) => user?.role?.name === "instructor"
+  );
 
   const handleSelectInstructor = (courseId: string) => {
     form.setFieldValue("course", courseId);

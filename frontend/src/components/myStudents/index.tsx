@@ -1,5 +1,4 @@
 import { useGetLoggedInUserQuery } from "@/features/auth";
-import { useGetMyStudentsQuery } from "@/features/instructor";
 import { IMyStudent } from "@/types/student.type";
 import { IUser } from "@/types/user.type";
 import { Avatar, Table } from "antd/lib";
@@ -8,10 +7,8 @@ import StudentActions from "./StudentActions";
 const MyStudents = () => {
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
-  const { data: studentsData, isLoading } = useGetMyStudentsQuery({
-    instructorId: user?.id,
-  });
-  const students = studentsData?.data as IMyStudent[];
+
+  const students: IMyStudent[] = [];
   const columns = [
     {
       title: "Image",
@@ -81,7 +78,6 @@ const MyStudents = () => {
         rowKey={(student) => student?.student?.id}
         pagination={{ pageSize: 5 }}
         bordered
-        loading={isLoading}
         className="shadow-md rounded-lg w-full min-w-[900px]"
         locale={{ emptyText: "No students found" }}
       />

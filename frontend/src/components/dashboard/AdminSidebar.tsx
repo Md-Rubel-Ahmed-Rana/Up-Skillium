@@ -33,7 +33,6 @@ import {
   FaTasks,
   FaUserCheck,
   FaUserCircle,
-  FaUserGraduate,
   FaUserPlus,
   FaUsers,
   FaUserShield,
@@ -82,47 +81,25 @@ const AdminSidebar = () => {
         {
           key: "2-1",
           icon: <FaUsers />,
-          label: <Link href="/dashboard/manage-users">All Users</Link>,
+          label: <Link href="/dashboard/manage-users">Users</Link>,
         },
         {
           key: "2-2",
-          icon: <FaUserShield />,
-          label: <Link href="/dashboard/manage-admins">Admins</Link>,
-        },
-        {
-          key: "2-3",
-          icon: <FaChalkboardTeacher />,
-          label: <Link href="/dashboard/manage-instructors">Instructors</Link>,
-        },
-        {
-          key: "2-4",
-          icon: <FaUserGraduate />,
-          label: <Link href="/dashboard/manage-students">Students</Link>,
-        },
-        {
-          key: "2-5",
           icon: <FaUserPlus />,
           label: <Link href="/dashboard/create-admin">Create Admin</Link>,
         },
         {
-          key: "2-6",
+          key: "2-3",
           icon: <FaUserTie />,
           label: (
             <Link href="/dashboard/create-instructor">Create Instructor</Link>
           ),
         },
         {
-          key: "2-7",
+          key: "2-4",
           icon: <FaUserPlus />,
           label: <Link href="/dashboard/create-student">Create Student</Link>,
         },
-        // {
-        //   key: "2-8",
-        //   icon: <FaChartLine />,
-        //   label: (
-        //     <Link href="/dashboard/students-progress">Students Progress</Link>
-        //   ),
-        // },
       ],
     },
     {
