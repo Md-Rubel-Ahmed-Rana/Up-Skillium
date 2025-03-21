@@ -6,8 +6,10 @@ import { Types } from "mongoose";
 class Controller extends RootController {
   getSubmittedQuizResultByLessonId = this.catchAsync(
     async (req: Request, res: Response) => {
+      const userId = req.params.userId as unknown as Types.ObjectId;
       const lessonId = req.params.lessonId as unknown as Types.ObjectId;
       const data = await QuizSubmissionService.getSubmittedQuizResultByLessonId(
+        userId,
         lessonId
       );
       this.apiResponse(res, {
@@ -40,6 +42,18 @@ class Controller extends RootController {
         statusCode: 200,
         success: true,
         message: "Quiz submissions retrieved successfully",
+        data: data,
+      });
+    }
+  );
+  getSingleQuizSubmission = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const id = req.params.id as unknown as Types.ObjectId;
+      const data = await QuizSubmissionService.getSingleQuizSubmission(id);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Quiz submission retrieved successfully",
         data: data,
       });
     }

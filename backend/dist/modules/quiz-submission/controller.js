@@ -19,8 +19,9 @@ class Controller extends rootController_1.default {
     constructor() {
         super(...arguments);
         this.getSubmittedQuizResultByLessonId = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.userId;
             const lessonId = req.params.lessonId;
-            const data = yield service_1.QuizSubmissionService.getSubmittedQuizResultByLessonId(lessonId);
+            const data = yield service_1.QuizSubmissionService.getSubmittedQuizResultByLessonId(userId, lessonId);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
@@ -45,6 +46,16 @@ class Controller extends rootController_1.default {
                 statusCode: 200,
                 success: true,
                 message: "Quiz submissions retrieved successfully",
+                data: data,
+            });
+        }));
+        this.getSingleQuizSubmission = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            const data = yield service_1.QuizSubmissionService.getSingleQuizSubmission(id);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Quiz submission retrieved successfully",
                 data: data,
             });
         }));

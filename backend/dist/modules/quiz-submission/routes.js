@@ -5,6 +5,7 @@ const express_1 = require("express");
 const controller_1 = require("./controller");
 const router = (0, express_1.Router)();
 router.get("/result/:userId/:lessonId", controller_1.QuizSubmissionController.getSubmittedQuizResultByLessonId);
+router.get("/single/:id", controller_1.QuizSubmissionController.getSingleQuizSubmission);
 router.post("/submit/:userId/:lessonId", controller_1.QuizSubmissionController.submitQuiz);
 router.get("/", controller_1.QuizSubmissionController.getAllQuizSubmissions);
 exports.QuizSubmissionRoutes = router;

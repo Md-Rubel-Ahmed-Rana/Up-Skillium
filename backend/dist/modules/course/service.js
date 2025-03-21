@@ -287,6 +287,13 @@ class Service {
             return { courses, otherCourses };
         });
     }
+    addStudentToCourse(courseId, studentId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield model_1.Course.findByIdAndUpdate(courseId, {
+                $addToSet: { students: studentId },
+            });
+        });
+    }
     getStudentsFromCourse(courseId) {
         return __awaiter(this, void 0, void 0, function* () {
             const course = yield model_1.Course.findById(courseId).populate("students", "name email image");

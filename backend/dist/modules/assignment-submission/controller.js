@@ -36,6 +36,16 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
+        this.getSingleSubmission = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const id = req.params.id;
+            const data = yield service_1.AssignmentSubmissionService.getSingleSubmission(id);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Assignment submission retrieved successfully",
+                data: data,
+            });
+        }));
         this.getAllPendingSubmissions = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const data = yield service_1.AssignmentSubmissionService.getAllPendingSubmissions();
             this.apiResponse(res, {

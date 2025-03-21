@@ -17,10 +17,26 @@ class Service {
     };
     await QuizSubmission.create(newData);
   }
+  async getSingleQuizSubmission(
+    id: Types.ObjectId
+  ): Promise<IQuizSubmission | null> {
+    return await QuizSubmission.findById(id).populate([
+      {
+        path: "user",
+        model: "User",
+        select: { password: 0 },
+      },
+      {
+        path: "lesson",
+        model: "Lesson",
+      },
+    ]);
+  }
   async getSubmittedQuizResultByLessonId(
+    userId: Types.ObjectId,
     lessonId: Types.ObjectId
   ): Promise<IQuizSubmission | null> {
-    return QuizSubmission.findOne({ lesson: lessonId }).populate([
+    return QuizSubmission.findOne({ user: userId, lesson: lessonId }).populate([
       {
         path: "user",
         model: "User",

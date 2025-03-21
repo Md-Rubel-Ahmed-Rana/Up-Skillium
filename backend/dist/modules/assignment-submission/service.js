@@ -34,6 +34,21 @@ class Service {
             ]);
         });
     }
+    getSingleSubmission(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield model_1.AssignmentSubmission.findById(id).populate([
+                {
+                    path: "user",
+                    model: "User",
+                    select: { password: 0 },
+                },
+                {
+                    path: "lesson",
+                    model: "Lesson",
+                },
+            ]);
+        });
+    }
     getAllPendingSubmissions() {
         return __awaiter(this, void 0, void 0, function* () {
             return yield model_1.AssignmentSubmission.find({ status: "pending" }).populate([
