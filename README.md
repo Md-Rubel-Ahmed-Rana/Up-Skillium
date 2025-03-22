@@ -6,10 +6,10 @@
 
 ## Quick Access
 - [Key Features](#key-features)
-- [Tech Stack](#tech-stack-&-third-party-libraries)
+- [Tech Stack](#tech-stack-and-third-party-libraries)
 - [Backend Techs](#backend-techs)
 - [Frontend Techs](#frontend-techs)
-- [Deployment & Cloud](#deployment-&-cloud)
+- [Deployment & Cloud](#deployment-and-cloud)
 - [Contribution](#contribution)
 - [Usages](#getting-started)
 - [License](#license)
@@ -51,7 +51,7 @@ Backend:
  
 
 
-## Tech Stack & Third-party Libraries
+## Tech Stack and Third-Party Libraries
 ### Frontend Techs:
 
 * **TypeScript**: To make type-safety and error-free application.
@@ -90,7 +90,7 @@ Backend:
 
 
 
-## Deployment & Cloud
+## Deployment and Cloud
 
 For seamless deployment and scalability, the project utilizes a combination of cloud services
 
