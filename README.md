@@ -4,7 +4,7 @@
 
 **Up Skillium** is a comprehensive web-based learning platform designed to provide a seamless and student-friendly environment for enhancing **digital skills**. It offers a structured learning journey where students can easily register, enroll in courses, make secure payments, and gain access to interactive lessons. With engaging quizzes, module-based assignments, and skill tests, learners can track their progress and apply their knowledge effectively. Upon successful course completion, students receive a certification, validating their expertise. Up Skillium ensures a well-organized and immersive educational experience, making skill development accessible and rewarding. 
 
-## Quick Access
+## Quick Navigate
 - [Key Features](#key-features)
 - [Tech Stack](#tech-stack-and-third-party-libraries)
 - [Backend Techs](#backend-techs)
@@ -95,7 +95,7 @@ Backend:
 For seamless deployment and scalability, the project utilizes a combination of cloud services
 
 - **Database:** The application uses a **MongoDB Atlas cluster**, powerful and modern database solution, ensuring high availability, security, and scalability.
-- **Storage:** **Firebase Admin SDK** in integrated for handling secure file storage, allowing efficient management of user-generated content like **Profile Pictures**, **Course content** including cover **image**, **thumbnails**, **introductory videos**, and finally **video lessons**.
+- **Storage:** **Firebase Admin SDK** is integrated for handling secure file storage, allowing efficient management of user-generated content like **Profile Pictures**, **Course content** including cover **image**, **thumbnails**, **introductory videos**, and finally **video lessons**.
 - **Containerization:** Both frontend and backend are **Dockerized**, enabling consistent environments accross different deployments and making the applications more portable, scalable, and version controlling.
 - **Frontend Deployment:** The frontend is hosted on **Vercel** which provides automatic deployments from the **frontend** branch with it's built-in **CI/CD pipeline**, ensuring smooth updates and zero-downtime deployment.
 - **Backend Deployment:** The backend is deployed on **Render** which supports continuous deployment from **backend**branch. Render automatically builds and deploys changes, keeping the backend up to date without manual inetervention
@@ -120,12 +120,12 @@ To get started with the **Up Skillium** LMS project locally, follow those steps:
 2. clone the repository: (Frontend) `git clone -b frontend https://github.com/Md-Rubel-Ahmed-Rana/Up-Skillium.git`
 or  (Backend) `git clone -b frontend https://github.com/Md-Rubel-Ahmed-Rana/Up-Skillium.git`
 3. Set up environment variables in `.env` or `.env.local` file based on the provided template.
-4. **Build Docker Image:** **command:** `dockeer-compose build` or `npm run docker:build` or `yarn docker:build`
-5. **Start Container/Server**: **command:** `dockeer-compose up -d` or `npm run docker:start` or `yarn docker:start`
+4. **Build Docker Image:** **command:** `docker-compose build` or `npm run docker:build` or `yarn docker:build`
+5. **Start Container/Server**: **command:** `docker-compose up -d` or `npm run docker:start` or `yarn docker:start`
 6. **Access the application**:
    - The frontend will be availavle at `http://localhost:3000`
    - The backend API will be availavle at `http://localhost:5010`
-7. **Stop the containers:** **command:**  `dockeer-compose down` or `npm run docker:stop` or `yarn docker:stop`
+7. **Stop the containers:** **command:**  `docker-compose down` or `npm run docker:stop` or `yarn docker:stop`
 
 ## Contribution
 Contributions to the **Up Skillium** LMS project are advanced welcome. Whether you're fixing a bug, implementing a new features, improving document, or you have an awesome idea for this project, your contributions help me to enhance the project acceptibility to others.
