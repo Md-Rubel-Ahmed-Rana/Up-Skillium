@@ -147,9 +147,8 @@ or  (Backend) `git clone -b frontend https://github.com/Md-Rubel-Ahmed-Rana/Up-S
 ## Contribution
 Contributions to the **Up Skillium** LMS project are advanced welcome. Whether you're fixing a bug, implementing a new feature, improving documents, or you have an awesome idea for this project, your contributions help me to enhance projects acceptability to others.
 
-### contributors
+### Contributors
 - [Md Rubel Ahmed Rana](https://github.com/Md-Rubel-Ahmed-Rana)
-- [Md. Najim Uddin](https://github.com/Mdnajimuddinhelal70)
 
 ## License
 This project has not been licensed yet.
