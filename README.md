@@ -98,7 +98,7 @@ For seamless deployment and scalability, the project utilizes a combination of c
 - **Storage:** **Firebase Admin SDK** is integrated for handling secure file storage, allowing efficient management of user-generated content like **Profile Pictures**, **Course content** including cover **image**, **thumbnails**, **introductory videos**, and finally **video lessons**.
 - **Containerization:** Both frontend and backend are **Dockerized**, enabling consistent environments accross different deployments and making the applications more portable, scalable, and version controlling.
 - **Frontend Deployment:** The frontend is hosted on **Vercel** which provides automatic deployments from the **frontend** branch with it's built-in **CI/CD pipeline**, ensuring smooth updates and zero-downtime deployment.
-- **Backend Deployment:** The backend is deployed on **Render** which supports continuous deployment from **backend**branch. Render automatically builds and deploys changes, keeping the backend up to date without manual inetervention
+- **Backend Deployment:** The backend is deployed on **Render** which supports continuous deployment from **backend**branch. Render automatically builds and deploys changes, keeping the backend up to date without manual intervention
 
 ## Getting Started
 To get started with the **Up Skillium** LMS project locally, follow those steps:
@@ -128,7 +128,10 @@ or  (Backend) `git clone -b frontend https://github.com/Md-Rubel-Ahmed-Rana/Up-S
 7. **Stop the containers:** **command:**  `docker-compose down` or `npm run docker:stop` or `yarn docker:stop`
 
 ## Contribution
-Contributions to the **Up Skillium** LMS project are advanced welcome. Whether you're fixing a bug, implementing a new features, improving document, or you have an awesome idea for this project, your contributions help me to enhance the project acceptibility to others.
+Contributions to the **Up Skillium** LMS project are advanced welcome. Whether you're fixing a bug, implementing a new features, improving document, or you have an awesome idea for this project, your contributions help me to enhance projects acceptability to others.
+
+### contributors
+- [Md. Najim Uddin](https://github.com/Mdnajimuddinhelal70)
 
 ## License
 This project has not been licensed yet.
