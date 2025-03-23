@@ -60,7 +60,7 @@ Backend:
 * **Ant Design**: Most popular React UI component library.
 * **Tailwindcss**: Utility-first CSS framework for building custom designs.
 * **Reduxjs**: RTK Quey, State management library for managing application state.
-* **Framer Motion**: To make powerfull animation
+* **Framer Motion**: To make powerful animation
 * **GSAP**: To take super animation power of graphical interface
 * **React Beautiful dnd**: To Drag & Drop the necessary elements
 * **React Hook Form**: form validation, to validate perfectly and control of forms
@@ -96,12 +96,12 @@ For seamless deployment and scalability, the project utilizes a combination of c
 
 - **Database:** The application uses a **MongoDB Atlas cluster**, powerful and modern database solution, ensuring high availability, security, and scalability.
 - **Storage:** **Firebase Admin SDK** is integrated for handling secure file storage, allowing efficient management of user-generated content like **Profile Pictures**, **Course content** including cover **image**, **thumbnails**, **introductory videos**, and finally **video lessons**.
-- **Containerization:** Both frontend and backend are **Dockerized**, enabling consistent environments accross different deployments and making the applications more portable, scalable, and version controlling.
+- **Containerization:** Both frontend and backend are **Dockerized**, enabling consistent environments across different deployments and making the applications more portable, scalable, and version controlling.
 - **Frontend Deployment:** The frontend is hosted on **Vercel** which provides automatic deployments from the **frontend** branch with it's built-in **CI/CD pipeline**, ensuring smooth updates and zero-downtime deployment.
 - **Backend Deployment:** The backend is deployed on **Render** which supports continuous deployment from **backend**branch. Render automatically builds and deploys changes, keeping the backend up to date without manual intervention
 
 ## Getting Started
-To get started with the **Up Skillium** LMS project locally, follow those steps:
+To get started with the **Up Skillium** LMS project locally, follow these steps:
 
 #### frontend:
 1. clone the repository: `git clone -b frontend https://github.com/Md-Rubel-Ahmed-Rana/Up-Skillium.git`
@@ -123,14 +123,15 @@ or  (Backend) `git clone -b frontend https://github.com/Md-Rubel-Ahmed-Rana/Up-S
 4. **Build Docker Image:** **command:** `docker-compose build` or `npm run docker:build` or `yarn docker:build`
 5. **Start Container/Server**: **command:** `docker-compose up -d` or `npm run docker:start` or `yarn docker:start`
 6. **Access the application**:
-   - The frontend will be availavle at `http://localhost:3000`
-   - The backend API will be availavle at `http://localhost:5010`
+   - The frontend will be available at `http://localhost:3000`
+   - The backend API will be available at `http://localhost:5010`
 7. **Stop the containers:** **command:**  `docker-compose down` or `npm run docker:stop` or `yarn docker:stop`
 
 ## Contribution
-Contributions to the **Up Skillium** LMS project are advanced welcome. Whether you're fixing a bug, implementing a new features, improving document, or you have an awesome idea for this project, your contributions help me to enhance projects acceptability to others.
+Contributions to the **Up Skillium** LMS project are advanced welcome. Whether you're fixing a bug, implementing a new feature, improving documents, or you have an awesome idea for this project, your contributions help me to enhance projects acceptability to others.
 
 ### contributors
+- [Md Rubel Ahmed Rana](https://github.com/Md-Rubel-Ahmed-Rana)
 - [Md. Najim Uddin](https://github.com/Mdnajimuddinhelal70)
 
 ## License
