@@ -10,6 +10,7 @@
 - [Backend Techs](#backend-techs)
 - [Frontend Techs](#frontend-techs)
 - [Deployment & Cloud](#deployment-and-cloud)
+- [Challenges](#challenges)
 - [Contribution](#contribution)
 - [Usages](#getting-started)
 - [License](#license)
@@ -94,11 +95,27 @@ Backend:
 
 For seamless deployment and scalability, the project utilizes a combination of cloud services
 
-- **Database:** The application uses a **MongoDB Atlas cluster**, powerful and modern database solution, ensuring high availability, security, and scalability.
+- **Database:** The application uses a **MongoDB Atlas cluster**, Powerful and modern database solution, ensuring high availability, security, and scalability.
 - **Storage:** **Firebase Admin SDK** is integrated for handling secure file storage, allowing efficient management of user-generated content like **Profile Pictures**, **Course content** including cover **image**, **thumbnails**, **introductory videos**, and finally **video lessons**.
 - **Containerization:** Both frontend and backend are **Dockerized**, enabling consistent environments across different deployments and making the applications more portable, scalable, and version controlling.
 - **Frontend Deployment:** The frontend is hosted on **Vercel** which provides automatic deployments from the **frontend** branch with it's built-in **CI/CD pipeline**, ensuring smooth updates and zero-downtime deployment.
 - **Backend Deployment:** The backend is deployed on **Render** which supports continuous deployment from **backend**branch. Render automatically builds and deploys changes, keeping the backend up to date without manual intervention
+
+## Challenges
+- **Design and Generate Unique PDF Certificates** - Create professional and visually appealling certificates for students.
+- **Automate Course Enrollment Invoice** - Generate well-structured PDF invoices for each enrollment.
+- **One-Request PDF Processing** - Create, modify, and deploy PDF files efficiently within a single request.
+- **Integrate Firebase Storage** - Implement **Firebase Admin SDK** for secure and seamless file storage.
+- **Implement Stripe & PayPal Payments** - Process course enrollment payments smoothly using Stripe and PayPal.
+- **Track Student Lesson Progress** - Develop a system to monitor and update students' progress dynamically.
+- **Maintain Three Role-Based Dashboard** - Design separate dashboards for students, instructors, and admins.
+- **Ensure Responsive UI/UX** - Optimize the platform for a seamless experience on both desktop and mobile devices.
+- **Follow DRY (Don't Repeat Yourself) Principle** Minimize code redundancy for better maintainability.
+- **Optimize Rendering Strategies** – Choose the right rendering method among SSR, SSG, CSR, and ISG for efficiency.
+- **Enhance Security & Authentication** – Ensure secure access control, user authentication, and data protection.
+- **Follow React Component Rules** - Make sure to maintain the React compoment-based architecture.
+- **Improve Performance & Scalability** – Optimize queries, caching, and API calls to handle growing user demands.
+
 
 ## Getting Started
 To get started with the **Up Skillium** LMS project locally, follow these steps:
