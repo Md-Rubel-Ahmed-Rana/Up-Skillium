@@ -1,9 +1,7 @@
 import { useGetAllUsersQuery } from "@/features/user";
 import { IUser } from "@/types/user.type";
 import { Avatar, Table } from "antd/lib";
-import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLink";
-import UserActiveInactiveButton from "./UserActiveInactiveButton";
-import UserDeleteButton from "./UserDeleteButton";
+import UserActions from "./UserActions";
 
 const ManageUsers = () => {
   const { data, isLoading } = useGetAllUsersQuery({});
@@ -76,33 +74,28 @@ const ManageUsers = () => {
       ),
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      filters: [
+        { text: "Active", value: "active" },
+        { text: "Inactive", value: "inactive" },
+      ],
+      onFilter: (value: string, user: IUser) => user.status === value,
+      render: (status: string) => (
+        <span
+          className={`${
+            status === "active" ? "text-green-500" : "text-red-500"
+          }`}
+        >
+          {status}
+        </span>
+      ),
+    },
+    {
       title: "Actions",
       key: "actions",
-      render: (_: any, user: IUser) => (
-        <div className="flex items-center gap-2">
-          <PublicProfileRedirectLink
-            buttonType="primary"
-            isButton={true}
-            linkText="Profile"
-            user={user}
-          />
-          <UserActiveInactiveButton
-            buttonType="default"
-            user={{
-              id: user?.id || user?._id,
-              status: user?.status as "active" | "inactive",
-              userName: user?.name,
-            }}
-          />
-          <UserDeleteButton
-            buttonType="primary"
-            user={{
-              id: user?.id || user?._id,
-              userName: user?.name,
-            }}
-          />
-        </div>
-      ),
+      render: (_: any, user: IUser) => <UserActions user={user} />,
     },
   ];
 
