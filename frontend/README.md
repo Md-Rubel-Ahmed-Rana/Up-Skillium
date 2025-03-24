@@ -7,6 +7,7 @@
 ## Quick Navigate
 - [Key Features](#key-features)
 - [Tech Stack](#tech-stack-and-third-party-libraries)
+- [Login Credentials](#login-credentials)
 - [Backend Techs](#backend-techs)
 - [Frontend Techs](#frontend-techs)
 - [Deployment & Cloud](#deployment-and-cloud)
@@ -48,8 +49,22 @@ Backend:
  12. **Integration with Third-Party Tool:** Connect with other platforms and services to enhance functionality like **Google API**, **Firebase**, and **SMTP**.
  13. **User Feedback:** Allow users to leave their valuable **feedback to courses and instructors**.
  14. **Notification System:** Keep users informed about updates and important alerts via email.
- 15. **Analytics and Report:** Generate reports to users engangement and student progress.
+ 15. **Analytics and Report:** Generate reports to users engagement and student progress.
  
+## Login Credentials
+Use the following credentials to login as a **Student** or **Instructor** or **Admin** on the website.
+
+### Student Login
+- **Email:** `abdurrahman123@gmail.com`  
+- **Password:** `AbdurRahman123@`
+
+### Instructor Login
+- **Email:** `mohinuddinrubel9660@gmail.com`  
+- **Password:** `MohinUddin9660@`
+
+### Admin Login
+- **Email:** `mdrubelahmedrana521@gmail.com`  
+- **Password:** `RubelAhmed521@`
 
 
 ## Tech Stack and Third-Party Libraries
