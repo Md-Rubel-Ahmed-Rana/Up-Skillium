@@ -12,8 +12,8 @@ const ReAssignInstructor = () => {
   const courseId = query?.courseId as string;
   const [isReAssign, setIsReAssign] = useState(false);
   const { data, isLoading } = useGetAllUsersQuery({});
-  const instructors = data?.data as IUser[];
-  const instructorUsers = instructors.filter(
+  const instructors = (data?.data as IUser[]) || [];
+  const instructorUsers = instructors?.filter(
     (user) => user?.role?.name === "instructor"
   );
 

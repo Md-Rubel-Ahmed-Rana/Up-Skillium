@@ -66,7 +66,7 @@ const IntroVideoUpdate = ({ courseId, open, setOpen }: Props) => {
       confirmLoading={isLoading}
       maskClosable={!isLoading}
       closable={!isLoading}
-      okButtonProps={{ disabled: isLoading }}
+      okButtonProps={{ disabled: isLoading || !videoUrl }}
       cancelButtonProps={{ disabled: isLoading }}
       classNames={{ footer: "flex justify-between" }}
     >
