@@ -18,9 +18,7 @@ type Props = {
   formTitle: string;
   role: "admin" | "student" | "instructor";
   successRoute:
-    | "/dashboard/manage-students"
-    | "/dashboard/manage-instructors"
-    | "/dashboard/manage-admins"
+    | "/dashboard/manage-users"
     | "/dashboard/profile-info"
     | "/login";
   buttonText?: string;
