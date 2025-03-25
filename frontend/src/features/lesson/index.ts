@@ -9,9 +9,15 @@ import apiSlice from "../api/apiSlice";
 const lessonApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllLessons: builder.query({
-      query: () => ({
+      query: ({
+        page = 1,
+        limit = 100,
+      }: {
+        page?: number;
+        limit?: number;
+      }) => ({
         method: "GET",
-        url: `/lesson?limit=100&page=1`,
+        url: `/lesson?page=${page}&limit=${limit}`,
       }),
       providesTags: ["lesson"],
     }),
