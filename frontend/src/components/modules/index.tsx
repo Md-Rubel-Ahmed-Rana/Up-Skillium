@@ -1,3 +1,5 @@
+import { useGetAllCoursesQuery } from "@/features/course";
+import { ICourse } from "@/types/course.type";
 import { IGetModule } from "@/types/module.type";
 import { Table, TableProps } from "antd/lib";
 import DeleteModuleModal from "../manageModules/DeleteModuleModal";
@@ -10,6 +12,9 @@ type Props = {
 };
 
 const ModulesTable = ({ modules, isLoading }: Props) => {
+  const { data } = useGetAllCoursesQuery({});
+  const courses = (data?.data as ICourse[]) || [];
+  console.log(courses);
   const columns: TableProps<IGetModule>["columns"] = [
     {
       title: "Module Name",
@@ -25,6 +30,11 @@ const ModulesTable = ({ modules, isLoading }: Props) => {
       title: "Course",
       key: "course.image",
       dataIndex: ["course", "image", "title"],
+      filters: courses?.map((course) => ({
+        text: course?.title,
+        value: course?.id,
+      })),
+      onFilter: (value, module) => module?.course?.id === value,
       render: (_: string, module: IGetModule) => (
         <div className="flex items-center gap-2">
           <img
