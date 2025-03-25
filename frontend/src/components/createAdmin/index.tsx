@@ -6,7 +6,7 @@ const CreateAdmin = () => {
       <CreateUser
         formTitle="Create Admin Account"
         role="admin"
-        successRoute="/dashboard/manage-admins"
+        successRoute="/dashboard/manage-users"
         buttonText="Create account"
       />
     </div>

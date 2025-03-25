@@ -6,7 +6,7 @@ const CreateInstructor = () => {
       <CreateUser
         formTitle="Create Instructor Account"
         role="instructor"
-        successRoute="/dashboard/manage-instructors"
+        successRoute="/dashboard/manage-users"
         buttonText="Create account"
       />
     </div>
