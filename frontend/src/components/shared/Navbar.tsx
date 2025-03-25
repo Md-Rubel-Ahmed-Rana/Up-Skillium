@@ -68,26 +68,29 @@ const Navbar = () => {
                 </Link>
               )}
             </div>
-            {user && user?.id ? (
-              isLoading ? (
-                <UserLoading />
-              ) : (
-                <NavbarDropdown isToggleIcon={false} />
-              )
+
+            {isLoading ? (
+              <UserLoading />
             ) : (
               <>
-                <Link
-                  href={"/login"}
-                  className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
-                >
-                  Login
-                </Link>
-                <Link
-                  href={"/register"}
-                  className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
-                >
-                  Register
-                </Link>
+                {user && user?.id ? (
+                  <NavbarDropdown isToggleIcon={false} />
+                ) : (
+                  <>
+                    <Link
+                      href={"/login"}
+                      className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
+                    >
+                      Login
+                    </Link>
+                    <Link
+                      href={"/register"}
+                      className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
+                    >
+                      Register
+                    </Link>
+                  </>
+                )}
               </>
             )}
           </div>
