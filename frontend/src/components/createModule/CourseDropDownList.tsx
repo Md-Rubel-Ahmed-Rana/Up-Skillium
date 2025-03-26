@@ -18,28 +18,20 @@ const CourseDropDownList = () => {
   const { data } = useGetAllCoursesQuery({});
   const adminCourses = data?.data as ICourse[];
 
+  const generatePathWithParams = (course: ICourse): string => {
+    return `/dashboard/create-module/?courseId=${course?.id}&courseTitle=${course?.title}&category=${course?.category}&description=${course?.description}`;
+  };
+
   const adminCourseList: MenuProps["items"] =
     adminCourses?.map((course) => ({
       key: course?.id,
-      label: (
-        <Link
-          href={`/dashboard/create-module/?courseId=${course?.id}&courseTitle=${course?.title}&category=${course?.category}&description=${course?.description}`}
-        >
-          {course?.title}
-        </Link>
-      ),
+      label: <Link href={generatePathWithParams(course)}>{course?.title}</Link>,
     })) || [];
 
   const instructorCourseList: MenuProps["items"] =
     instructorCourses?.map((course) => ({
       key: course?.id,
-      label: (
-        <Link
-          href={`/dashboard/create-module/?courseId=${course?.id}&courseTitle=${course?.title}&category=${course?.category}&description=${course?.description}`}
-        >
-          {course?.title}
-        </Link>
-      ),
+      label: <Link href={generatePathWithParams(course)}>{course?.title}</Link>,
     })) || [];
 
   const courses =
