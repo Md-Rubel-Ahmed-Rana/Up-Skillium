@@ -1,14 +1,31 @@
 import { Router } from "express";
 import { AssignmentController } from "./controller";
+import { JwtInstance } from "../../lib/jwt";
 
 const router = Router();
 
-router.get("/", AssignmentController.getAllAssignments);
+router.get(
+  "/",
+  JwtInstance.verifyToken,
+  AssignmentController.getAllAssignments
+);
 
-router.get("/:id", AssignmentController.getSingleAssignment);
+router.get(
+  "/:id",
+  JwtInstance.verifyToken,
+  AssignmentController.getSingleAssignment
+);
 
-router.patch("/:id", AssignmentController.updateAssignment);
+router.patch(
+  "/:id",
+  JwtInstance.verifyToken,
+  AssignmentController.updateAssignment
+);
 
-router.delete("/:id", AssignmentController.deleteAssignment);
+router.delete(
+  "/:id",
+  JwtInstance.verifyToken,
+  AssignmentController.deleteAssignment
+);
 
 export const AssignmentRoutes = router;

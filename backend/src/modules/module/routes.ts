@@ -1,24 +1,38 @@
 import { Router } from "express";
 import { ModuleController } from "./controller";
+import { JwtInstance } from "../../lib/jwt";
 
 const router = Router();
 
-router.post("/create", ModuleController.createNewModule);
+router.post(
+  "/create",
+  JwtInstance.verifyToken,
+  ModuleController.createNewModule
+);
 
-router.get("/", ModuleController.getAllModules);
+router.get("/", JwtInstance.verifyToken, ModuleController.getAllModules);
 
-router.get("/:id", ModuleController.getSingleModule);
+router.get("/:id", JwtInstance.verifyToken, ModuleController.getSingleModule);
 
-router.get("/by-course/:courseId", ModuleController.getModuleByCourseId);
+router.get(
+  "/by-course/:courseId",
+  JwtInstance.verifyToken,
+  ModuleController.getModuleByCourseId
+);
 
-router.get("/classes/:courseId", ModuleController.getFullClassByCourseId);
+router.get(
+  "/classes/:courseId",
+  JwtInstance.verifyToken,
+  ModuleController.getFullClassByCourseId
+);
 
-router.patch("/:id", ModuleController.updateModule);
+router.patch("/:id", JwtInstance.verifyToken, ModuleController.updateModule);
 
-router.delete("/:id", ModuleController.deleteModule);
+router.delete("/:id", JwtInstance.verifyToken, ModuleController.deleteModule);
 
 router.get(
   "/by-instructor/modules/:instructorId",
+  JwtInstance.verifyToken,
   ModuleController.getAllModulesByInstructor
 );
 

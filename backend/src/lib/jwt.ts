@@ -45,11 +45,7 @@ class JWT {
     const refreshToken = req?.cookies?.upSkilliumRefreshToken;
 
     if (!accessToken || !refreshToken) {
-      return res.status(401).json({
-        statusCode: 401,
-        success: false,
-        message: "User was not logged in. Please login",
-      });
+      return res.sendFile("unauthenticated.html", { root: "public" });
     }
 
     try {
@@ -65,11 +61,7 @@ class JWT {
         return this.handleExpiredAccessToken(refreshToken, res, next);
       }
 
-      return res.status(401).json({
-        statusCode: 401,
-        success: false,
-        message: "Unauthorized access",
-      });
+      return res.sendFile("unauthenticated.html", { root: "public" });
     }
   };
 
@@ -104,11 +96,7 @@ class JWT {
         return this.logoutUser(res);
       }
 
-      return res.status(403).json({
-        statusCode: 403,
-        success: false,
-        message: "Invalid refresh token",
-      });
+      return res.sendFile("unauthenticated.html", { root: "public" });
     }
   };
 
