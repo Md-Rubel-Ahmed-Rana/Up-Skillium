@@ -1,7 +1,11 @@
 import nodemailer from "nodemailer";
 import config from "../../config/envConfig";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
-import { IAssignmentMarkedMail, ILiveClassMail } from "./interface";
+import {
+  IAssignmentMarkedMail,
+  IGotCertificateMail,
+  ILiveClassMail,
+} from "./interface";
 
 class Mail {
   private sendEmail(
@@ -326,6 +330,53 @@ class Mail {
       </html>
     `;
     this.sendEmail("Assignment Marked", data.student.email, content);
+  }
+
+  async sendGotCertificateMail(data: IGotCertificateMail) {
+    const content = `
+      <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Certificate Issued</title>
+        </head>
+        <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 10px 5px;">
+            <table width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <table width="600px" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #cccccc;">
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <h2 style="color: #333333;">📢 Certificate Issued</h2>
+                                    <p style="color: #555555; font-size: 16px;">Hello ${data.student.name},</p>
+                                    <p style="color: #555555; font-size: 16px;">Congratulations! You have successfully completed the course <strong>${data.courseName}</strong>.</p>
+                                    <p style="color: #555555; font-size: 16px;">Your certificate is ready. Click the button below to download your certificate.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <a href="${data.certificateLink}" style="background-color: #007BFF; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">📜 Download Certificate</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <a href="https://upskillium.vercel.app/dashboard/certificates" style="background-color: #007BFF; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">📚 My Certificates</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <a href="https://upskillium.vercel.app/courses" style="background-color: #ffc107; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">🚀 Explore More</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </body>
+        </html>
+    `;
+    this.sendEmail("Certificate Issued", data.student.email, content);
   }
 }
 

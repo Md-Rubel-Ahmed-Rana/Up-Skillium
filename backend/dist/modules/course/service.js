@@ -17,6 +17,7 @@ const model_1 = require("./model");
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 const incrementAverageRating_1 = __importDefault(require("../../utils/incrementAverageRating"));
 const apiError_1 = __importDefault(require("../../shared/apiError"));
+const mail_service_1 = require("../mail/mail.service");
 class Service {
     createCourse(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -209,9 +210,12 @@ class Service {
     }
     updateCourseInstructor(courseId, instructorId) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield model_1.Course.findByIdAndUpdate(courseId, {
+            var _a, _b;
+            const course = yield model_1.Course.findByIdAndUpdate(courseId, {
                 $set: { instructor: instructorId },
-            });
+            }).populate("instructor", "name email image");
+            // send notification main to the instructor
+            yield mail_service_1.MailService.sendMailToInstructorAssignedToCourse(course === null || course === void 0 ? void 0 : course.title, (_a = course === null || course === void 0 ? void 0 : course.instructor) === null || _a === void 0 ? void 0 : _a.name, (_b = course === null || course === void 0 ? void 0 : course.instructor) === null || _b === void 0 ? void 0 : _b.email);
         });
     }
     updateCourseImage(id, imageUrl) {

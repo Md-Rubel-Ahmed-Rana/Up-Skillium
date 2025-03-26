@@ -14,9 +14,11 @@ const certificate_service_1 = require("../pdf-creator/certificate.service");
 const model_1 = require("./model");
 const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddleware");
 const service_1 = require("../course/service");
+const mail_service_1 = require("../mail/mail.service");
 class Service {
     createCertificate(data) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a;
             const certificatePdfData = {
                 courseName: data === null || data === void 0 ? void 0 : data.courseName,
                 studentName: data === null || data === void 0 ? void 0 : data.studentName,
@@ -24,7 +26,17 @@ class Service {
                 technologies: data === null || data === void 0 ? void 0 : data.technologies,
             };
             const certificateUrl = yield certificate_service_1.PdfCreatorService.createCertificate(certificatePdfData);
-            yield model_1.Certificate.create(Object.assign(Object.assign({}, data), { certificateUrl: certificateUrl }));
+            const newCertificate = yield model_1.Certificate.create(Object.assign(Object.assign({}, data), { certificateUrl: certificateUrl }));
+            const createdCertificate = yield model_1.Certificate.findById(newCertificate._id).populate("user", "email name");
+            // send email to student
+            yield mail_service_1.MailService.sendGotCertificateMail({
+                courseName: data.courseName,
+                student: {
+                    name: data === null || data === void 0 ? void 0 : data.studentName,
+                    email: (_a = createdCertificate === null || createdCertificate === void 0 ? void 0 : createdCertificate.user) === null || _a === void 0 ? void 0 : _a.email,
+                },
+                certificateLink: certificateUrl,
+            });
         });
     }
     getAllCertificate() {

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AssignmentSubmissionService = void 0;
 const model_1 = require("./model");
 const service_1 = require("../module/service");
+const mail_service_1 = require("../mail/mail.service");
 class Service {
     submit(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -89,10 +90,22 @@ class Service {
     }
     updateAssignmentReview(data) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield model_1.AssignmentSubmission.findOneAndUpdate({
+            var _a, _b, _c;
+            const assignment = yield model_1.AssignmentSubmission.findOneAndUpdate({
                 user: data.user,
                 lesson: data.lesson,
-            }, { $set: Object.assign({}, data) });
+            }, { $set: Object.assign({}, data) }, { new: true }).populate(["user", "lesson"]);
+            // Send notification email to student
+            const mailData = {
+                assignmentTitle: (_a = assignment === null || assignment === void 0 ? void 0 : assignment.lesson) === null || _a === void 0 ? void 0 : _a.title,
+                student: {
+                    name: (_b = assignment === null || assignment === void 0 ? void 0 : assignment.user) === null || _b === void 0 ? void 0 : _b.name,
+                    email: (_c = assignment === null || assignment === void 0 ? void 0 : assignment.user) === null || _c === void 0 ? void 0 : _c.email,
+                },
+                marks: assignment.yourMark,
+                totalMarks: assignment.fullMark,
+            };
+            yield mail_service_1.MailService.sendAssignmentMarkedMail(mailData);
         });
     }
     updateSubmission(id, updatedData) {

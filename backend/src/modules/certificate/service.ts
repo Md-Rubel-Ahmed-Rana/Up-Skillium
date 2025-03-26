@@ -5,6 +5,7 @@ import { Certificate } from "./model";
 import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { IPdfCertificate } from "../pdf-creator/interface";
 import { CourseService } from "../course/service";
+import { MailService } from "../mail/mail.service";
 
 class Service {
   async createCertificate(data: ICertificate) {
@@ -17,7 +18,24 @@ class Service {
     const certificateUrl = await PdfCreatorService.createCertificate(
       certificatePdfData
     );
-    await Certificate.create({ ...data, certificateUrl: certificateUrl });
+    const newCertificate = await Certificate.create({
+      ...data,
+      certificateUrl: certificateUrl,
+    });
+
+    const createdCertificate: any = await Certificate.findById(
+      newCertificate._id
+    ).populate("user", "email name");
+
+    // send email to student
+    await MailService.sendGotCertificateMail({
+      courseName: data.courseName,
+      student: {
+        name: data?.studentName,
+        email: createdCertificate?.user?.email,
+      },
+      certificateLink: certificateUrl,
+    });
   }
   async getAllCertificate(): Promise<any> {
     const data = await Certificate.find({}).populate([

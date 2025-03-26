@@ -24,3 +24,12 @@ export type IAssignmentMarkedMail = {
   marks: number;
   totalMarks: number;
 };
+
+export type IGotCertificateMail = {
+  courseName: string;
+  student: {
+    name: string;
+    email: string;
+  };
+  certificateLink: string;
+};
