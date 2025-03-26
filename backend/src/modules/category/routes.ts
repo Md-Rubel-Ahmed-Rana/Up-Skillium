@@ -1,14 +1,23 @@
 import { Router } from "express";
 import { CategoryController } from "./controller";
+import { JwtInstance } from "../../lib/jwt";
 
 const router = Router();
 
-router.post("/create", CategoryController.createCategory);
+router.post(
+  "/create",
+  JwtInstance.verifyToken,
+  CategoryController.createCategory
+);
 
-router.get("/", CategoryController.getCategories);
+router.get("/", JwtInstance.verifyToken, CategoryController.getCategories);
 
-router.patch("/", CategoryController.updateCategories);
+router.patch("/", JwtInstance.verifyToken, CategoryController.updateCategories);
 
-router.delete("/", CategoryController.deleteCategories);
+router.delete(
+  "/",
+  JwtInstance.verifyToken,
+  CategoryController.deleteCategories
+);
 
 export const CategoryRoutes = router;

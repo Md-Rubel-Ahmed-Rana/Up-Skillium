@@ -1,18 +1,23 @@
 import { Router } from "express";
 import { RoleController } from "./controller";
+import { JwtInstance } from "../../lib/jwt";
 
 const router = Router();
 
-router.post("/create", RoleController.createRole);
+router.post("/create", JwtInstance.verifyToken, RoleController.createRole);
 
-router.get("/", RoleController.getAllRoles);
+router.get("/", JwtInstance.verifyToken, RoleController.getAllRoles);
 
-router.get("/:id", RoleController.getRoleById);
+router.get("/:id", JwtInstance.verifyToken, RoleController.getRoleById);
 
-router.get("/by-name/:role", RoleController.getRoleByRoleName);
+router.get(
+  "/by-name/:role",
+  JwtInstance.verifyToken,
+  RoleController.getRoleByRoleName
+);
 
-router.patch("/:id", RoleController.updateRole);
+router.patch("/:id", JwtInstance.verifyToken, RoleController.updateRole);
 
-router.delete("/:id", RoleController.deleteRole);
+router.delete("/:id", JwtInstance.verifyToken, RoleController.deleteRole);
 
 export const RoleRoutes = router;
