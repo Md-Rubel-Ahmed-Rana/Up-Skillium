@@ -10,6 +10,7 @@ import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import incrementAverageRating from "../../utils/incrementAverageRating";
 import ApiError from "../../shared/apiError";
 import { IUser } from "../user/interface";
+import { MailService } from "../mail/mail.service";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -258,10 +259,17 @@ class Service {
   async updateCourseInstructor(
     courseId: Types.ObjectId,
     instructorId: Types.ObjectId
-  ) {
-    await Course.findByIdAndUpdate(courseId, {
+  ): Promise<void> {
+    const course: any = await Course.findByIdAndUpdate(courseId, {
       $set: { instructor: instructorId },
-    });
+    }).populate("instructor", "name email image");
+
+    // send notification main to the instructor
+    await MailService.sendMailToInstructorAssignedToCourse(
+      course?.title,
+      course?.instructor?.name,
+      course?.instructor?.email
+    );
   }
 
   async updateCourseImage(id: Types.ObjectId, imageUrl: string) {

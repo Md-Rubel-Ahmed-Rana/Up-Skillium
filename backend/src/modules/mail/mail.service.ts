@@ -177,13 +177,15 @@ class Mail {
                 <tr>
                     <td align="center">
                         <table width="600px" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #cccccc;">
-                            <tr>
+                            
+                              <tr>
                                 <td align="center" style="padding: 10px;">
                                     <h2 style="color: #333333;">📢 Live Class Alert</h2>
                                     <p style="color: #555555; font-size: 16px;">Hello,</p>
                                     <p style="color: #555555; font-size: 16px;">We are excited to inform you about an upcoming live class. Here are the details:</p>
                                 </td>
                             </tr>
+
                             <tr>
                                 <td align="center" style="padding: 10px;">
                                     <h3 style="color: #333333;">Title: <strong>${
@@ -218,17 +220,24 @@ class Mail {
                                     <a href="https://upskillium.vercel.app/dashboard/my-courses" style="background-color: #007BFF; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">📚 My Courses</a>
                                 </td>
                             </tr>
+
                             <tr>
                                 <td align="center" style="padding: 10px;">
                                     <a href="https://upskillium.vercel.app/dashboard/live-classes" style="background-color: #007BFF; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Live Classes</a>
                                 </td>
                             </tr>
+
                             <tr>
                                 <td align="center" style="padding: 10px;">
                                     <a href="https://upskillium.vercel.app/courses" style="background-color: #ffc107; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">🚀 Explore More</a>
                                 </td>
                             </tr>
-
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </body>
+        </html>
         `;
 
     this.sendEmail(
@@ -236,6 +245,49 @@ class Mail {
       data.students.map((s) => s.email),
       content
     );
+  }
+
+  async sendMailToInstructorAssignedToCourse(
+    courseName: string,
+    instructorName: string,
+    instructorEmail: string
+  ) {
+    const content = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Course Assignment</title>
+      </head>
+      <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 10px 5px;">
+          <table width="100%" cellspacing="0" cellpadding="0">
+              <tr>
+                  <td align="center">
+                      <table width="600px" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #cccccc;">
+                          <tr>
+                              <td align="center" style="padding: 10px;">
+                                  <h2 style="color: #333333;">📢 Course Assignment</h2>
+                                  <p style="color: #555555; font-size: 16px;">Hello ${instructorName},</p>
+                                  <p style="color: #555555; font-size: 16px;">You have been assigned to teach <strong>${courseName}</strong> course.</p>
+                                  <p style="color: #555555; font-size: 16px;">Please login to your account to view the course details and start teaching.</p>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td align="center" style="padding: 10px;">
+                                  <a href="https://upskillium.vercel.app/dashboard/my-classes" style="background-color: #007BFF; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">📚 My Classes</a>
+                              </td>
+                          </tr>
+                      </table>
+                  </td>
+
+              </tr>
+          </table>
+      </body>
+      </html>
+
+    `;
+    this.sendEmail("Course Assignment", instructorEmail, content);
   }
 }
 
