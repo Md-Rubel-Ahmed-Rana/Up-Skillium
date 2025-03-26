@@ -56,11 +56,7 @@ class JWT {
             const accessToken = (_a = req === null || req === void 0 ? void 0 : req.cookies) === null || _a === void 0 ? void 0 : _a.upSkilliumAccessToken;
             const refreshToken = (_b = req === null || req === void 0 ? void 0 : req.cookies) === null || _b === void 0 ? void 0 : _b.upSkilliumRefreshToken;
             if (!accessToken || !refreshToken) {
-                return res.status(401).json({
-                    statusCode: 401,
-                    success: false,
-                    message: "User was not logged in. Please login",
-                });
+                return res.sendFile("unauthenticated.html", { root: "public" });
             }
             try {
                 const user = jsonwebtoken_1.default.verify(accessToken, envConfig_1.default.jwt.accessTokenSecret);
@@ -72,11 +68,7 @@ class JWT {
                 if (error instanceof jsonwebtoken_1.TokenExpiredError) {
                     return this.handleExpiredAccessToken(refreshToken, res, next);
                 }
-                return res.status(401).json({
-                    statusCode: 401,
-                    success: false,
-                    message: "Unauthorized access",
-                });
+                return res.sendFile("unauthenticated.html", { root: "public" });
             }
         });
         this.handleExpiredAccessToken = (refreshToken, res, next) => __awaiter(this, void 0, void 0, function* () {
@@ -98,11 +90,7 @@ class JWT {
                 if (error instanceof jsonwebtoken_1.TokenExpiredError) {
                     return this.logoutUser(res);
                 }
-                return res.status(403).json({
-                    statusCode: 403,
-                    success: false,
-                    message: "Invalid refresh token",
-                });
+                return res.sendFile("unauthenticated.html", { root: "public" });
             }
         });
         this.logoutUser = (res) => {
