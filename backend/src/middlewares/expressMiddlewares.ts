@@ -1,3 +1,4 @@
+import path from "path";
 import express, { Application } from "express";
 import cors from "cors";
 import helmet from "helmet";
@@ -6,6 +7,7 @@ import cookieParser from "cookie-parser";
 import { corsConfig } from "../config/cors";
 
 export const expressMiddlewares = (app: Application) => {
+  app.use(express.static(path.join(__dirname, "../../public")));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors(corsConfig));
