@@ -2,6 +2,8 @@ import { Types } from "mongoose";
 import { IAssignmentSubmission } from "./interface";
 import { AssignmentSubmission } from "./model";
 import { ModuleService } from "../module/service";
+import { MailService } from "../mail/mail.service";
+import { IAssignmentMarkedMail } from "../mail/interface";
 
 class Service {
   async submit(data: IAssignmentSubmission): Promise<IAssignmentSubmission> {
@@ -74,13 +76,26 @@ class Service {
     });
   }
   async updateAssignmentReview(data: IAssignmentSubmission): Promise<void> {
-    await AssignmentSubmission.findOneAndUpdate(
+    const assignment: any = await AssignmentSubmission.findOneAndUpdate(
       {
         user: data.user,
         lesson: data.lesson,
       },
-      { $set: { ...data } }
-    );
+      { $set: { ...data } },
+      { new: true }
+    ).populate(["user", "lesson"]);
+
+    // Send notification email to student
+    const mailData: IAssignmentMarkedMail = {
+      assignmentTitle: assignment?.lesson?.title,
+      student: {
+        name: assignment?.user?.name,
+        email: assignment?.user?.email,
+      },
+      marks: assignment.yourMark,
+      totalMarks: assignment.fullMark,
+    };
+    await MailService.sendAssignmentMarkedMail(mailData);
   }
   async updateSubmission(
     id: Types.ObjectId,
