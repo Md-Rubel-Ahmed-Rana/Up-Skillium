@@ -1,8 +1,16 @@
 import nodemailer from "nodemailer";
 import config from "../../config/envConfig";
+import SMTPTransport from "nodemailer/lib/smtp-transport";
+import { ILiveClassMail } from "./interface";
 
 class Mail {
-  private sendEmail(subject: string, to: string, htmlContent: string) {
+  private sendEmail(
+    subject: string,
+    to: string | string[],
+    htmlContent: string,
+    bcc?: string[],
+    cc?: string[]
+  ) {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       secure: true,
@@ -14,12 +22,20 @@ class Mail {
       },
     });
 
-    const mailOptions = {
+    const mailOptions: SMTPTransport.Options = {
       from: `Up Skillium <${config.google.appUser}>`,
       to: to,
       subject: subject,
       html: htmlContent,
     };
+
+    if (bcc) {
+      mailOptions.bcc = bcc;
+    }
+
+    if (cc) {
+      mailOptions.cc = cc;
+    }
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
@@ -88,6 +104,7 @@ class Mail {
     `;
     this.sendEmail("Enrollment Confirmation", receiver, content);
   }
+
   async resetPasswordLink(receiver: string, resetUrl: string) {
     const content = `
       <!DOCTYPE html>
@@ -134,6 +151,91 @@ class Mail {
     `;
 
     this.sendEmail("Reset Your Password", receiver, content);
+  }
+
+  async sendLiveClassMail(data: ILiveClassMail) {
+    const classTime = new Date(data.startDateTime);
+    const formattedTime = classTime.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    const content = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Live Class Alert</title>
+        </head>
+        <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 10px 5px;">
+            <table width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td align="center">
+                        <table width="600px" style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #cccccc;">
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <h2 style="color: #333333;">📢 Live Class Alert</h2>
+                                    <p style="color: #555555; font-size: 16px;">Hello,</p>
+                                    <p style="color: #555555; font-size: 16px;">We are excited to inform you about an upcoming live class. Here are the details:</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <h3 style="color: #333333;">Title: <strong>${
+                                      data.title
+                                    }</strong></h3>
+                                    <p style="color: #555555; font-size: 16px;">Instructor: ${
+                                      data.instructor?.name
+                                    } </p>
+                                    <p style="color: #555555; font-size: 16px;">Date & Time: ${formattedTime} </p>
+                                    <p style="color: #555555; font-size: 16px;">Duration: ${
+                                      data.duration
+                                    }</p>
+                                    <p style="color: #555555; font-size: 16px;">Topics: ${data.topics.join(
+                                      ", "
+                                    )}</p>
+                                    <p style="color: #555555; font-size: 16px;">Meeting Link: <a href=${
+                                      data.meetingLink
+                                    }>Join Now</a></p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <h3 style="color: #333333;">Course: <strong>${
+                                      data.courseName
+                                    }</strong></h3>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <a href="https://upskillium.vercel.app/dashboard/my-courses" style="background-color: #007BFF; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">📚 My Courses</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <a href="https://upskillium.vercel.app/dashboard/live-classes" style="background-color: #007BFF; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">Live Classes</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center" style="padding: 10px;">
+                                    <a href="https://upskillium.vercel.app/courses" style="background-color: #ffc107; color: #ffffff; padding: 12px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">🚀 Explore More</a>
+                                </td>
+                            </tr>
+
+        `;
+
+    this.sendEmail(
+      "Live Class Alert",
+      data.students.map((s) => s.email),
+      content
+    );
   }
 }
 
