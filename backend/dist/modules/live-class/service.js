@@ -16,11 +16,21 @@ exports.LiveClassService = void 0;
 const model_1 = __importDefault(require("./model"));
 const service_1 = require("../google/service");
 const service_2 = require("../user/service");
+const mail_service_1 = require("../mail/mail.service");
 class Service {
     createLiveClass(data) {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c;
+            const mailData = {
+                title: data === null || data === void 0 ? void 0 : data.title,
+                startDateTime: data === null || data === void 0 ? void 0 : data.startDateTime,
+                duration: data === null || data === void 0 ? void 0 : data.duration,
+                topics: data === null || data === void 0 ? void 0 : data.topics,
+            };
+            let newLiveClass;
             if ((data === null || data === void 0 ? void 0 : data.meetingLink) && (data === null || data === void 0 ? void 0 : data.meetingLink) !== "") {
-                yield model_1.default.create(data);
+                newLiveClass = yield model_1.default.create(data);
+                mailData.meetingLink = data === null || data === void 0 ? void 0 : data.meetingLink;
             }
             else {
                 const attendees = yield service_2.UserService.getUsersEmailByIds(data === null || data === void 0 ? void 0 : data.students);
@@ -32,8 +42,21 @@ class Service {
                     attendees: attendees,
                 };
                 const meetLink = yield service_1.GoogleService.createMeetLink(meetData);
-                yield model_1.default.create(Object.assign(Object.assign({}, data), { meetingLink: meetLink }));
+                newLiveClass = yield model_1.default.create(Object.assign(Object.assign({}, data), { meetingLink: meetLink }));
+                mailData.meetingLink = meetLink;
             }
+            const createdLiveClass = yield model_1.default.findById(newLiveClass._id)
+                .populate("students", "name email")
+                .populate("instructor", "name email")
+                .populate("course", "title image category");
+            mailData.instructor = {
+                name: (_a = createdLiveClass === null || createdLiveClass === void 0 ? void 0 : createdLiveClass.instructor) === null || _a === void 0 ? void 0 : _a.name,
+                email: (_b = createdLiveClass === null || createdLiveClass === void 0 ? void 0 : createdLiveClass.instructor) === null || _b === void 0 ? void 0 : _b.email,
+            };
+            mailData.courseName = (_c = createdLiveClass === null || createdLiveClass === void 0 ? void 0 : createdLiveClass.course) === null || _c === void 0 ? void 0 : _c.title;
+            mailData.students = createdLiveClass === null || createdLiveClass === void 0 ? void 0 : createdLiveClass.students;
+            // Send email to students
+            yield mail_service_1.MailService.sendLiveClassMail(mailData);
         });
     }
     getAllLiveClasses(filters) {
