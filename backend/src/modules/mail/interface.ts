@@ -14,3 +14,13 @@ export type ILiveClassMail = {
   meetingLink: string;
   topics: string[];
 };
+
+export type IAssignmentMarkedMail = {
+  assignmentTitle: string;
+  student: {
+    name: string;
+    email: string;
+  };
+  marks: number;
+  totalMarks: number;
+};
