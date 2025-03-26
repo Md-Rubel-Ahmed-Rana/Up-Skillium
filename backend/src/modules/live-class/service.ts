@@ -4,11 +4,23 @@ import LiveClass from "./model";
 import { GoogleService } from "../google/service";
 import { ICreateMeetLink } from "../google/interface";
 import { UserService } from "../user/service";
+import { ILiveClassMail } from "../mail/interface";
+import { MailService } from "../mail/mail.service";
 
 class Service {
   async createLiveClass(data: ILiveClass): Promise<void> {
+    const mailData: Partial<ILiveClassMail> = {
+      title: data?.title as string,
+      startDateTime: data?.startDateTime as unknown as Date,
+      duration: data?.duration as number,
+      topics: data?.topics as string[],
+    };
+
+    let newLiveClass;
+
     if (data?.meetingLink && data?.meetingLink !== "") {
-      await LiveClass.create(data);
+      newLiveClass = await LiveClass.create(data);
+      mailData.meetingLink = data?.meetingLink;
     } else {
       const attendees = await UserService.getUsersEmailByIds(data?.students);
       const meetData: ICreateMeetLink = {
@@ -19,8 +31,30 @@ class Service {
         attendees: attendees,
       };
       const meetLink = await GoogleService.createMeetLink(meetData);
-      await LiveClass.create({ ...data, meetingLink: meetLink });
+      newLiveClass = await LiveClass.create({
+        ...data,
+        meetingLink: meetLink,
+      });
+      mailData.meetingLink = meetLink;
     }
+
+    const createdLiveClass: any = await LiveClass.findById(newLiveClass._id)
+      .populate("students", "name email")
+      .populate("instructor", "name email")
+      .populate("course", "title image category");
+
+    mailData.instructor = {
+      name: createdLiveClass?.instructor?.name as string,
+      email: createdLiveClass?.instructor?.email as string,
+    };
+
+    mailData.courseName = createdLiveClass?.course?.title as string;
+    mailData.students = createdLiveClass?.students as {
+      name: string;
+      email: string;
+    }[];
+    // Send email to students
+    await MailService.sendLiveClassMail(mailData as ILiveClassMail);
   }
 
   async getAllLiveClasses(filters: {
