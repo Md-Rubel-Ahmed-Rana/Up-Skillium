@@ -6,13 +6,9 @@ const router = Router();
 
 router.post("/add", JwtInstance.verifyToken, ReviewController.addReview);
 
-router.get("/", JwtInstance.verifyToken, ReviewController.getAllReviews);
+router.get("/", ReviewController.getAllReviews);
 
-router.get(
-  "/course",
-  JwtInstance.verifyToken,
-  ReviewController.getAllCourseReviews
-);
+router.get("/course", ReviewController.getAllCourseReviews);
 
 router.get(
   "/instructor",
@@ -20,11 +16,10 @@ router.get(
   ReviewController.getAllInstructorReviews
 );
 
-router.get("/:id", JwtInstance.verifyToken, ReviewController.getSingleReview);
+router.get("/:id", ReviewController.getSingleReview);
 
 router.get(
   "/by-review-to/:reviewToId",
-  JwtInstance.verifyToken,
   ReviewController.getAllReviewByReviewTo
 );
 
