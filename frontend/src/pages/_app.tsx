@@ -8,6 +8,9 @@ import { useEffect, type ReactElement, type ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import "react-quill/dist/quill.snow.css";
 import { Provider } from "react-redux";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;

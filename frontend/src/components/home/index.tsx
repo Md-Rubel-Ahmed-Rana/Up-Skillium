@@ -5,6 +5,7 @@ import HowItWorks from "./howItWorks";
 import Opportunities from "./opportunities";
 import PopularCourses from "./popularCourses";
 import OurServicesAndMissions from "./servicesMissions";
+import StudentReviews from "./studentReviews";
 import SuccessStudents from "./successStudents";
 import TeamContainer from "./team";
 
@@ -21,6 +22,7 @@ const Home = ({ courses = [] }: Props) => {
       <Opportunities />
       <HowItWorks />
       <TeamContainer />
+      <StudentReviews />
       <SuccessStudents />
       <ContactUs />
     </div>
