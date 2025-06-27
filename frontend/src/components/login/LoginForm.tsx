@@ -8,14 +8,17 @@ import toast from "react-hot-toast";
 import { MdEmail, MdLock } from "react-icons/md";
 
 const loginCredentials = {
-  student: { email: "abdurrahman123@gmail.com", password: "AbdurRahman123@" },
+  student: {
+    email: process.env.NEXT_PUBLIC_STUDENT_EMAIL as string,
+    password: process.env.NEXT_PUBLIC_STUDENT_PASS as string,
+  },
   instructor: {
-    email: "mohinuddinrubel9660@gmail.com",
-    password: "MohinUddin9660@",
+    email: process.env.NEXT_PUBLIC_INSTRUCTOR_EMAIL as string,
+    password: process.env.NEXT_PUBLIC_INSTRUCTOR_PASS as string,
   },
   admin: {
-    email: "mdrubelahmedrana521@gmail.com",
-    password: "RubelAhmed521@",
+    email: process.env.NEXT_PUBLIC_ADMIN_EMAIL as string,
+    password: process.env.NEXT_PUBLIC_ADMIN_PASS as string,
   },
 };
 
