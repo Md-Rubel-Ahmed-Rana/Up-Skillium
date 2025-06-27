@@ -16,7 +16,7 @@ const CourseOutline = () => {
         <CourseDetailsOutlineSkeleton />
       ) : (
         <div className="p-2">
-          <CourseCardForDetails course={outline?.course} />
+          <CourseCardForDetails />
           <OutlineModules modules={outline?.modules} />
         </div>
       )}
