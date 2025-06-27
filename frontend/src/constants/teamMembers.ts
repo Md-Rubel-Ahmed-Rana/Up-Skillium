@@ -88,7 +88,7 @@ const teamMembersData = [
       _id: "673707967df9ab183785706e",
     },
     image:
-      "https://storage.googleapis.com/up-skillium.appspot.com/up-skillium/profile-picture/1731660008276_juwel.png?GoogleAccessId=firebase-adminsdk-pvmpn%40up-skillium.iam.gserviceaccount.com&Expires=1893456000&Signature=eOUPvxpKBo2bzUJY%2B0Pb0CdXbAi2iml7fTKGwTNrUusQZBrzN%2FMNSZrfJv%2BDuywL1obwTa8H8bcwwPhdaATz5jWd5RhxLpD9kZL4mgrlZJDHmA79YCgWRnakUa6WVq4xOomisLEDMqxsFZyaFWfphhvuQqNcCrCpMb0PZ8xKjb8UWHUOm2RD3F%2B%2Bt69KCKWmQw8ckkfaW2V6wyi%2Bslgsq7hIbnEQhWrEUboBCvxWpizA1dT7oykIVigsdd6yP4w%2BvEaZ4C296mzK36Hzpsfjhz5T8blo4mZ8XMj6YDUMO%2FfcnkhoSAMKgnLiND1JRouxELaYn9%2FcM3Bz97hYpIYGlg%3D%3D",
+      "https://storage.googleapis.com/up-skillium.appspot.com/up-skillium/profile-picture/1751035637691_programmer-5.png?GoogleAccessId=firebase-adminsdk-pvmpn%40up-skillium.iam.gserviceaccount.com&Expires=1893456000&Signature=sDC47RtPF16L8tkYBA2GCDW7p3yjW2rvTtAsFhvf9PbBY93XOtD0SDw4%2BS4TLs0t2svvoQBVMblyAa4CjSoeizv9JXIPd0Ef6r6LAmTFXkEtKdTF65WyoANY507m%2BIItJRfAudGSsBom6Je1NA3fWNnSSlTIydiUnuJbzn2ARTux%2F2rWyIfwWRK6XtOlvwQtACztNdsMgY43aKiyIEr3cahS3VjRFtAnWSxT8wx%2FGPP2y293gmDNrJFHjPxtZgCcEhDaEsQqx4kul95QOG2iWWC%2FNgG2UiSgKH%2FX82guztg4AnKsfG6Xyzwj4qNTiTiEGTrD%2BjjG0QZuCjEk9m5iMA%3D%3D",
     id: "67364ec32d90167205156b9e",
   },
   {
