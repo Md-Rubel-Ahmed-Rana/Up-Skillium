@@ -12,7 +12,7 @@ type Props = {
   courses: ICourse[];
 };
 
-const Home = ({ courses }: Props) => {
+const Home = ({ courses = [] }: Props) => {
   return (
     <div className="w-full">
       <Banner />

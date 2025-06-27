@@ -1,9 +1,9 @@
-import { ITeamMember } from "@/types/instructor";
+import { IUser } from "@/types/user.type";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 type Props = {
-  member: ITeamMember;
+  member: IUser;
 };
 
 const overlayVariants = {
@@ -39,7 +39,7 @@ const MemberCard = ({ member }: Props) => {
         className="absolute bottom-0 left-0 right-0 p-4 bg-black/60 backdrop-blur-md text-white"
       >
         <h3 className="text-xl font-semibold">{member?.name}</h3>
-        <p className="text-sm opacity-80">{member?.designation}</p>
+        <p className="text-sm opacity-80">{member?.role?.name}</p>
       </motion.div>
     </motion.div>
   );

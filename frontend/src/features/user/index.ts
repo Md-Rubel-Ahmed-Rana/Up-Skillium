@@ -13,7 +13,7 @@ const userApi = apiSlice.injectEndpoints({
     getAllUsers: builder.query({
       query: () => ({
         method: "GET",
-        url: `/user`,
+        url: `/user?page=1&limit=1000`,
       }),
       providesTags: ["user"],
     }),
