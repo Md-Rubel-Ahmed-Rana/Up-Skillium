@@ -36,7 +36,7 @@ const MemberCard = ({ member }: Props) => {
       <motion.div
         variants={overlayVariants}
         transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="absolute bottom-0 left-0 right-0 p-4 bg-black/60 backdrop-blur-md text-white"
+        className="absolute bottom-0 left-0 right-0 p-4 backdrop-blur-md text-white bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"
       >
         <h3 className="text-xl font-semibold">{member?.name}</h3>
         <p className="text-sm opacity-80">{member?.role?.name}</p>

@@ -1,15 +1,16 @@
 import CheckoutRedirectButton from "@/components/courses/courseListing/CheckoutRedirectButton";
-import { ICourseForOutline } from "@/types/courseOutline.type";
-import { Card, Typography } from "antd/lib";
+import { useGetSingleCourseQuery } from "@/features/course";
+import { ICourse } from "@/types/course.type";
+import { Card } from "antd/lib";
+import { useRouter } from "next/router";
 
 const { Meta } = Card;
-const { Text } = Typography;
 
-type Props = {
-  course: ICourseForOutline;
-};
-
-const CourseCardForDetails = ({ course }: Props) => {
+const CourseCardForDetails = () => {
+  const { query } = useRouter();
+  const courseId = query?.courseId as string;
+  const { data } = useGetSingleCourseQuery({ id: courseId });
+  const course = data?.data as ICourse;
   return (
     <Card
       cover={<img alt="course thumbnail" src={course?.image} />}
@@ -18,24 +19,22 @@ const CourseCardForDetails = ({ course }: Props) => {
           key="price-section"
           className="w-11/12 flex flex-col justify-center mx-auto items-center space-y-2"
         >
-          <div className="flex justify-between w-11/12 items-center">
-            <div className="flex items-center gap-2">
-              <Text className="text-sm font-medium text-gray-500">
-                Original Price
-              </Text>
-              <Text delete className="text-gray-500 text-lg">
+          <div className="bg-gray-50 p-4 rounded-xl w-full max-w-md shadow-sm">
+            <div className="flex items-end gap-4">
+              <div className="text-gray-400 text-lg line-through">
                 ${course?.price?.original || 99}
-              </Text>
-            </div>
-            <div className="flex items-center gap-2">
-              <Text className="text-sm font-medium text-gray-500">
-                Sale Price:
-              </Text>
-              <Text className="text-2xl font-semibold text-blue-600">
+              </div>
+              <div className="text-blue-600 text-3xl font-bold">
                 ${course?.price?.salePrice || 44}
-              </Text>
+              </div>
+              {course?.price?.discount && (
+                <div className="text-sm text-red-500 font-medium bg-red-100 px-2 py-0.5 rounded">
+                  -{course.price.discount}%
+                </div>
+              )}
             </div>
           </div>
+
           <div className="w-full flex justify-center items-center">
             <CheckoutRedirectButton
               course={course}
