@@ -44,11 +44,7 @@ const CourseCard = ({ course }: Props) => {
         />,
       ]}
     >
-      <Meta
-        className="pb-3"
-        title={course?.title}
-        description={course?.description}
-      />
+      <Meta className="pb-3" title={course?.title} />
       <div className="pt-4 border-t">
         <Meta
           className="border rounded-md p-2 text-xs flex items-center"
@@ -82,21 +78,22 @@ const CourseCard = ({ course }: Props) => {
             ({course?.ratings?.totalReviews || 0} Ratings)
           </span>
         </div>
-        <div className="flex flex-col font-semibold">
-          <div>
-            <Text>Original: </Text>
-            <Text delete type="warning">
-              ${course?.price?.original}
-            </Text>
-          </div>
-          <div>
-            <Text>Discount: </Text>
-            <Text type="danger"> -{course?.price?.discount}%</Text>
-          </div>
-          <div>
-            <Text>Sale Price: </Text>
-            <Text type="success"> ${course?.price?.salePrice}</Text>
-          </div>
+        <div>
+          {course?.price?.discount > 0 ? (
+            <div className="space-x-2 text-sm font-semibold">
+              <span className="line-through text-orange-400">
+                ${course?.price?.original}
+              </span>
+              <span className="text-red-500">-{course?.price?.discount}%</span>
+              <span className="text-green-600">
+                ${course?.price?.salePrice}
+              </span>
+            </div>
+          ) : (
+            <span className="text-green-600 font-semibold text-sm">
+              ${course?.price?.salePrice}
+            </span>
+          )}
         </div>
       </div>
     </Card>
