@@ -1,26 +1,47 @@
 import { ITeamMember } from "@/types/instructor";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 type Props = {
   member: ITeamMember;
 };
 
+const overlayVariants = {
+  hidden: { y: "100%" },
+  visible: { y: "0%" },
+};
+
 const MemberCard = ({ member }: Props) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-20%" });
+
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   return (
-    <div
-      className="relative p-2 overflow-hidden h-[290px] w-full min-w-[280px] max-w-[350px] bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300"
-      key={member?.id}
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      whileHover={!isMobile ? "visible" : undefined}
+      animate={isMobile && isInView ? "visible" : "hidden"}
+      className="relative overflow-hidden h-[290px] w-full rounded-xl shadow-lg cursor-pointer"
     >
-      <img
+      <motion.img
         src={member?.image}
-        alt={"member image"}
-        className="absolute inset-0 w-full h-full object-cover"
+        alt="member image"
+        className="w-full h-full object-cover"
+        whileHover={!isMobile ? { scale: 1.05 } : undefined}
+        transition={{ duration: 0.3 }}
       />
 
-      <div className="absolute inset-0 flex flex-col justify-center items-center bg-black bg-opacity-40 p-4">
-        <h3 className="text-xl font-semibold mb-2">{member?.name}</h3>
-        <p className="text-lg font-medium opacity-80">{member?.designation}</p>
-      </div>
-    </div>
+      <motion.div
+        variants={overlayVariants}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        className="absolute bottom-0 left-0 right-0 p-4 bg-black/60 backdrop-blur-md text-white"
+      >
+        <h3 className="text-xl font-semibold">{member?.name}</h3>
+        <p className="text-sm opacity-80">{member?.designation}</p>
+      </motion.div>
+    </motion.div>
   );
 };
 
