@@ -60,6 +60,7 @@ const CreateUser = ({ formTitle, role, successRoute, buttonText }: Props) => {
       onFinish={handleRegister}
       layout="vertical"
       className="w-full p-4 bg-gray-50 shadow-md rounded-md"
+      disabled={isLoading}
     >
       <h2 className="text-lg lg:text-2xl font-semibold text-center">
         {formTitle}
