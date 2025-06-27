@@ -2,7 +2,7 @@ import { useGetLoggedInUserQuery } from "@/features/auth";
 import { useChangeProfilePictureMutation } from "@/features/user";
 import { IUser } from "@/types/user.type";
 import { Button } from "antd/lib";
-import React from "react";
+import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -22,10 +22,15 @@ const ProfilePictureChangeButton = ({
   setFile,
   setImageUrl,
 }: Props) => {
+  const router = useRouter();
+  const userId = router?.query?.userId as string;
+
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
   const [changeProfilePicture, { isLoading }] =
     useChangeProfilePictureMutation();
+  const currentUserId =
+    router.pathname === "/profile/[userId]" ? userId : user?.id || user?._id;
 
   const handleChangeProfilePicture = async () => {
     if (file) {
@@ -34,7 +39,7 @@ const ProfilePictureChangeButton = ({
       formData.append("file", file);
       try {
         const response: any = await changeProfilePicture({
-          id: user.id,
+          id: currentUserId,
           image: formData,
         });
         if (response?.data?.statusCode === 200) {

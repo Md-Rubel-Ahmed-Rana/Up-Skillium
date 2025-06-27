@@ -1,4 +1,4 @@
-import teamMembersData from "@/constants/teamMembers";
+import { instructors } from "@/constants/teamMembers";
 import { Button } from "antd/lib";
 import Link from "next/link";
 import MemberCard from "./MemberCard";
@@ -10,7 +10,7 @@ const TeamContainer = () => {
       <TeamHeader />
 
       <div className="max-w-[1200px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {teamMembersData.slice(0, 6).map((member) => (
+        {instructors.slice(0, 6).map((member) => (
           <MemberCard key={member?.id} member={member} />
         ))}
       </div>

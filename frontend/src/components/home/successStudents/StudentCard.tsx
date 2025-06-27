@@ -4,7 +4,7 @@ import { useRef } from "react";
 const cardVariants = {
   hidden: { opacity: 0, y: 50 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  hover: { scale: 1.05, boxShadow: "0px 4px 15px rgba(0,0,0,0.2)" },
+  hover: { scale: 1.02, boxShadow: "0px 4px 15px rgba(0,0,0,0.2)" },
 };
 
 type Student = {
@@ -26,7 +26,7 @@ const StudentCard = ({ student }: Props) => {
   return (
     <motion.div
       ref={ref}
-      className="p-2 border border-gray-400 rounded-md h-[290px] w-full min-w-[280px] max-w-[350px]  bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white"
+      className="p-2 border border-gray-400 rounded-md h-[290px] w-full  bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white"
       variants={cardVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
@@ -39,7 +39,7 @@ const StudentCard = ({ student }: Props) => {
       />
       <h3 className="text-xl font-bold mt-3">{student?.name}</h3>
       <p>Score: {student?.score}</p>
-      <p>Course: {student?.course}</p>
+      <p>{student?.course}</p>
     </motion.div>
   );
 };
