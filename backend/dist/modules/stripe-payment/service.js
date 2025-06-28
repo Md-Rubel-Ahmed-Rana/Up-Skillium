@@ -66,6 +66,21 @@ class Service {
             return { url: sessionUrl };
         });
     }
+    checkoutFromCart(items) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { sessionId, sessionUrl } = yield this.stripeCheckout(items);
+            const enrollmentData = items.map((item) => ({
+                user: item === null || item === void 0 ? void 0 : item.userId,
+                course: item === null || item === void 0 ? void 0 : item.courseId,
+                courseName: item === null || item === void 0 ? void 0 : item.courseName,
+                price: item === null || item === void 0 ? void 0 : item.price,
+                paymentSessionId: sessionId,
+                paymentSessionUrl: sessionUrl,
+            }));
+            yield service_1.EnrollmentService.createManyEnrollment(enrollmentData);
+            return { url: sessionUrl };
+        });
+    }
     makePaymentStatusSuccess(sessionId) {
         return __awaiter(this, void 0, void 0, function* () {
             yield service_1.EnrollmentService.updateStatusAsSuccessByWebhook(sessionId);
@@ -78,6 +93,23 @@ class Service {
                     const payment = event.data.object;
                     const sessionId = payment === null || payment === void 0 ? void 0 : payment.id;
                     yield this.makePaymentStatusSuccess(sessionId);
+                    break;
+                default:
+                    console.log(`Unhandled event type ${event.type}`);
+            }
+        });
+    }
+    webHookCart(event) {
+        return __awaiter(this, void 0, void 0, function* () {
+            switch (event.type) {
+                case "checkout.session.completed":
+                    const payment = event.data.object;
+                    console.log({
+                        from: "Stripe Payment cart webhook",
+                        data: payment,
+                    });
+                    const sessionId = payment === null || payment === void 0 ? void 0 : payment.id;
+                    yield service_1.EnrollmentService.updateCartEnrollmentsWebhook(sessionId);
                     break;
                 default:
                     console.log(`Unhandled event type ${event.type}`);

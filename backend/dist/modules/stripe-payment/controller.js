@@ -36,6 +36,15 @@ class Controller extends rootController_1.default {
                 data: { received: true },
             });
         }));
+        this.webHookCart = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield service_1.StripePaymentService.webHookCart(req.body);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Event triggered from Webhook cart successfully",
+                data: { received: true },
+            });
+        }));
     }
 }
 exports.StripePaymentController = new Controller();

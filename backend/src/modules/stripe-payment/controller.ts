@@ -22,6 +22,16 @@ class Controller extends RootController {
       data: { received: true },
     });
   });
+
+  webHookCart = this.catchAsync(async (req: Request, res: Response) => {
+    await StripePaymentService.webHookCart(req.body);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Event triggered from Webhook cart successfully",
+      data: { received: true },
+    });
+  });
 }
 
 export const StripePaymentController = new Controller();
