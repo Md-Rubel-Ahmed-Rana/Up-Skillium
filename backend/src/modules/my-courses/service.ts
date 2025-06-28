@@ -59,6 +59,83 @@ class Service {
     await this.calculateCourseCompletion(userId, courseId, lessonId);
   }
 
+  async getStudentCourseProgressAnalyticsSummary(filters = {}) {
+    const summary = await MyCourse.aggregate([
+      {
+        $match: {
+          ...filters,
+          completionPercentage: { $ne: null },
+        },
+      },
+      {
+        $facet: {
+          overallStats: [
+            {
+              $group: {
+                _id: null,
+                totalEnrolled: { $sum: 1 },
+                totalCompleted: {
+                  $sum: { $cond: ["$isCourseCompleted", 1, 0] },
+                },
+                totalInProgress: {
+                  $sum: { $cond: ["$isCourseCompleted", 0, 1] },
+                },
+                averageCompletionPercentage: { $avg: "$completionPercentage" },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                totalEnrolled: 1,
+                totalCompleted: 1,
+                totalInProgress: 1,
+                averageCompletionPercentage: {
+                  $round: ["$averageCompletionPercentage", 2],
+                },
+              },
+            },
+          ],
+          // Optional: For expansion
+          perCourseStats: [
+            {
+              $group: {
+                _id: "$course",
+                enrolled: { $sum: 1 },
+                completed: {
+                  $sum: { $cond: ["$isCourseCompleted", 1, 0] },
+                },
+                avgCompletion: { $avg: "$completionPercentage" },
+              },
+            },
+            {
+              $project: {
+                courseId: "$_id",
+                _id: 0,
+                enrolled: 1,
+                completed: 1,
+                avgCompletion: { $round: ["$avgCompletion", 2] },
+              },
+            },
+          ],
+        },
+      },
+    ]);
+
+    const overallStats = summary[0]?.overallStats?.[0] || {
+      totalEnrolled: 0,
+      totalCompleted: 0,
+      totalInProgress: 0,
+      averageCompletionPercentage: 0,
+    };
+
+    const perCourseStats = summary[0]?.perCourseStats || [];
+
+    return {
+      ...overallStats,
+      perCourseStats,
+    };
+  }
+
   private async calculateCourseCompletion(
     userId: Types.ObjectId,
     courseId: Types.ObjectId,

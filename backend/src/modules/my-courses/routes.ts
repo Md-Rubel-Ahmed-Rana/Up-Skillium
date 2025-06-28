@@ -5,6 +5,12 @@ import { JwtInstance } from "../../lib/jwt";
 const router = Router();
 
 router.get(
+  "/admin/analytics-summary",
+  JwtInstance.verifyToken,
+  MyCourseController.getStudentCourseProgressAnalyticsSummary
+);
+
+router.get(
   "/:userId",
   JwtInstance.verifyToken,
   MyCourseController.getMyCourses

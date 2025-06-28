@@ -9,3 +9,8 @@ export type IMyCourse = {
   isCourseCompleted?: boolean;
   completionPercentage?: number;
 };
+
+export type IAnalyticFilters = {
+  userId?: string;
+  courseId?: string;
+};
