@@ -22,6 +22,19 @@ class Service {
       orderId: newOrderId,
     });
   }
+  async createManyEnrollment(enrollments: IEnrollment[]) {
+    const lastEnrollment = await Enrollment.findOne().sort({ _id: -1 });
+    for (const enrollment of enrollments) {
+      const newOrderId = await TrackOrderId.generateOrderId(
+        lastEnrollment as IEnrollment,
+        enrollment.course.toString()
+      );
+      await Enrollment.create({
+        ...enrollment,
+        orderId: newOrderId,
+      });
+    }
+  }
   async isExist(
     userId: Types.ObjectId,
     courseId: Types.ObjectId
@@ -122,6 +135,57 @@ class Service {
         enrollment.course.title,
         invoiceUrl
       );
+    }
+  }
+
+  async updateCartEnrollmentsWebhook(sessionId: string): Promise<void> {
+    const enrollments: any = await Enrollment.find({
+      paymentSessionId: sessionId,
+    })
+      .populate("user", "-password")
+      .populate("course");
+
+    for (const enrollment of enrollments) {
+      if (enrollment) {
+        // generate PDF invoice here
+        const invoiceUrl = await InvoiceService.createInvoice({
+          courseInfo: {
+            name: enrollment.course.title as string,
+            price: enrollment.course.price.salePrice as number,
+            discount: enrollment.course.price.discount as number,
+          },
+          customerInfo: {
+            name: enrollment.user.name as string,
+            email: enrollment.user.email as string,
+            studentId: enrollment?.user?.userRoleId,
+          },
+          orderInfo: {
+            orderId: enrollment.orderId as string,
+          },
+        });
+
+        await Enrollment.updateOne(
+          { paymentSessionId: sessionId },
+          { $set: { status: "success", invoice: invoiceUrl } }
+        );
+
+        await MyCourseService.addNewCourse({
+          course: enrollment.course.id,
+          user: enrollment.user._id,
+        });
+
+        await CourseService.addStudentToCourse(
+          enrollment?.course?.id,
+          enrollment?.user?._id
+        );
+
+        await MailService.enrollmentConfirmationMail(
+          enrollment.user.email,
+          enrollment.user.name,
+          enrollment.course.title,
+          invoiceUrl
+        );
+      }
     }
   }
 

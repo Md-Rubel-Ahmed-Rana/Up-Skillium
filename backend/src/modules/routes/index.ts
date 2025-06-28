@@ -18,6 +18,7 @@ import { ReviewRoutes } from "../review/routes";
 import { AssignmentRoutes } from "../assignment/routes";
 import { LiveClassRoutes } from "../live-class/routes";
 import { MyCourseRoutes } from "../my-courses/routes";
+import { CartRoutes } from "../cart/routes";
 
 const router = Router();
 
@@ -58,5 +59,7 @@ router.use("/review", ReviewRoutes);
 router.use("/live-class", LiveClassRoutes);
 
 router.use("/my-course", MyCourseRoutes);
+
+router.use("/cart", CartRoutes);
 
 export const RootRoutes = router;

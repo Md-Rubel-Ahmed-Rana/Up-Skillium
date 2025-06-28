@@ -63,6 +63,24 @@ class Service {
     return { url: sessionUrl };
   }
 
+  async checkoutFromCart(items: IStripeCheckout[]): Promise<{ url: string }> {
+    const { sessionId, sessionUrl } = await this.stripeCheckout(items);
+    const enrollmentData: IEnrollment[] = items.map(
+      (item: IStripeCheckout) => ({
+        user: item?.userId,
+        course: item?.courseId,
+        courseName: item?.courseName,
+        price: item?.price,
+        paymentSessionId: sessionId,
+        paymentSessionUrl: sessionUrl,
+      })
+    );
+
+    await EnrollmentService.createManyEnrollment(enrollmentData);
+
+    return { url: sessionUrl };
+  }
+
   async makePaymentStatusSuccess(sessionId: string) {
     await EnrollmentService.updateStatusAsSuccessByWebhook(sessionId);
   }
@@ -73,6 +91,21 @@ class Service {
         const payment = event.data.object;
         const sessionId = payment?.id;
         await this.makePaymentStatusSuccess(sessionId);
+        break;
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+  }
+  async webHookCart(event: any) {
+    switch (event.type) {
+      case "checkout.session.completed":
+        const payment = event.data.object;
+        console.log({
+          from: "Stripe Payment cart webhook",
+          data: payment,
+        });
+        const sessionId = payment?.id;
+        await EnrollmentService.updateCartEnrollmentsWebhook(sessionId);
         break;
       default:
         console.log(`Unhandled event type ${event.type}`);
