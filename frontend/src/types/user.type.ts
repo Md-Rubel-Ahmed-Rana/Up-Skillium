@@ -27,3 +27,21 @@ export type IUser = {
   emergencyContact: IEmergencyContact;
   phoneNumber: string;
 };
+
+export type IUserAnalytics = {
+  totalUsers: number;
+  activeUsers: number;
+  inactiveUsers: number;
+  usersByDate: {
+    count: number;
+    date: string;
+  }[];
+  genderDistribution: {
+    gender: "Male" | "Female" | "unknown";
+    count: number;
+  }[];
+  roleDistribution: {
+    role: "student" | "instructor" | "unknown";
+    count: number;
+  }[];
+};

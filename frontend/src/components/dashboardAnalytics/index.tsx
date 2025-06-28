@@ -1,5 +1,11 @@
+import UserAnalyticsSummary from "./UserAnalyticsSummary";
+
 const Analytics = () => {
-  return <div>Analytics</div>;
+  return (
+    <div>
+      <UserAnalyticsSummary />
+    </div>
+  );
 };
 
 export default Analytics;

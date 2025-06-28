@@ -9,6 +9,7 @@ import {
   FaBook,
   FaBookOpen,
   FaChalkboardTeacher,
+  FaChartBar,
   FaChartLine,
   FaCheckCircle,
   FaClipboardCheck,
@@ -37,6 +38,7 @@ import {
   FaUserTie,
   FaWrench,
 } from "react-icons/fa";
+import { GiTeacher } from "react-icons/gi";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import {
   MdAddToQueue,
@@ -356,9 +358,42 @@ const AdminSidebar = () => {
       ],
     },
     {
-      key: "11",
+      key: "12",
       icon: <FaChartLine />,
-      label: <Link href="/dashboard/analytics">Analytics</Link>,
+      label: "Analytics",
+      children: [
+        {
+          key: "12-1",
+          icon: <FaChartLine />,
+          label: <Link href="/dashboard/analytics/users">Users Analytics</Link>,
+        },
+        {
+          key: "12-2",
+          icon: <FaChartBar />,
+          label: (
+            <Link href="/dashboard/analytics/students">Student Analytics</Link>
+          ),
+        },
+
+        {
+          key: "12-3",
+          icon: <GiTeacher />,
+          label: (
+            <Link href="/dashboard/analytics/instructors">
+              Instructor Analytics
+            </Link>
+          ),
+        },
+        {
+          key: "12-4",
+          icon: <FaChartLine />,
+          label: (
+            <Link href="/dashboard/analytics/platform">
+              Platform Usage Analytics
+            </Link>
+          ),
+        },
+      ],
     },
     {
       key: "13",
