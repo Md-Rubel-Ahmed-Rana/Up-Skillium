@@ -16,3 +16,15 @@ export type IEnrollment = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type IEnrollmentAnalytics = {
+  totalEnrollments: number;
+  totalRevenue: number;
+  successCount: number;
+  failedCount: number;
+  enrollmentsByDate: {
+    date: string;
+    count: number;
+    revenue: number;
+  }[];
+};

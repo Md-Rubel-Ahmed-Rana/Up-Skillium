@@ -371,7 +371,9 @@ const AdminSidebar = () => {
           key: "12-2",
           icon: <FaChartBar />,
           label: (
-            <Link href="/dashboard/analytics/students">Student Analytics</Link>
+            <Link href="/dashboard/analytics/enrollments">
+              Enrollment Analytics
+            </Link>
           ),
         },
 
