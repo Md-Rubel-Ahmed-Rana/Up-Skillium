@@ -40,6 +40,13 @@ const quizSubmissionApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["lesson", "module", "course", "quiz-submission"],
     }),
+    getQuizSubmissionAnalytics: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/quiz-submission/analytics-summary`,
+      }),
+      providesTags: ["lesson", "module", "course", "quiz-submission"],
+    }),
   }),
 });
 
@@ -47,4 +54,5 @@ export const {
   useGetSubmittedQuizResultQuery,
   useGetAllSubmittedQuizzesQuery,
   useSubmitQuizMutation,
+  useGetQuizSubmissionAnalyticsQuery,
 } = quizSubmissionApi;

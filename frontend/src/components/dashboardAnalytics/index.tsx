@@ -1,6 +1,7 @@
 import AssignmentSubmissionAnalytics from "./AssignmentSubmissionAnalytics";
 import CertificateAnalytics from "./CertificateAnalytics";
 import EnrollmentAnalytics from "./EnrollmentAnalytics";
+import QuizSubmissionAnalytics from "./QuizSubmissionAnalytics";
 import StudentProgressAnalytics from "./StudentProgressAnalytics";
 import UserAnalyticsSummary from "./UserAnalyticsSummary";
 
@@ -12,6 +13,7 @@ const Analytics = () => {
       <CertificateAnalytics />
       <StudentProgressAnalytics />
       <AssignmentSubmissionAnalytics />
+      <QuizSubmissionAnalytics />
     </div>
   );
 };
