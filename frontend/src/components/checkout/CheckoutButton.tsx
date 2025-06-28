@@ -51,7 +51,7 @@ const CheckoutButton = ({
         backdrop: true,
         timer: 10000,
       });
-      router.push("/login");
+      router.push(`/login?redirect=${router.asPath}`);
       return;
     } else {
       if (user?.role?.name === "student") {

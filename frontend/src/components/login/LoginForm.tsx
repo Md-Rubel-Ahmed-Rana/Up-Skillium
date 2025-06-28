@@ -31,16 +31,21 @@ const LoginForm: React.FC = () => {
   const [form] = Form.useForm();
   const [loginUser, { isLoading }] = useUserLoginMutation();
   const router = useRouter();
+  const redirect = router.query?.redirect as string;
 
   const handleLogin: FormProps<FieldType>["onFinish"] = async (data) => {
     try {
       const response: any = await loginUser(data);
       if (response?.data?.statusCode === 200) {
         toast.success(response?.data?.message || "User login successful");
-        if (response?.data?.data?.role?.name === "admin") {
-          router.push("/dashboard");
+        if (redirect) {
+          router.push(redirect);
         } else {
-          router.push("/dashboard/profile-info");
+          if (response?.data?.data?.role?.name === "admin") {
+            router.push("/dashboard");
+          } else {
+            router.push("/dashboard/profile-info");
+          }
         }
       } else {
         toast.error(
@@ -61,10 +66,14 @@ const LoginForm: React.FC = () => {
       const response: any = await loginUser(credentials);
       if (response?.data?.statusCode === 200) {
         toast.success(response?.data?.message || "User login successful");
-        if (role === "admin") {
-          router.push("/dashboard");
+        if (redirect) {
+          router.push(redirect);
         } else {
-          router.push("/dashboard/profile-info");
+          if (role === "admin") {
+            router.push("/dashboard");
+          } else {
+            router.push("/dashboard/profile-info");
+          }
         }
       } else {
         toast.error(
