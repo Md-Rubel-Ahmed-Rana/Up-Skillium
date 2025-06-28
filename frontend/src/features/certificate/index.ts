@@ -20,6 +20,13 @@ const certificateApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["certificates"] as any,
     }),
+    getCertificatesAnalytics: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/certificate/analytics-summary`,
+      }),
+      providesTags: ["certificates"] as any,
+    }),
     getCertificatesByInstructor: builder.query({
       query: ({ instructorId }: { instructorId: string }) => ({
         method: "GET",
@@ -68,4 +75,5 @@ export const {
   useDeleteCertificateMutation,
   useUpdateCertificateMutation,
   useGetCertificatesByInstructorQuery,
+  useGetCertificatesAnalyticsQuery,
 } = certificateApi;
