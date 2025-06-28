@@ -17,3 +17,12 @@ export type IQuizSubmissionResult = {
   wrongAnswers: number;
   modifiedQuizAnswers: IQuizAnswer[];
 };
+
+export type IQuizSubmissionAnalytics = {
+  totalSubmissions: number;
+  totalCorrectAnswers: number;
+  totalWrongAnswers: number;
+  highestScore: number;
+  lowestScore: number;
+  averageScorePercentage: number;
+};
