@@ -390,8 +390,8 @@ const AdminSidebar = () => {
           key: "12-4",
           icon: <FaChartLine />,
           label: (
-            <Link href="/dashboard/analytics/platform">
-              Platform Usage Analytics
+            <Link href="/dashboard/analytics/students-progress">
+              Students Progress
             </Link>
           ),
         },
