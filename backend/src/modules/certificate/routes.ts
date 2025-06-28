@@ -17,6 +17,12 @@ router.get(
 );
 
 router.get(
+  "/analytics-summary",
+  JwtInstance.verifyToken,
+  CertificateController.getCertificateAnalyticsSummary
+);
+
+router.get(
   "/:id",
   JwtInstance.verifyToken,
   CertificateController.getSingleCertificate
