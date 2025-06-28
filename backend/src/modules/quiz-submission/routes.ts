@@ -11,6 +11,12 @@ router.get(
 );
 
 router.get(
+  "/analytics-summary",
+  JwtInstance.verifyToken,
+  QuizSubmissionController.getQuizSubmissionAnalyticsSummary
+);
+
+router.get(
   "/single/:id",
   JwtInstance.verifyToken,
   QuizSubmissionController.getSingleQuizSubmission

@@ -4,6 +4,7 @@ import { BcryptInstance } from "../../lib/bcrypt";
 import { UserService } from "../user/service";
 import { IRegister } from "./interface";
 import { MailService } from "../mail/mail.service";
+import { IUser } from "../user/interface";
 
 class Service {
   async auth(id: string) {
@@ -13,8 +14,8 @@ class Service {
   async login(
     email: string,
     password: string
-  ): Promise<{ accessToken: string; refreshToken: string }> {
-    const isExist = await UserService.findUserByEmailWithPassword(email);
+  ): Promise<{ accessToken: string; refreshToken: string; user: IUser }> {
+    const isExist: any = await UserService.findUserByEmailWithPassword(email);
 
     if (!isExist) {
       throw new ApiError(
@@ -50,7 +51,9 @@ class Service {
     const accessToken = await JwtInstance.generateAccessToken(jwtPayload);
     const refreshToken = await JwtInstance.generateRefreshToken(jwtPayload);
 
-    return { accessToken, refreshToken };
+    delete isExist?.password;
+
+    return { accessToken, refreshToken, user: isExist };
   }
 
   async register(data: IRegister) {

@@ -59,6 +59,15 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
+        this.getQuizSubmissionAnalyticsSummary = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.QuizSubmissionService.getQuizSubmissionAnalyticsSummary();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Quiz submission analytics retrieved successfully",
+                data: data,
+            });
+        }));
     }
 }
 exports.QuizSubmissionController = new Controller();

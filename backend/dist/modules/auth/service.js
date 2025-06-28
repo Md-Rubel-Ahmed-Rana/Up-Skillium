@@ -44,7 +44,8 @@ class Service {
             };
             const accessToken = yield jwt_1.JwtInstance.generateAccessToken(jwtPayload);
             const refreshToken = yield jwt_1.JwtInstance.generateRefreshToken(jwtPayload);
-            return { accessToken, refreshToken };
+            isExist === null || isExist === void 0 ? true : delete isExist.password;
+            return { accessToken, refreshToken, user: isExist };
         });
     }
     register(data) {

@@ -65,5 +65,50 @@ class Service {
             ]);
         });
     }
+    getQuizSubmissionAnalyticsSummary() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const summary = yield model_1.QuizSubmission.aggregate([
+                {
+                    $group: {
+                        _id: null,
+                        totalSubmissions: { $sum: 1 },
+                        totalCorrectAnswers: { $sum: "$correctAnswers" },
+                        totalWrongAnswers: { $sum: "$wrongAnswers" },
+                        totalQuestions: { $sum: "$totalQuiz" },
+                        highestScore: { $max: "$correctAnswers" },
+                        lowestScore: { $min: "$correctAnswers" },
+                    },
+                },
+                {
+                    $addFields: {
+                        averageScorePercentage: {
+                            $cond: [
+                                { $eq: ["$totalQuestions", 0] },
+                                0,
+                                {
+                                    $multiply: [
+                                        { $divide: ["$totalCorrectAnswers", "$totalQuestions"] },
+                                        100,
+                                    ],
+                                },
+                            ],
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        totalSubmissions: 1,
+                        totalCorrectAnswers: 1,
+                        totalWrongAnswers: 1,
+                        averageScorePercentage: { $round: ["$averageScorePercentage", 2] },
+                        highestScore: 1,
+                        lowestScore: 1,
+                    },
+                },
+            ]);
+            return summary[0];
+        });
+    }
 }
 exports.QuizSubmissionService = new Service();

@@ -58,6 +58,18 @@ class Controller extends RootController {
       });
     }
   );
+  getQuizSubmissionAnalyticsSummary = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const data =
+        await QuizSubmissionService.getQuizSubmissionAnalyticsSummary();
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Quiz submission analytics retrieved successfully",
+        data: data,
+      });
+    }
+  );
 }
 
 export const QuizSubmissionController = new Controller();
