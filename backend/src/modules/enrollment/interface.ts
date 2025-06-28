@@ -11,3 +11,8 @@ export type IEnrollment = {
   paymentSessionId: string;
   paymentSessionUrl: string;
 };
+
+export type EnrollmentAnalyticsParams = {
+  startDate?: string;
+  endDate?: string;
+};

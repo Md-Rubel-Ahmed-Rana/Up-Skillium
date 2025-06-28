@@ -2,6 +2,7 @@ import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { EnrollmentService } from "./service";
 import { Types } from "mongoose";
+import { EnrollmentAnalyticsParams } from "./interface";
 
 class Controller extends RootController {
   createEnrollment = this.catchAsync(async (req: Request, res: Response) => {
@@ -109,6 +110,22 @@ class Controller extends RootController {
       data: result,
     });
   });
+
+  getEnrollmentAnalyticsSummary = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const params = req.query as EnrollmentAnalyticsParams;
+      const result = await EnrollmentService.getEnrollmentAnalyticsSummary(
+        params
+      );
+
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Enrollment analytics summary retrieved successfully",
+        data: result,
+      });
+    }
+  );
 }
 
 export const EnrollmentController = new Controller();

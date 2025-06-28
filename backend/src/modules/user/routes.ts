@@ -6,9 +6,9 @@ import { JwtInstance } from "../../lib/jwt";
 
 const router = Router();
 
-router.get("/", JwtInstance.verifyToken, UserController.findUsers);
+router.get("/", UserController.findUsers);
 
-router.get("/:id", JwtInstance.verifyToken, UserController.getSingleUser);
+router.get("/:id", UserController.getSingleUser);
 
 router.patch("/:id", JwtInstance.verifyToken, UserController.updateUser);
 
