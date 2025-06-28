@@ -1,23 +1,23 @@
-import UserAnalyticsSummary from "@/components/dashboardAnalytics/UserAnalyticsSummary";
+import EnrollmentAnalytics from "@/components/dashboardAnalytics/EnrollmentAnalytics";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
-const UserAnalyticsPage = () => {
+const EnrollmentAnalyticsPage = () => {
   return (
     <>
       <PageMetadata
-        title={`Users Analytics - Up Skillium`}
+        title={`Enrollments Analytics - Up Skillium`}
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <UserAnalyticsSummary />
+      <EnrollmentAnalytics />
     </>
   );
 };
 
-UserAnalyticsPage.getLayout = function (page: ReactElement) {
+EnrollmentAnalyticsPage.getLayout = function (page: ReactElement) {
   return (
     <RootLayout>
       <DashboardLayout>{page}</DashboardLayout>
@@ -25,4 +25,4 @@ UserAnalyticsPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default UserAnalyticsPage;
+export default EnrollmentAnalyticsPage;
