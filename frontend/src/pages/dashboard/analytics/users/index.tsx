@@ -8,7 +8,7 @@ const AnalyticsPage = () => {
   return (
     <>
       <PageMetadata
-        title={`Analytics - Up Skillium`}
+        title={`Users Analytics - Up Skillium`}
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
