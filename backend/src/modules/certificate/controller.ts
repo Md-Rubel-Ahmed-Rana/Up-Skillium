@@ -81,6 +81,17 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getCertificateAnalyticsSummary = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const data = await CertificateService.getCertificateAnalyticsSummary();
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Certificate analytics retrieved successfully",
+        data,
+      });
+    }
+  );
 }
 
 export const CertificateController = new Controller();

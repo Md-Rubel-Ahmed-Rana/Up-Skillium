@@ -98,7 +98,74 @@ class Service {
     ]);
     return certificates;
   }
+  async getCertificateAnalyticsSummary() {
+    const [summary] = await Certificate.aggregate([
+      {
+        $facet: {
+          overallStats: [
+            {
+              $group: {
+                _id: null,
+                totalCertificates: { $sum: 1 },
+                averageScore: { $avg: "$score" },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                totalCertificates: 1,
+                averageScore: { $round: ["$averageScore", 2] },
+              },
+            },
+          ],
 
+          topTechnologies: [
+            { $unwind: "$technologies" },
+            {
+              $group: {
+                _id: "$technologies",
+                count: { $sum: 1 },
+              },
+            },
+            { $sort: { count: -1 } },
+            { $limit: 5 },
+            {
+              $project: {
+                _id: 0,
+                name: "$_id",
+                count: 1,
+              },
+            },
+          ],
+
+          topCourses: [
+            {
+              $group: {
+                _id: "$courseName",
+                count: { $sum: 1 },
+              },
+            },
+            { $sort: { count: -1 } },
+            { $limit: 5 },
+            {
+              $project: {
+                _id: 0,
+                title: "$_id",
+                count: 1,
+              },
+            },
+          ],
+        },
+      },
+    ]);
+
+    return {
+      totalCertificates: summary?.overallStats?.[0]?.totalCertificates || 0,
+      averageScore: summary?.overallStats?.[0]?.averageScore || 0,
+      topTechnologies: summary?.topTechnologies || [],
+      topCourses: summary?.topCourses || [],
+    };
+  }
   async updateCertificate(
     id: Types.ObjectId,
     updateData: IPdfCertificate
