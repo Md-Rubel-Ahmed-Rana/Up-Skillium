@@ -3,13 +3,13 @@ import buildPathToKeyMap from "@/utils/buildPathToKeyMapSidebar";
 import { Menu, MenuProps } from "antd/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { AiOutlineFileSearch } from "react-icons/ai";
 import {
   FaArchive,
   FaAward,
   FaBook,
   FaBookOpen,
   FaChalkboardTeacher,
-  FaChartBar,
   FaChartLine,
   FaCheckCircle,
   FaClipboardCheck,
@@ -38,10 +38,10 @@ import {
   FaUserTie,
   FaWrench,
 } from "react-icons/fa";
-import { GiTeacher } from "react-icons/gi";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import {
   MdAddToQueue,
+  MdAssignmentTurnedIn,
   MdHistory,
   MdOutlineLibraryBooks,
   MdPassword,
@@ -49,7 +49,7 @@ import {
   MdSchedule,
   MdVideoCameraFront,
 } from "react-icons/md";
-import { RiLiveFill } from "react-icons/ri";
+import { RiBarChartBoxFill, RiLiveFill } from "react-icons/ri";
 
 const AdminSidebar = () => {
   const router = useRouter();
@@ -364,22 +364,21 @@ const AdminSidebar = () => {
       children: [
         {
           key: "12-1",
-          icon: <FaChartLine />,
+          icon: <FaUsers />,
           label: <Link href="/dashboard/analytics/users">Users Analytics</Link>,
         },
         {
           key: "12-2",
-          icon: <FaChartBar />,
+          icon: <RiBarChartBoxFill />,
           label: (
             <Link href="/dashboard/analytics/enrollments">
               Enrollment Analytics
             </Link>
           ),
         },
-
         {
           key: "12-3",
-          icon: <GiTeacher />,
+          icon: <FaGraduationCap />,
           label: (
             <Link href="/dashboard/analytics/certificates">
               Certificates Analytics
@@ -388,7 +387,7 @@ const AdminSidebar = () => {
         },
         {
           key: "12-4",
-          icon: <FaChartLine />,
+          icon: <AiOutlineFileSearch />,
           label: (
             <Link href="/dashboard/analytics/students-progress">
               Students Progress
@@ -397,10 +396,19 @@ const AdminSidebar = () => {
         },
         {
           key: "12-5",
-          icon: <FaChartLine />,
+          icon: <MdAssignmentTurnedIn />,
           label: (
             <Link href="/dashboard/analytics/assignments">
               Assignments Progress
+            </Link>
+          ),
+        },
+        {
+          key: "12-6",
+          icon: <FaTasks />,
+          label: (
+            <Link href="/dashboard/analytics/quiz-submissions">
+              Quiz Submissions
             </Link>
           ),
         },
