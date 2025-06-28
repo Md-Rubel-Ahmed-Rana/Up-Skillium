@@ -8,6 +8,12 @@ const router = Router();
 
 router.get("/", UserController.findUsers);
 
+router.get(
+  "/analytics-summary",
+  JwtInstance.verifyToken,
+  UserController.getUserAnalyticsSummary
+);
+
 router.get("/:id", UserController.getSingleUser);
 
 router.patch("/:id", JwtInstance.verifyToken, UserController.updateUser);

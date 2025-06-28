@@ -2,6 +2,7 @@ import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { UserService } from "./service";
 import { Types } from "mongoose";
+import { UserAnalyticsParams } from "./interface";
 
 class Controller extends RootController {
   findUsers = this.catchAsync(async (req: Request, res: Response) => {
@@ -124,6 +125,18 @@ class Controller extends RootController {
       data: null,
     });
   });
+  getUserAnalyticsSummary = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const params = req.query as UserAnalyticsParams;
+      const data = await UserService.getUserAnalyticsSummary(params);
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: `Users analytics summary retrieved successfully!`,
+        data,
+      });
+    }
+  );
 }
 
 export const UserController = new Controller();

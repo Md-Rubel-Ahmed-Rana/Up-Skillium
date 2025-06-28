@@ -58,3 +58,8 @@ export type IUserBasicInfo = {
   dateOfBirth: Date;
   gender: string;
 };
+
+export type UserAnalyticsParams = {
+  startDate?: string;
+  endDate?: string;
+};

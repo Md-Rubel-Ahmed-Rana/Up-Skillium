@@ -6,6 +6,7 @@ import {
   IEmergencyContact,
   IGetUser,
   IUserBasicInfo,
+  UserAnalyticsParams,
 } from "./interface";
 import { BcryptInstance } from "../../lib/bcrypt";
 import ApiError from "../../shared/apiError";
@@ -199,6 +200,86 @@ class Service {
   }
   async deleteUserAccount(id: Types.ObjectId): Promise<void> {
     await User.findByIdAndDelete(id);
+  }
+  async getUserAnalyticsSummary(params: UserAnalyticsParams) {
+    const { startDate, endDate } = params;
+
+    const match: any = {};
+    if (startDate || endDate) {
+      match.createdAt = {};
+      if (startDate) match.createdAt.$gte = new Date(startDate);
+      if (endDate) match.createdAt.$lte = new Date(endDate);
+    }
+
+    const summary = await User.aggregate([
+      { $match: match },
+      {
+        $facet: {
+          totalUsers: [{ $count: "count" }],
+
+          activeUsers: [{ $match: { status: "active" } }, { $count: "count" }],
+
+          inactiveUsers: [
+            { $match: { status: "inactive" } },
+            { $count: "count" },
+          ],
+
+          usersByDate: [
+            {
+              $group: {
+                _id: {
+                  $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                },
+                count: { $sum: 1 },
+              },
+            },
+            { $sort: { _id: 1 } },
+            {
+              $project: {
+                _id: 0,
+                date: "$_id",
+                count: 1,
+              },
+            },
+          ],
+
+          genderDistribution: [
+            {
+              $group: {
+                _id: "$gender",
+                count: { $sum: 1 },
+              },
+            },
+          ],
+
+          roleDistribution: [
+            {
+              $group: {
+                _id: "$roleName",
+                count: { $sum: 1 },
+              },
+            },
+          ],
+        },
+      },
+    ]);
+
+    const result = summary[0];
+
+    return {
+      totalUsers: result.totalUsers[0]?.count || 0,
+      activeUsers: result.activeUsers[0]?.count || 0,
+      inactiveUsers: result.inactiveUsers[0]?.count || 0,
+      usersByDate: result.usersByDate,
+      genderDistribution: result.genderDistribution.map((g: any) => ({
+        gender: g?._id || "unknown",
+        count: g?.count,
+      })),
+      roleDistribution: result.roleDistribution.map((r: any) => ({
+        role: r?._id || "unknown",
+        count: r?.count,
+      })),
+    };
   }
 }
 
