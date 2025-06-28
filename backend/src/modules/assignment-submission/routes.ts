@@ -17,6 +17,12 @@ router.get(
 );
 
 router.get(
+  "/analytics-summary",
+  JwtInstance.verifyToken,
+  AssignmentSubmissionController.getAssignmentSubmissionAnalyticsSummary
+);
+
+router.get(
   "/single/:id",
   JwtInstance.verifyToken,
   AssignmentSubmissionController.getSingleSubmission
