@@ -206,5 +206,81 @@ class Service {
             yield model_1.User.findByIdAndDelete(id);
         });
     }
+    getUserAnalyticsSummary(params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c;
+            const { startDate, endDate } = params;
+            const match = {};
+            if (startDate || endDate) {
+                match.createdAt = {};
+                if (startDate)
+                    match.createdAt.$gte = new Date(startDate);
+                if (endDate)
+                    match.createdAt.$lte = new Date(endDate);
+            }
+            const summary = yield model_1.User.aggregate([
+                { $match: match },
+                {
+                    $facet: {
+                        totalUsers: [{ $count: "count" }],
+                        activeUsers: [{ $match: { status: "active" } }, { $count: "count" }],
+                        inactiveUsers: [
+                            { $match: { status: "inactive" } },
+                            { $count: "count" },
+                        ],
+                        usersByDate: [
+                            {
+                                $group: {
+                                    _id: {
+                                        $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                                    },
+                                    count: { $sum: 1 },
+                                },
+                            },
+                            { $sort: { _id: 1 } },
+                            {
+                                $project: {
+                                    _id: 0,
+                                    date: "$_id",
+                                    count: 1,
+                                },
+                            },
+                        ],
+                        genderDistribution: [
+                            {
+                                $group: {
+                                    _id: "$gender",
+                                    count: { $sum: 1 },
+                                },
+                            },
+                        ],
+                        roleDistribution: [
+                            {
+                                $group: {
+                                    _id: "$roleName",
+                                    count: { $sum: 1 },
+                                },
+                            },
+                        ],
+                    },
+                },
+            ]);
+            const result = summary[0];
+            return {
+                totalUsers: ((_a = result.totalUsers[0]) === null || _a === void 0 ? void 0 : _a.count) || 0,
+                activeUsers: ((_b = result.activeUsers[0]) === null || _b === void 0 ? void 0 : _b.count) || 0,
+                inactiveUsers: ((_c = result.inactiveUsers[0]) === null || _c === void 0 ? void 0 : _c.count) || 0,
+                usersByDate: result.usersByDate,
+                genderDistribution: result.genderDistribution.map((g) => ({
+                    gender: (g === null || g === void 0 ? void 0 : g._id) || "unknown",
+                    count: g === null || g === void 0 ? void 0 : g.count,
+                })),
+                roleDistribution: result.roleDistribution.map((r) => ({
+                    role: (r === null || r === void 0 ? void 0 : r._id) || "unknown",
+                    count: r === null || r === void 0 ? void 0 : r.count,
+                })),
+            };
+        });
+    }
 }
 exports.UserService = new Service();

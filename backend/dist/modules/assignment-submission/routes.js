@@ -7,6 +7,7 @@ const jwt_1 = require("../../lib/jwt");
 const router = (0, express_1.Router)();
 router.post("/submit", jwt_1.JwtInstance.verifyToken, controller_1.AssignmentSubmissionController.submit);
 router.get("/", jwt_1.JwtInstance.verifyToken, controller_1.AssignmentSubmissionController.getAllSubmission);
+router.get("/analytics-summary", jwt_1.JwtInstance.verifyToken, controller_1.AssignmentSubmissionController.getAssignmentSubmissionAnalyticsSummary);
 router.get("/single/:id", jwt_1.JwtInstance.verifyToken, controller_1.AssignmentSubmissionController.getSingleSubmission);
 router.get("/pending", jwt_1.JwtInstance.verifyToken, controller_1.AssignmentSubmissionController.getAllPendingSubmissions);
 router.get("/reviewed", jwt_1.JwtInstance.verifyToken, controller_1.AssignmentSubmissionController.getAllReviewedSubmissions);

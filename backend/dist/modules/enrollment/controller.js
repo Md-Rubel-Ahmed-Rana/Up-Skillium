@@ -103,6 +103,16 @@ class Controller extends rootController_1.default {
                 data: result,
             });
         }));
+        this.getEnrollmentAnalyticsSummary = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const params = req.query;
+            const result = yield service_1.EnrollmentService.getEnrollmentAnalyticsSummary(params);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Enrollment analytics summary retrieved successfully",
+                data: result,
+            });
+        }));
     }
 }
 exports.EnrollmentController = new Controller();

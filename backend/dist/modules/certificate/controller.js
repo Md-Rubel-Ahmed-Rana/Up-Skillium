@@ -87,6 +87,15 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.getCertificateAnalyticsSummary = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.CertificateService.getCertificateAnalyticsSummary();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Certificate analytics retrieved successfully",
+                data,
+            });
+        }));
     }
 }
 exports.CertificateController = new Controller();

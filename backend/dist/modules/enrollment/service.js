@@ -150,5 +150,63 @@ class Service {
             return enrollments;
         });
     }
+    getEnrollmentAnalyticsSummary(params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d;
+            const { startDate, endDate } = params;
+            const match = {};
+            if (startDate || endDate) {
+                match.createdAt = {};
+                if (startDate)
+                    match.createdAt.$gte = new Date(startDate);
+                if (endDate)
+                    match.createdAt.$lte = new Date(endDate);
+            }
+            const summary = yield model_1.Enrollment.aggregate([
+                { $match: match },
+                {
+                    $facet: {
+                        totalEnrollments: [{ $count: "count" }],
+                        successCount: [
+                            { $match: { status: "success" } },
+                            { $count: "count" },
+                        ],
+                        failedCount: [{ $match: { status: "failed" } }, { $count: "count" }],
+                        totalRevenue: [
+                            { $match: { status: "success" } },
+                            {
+                                $group: {
+                                    _id: null,
+                                    total: { $sum: "$price" },
+                                },
+                            },
+                        ],
+                        enrollmentsByDate: [
+                            { $match: { status: "success" } },
+                            {
+                                $group: {
+                                    _id: {
+                                        $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                                    },
+                                    count: { $sum: 1 },
+                                    revenue: { $sum: "$price" },
+                                },
+                            },
+                            { $project: { _id: 0, date: "$_id", count: 1, revenue: 1 } },
+                            { $sort: { date: 1 } },
+                        ],
+                    },
+                },
+            ]);
+            const result = summary[0];
+            return {
+                totalEnrollments: ((_a = result.totalEnrollments[0]) === null || _a === void 0 ? void 0 : _a.count) || 0,
+                successCount: ((_b = result.successCount[0]) === null || _b === void 0 ? void 0 : _b.count) || 0,
+                failedCount: ((_c = result.failedCount[0]) === null || _c === void 0 ? void 0 : _c.count) || 0,
+                totalRevenue: ((_d = result.totalRevenue[0]) === null || _d === void 0 ? void 0 : _d.total) || 0,
+                enrollmentsByDate: result.enrollmentsByDate || [],
+            };
+        });
+    }
 }
 exports.EnrollmentService = new Service();

@@ -114,6 +114,15 @@ class Controller extends rootController_1.default {
                 data: data,
             });
         }));
+        this.getAssignmentSubmissionAnalyticsSummary = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const data = yield service_1.AssignmentSubmissionService.getAssignmentSubmissionAnalyticsSummary();
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Assignments submission analytics retrieved successfully",
+                data: data,
+            });
+        }));
     }
 }
 exports.AssignmentSubmissionController = new Controller();

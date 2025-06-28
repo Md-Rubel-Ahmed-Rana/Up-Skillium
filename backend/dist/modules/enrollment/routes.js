@@ -14,4 +14,5 @@ router.get("/order-history", jwt_1.JwtInstance.verifyToken, controller_1.Enrollm
 router.get("/student/:userId", jwt_1.JwtInstance.verifyToken, controller_1.EnrollmentController.getSuccessEnrollmentForStudent);
 router.get("/student-order-history/:userId", jwt_1.JwtInstance.verifyToken, controller_1.EnrollmentController.getOrderEnrollmentHistoryForStudent);
 router.get("/search", jwt_1.JwtInstance.verifyToken, controller_1.EnrollmentController.searchEnrollments);
+router.get("/analytics-summary", jwt_1.JwtInstance.verifyToken, controller_1.EnrollmentController.getEnrollmentAnalyticsSummary);
 exports.EnrollmentRoutes = router;

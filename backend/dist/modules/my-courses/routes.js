@@ -5,6 +5,7 @@ const express_1 = require("express");
 const controller_1 = require("./controller");
 const jwt_1 = require("../../lib/jwt");
 const router = (0, express_1.Router)();
+router.get("/admin/analytics-summary", jwt_1.JwtInstance.verifyToken, controller_1.MyCourseController.getStudentCourseProgressAnalyticsSummary);
 router.get("/:userId", jwt_1.JwtInstance.verifyToken, controller_1.MyCourseController.getMyCourses);
 router.get("/single/:userId/:courseId", jwt_1.JwtInstance.verifyToken, controller_1.MyCourseController.getMySingleCourse);
 router.post("/compete-lesson/:userId/:courseId/:lessonId", jwt_1.JwtInstance.verifyToken, controller_1.MyCourseController.completeLesson);

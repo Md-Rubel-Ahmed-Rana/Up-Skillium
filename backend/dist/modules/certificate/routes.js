@@ -7,6 +7,7 @@ const jwt_1 = require("../../lib/jwt");
 const router = (0, express_1.Router)();
 router.post("/create", jwt_1.JwtInstance.verifyToken, controller_1.CertificateController.createCertificate);
 router.get("/", jwt_1.JwtInstance.verifyToken, controller_1.CertificateController.getAllCertificate);
+router.get("/analytics-summary", jwt_1.JwtInstance.verifyToken, controller_1.CertificateController.getCertificateAnalyticsSummary);
 router.get("/:id", jwt_1.JwtInstance.verifyToken, controller_1.CertificateController.getSingleCertificate);
 router.get("/my-certificates/:userId", jwt_1.JwtInstance.verifyToken, controller_1.CertificateController.getCertificatesByUserId);
 router.get("/instructor/:instructorId", jwt_1.JwtInstance.verifyToken, controller_1.CertificateController.getCertificatesByInstructor);

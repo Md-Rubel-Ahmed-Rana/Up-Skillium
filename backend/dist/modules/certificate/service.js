@@ -104,6 +104,74 @@ class Service {
             return certificates;
         });
     }
+    getCertificateAnalyticsSummary() {
+        return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b, _c, _d;
+            const [summary] = yield model_1.Certificate.aggregate([
+                {
+                    $facet: {
+                        overallStats: [
+                            {
+                                $group: {
+                                    _id: null,
+                                    totalCertificates: { $sum: 1 },
+                                    averageScore: { $avg: "$score" },
+                                },
+                            },
+                            {
+                                $project: {
+                                    _id: 0,
+                                    totalCertificates: 1,
+                                    averageScore: { $round: ["$averageScore", 2] },
+                                },
+                            },
+                        ],
+                        topTechnologies: [
+                            { $unwind: "$technologies" },
+                            {
+                                $group: {
+                                    _id: "$technologies",
+                                    count: { $sum: 1 },
+                                },
+                            },
+                            { $sort: { count: -1 } },
+                            { $limit: 5 },
+                            {
+                                $project: {
+                                    _id: 0,
+                                    name: "$_id",
+                                    count: 1,
+                                },
+                            },
+                        ],
+                        topCourses: [
+                            {
+                                $group: {
+                                    _id: "$courseName",
+                                    count: { $sum: 1 },
+                                },
+                            },
+                            { $sort: { count: -1 } },
+                            { $limit: 5 },
+                            {
+                                $project: {
+                                    _id: 0,
+                                    title: "$_id",
+                                    count: 1,
+                                },
+                            },
+                        ],
+                    },
+                },
+            ]);
+            return {
+                totalCertificates: ((_b = (_a = summary === null || summary === void 0 ? void 0 : summary.overallStats) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.totalCertificates) || 0,
+                averageScore: ((_d = (_c = summary === null || summary === void 0 ? void 0 : summary.overallStats) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.averageScore) || 0,
+                topTechnologies: (summary === null || summary === void 0 ? void 0 : summary.topTechnologies) || [],
+                topCourses: (summary === null || summary === void 0 ? void 0 : summary.topCourses) || [],
+            };
+        });
+    }
     updateCertificate(id, updateData) {
         return __awaiter(this, void 0, void 0, function* () {
             const certificate = yield model_1.Certificate.findById(id);

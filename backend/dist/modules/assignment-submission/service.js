@@ -137,5 +137,52 @@ class Service {
             return assignments;
         });
     }
+    getAssignmentSubmissionAnalyticsSummary() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const summary = yield model_1.AssignmentSubmission.aggregate([
+                {
+                    $group: {
+                        _id: null,
+                        totalSubmissions: { $sum: 1 },
+                        totalChecked: {
+                            $sum: { $cond: [{ $eq: ["$status", "checked"] }, 1, 0] },
+                        },
+                        totalPending: {
+                            $sum: { $cond: [{ $eq: ["$status", "pending"] }, 1, 0] },
+                        },
+                        totalLate: {
+                            $sum: { $cond: ["$isLate", 1, 0] },
+                        },
+                        totalOnTime: {
+                            $sum: { $cond: ["$isLate", 0, 1] },
+                        },
+                        averageMark: { $avg: "$yourMark" },
+                        averageFullMark: { $avg: "$fullMark" },
+                    },
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        totalSubmissions: 1,
+                        totalChecked: 1,
+                        totalPending: 1,
+                        totalLate: 1,
+                        totalOnTime: 1,
+                        averageMark: { $round: ["$averageMark", 2] },
+                        averageFullMark: { $round: ["$averageFullMark", 2] },
+                    },
+                },
+            ]);
+            return (summary[0] || {
+                totalSubmissions: 0,
+                totalChecked: 0,
+                totalPending: 0,
+                totalLate: 0,
+                totalOnTime: 0,
+                averageMark: 0,
+                averageFullMark: 0,
+            });
+        });
+    }
 }
 exports.AssignmentSubmissionService = new Service();

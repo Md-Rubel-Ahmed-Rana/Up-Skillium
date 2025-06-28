@@ -136,6 +136,16 @@ class Controller extends rootController_1.default {
                 data: null,
             });
         }));
+        this.getUserAnalyticsSummary = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const params = req.query;
+            const data = yield service_1.UserService.getUserAnalyticsSummary(params);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: `Users analytics summary retrieved successfully!`,
+                data,
+            });
+        }));
     }
 }
 exports.UserController = new Controller();

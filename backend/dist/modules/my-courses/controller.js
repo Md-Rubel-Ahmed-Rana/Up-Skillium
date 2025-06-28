@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyCourseController = void 0;
 const rootController_1 = __importDefault(require("../../shared/rootController"));
 const service_1 = require("./service");
+const mongoose_1 = require("mongoose");
 class Controller extends rootController_1.default {
     constructor() {
         super(...arguments);
@@ -49,6 +50,23 @@ class Controller extends rootController_1.default {
                 success: true,
                 message: "Lesson marked as completed",
                 data: null,
+            });
+        }));
+        this.getStudentCourseProgressAnalyticsSummary = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { userId, courseId } = req.query;
+            const filters = {};
+            if (userId && mongoose_1.Types.ObjectId.isValid(userId)) {
+                filters.user = new mongoose_1.Types.ObjectId(userId);
+            }
+            if (courseId && mongoose_1.Types.ObjectId.isValid(courseId)) {
+                filters.course = new mongoose_1.Types.ObjectId(courseId);
+            }
+            const summary = yield service_1.MyCourseService.getStudentCourseProgressAnalyticsSummary(filters);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Student course progress analytics retrieved successfully",
+                data: summary,
             });
         }));
     }

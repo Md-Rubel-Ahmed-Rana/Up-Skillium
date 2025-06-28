@@ -56,6 +56,76 @@ class Service {
             yield this.calculateCourseCompletion(userId, courseId, lessonId);
         });
     }
+    getStudentCourseProgressAnalyticsSummary() {
+        return __awaiter(this, arguments, void 0, function* (filters = {}) {
+            var _a, _b, _c;
+            const summary = yield model_1.MyCourse.aggregate([
+                {
+                    $match: Object.assign(Object.assign({}, filters), { completionPercentage: { $ne: null } }),
+                },
+                {
+                    $facet: {
+                        overallStats: [
+                            {
+                                $group: {
+                                    _id: null,
+                                    totalEnrolled: { $sum: 1 },
+                                    totalCompleted: {
+                                        $sum: { $cond: ["$isCourseCompleted", 1, 0] },
+                                    },
+                                    totalInProgress: {
+                                        $sum: { $cond: ["$isCourseCompleted", 0, 1] },
+                                    },
+                                    averageCompletionPercentage: { $avg: "$completionPercentage" },
+                                },
+                            },
+                            {
+                                $project: {
+                                    _id: 0,
+                                    totalEnrolled: 1,
+                                    totalCompleted: 1,
+                                    totalInProgress: 1,
+                                    averageCompletionPercentage: {
+                                        $round: ["$averageCompletionPercentage", 2],
+                                    },
+                                },
+                            },
+                        ],
+                        // Optional: For expansion
+                        perCourseStats: [
+                            {
+                                $group: {
+                                    _id: "$course",
+                                    enrolled: { $sum: 1 },
+                                    completed: {
+                                        $sum: { $cond: ["$isCourseCompleted", 1, 0] },
+                                    },
+                                    avgCompletion: { $avg: "$completionPercentage" },
+                                },
+                            },
+                            {
+                                $project: {
+                                    courseId: "$_id",
+                                    _id: 0,
+                                    enrolled: 1,
+                                    completed: 1,
+                                    avgCompletion: { $round: ["$avgCompletion", 2] },
+                                },
+                            },
+                        ],
+                    },
+                },
+            ]);
+            const overallStats = ((_b = (_a = summary[0]) === null || _a === void 0 ? void 0 : _a.overallStats) === null || _b === void 0 ? void 0 : _b[0]) || {
+                totalEnrolled: 0,
+                totalCompleted: 0,
+                totalInProgress: 0,
+                averageCompletionPercentage: 0,
+            };
+            const perCourseStats = ((_c = summary[0]) === null || _c === void 0 ? void 0 : _c.perCourseStats) || [];
+            return Object.assign(Object.assign({}, overallStats), { perCourseStats });
+        });
+    }
     calculateCourseCompletion(userId, courseId, lastCompletedLessonId) {
         return __awaiter(this, void 0, void 0, function* () {
             let totalLessons = 0;
