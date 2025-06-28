@@ -9,6 +9,13 @@ const myCourseApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["my-course"],
     }),
+    getStudentCourseProgressAnalytics: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/my-course/admin/analytics-summary`,
+      }),
+      providesTags: ["my-course"],
+    }),
     getMySingleCourse: builder.query({
       query: ({ userId, courseId }: { userId: string; courseId: string }) => ({
         method: "GET",
@@ -38,4 +45,5 @@ export const {
   useGetAllMyCoursesQuery,
   useGetMySingleCourseQuery,
   useMarkLessonAsCompletedMutation,
+  useGetStudentCourseProgressAnalyticsQuery,
 } = myCourseApi;

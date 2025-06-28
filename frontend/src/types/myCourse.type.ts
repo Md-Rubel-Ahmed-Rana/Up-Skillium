@@ -11,3 +11,18 @@ export type IMyCourse = {
   isCourseCompleted: boolean;
   completionPercentage: number;
 };
+
+type ICourseProgressStats = {
+  enrolled: number;
+  completed: number;
+  courseId: string;
+  avgCompletion: number;
+};
+
+export type ICourseProgressAnalytics = {
+  totalEnrolled: number;
+  totalCompleted: number;
+  totalInProgress: number;
+  averageCompletionPercentage: number;
+  perCourseStats: ICourseProgressStats[];
+};
