@@ -1,5 +1,5 @@
 import { Types } from "mongoose";
-import { IEnrollment } from "./interface";
+import { EnrollmentAnalyticsParams, IEnrollment } from "./interface";
 import { Enrollment } from "./model";
 import { TrackOrderId } from "../../utils/trackOrderId";
 import { InvoiceService } from "../pdf-creator/invoice.service";
@@ -164,6 +164,68 @@ class Service {
       .limit(limit);
 
     return enrollments;
+  }
+
+  async getEnrollmentAnalyticsSummary(params: EnrollmentAnalyticsParams) {
+    const { startDate, endDate } = params;
+
+    const match: any = {};
+    if (startDate || endDate) {
+      match.createdAt = {};
+      if (startDate) match.createdAt.$gte = new Date(startDate);
+      if (endDate) match.createdAt.$lte = new Date(endDate);
+    }
+
+    const summary = await Enrollment.aggregate([
+      { $match: match },
+
+      {
+        $facet: {
+          totalEnrollments: [{ $count: "count" }],
+
+          successCount: [
+            { $match: { status: "success" } },
+            { $count: "count" },
+          ],
+
+          failedCount: [{ $match: { status: "failed" } }, { $count: "count" }],
+
+          totalRevenue: [
+            { $match: { status: "success" } },
+            {
+              $group: {
+                _id: null,
+                total: { $sum: "$price" },
+              },
+            },
+          ],
+
+          enrollmentsByDate: [
+            { $match: { status: "success" } },
+            {
+              $group: {
+                _id: {
+                  $dateToString: { format: "%Y-%m-%d", date: "$createdAt" },
+                },
+                count: { $sum: 1 },
+                revenue: { $sum: "$price" },
+              },
+            },
+            { $project: { _id: 0, date: "$_id", count: 1, revenue: 1 } },
+            { $sort: { date: 1 } },
+          ],
+        },
+      },
+    ]);
+
+    const result = summary[0];
+    return {
+      totalEnrollments: result.totalEnrollments[0]?.count || 0,
+      successCount: result.successCount[0]?.count || 0,
+      failedCount: result.failedCount[0]?.count || 0,
+      totalRevenue: result.totalRevenue[0]?.total || 0,
+      enrollmentsByDate: result.enrollmentsByDate || [],
+    };
   }
 }
 

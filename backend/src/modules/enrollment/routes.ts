@@ -58,4 +58,10 @@ router.get(
   EnrollmentController.searchEnrollments
 );
 
+router.get(
+  "/analytics-summary",
+  JwtInstance.verifyToken,
+  EnrollmentController.getEnrollmentAnalyticsSummary
+);
+
 export const EnrollmentRoutes = router;
