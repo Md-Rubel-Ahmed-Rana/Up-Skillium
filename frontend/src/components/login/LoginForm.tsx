@@ -57,7 +57,11 @@ const LoginForm: React.FC = () => {
       const response: any = await loginUser(credentials);
       if (response?.data?.statusCode === 200) {
         toast.success(response?.data?.message || "User login successful");
-        router.push("/dashboard/profile-info");
+        if (role === "admin") {
+          router.push("/dashboard");
+        } else {
+          router.push("/dashboard/profile-info");
+        }
       } else {
         toast.error(
           response?.data?.message ||
