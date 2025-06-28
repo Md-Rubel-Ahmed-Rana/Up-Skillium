@@ -123,6 +123,18 @@ class Controller extends RootController {
       });
     }
   );
+  getAssignmentSubmissionAnalyticsSummary = this.catchAsync(
+    async (req: Request, res: Response) => {
+      const data =
+        await AssignmentSubmissionService.getAssignmentSubmissionAnalyticsSummary();
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Assignments submission analytics retrieved successfully",
+        data: data,
+      });
+    }
+  );
 }
 
 export const AssignmentSubmissionController = new Controller();
