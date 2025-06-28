@@ -395,6 +395,15 @@ const AdminSidebar = () => {
             </Link>
           ),
         },
+        {
+          key: "12-5",
+          icon: <FaChartLine />,
+          label: (
+            <Link href="/dashboard/analytics/assignments">
+              Assignments Progress
+            </Link>
+          ),
+        },
       ],
     },
     {

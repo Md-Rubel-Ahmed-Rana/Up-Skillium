@@ -34,6 +34,13 @@ const assignmentSubmissionApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["assignment", "assignment-submission"],
     }),
+    getAssignmentSubmissionAnalytics: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/assignment-submission/analytics-summary`,
+      }),
+      providesTags: ["assignment", "assignment-submission"],
+    }),
     getSingleAssignmentSubmission: builder.query({
       query: ({ id }: { id: string }) => ({
         method: "GET",
@@ -81,4 +88,5 @@ export const {
   useGetInstructorCompleteAssignmentsQuery,
   useGetSingleAssignmentSubmissionQuery,
   useSubmitAssignmentFeedbackMutation,
+  useGetAssignmentSubmissionAnalyticsQuery,
 } = assignmentSubmissionApi;

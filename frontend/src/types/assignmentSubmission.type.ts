@@ -42,3 +42,13 @@ export type IReviewAssignment = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type IAssignmentSubmissionAnalytics = {
+  totalSubmissions: number;
+  totalChecked: number;
+  totalPending: number;
+  totalLate: number;
+  totalOnTime: number;
+  averageMark: number | null;
+  averageFullMark: number | null;
+};
