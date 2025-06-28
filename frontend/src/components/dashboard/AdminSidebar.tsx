@@ -381,8 +381,8 @@ const AdminSidebar = () => {
           key: "12-3",
           icon: <GiTeacher />,
           label: (
-            <Link href="/dashboard/analytics/instructors">
-              Instructor Analytics
+            <Link href="/dashboard/analytics/certificates">
+              Certificates Analytics
             </Link>
           ),
         },

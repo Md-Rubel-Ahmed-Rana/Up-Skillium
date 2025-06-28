@@ -40,3 +40,16 @@ export type ICreateCertificate = {
   technologies: string[];
   score: number;
 };
+
+export type ICertificateAnalytics = {
+  totalCertificates: number;
+  averageScore: number;
+  topTechnologies: {
+    count: number;
+    name: string;
+  }[];
+  topCourses: {
+    count: number;
+    title: string;
+  }[];
+};
