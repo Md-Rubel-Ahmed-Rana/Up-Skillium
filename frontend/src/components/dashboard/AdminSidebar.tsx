@@ -9,13 +9,11 @@ import {
   FaBook,
   FaBookOpen,
   FaChalkboardTeacher,
-  FaChartBar,
   FaChartLine,
   FaCheckCircle,
   FaClipboardCheck,
   FaClipboardList,
   FaCommentDots,
-  FaComments,
   FaDraftingCompass,
   FaFileAlt,
   FaFolderOpen,
@@ -39,7 +37,6 @@ import {
   FaUserTie,
   FaWrench,
 } from "react-icons/fa";
-import { GiTeacher } from "react-icons/gi";
 import { HiOutlineDocumentText } from "react-icons/hi";
 import {
   MdAddToQueue,
@@ -256,7 +253,6 @@ const AdminSidebar = () => {
         },
       ],
     },
-
     {
       key: "7",
       icon: <FaWrench />,
@@ -309,7 +305,6 @@ const AdminSidebar = () => {
         },
       ],
     },
-
     {
       key: "9",
       icon: <FaMoneyBillWave />,
@@ -362,78 +357,8 @@ const AdminSidebar = () => {
     },
     {
       key: "11",
-      icon: <FaChartBar />,
-      label: "Reports",
-      children: [
-        {
-          key: "11-1",
-          icon: <FaChartBar />,
-          label: <Link href="/dashboard/reports/courses">Course Reports</Link>,
-        },
-        {
-          key: "11-2",
-          icon: <GiTeacher />,
-          label: (
-            <Link href="/dashboard/reports/instructors">
-              Instructor Reports
-            </Link>
-          ),
-        },
-        {
-          key: "11-3",
-          icon: <FaUsers />,
-          label: (
-            <Link href="/dashboard/reports/students">Student Reports</Link>
-          ),
-        },
-        {
-          key: "11-4",
-          icon: <FaComments />,
-          label: (
-            <Link href="/dashboard/reports/feedback">Feedback Reports</Link>
-          ),
-        },
-      ],
-    },
-    {
-      key: "12",
       icon: <FaChartLine />,
-      label: "Analytics",
-      children: [
-        {
-          key: "12-1",
-          icon: <FaChartLine />,
-          label: (
-            <Link href="/dashboard/analytics/courses">Course Analytics</Link>
-          ),
-        },
-        {
-          key: "12-2",
-          icon: <FaChartBar />,
-          label: (
-            <Link href="/dashboard/analytics/students">Student Analytics</Link>
-          ),
-        },
-
-        {
-          key: "12-3",
-          icon: <GiTeacher />,
-          label: (
-            <Link href="/dashboard/analytics/instructors">
-              Instructor Analytics
-            </Link>
-          ),
-        },
-        {
-          key: "12-4",
-          icon: <FaChartLine />,
-          label: (
-            <Link href="/dashboard/analytics/platform">
-              Platform Usage Analytics
-            </Link>
-          ),
-        },
-      ],
+      label: <Link href="/dashboard/analytics">Analytics</Link>,
     },
     {
       key: "13",
