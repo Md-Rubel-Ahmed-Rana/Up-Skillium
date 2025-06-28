@@ -117,7 +117,7 @@ class Service {
     }
     findUserByEmailWithPassword(email) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.User.findOne({ email: email });
+            return yield model_1.User.findOne({ email: email }).populate("role");
         });
     }
     getUsersEmailByIds(ids) {
