@@ -17,6 +17,13 @@ const userApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getUsersAnalyticsSummary: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/user/analytics-summary`,
+      }),
+      providesTags: ["user"],
+    }),
     getSingleUser: builder.query({
       query: ({ userId }: { userId: string }) => ({
         method: "GET",
@@ -138,4 +145,5 @@ export const {
   useActiveInactiveUserAccountMutation,
   useDeleteUserAccountMutation,
   useResetPasswordMutation,
+  useGetUsersAnalyticsSummaryQuery,
 } = userApi;
