@@ -109,7 +109,7 @@ class Service {
     return users;
   }
   async findUserByEmailWithPassword(email: string) {
-    return User.findOne({ email: email });
+    return await User.findOne({ email: email }).populate("role");
   }
   async getUsersEmailByIds(
     ids: Types.ObjectId[]
