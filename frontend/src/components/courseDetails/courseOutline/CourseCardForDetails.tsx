@@ -1,3 +1,4 @@
+import AddToCartButton from "@/components/cart/AddToCartButton";
 import CheckoutRedirectButton from "@/components/courses/courseListing/CheckoutRedirectButton";
 import { useGetSingleCourseQuery } from "@/features/course";
 import { ICourse } from "@/types/course.type";
@@ -35,14 +36,15 @@ const CourseCardForDetails = () => {
             </div>
           </div>
 
-          <div className="w-full flex justify-center items-center">
+          <div className="w-full flex justify-center items-center gap-2">
             <CheckoutRedirectButton
               course={course}
-              buttonText="Purchase Now"
+              buttonText="Buy now"
               key={"1"}
               buttonSize="large"
               styles="w-full"
             />
+            <AddToCartButton courseId={course?.id} />
           </div>
         </div>,
       ]}
