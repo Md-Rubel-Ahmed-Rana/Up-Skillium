@@ -26,6 +26,7 @@ const apiSlice = createApi({
     "role",
     "live-class",
     "my-course",
+    "cart",
   ],
   endpoints: () => ({}),
 });
