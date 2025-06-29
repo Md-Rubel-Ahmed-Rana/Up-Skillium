@@ -148,50 +148,50 @@ class Service {
     console.log({ from: "updateCartEnrollmentsWebhook", enrollments });
 
     for (const enrollment of enrollments) {
-      console.log({ from: "updateCartEnrollmentsWebhook 2", enrollment });
       if (enrollment) {
-        // generate PDF invoice here
-        const invoiceUrl = await InvoiceService.createInvoice({
-          courseInfo: {
-            name: enrollment.course.title as string,
-            price: enrollment.course.price.salePrice as number,
-            discount: enrollment.course.price.discount as number,
-          },
-          customerInfo: {
-            name: enrollment.user.name as string,
-            email: enrollment.user.email as string,
-            studentId: enrollment?.user?.userRoleId,
-          },
-          orderInfo: {
-            orderId: enrollment.orderId as string,
-          },
-        });
+        try {
+          const invoiceUrl = await InvoiceService.createInvoice({
+            courseInfo: {
+              name: enrollment.course.title as string,
+              price: enrollment.course.price.salePrice as number,
+              discount: enrollment.course.price.discount as number,
+            },
+            customerInfo: {
+              name: enrollment.user.name as string,
+              email: enrollment.user.email as string,
+              studentId: enrollment?.user?.userRoleId,
+            },
+            orderInfo: {
+              orderId: enrollment.orderId as string,
+            },
+          });
 
-        console.log({ from: "updateCartEnrollmentsWebhook 3", invoiceUrl });
+          await Enrollment.findByIdAndUpdate(enrollment._id, {
+            $set: {
+              status: "success",
+              invoice: invoiceUrl,
+            },
+          });
 
-        await Enrollment.findByIdAndUpdate(enrollment._id, {
-          $set: {
-            status: "success",
-            invoice: invoiceUrl,
-          },
-        });
+          await MyCourseService.addNewCourse({
+            course: enrollment.course.id,
+            user: enrollment.user._id,
+          });
 
-        await MyCourseService.addNewCourse({
-          course: enrollment.course.id,
-          user: enrollment.user._id,
-        });
+          await CourseService.addStudentToCourse(
+            enrollment?.course?.id,
+            enrollment?.user?._id
+          );
 
-        await CourseService.addStudentToCourse(
-          enrollment?.course?.id,
-          enrollment?.user?._id
-        );
-
-        await MailService.enrollmentConfirmationMail(
-          enrollment.user.email,
-          enrollment.user.name,
-          enrollment.course.title,
-          invoiceUrl
-        );
+          await MailService.enrollmentConfirmationMail(
+            enrollment.user.email,
+            enrollment.user.name,
+            enrollment.course.title,
+            invoiceUrl
+          );
+        } catch (error) {
+          console.error(`Error processing enrollment ${enrollment._id}`, error);
+        }
       }
     }
   }

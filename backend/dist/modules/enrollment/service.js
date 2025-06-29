@@ -131,37 +131,39 @@ class Service {
                 .populate("course");
             console.log({ from: "updateCartEnrollmentsWebhook", enrollments });
             for (const enrollment of enrollments) {
-                console.log({ from: "updateCartEnrollmentsWebhook 2", enrollment });
                 if (enrollment) {
-                    // generate PDF invoice here
-                    const invoiceUrl = yield invoice_service_1.InvoiceService.createInvoice({
-                        courseInfo: {
-                            name: enrollment.course.title,
-                            price: enrollment.course.price.salePrice,
-                            discount: enrollment.course.price.discount,
-                        },
-                        customerInfo: {
-                            name: enrollment.user.name,
-                            email: enrollment.user.email,
-                            studentId: (_a = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _a === void 0 ? void 0 : _a.userRoleId,
-                        },
-                        orderInfo: {
-                            orderId: enrollment.orderId,
-                        },
-                    });
-                    console.log({ from: "updateCartEnrollmentsWebhook 3", invoiceUrl });
-                    yield model_1.Enrollment.findByIdAndUpdate(enrollment._id, {
-                        $set: {
-                            status: "success",
-                            invoice: invoiceUrl,
-                        },
-                    });
-                    yield service_1.MyCourseService.addNewCourse({
-                        course: enrollment.course.id,
-                        user: enrollment.user._id,
-                    });
-                    yield service_2.CourseService.addStudentToCourse((_b = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _b === void 0 ? void 0 : _b.id, (_c = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _c === void 0 ? void 0 : _c._id);
-                    yield mail_service_1.MailService.enrollmentConfirmationMail(enrollment.user.email, enrollment.user.name, enrollment.course.title, invoiceUrl);
+                    try {
+                        const invoiceUrl = yield invoice_service_1.InvoiceService.createInvoice({
+                            courseInfo: {
+                                name: enrollment.course.title,
+                                price: enrollment.course.price.salePrice,
+                                discount: enrollment.course.price.discount,
+                            },
+                            customerInfo: {
+                                name: enrollment.user.name,
+                                email: enrollment.user.email,
+                                studentId: (_a = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _a === void 0 ? void 0 : _a.userRoleId,
+                            },
+                            orderInfo: {
+                                orderId: enrollment.orderId,
+                            },
+                        });
+                        yield model_1.Enrollment.findByIdAndUpdate(enrollment._id, {
+                            $set: {
+                                status: "success",
+                                invoice: invoiceUrl,
+                            },
+                        });
+                        yield service_1.MyCourseService.addNewCourse({
+                            course: enrollment.course.id,
+                            user: enrollment.user._id,
+                        });
+                        yield service_2.CourseService.addStudentToCourse((_b = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _b === void 0 ? void 0 : _b.id, (_c = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _c === void 0 ? void 0 : _c._id);
+                        yield mail_service_1.MailService.enrollmentConfirmationMail(enrollment.user.email, enrollment.user.name, enrollment.course.title, invoiceUrl);
+                    }
+                    catch (error) {
+                        console.error(`Error processing enrollment ${enrollment._id}`, error);
+                    }
                 }
             }
         });

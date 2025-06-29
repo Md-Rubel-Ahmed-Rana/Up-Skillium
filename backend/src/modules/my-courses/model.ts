@@ -38,4 +38,6 @@ const myCourseSchema = new Schema<IMyCourse>(
   schemaOption
 );
 
+myCourseSchema.index({ user: 1, course: 1 }, { unique: true });
+
 export const MyCourse = model<IMyCourse>("MyCourse", myCourseSchema);

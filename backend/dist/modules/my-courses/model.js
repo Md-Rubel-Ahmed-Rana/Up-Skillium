@@ -38,4 +38,5 @@ const myCourseSchema = new mongoose_1.Schema({
         default: false,
     },
 }, schemaOption_1.default);
+myCourseSchema.index({ user: 1, course: 1 }, { unique: true });
 exports.MyCourse = (0, mongoose_1.model)("MyCourse", myCourseSchema);
