@@ -1,6 +1,7 @@
 import ArchivedCourses from "@/components/archivedCourses";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
@@ -26,4 +27,4 @@ ArchivedCoursesPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default isAuthenticate(ArchivedCoursesPage);
+export default isAuthenticate(AuthorizationGuard(ArchivedCoursesPage, "admin"));

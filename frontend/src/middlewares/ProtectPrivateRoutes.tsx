@@ -13,7 +13,7 @@ const isAuthenticate = (WrappedComponent: any) => {
 
     useEffect(() => {
       if (!isLoading && !user) {
-        router.push("/login");
+        router.push(`/login?redirect=${router.asPath}`);
       }
     }, [isLoading, user, router]);
 

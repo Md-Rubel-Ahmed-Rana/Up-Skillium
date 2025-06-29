@@ -1,6 +1,8 @@
 import StudentProgressAnalytics from "@/components/dashboardAnalytics/StudentProgressAnalytics";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +27,6 @@ StudentProgressAnalyticsPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default StudentProgressAnalyticsPage;
+export default isAuthenticate(
+  AuthorizationGuard(StudentProgressAnalyticsPage, "admin")
+);
