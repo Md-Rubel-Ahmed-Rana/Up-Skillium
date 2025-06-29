@@ -1,26 +1,34 @@
-import { Button, Tooltip } from "antd/lib";
+import { useGetLoggedInUserQuery } from "@/features/auth";
+import { useGetUserCartsQuery } from "@/features/cart";
+import { ICart } from "@/types/cart.type";
+import { IUser } from "@/types/user.type";
 import { useState } from "react";
-import { FaCartArrowDown } from "react-icons/fa";
 import CartDrawer from "./CartDrawer";
+import CartToggleButton from "./CartToggleButton";
 
 const CourseCart = () => {
   const [open, setOpen] = useState(false);
-
-  const handleToggleDrawer = () => {
-    setOpen(!open);
-  };
+  const { data: userData } = useGetLoggedInUserQuery({});
+  const user = userData?.data as IUser;
+  const { data, isLoading } = useGetUserCartsQuery({
+    userId: user?.id || user?._id,
+  });
+  const courses = (data?.data || []) as ICart[];
+  console.log(courses);
 
   return (
     <>
-      <Tooltip title="Course cart">
-        <Button
-          onClick={handleToggleDrawer}
-          type="default"
-          shape="circle"
-          icon={<FaCartArrowDown />}
-        />
-      </Tooltip>
-      <CartDrawer open={open} setOpen={setOpen} />
+      <CartToggleButton
+        open={open}
+        setOpen={setOpen}
+        total={courses?.length || 0}
+      />
+      <CartDrawer
+        open={open}
+        setOpen={setOpen}
+        isLoading={isLoading}
+        items={courses}
+      />
     </>
   );
 };
