@@ -17,8 +17,8 @@ const FooterPage = () => {
               <Image
                 src={navbarLogo}
                 alt="navbarLogo"
-                height={60}
-                width={80}
+                height={100}
+                width={120}
                 className="rounded-full mr-4"
               />
             </Link>
@@ -30,31 +30,38 @@ const FooterPage = () => {
             </Link>
           </div>
           <div className="">
-            <h2 className="text-xl text-center font-semibold mb-4">About Us</h2>
-            <p className="mb-2 text-center">
+            <h2 className="text-2xl text-center lg:text-start font-semibold mb-4">
+              About Us
+            </h2>
+            <p className="mb-2 text-lg text-center lg:text-start">
               We are dedicated to providing the best programming resources and
               community support for developers worldwide.
             </p>
           </div>
 
           <div>
-            <h2 className="text-xl text-center font-semibold mb-4">
+            <h2 className="text-xl text-center lg:text-start font-semibold mb-4">
               Quick Links
             </h2>
-            <ul className="flex flex-col gap-2 items-center justify-center">
-              <li className="mb-2">
+            <ul className="flex flex-col lg:gap-2 items-center lg:items-start justify-center lg:justify-start">
+              <li>
                 <Link href="/" className="hover:text-yellow-400">
                   Home
                 </Link>
               </li>
-              <li className="mb-2">
+              <li>
                 <Link href="/courses" className="hover:text-yellow-400">
                   Courses
                 </Link>
               </li>
-              <li className="mb-2">
+              <li>
                 <Link href="/team" className="hover:text-yellow-400">
                   Our Team
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-yellow-400">
+                  Contact
                 </Link>
               </li>
             </ul>
