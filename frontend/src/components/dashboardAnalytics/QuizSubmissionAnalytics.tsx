@@ -1,6 +1,6 @@
 import { useGetQuizSubmissionAnalyticsQuery } from "@/features/quizSubmission";
 import { IQuizSubmissionAnalytics } from "@/types/quizSubmission.type";
-import { Card, Col, Row, Spin, Statistic } from "antd/lib";
+import { Card, Col, Row, Spin, Statistic, Typography } from "antd/lib";
 import {
   Bar,
   BarChart,
@@ -10,6 +10,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+const { Title } = Typography;
 
 const QuizSubmissionAnalytics = () => {
   const { data, isLoading } = useGetQuizSubmissionAnalyticsQuery({});
@@ -39,6 +40,7 @@ const QuizSubmissionAnalytics = () => {
 
   return (
     <div className="p-4">
+      <Title level={3}>Quiz Submission Analytics</Title>
       <Row gutter={[16, 16]}>
         <Col xs={24} sm={12} md={8}>
           <Card>

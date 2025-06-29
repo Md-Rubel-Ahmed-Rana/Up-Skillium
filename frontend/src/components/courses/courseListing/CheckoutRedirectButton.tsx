@@ -4,7 +4,9 @@ import { IMyCourse } from "@/types/myCourse.type";
 import { IUser } from "@/types/user.type";
 import { Button } from "antd/lib";
 import Link from "next/link";
+import { FaCheckCircle } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
+import { RxCross2 } from "react-icons/rx";
 
 type Props = {
   course: any;
@@ -77,6 +79,10 @@ const CheckoutRedirectButton = ({
           key="2"
           iconPosition="start"
         >
+          {isAlreadyEnrolled && (
+            <FaCheckCircle className="text-lg text-green-600" />
+          )}
+          {!isStudent && <RxCross2 />}
           {isStudent ? "Already enrolled" : "Not a student"}
         </Button>
       )}

@@ -1,8 +1,8 @@
+import AddToCartButton from "@/components/cart/AddToCartButton";
 import { ICourse } from "@/types/course.type";
 import { Card, Rate, Space, Tag } from "antd/lib";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import CheckoutRedirectButton from "../courseListing/CheckoutRedirectButton";
 import CourseDetailsRedirectButton from "../courseListing/CourseDetailsRedirectButton";
 
 const { Meta } = Card;
@@ -61,24 +61,24 @@ const TopSellingCard = ({ course }: Props) => {
             </div>
           }
         />
-        <Space direction="horizontal" size="middle" className="w-full">
+        <div className="w-full flex items-center justify-between gap-3">
           <CourseDetailsRedirectButton
             buttonSize="middle"
-            buttonStyles="w-full bg-yellow-500 text-white"
+            buttonStyles="w-full bg-blue-500 text-white"
             buttonType="default"
             course={course}
             isButton={true}
             text="See Details"
             key="1"
           />
-          <CheckoutRedirectButton
-            course={course}
-            buttonText="Buy Now"
-            key="2"
+          <AddToCartButton
+            key={"2"}
+            courseId={course?.id}
             buttonSize="middle"
-            styles="w-full"
+            buttonWidth="w-[90%]"
           />
-        </Space>
+          ,
+        </div>
       </Space>
       <FaStar className="text-4xl text-yellow-500 absolute top-4 right-4" />
     </Card>
