@@ -22,7 +22,7 @@ const authApi = apiSlice.injectEndpoints({
         url: "/auth/login",
         body: { email, password },
       }),
-      invalidatesTags: ["user"],
+      invalidatesTags: ["user", "cart"],
     }),
     forgetPassword: builder.mutation({
       query: ({ email }: { email: string }) => ({

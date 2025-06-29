@@ -1,5 +1,7 @@
 import { ICart } from "@/types/cart.type";
-import { Drawer } from "antd/lib";
+import { Drawer, Empty, Spin } from "antd/lib";
+import CartItem from "./CartItem";
+import PricesCalculate from "./PricesCalculate";
 
 type Props = {
   open: boolean;
@@ -11,14 +13,23 @@ type Props = {
 const CartDrawer = ({ open, setOpen, isLoading, items }: Props) => {
   return (
     <Drawer
-      title="Courses"
-      closable={{ "aria-label": "Close Button" }}
+      title="Your Course Cart"
       onClose={() => setOpen(false)}
       open={open}
+      width={400}
+      footer={items.length > 0 && <PricesCalculate items={items} />}
     >
-      <p>Some contents...</p>
-      <p>Some contents...</p>
-      <p>Some contents...</p>
+      {isLoading ? (
+        <Spin />
+      ) : items.length === 0 ? (
+        <Empty description="No courses in your cart" />
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          {items.map((item) => (
+            <CartItem item={item} key={item?.id || item?.course?.id} />
+          ))}
+        </div>
+      )}
     </Drawer>
   );
 };
