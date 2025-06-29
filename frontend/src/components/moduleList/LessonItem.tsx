@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { MdLockOutline } from "react-icons/md";
-import Swal from "sweetalert2";
 import LessonIcon from "./LessonIcon";
 
 type Props = {
@@ -38,21 +37,27 @@ const LessonItem: React.FC<Props> = ({
       return;
     }
 
-    if (!completedLessons.includes(lesson.id) && lesson.id !== nextLesson.id) {
-      Swal.fire({
-        position: "center",
-        icon: "warning",
-        title: "Murubbi Murubbi 😂, Ohhm Ohhm Ohhm 🤚",
-        text: "You are trying to jump to a random lesson. You need to complete the previous lesson",
-      });
-      return;
-    } else {
-      const routePath = `/classes/course/${courseId}/module/${
-        lesson?.module
-      }/lesson/${lesson?.id}/${makeLessonTitleAsParamsUrl(lesson?.title)}`;
-      push(routePath);
-      markLessonAsCompleted();
-    }
+    const routePath = `/classes/course/${courseId}/module/${
+      lesson?.module
+    }/lesson/${lesson?.id}/${makeLessonTitleAsParamsUrl(lesson?.title)}`;
+    push(routePath);
+    markLessonAsCompleted();
+
+    // if (!completedLessons.includes(lesson.id) && lesson.id !== nextLesson.id) {
+    //   Swal.fire({
+    //     position: "center",
+    //     icon: "warning",
+    //     title: "Murubbi Murubbi 😂, Ohhm Ohhm Ohhm 🤚",
+    //     text: "You are trying to jump to a random lesson. You need to complete the previous lesson",
+    //   });
+    //   return;
+    // } else {
+    //   const routePath = `/classes/course/${courseId}/module/${
+    //     lesson?.module
+    //   }/lesson/${lesson?.id}/${makeLessonTitleAsParamsUrl(lesson?.title)}`;
+    //   push(routePath);
+    //   markLessonAsCompleted();
+    // }
   };
 
   const markLessonAsCompleted = async () => {
