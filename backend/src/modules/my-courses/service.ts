@@ -2,7 +2,6 @@ import { Types } from "mongoose";
 import { IMyCourse } from "./interface";
 import { MyCourse } from "./model";
 import { ModuleService } from "../module/service";
-import ApiError from "../../shared/apiError";
 import { IGetModulesWithLessons } from "../module/interface";
 
 class Service {
@@ -11,22 +10,34 @@ class Service {
       user: data.user,
       course: data.course,
     });
+
     if (isExist) {
-      throw new ApiError(400, "You already have enrolled to this course!");
+      console.log(
+        `[MyCourse] Skipped: Already exists for user ${data.user} course ${data.course}`
+      );
+      return; // 👈 do not throw if wrapped in try/catch outside
     }
+
     const lastLesson = await ModuleService.getFirstLessonOfFirstModuleByCourse(
       data.course
     );
+    if (!lastLesson) {
+      console.warn(
+        `[MyCourse] Skipped: No lessons found for course ${data.course}`
+      );
+      return; // 👈 safely skip if course has no lesson
+    }
+
     await MyCourse.create({
       ...data,
-      completedLessons: lastLesson?._id,
+      completedLessons: lastLesson?._id || [],
       completionPercentage: 0,
     });
 
     await this.calculateCourseCompletion(
       data.user,
       data.course,
-      lastLesson?._id as Types.ObjectId
+      lastLesson?._id
     );
   }
 

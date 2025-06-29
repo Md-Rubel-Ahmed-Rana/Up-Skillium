@@ -8,14 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyCourseService = void 0;
 const model_1 = require("./model");
 const service_1 = require("../module/service");
-const apiError_1 = __importDefault(require("../../shared/apiError"));
 class Service {
     addNewCourse(data) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -24,10 +20,15 @@ class Service {
                 course: data.course,
             });
             if (isExist) {
-                throw new apiError_1.default(400, "You already have enrolled to this course!");
+                console.log(`[MyCourse] Skipped: Already exists for user ${data.user} course ${data.course}`);
+                return; // 👈 do not throw if wrapped in try/catch outside
             }
             const lastLesson = yield service_1.ModuleService.getFirstLessonOfFirstModuleByCourse(data.course);
-            yield model_1.MyCourse.create(Object.assign(Object.assign({}, data), { completedLessons: lastLesson === null || lastLesson === void 0 ? void 0 : lastLesson._id, completionPercentage: 0 }));
+            if (!lastLesson) {
+                console.warn(`[MyCourse] Skipped: No lessons found for course ${data.course}`);
+                return; // 👈 safely skip if course has no lesson
+            }
+            yield model_1.MyCourse.create(Object.assign(Object.assign({}, data), { completedLessons: (lastLesson === null || lastLesson === void 0 ? void 0 : lastLesson._id) || [], completionPercentage: 0 }));
             yield this.calculateCourseCompletion(data.user, data.course, lastLesson === null || lastLesson === void 0 ? void 0 : lastLesson._id);
         });
     }
