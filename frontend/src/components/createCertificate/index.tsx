@@ -18,8 +18,6 @@ const CreateCertificate = () => {
     technologies: [""],
   });
 
-  console.log(selectedCourse);
-
   return (
     <div className="flex justify-center items-center pt-5 pb-20">
       <div className="flex flex-col-reverse lg:flex-row w-full gap-5 p-2 rounded-md">

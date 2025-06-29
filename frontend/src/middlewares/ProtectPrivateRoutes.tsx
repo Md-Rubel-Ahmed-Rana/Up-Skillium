@@ -1,6 +1,7 @@
 import FullScreenLoader from "@/components/shared/FullScreenLoader";
 import { useGetLoggedInUserQuery } from "@/features/auth";
 import { IUser } from "@/types/user.type";
+import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -17,7 +18,16 @@ const isAuthenticate = (WrappedComponent: any) => {
     }, [isLoading, user, router]);
 
     if (isLoading) {
-      return <FullScreenLoader />;
+      return (
+        <>
+          <PageMetadata
+            title="Authenticating access... - Up Skillium"
+            description="This is up skillium courses page"
+            keywords="courses, up-skillium, up skillium, web development"
+          />{" "}
+          <FullScreenLoader />
+        </>
+      );
     }
 
     if (error) {
@@ -33,7 +43,6 @@ const isAuthenticate = (WrappedComponent: any) => {
     return user ? <WrappedComponent {...props} /> : null;
   };
 
-  // Copy getLayout so it is not lost
   if (WrappedComponent.getLayout) {
     ComponentWithAuth.getLayout = WrappedComponent.getLayout;
   }

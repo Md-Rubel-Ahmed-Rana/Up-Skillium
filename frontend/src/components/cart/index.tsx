@@ -14,7 +14,6 @@ const CourseCart = () => {
     userId: user?.id || user?._id,
   });
   const courses = (data?.data || []) as ICart[];
-  console.log(courses);
 
   return (
     <>
