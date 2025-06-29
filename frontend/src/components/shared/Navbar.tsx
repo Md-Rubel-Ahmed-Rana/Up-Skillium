@@ -72,9 +72,10 @@ const Navbar = () => {
               >
                 Success Stories
               </Link>
-              <CourseCart />
+
               {user && user?.id && user?.role?.name === "student" && (
                 <>
+                  <CourseCart />
                   <Link
                     href={"/dashboard/my-courses"}
                     className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
@@ -93,6 +94,7 @@ const Navbar = () => {
                   <NavbarDropdown isToggleIcon={false} />
                 ) : (
                   <>
+                    <CourseCart />
                     <Link
                       href={"/login"}
                       className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
