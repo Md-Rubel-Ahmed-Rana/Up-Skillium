@@ -36,9 +36,8 @@ const VerticalCards = () => {
       {howItWorksData.map((item, index) => (
         <VerticalTimelineElement
           key={item.id}
-          className="vertical-timeline-element--work"
+          className="vertical-timeline-element--work text-gray-800"
           contentStyle={{
-            background: "rgba(255, 255, 255, 0.1)",
             color: "#fff",
             border: "1px solid rgba(255, 255, 255, 0.3)",
             boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.2)",
@@ -47,7 +46,7 @@ const VerticalCards = () => {
             borderRight: "7px solid rgba(255, 255, 255, 0.3)",
           }}
           iconStyle={{
-            background: "linear-gradient(to bottom, #3b82f6, #ec4899)",
+            background: "#578FCA",
             color: "#fff",
           }}
           icon={iconMapping[item.icon]}
@@ -56,10 +55,10 @@ const VerticalCards = () => {
             className: "last-timeline-element",
           })}
         >
-          <h3 className="vertical-timeline-element-title text-lg font-bold">
+          <h3 className="vertical-timeline-element-title text-gray-800 text-lg font-bold">
             {item.title}
           </h3>
-          <p className="text-sm">{item.description}</p>
+          <p className="text-sm text-gray-700">{item.description}</p>
         </VerticalTimelineElement>
       ))}
     </VerticalTimeline>

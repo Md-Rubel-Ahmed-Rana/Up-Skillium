@@ -59,13 +59,6 @@ export const servicesData = [
   },
   {
     id: uuidv4(),
-    title: "Multi-Device Accessibility",
-    description:
-      "Access courses on any device, whether you're at home, at work, or on the go.",
-    icon: "📱",
-  },
-  {
-    id: uuidv4(),
     title: "Affordable Learning Options",
     description:
       "Choose from a variety of pricing plans that make quality education accessible and budget-friendly.",

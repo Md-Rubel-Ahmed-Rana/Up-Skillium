@@ -1,0 +1,33 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "authorization-homepage-normal-theme",
+    "backend",
+    "dashboard-layout-redesign",
+    "frontend",
+    "improve-home-page-implement-dynamic-data",
+    "main",
+    "origin",
+    "total-docs-students-team-member-count-api"
+  ],
+  "parent": {
+    "authorization-homepage-normal-theme": "main",
+    "backend": "main",
+    "dashboard-layout-redesign": "main",
+    "frontend": "main",
+    "improve-home-page-implement-dynamic-data": "main",
+    "main": null,
+    "origin": "main",
+    "total-docs-students-team-member-count-api": "main"
+  },
+  "order": [
+    "main",
+    "authorization-homepage-normal-theme",
+    "backend",
+    "dashboard-layout-redesign",
+    "frontend",
+    "improve-home-page-implement-dynamic-data",
+    "origin",
+    "total-docs-students-team-member-count-api"
+  ]
+}

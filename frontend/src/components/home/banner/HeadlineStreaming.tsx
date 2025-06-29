@@ -8,7 +8,7 @@ const hotOffers = [
 
 const HeadlineStreaming = () => {
   return (
-    <div className="relative w-full overflow-hidden py-2 border-b border-gray-400">
+    <div className="relative w-full overflow-hidden py-1 border-b border-gray-400">
       <div className="absolute inset-0  blur-md h-full w-full -z-10 opacity-50"></div>
 
       <motion.div
@@ -21,14 +21,9 @@ const HeadlineStreaming = () => {
         }}
       >
         {hotOffers.map((offer, index) => (
-          <div
-            className="text-white flex items-center text-lg font-semibold"
-            key={index}
-          >
+          <div className="flex items-center text-sm font-semibold" key={index}>
             <h3>{offer}</h3>
-            {hotOffers.length - 1 !== index && (
-              <span className="mx-5 text-white">|</span>
-            )}
+            {hotOffers.length - 1 !== index && <span className="mx-5">|</span>}
           </div>
         ))}
       </motion.div>
