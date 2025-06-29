@@ -129,7 +129,9 @@ class Service {
             })
                 .populate("user", "-password")
                 .populate("course");
+            console.log({ from: "updateCartEnrollmentsWebhook", enrollments });
             for (const enrollment of enrollments) {
+                console.log({ from: "updateCartEnrollmentsWebhook 2", enrollment });
                 if (enrollment) {
                     // generate PDF invoice here
                     const invoiceUrl = yield invoice_service_1.InvoiceService.createInvoice({
@@ -147,7 +149,13 @@ class Service {
                             orderId: enrollment.orderId,
                         },
                     });
-                    yield model_1.Enrollment.updateOne({ paymentSessionId: sessionId }, { $set: { status: "success", invoice: invoiceUrl } });
+                    console.log({ from: "updateCartEnrollmentsWebhook 3", invoiceUrl });
+                    yield model_1.Enrollment.findByIdAndUpdate(enrollment._id, {
+                        $set: {
+                            status: "success",
+                            invoice: invoiceUrl,
+                        },
+                    });
                     yield service_1.MyCourseService.addNewCourse({
                         course: enrollment.course.id,
                         user: enrollment.user._id,

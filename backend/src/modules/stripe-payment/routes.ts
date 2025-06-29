@@ -19,7 +19,7 @@ router.post(
 router.post(
   "/cart/webhook",
   express.json({ type: "application/json" }),
-  StripePaymentController.webhook
+  StripePaymentController.webHookCart
 );
 
 export const StripePaymentRoutes = router;

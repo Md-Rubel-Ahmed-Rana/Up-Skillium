@@ -30,5 +30,5 @@ const jwt_1 = require("../../lib/jwt");
 const router = (0, express_1.Router)();
 router.post("/checkout", jwt_1.JwtInstance.verifyToken, controller_1.StripePaymentController.checkout);
 router.post("/webhook", express_1.default.json({ type: "application/json" }), controller_1.StripePaymentController.webhook);
-router.post("/cart/webhook", express_1.default.json({ type: "application/json" }), controller_1.StripePaymentController.webhook);
+router.post("/cart/webhook", express_1.default.json({ type: "application/json" }), controller_1.StripePaymentController.webHookCart);
 exports.StripePaymentRoutes = router;

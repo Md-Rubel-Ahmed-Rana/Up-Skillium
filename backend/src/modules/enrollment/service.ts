@@ -145,7 +145,10 @@ class Service {
       .populate("user", "-password")
       .populate("course");
 
+    console.log({ from: "updateCartEnrollmentsWebhook", enrollments });
+
     for (const enrollment of enrollments) {
+      console.log({ from: "updateCartEnrollmentsWebhook 2", enrollment });
       if (enrollment) {
         // generate PDF invoice here
         const invoiceUrl = await InvoiceService.createInvoice({
@@ -164,10 +167,14 @@ class Service {
           },
         });
 
-        await Enrollment.updateOne(
-          { paymentSessionId: sessionId },
-          { $set: { status: "success", invoice: invoiceUrl } }
-        );
+        console.log({ from: "updateCartEnrollmentsWebhook 3", invoiceUrl });
+
+        await Enrollment.findByIdAndUpdate(enrollment._id, {
+          $set: {
+            status: "success",
+            invoice: invoiceUrl,
+          },
+        });
 
         await MyCourseService.addNewCourse({
           course: enrollment.course.id,
