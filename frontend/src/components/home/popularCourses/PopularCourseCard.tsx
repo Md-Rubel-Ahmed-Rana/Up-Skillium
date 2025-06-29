@@ -16,8 +16,8 @@ const PopularCourseCard = ({ course }: Props) => {
         <Image
           src={course?.image}
           alt={course?.title}
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: "cover" }}
           className="rounded-md"
         />
       </div>

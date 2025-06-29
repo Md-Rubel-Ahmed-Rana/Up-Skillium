@@ -13,6 +13,7 @@ const Navbar = () => {
   const user = data?.data as IUser;
   const router = useRouter();
   const isHomePage = router.pathname === "/";
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
     <nav
@@ -25,25 +26,32 @@ const Navbar = () => {
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Image
-              src={navbarLogo}
-              alt="navbarLogo"
-              height={30}
-              width={50}
-              className="rounded-full mr-4"
-            />
+            <Link href="/">
+              <Image
+                src={navbarLogo}
+                alt="navbarLogo"
+                height={isMobile ? 25 : 30}
+                width={isMobile ? 40 : 50}
+                className="rounded-full mr-4"
+              />
+            </Link>
             <Link
               href="/"
-              className="text-2xl font-serif hover:text-yellow-500 font-bold"
+              className="text-md lg:text-2xl font-serif hover:text-yellow-500 font-bold"
             >
-              UP-SKILLIUM
+              UP SKILLIUM
             </Link>
           </div>
           <div className="sm:hidden">
             {isLoading ? (
               <UserLoading />
             ) : (
-              <NavbarDropdown isToggleIcon={true} />
+              <div className="flex items-center gap-4">
+                {user && user?.id && user?.role?.name === "student" && (
+                  <CourseCart />
+                )}
+                <NavbarDropdown isToggleIcon={true} />
+              </div>
             )}
           </div>
           <div className="hidden sm:flex items-center space-x-4">
@@ -75,13 +83,13 @@ const Navbar = () => {
 
               {user && user?.id && user?.role?.name === "student" && (
                 <>
-                  <CourseCart />
                   <Link
                     href={"/dashboard/my-courses"}
                     className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
                   >
                     My Classes
                   </Link>
+                  <CourseCart />
                 </>
               )}
             </div>
