@@ -11,17 +11,17 @@ const changeableTexts = [
 const WelcomeContainer = () => {
   const { text } = useTextWritingStream(changeableTexts);
   return (
-    <div className="w-full py-5 text-white">
+    <div className="w-full py-5">
       <div className="max-w-4xl mx-auto text-center px-4">
         <motion.h1
-          className="text-2xl lg:text-5xl font-bold mb-4"
+          className="text-2xl lg:text-3xl font-bold mb-4"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          Welcome to Up Skillium
+          Learn. Grow. Lead. Your Online Career Starts Here
         </motion.h1>
-        <div className="text-xl lg:text-3xl font-semibold h-16 flex justify-center items-center">
+        <div className="text-xl lg:text-2xl font-semibold h-16 flex justify-center items-center">
           <motion.div
             className="overflow-hidden"
             initial={{ opacity: 0 }}
@@ -33,7 +33,7 @@ const WelcomeContainer = () => {
           </motion.div>
         </div>
         <motion.p
-          className="mt-3 text-lg text-gray-200"
+          className="mt-3 text-lg"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5 }}

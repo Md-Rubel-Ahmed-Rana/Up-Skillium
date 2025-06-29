@@ -20,7 +20,7 @@ const ContactForm = () => {
       form={form}
       layout="vertical"
       onFinish={handleContact}
-      className="space-y-4 max-w-3xl mx-auto mt-10 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white rounded-lg shadow-lg lg:p-8"
+      className="space-y-4 max-w-3xl mx-auto mt-10  rounded-lg shadow-lg lg:p-8"
       size="large"
     >
       <Form.Item
@@ -65,7 +65,7 @@ const ContactForm = () => {
           type="primary"
           htmlType="submit"
           loading={loading}
-          className="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 hover:from-purple-400 hover:to-red-400 text-white"
+          className="w-full"
         >
           {loading ? "Sending..." : "Send Message"}
         </Button>
