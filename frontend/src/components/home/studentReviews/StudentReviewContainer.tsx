@@ -1,16 +1,15 @@
 import { reviewsData } from "@/constants/reviews";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ReviewCard from "./ReviewCard";
 
 const StudentReviewContainer = () => {
   return (
-    <div className="max-w-6xl w-full mx-auto lg:px-4 py-12 overflow-hidden">
+    <div className="max-w-[1250px] w-full mx-auto lg:px-4 py-12 overflow-hidden">
       <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
+        modules={[Pagination, Autoplay]}
         spaceBetween={30}
         slidesPerView={1}
-        navigation
         pagination={{ clickable: true }}
         autoplay={{ delay: 5000 }}
         loop={true}
@@ -21,7 +20,7 @@ const StudentReviewContainer = () => {
         }}
       >
         {reviewsData.map((review) => (
-          <SwiperSlide key={review.id}>
+          <SwiperSlide className="w-full" key={review.id}>
             <ReviewCard review={review} />
           </SwiperSlide>
         ))}
