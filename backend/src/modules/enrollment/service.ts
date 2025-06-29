@@ -173,11 +173,6 @@ class Service {
             },
           });
 
-          await MyCourseService.addNewCourse({
-            course: enrollment.course.id,
-            user: enrollment.user._id,
-          });
-
           await CourseService.addStudentToCourse(
             enrollment?.course?.id,
             enrollment?.user?._id
@@ -194,6 +189,15 @@ class Service {
         }
       }
     }
+
+    // add
+    const payload: { user: string; course: string }[] = enrollments.map(
+      (enrollment: any) => ({
+        user: enrollment.user?.id || enrollment.user?._id,
+        course: enrollment.course?.id || enrollment.course?._id,
+      })
+    );
+    await MyCourseService.addMultipleCourses(payload);
   }
 
   async deleteEnrollment(id: string): Promise<void> {

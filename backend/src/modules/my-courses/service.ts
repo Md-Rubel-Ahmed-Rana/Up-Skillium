@@ -15,7 +15,7 @@ class Service {
       console.log(
         `[MyCourse] Skipped: Already exists for user ${data.user} course ${data.course}`
       );
-      return; // 👈 do not throw if wrapped in try/catch outside
+      return;
     }
 
     const lastLesson = await ModuleService.getFirstLessonOfFirstModuleByCourse(
@@ -25,7 +25,7 @@ class Service {
       console.warn(
         `[MyCourse] Skipped: No lessons found for course ${data.course}`
       );
-      return; // 👈 safely skip if course has no lesson
+      return;
     }
 
     await MyCourse.create({
@@ -39,6 +39,39 @@ class Service {
       data.course,
       lastLesson?._id
     );
+  }
+
+  async addMultipleCourses(payloads: { user: string; course: string }[]) {
+    for (const payload of payloads) {
+      const alreadyEnrolled = await MyCourse.findOne({
+        user: payload.user,
+        course: payload.course,
+      });
+      if (alreadyEnrolled) continue;
+
+      const lastLesson =
+        await ModuleService.getFirstLessonOfFirstModuleByCourse(
+          new Types.ObjectId(payload.course)
+        );
+
+      await MyCourse.create({
+        ...payload,
+        completedLessons: lastLesson?._id ? [lastLesson._id] : [],
+        completionPercentage: 0,
+      });
+
+      if (!lastLesson) {
+        console.warn(
+          `[MyCourse] Skipped: No lessons found for course ${payload.course}`
+        );
+        return;
+      }
+      await this.calculateCourseCompletion(
+        new Types.ObjectId(payload.user),
+        new Types.ObjectId(payload.course),
+        lastLesson?._id
+      );
+    }
   }
 
   async getMyCourses(userId: Types.ObjectId): Promise<IMyCourse[]> {

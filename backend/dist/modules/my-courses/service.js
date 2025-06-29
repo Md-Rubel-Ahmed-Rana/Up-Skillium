@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MyCourseService = void 0;
+const mongoose_1 = require("mongoose");
 const model_1 = require("./model");
 const service_1 = require("../module/service");
 class Service {
@@ -21,15 +22,34 @@ class Service {
             });
             if (isExist) {
                 console.log(`[MyCourse] Skipped: Already exists for user ${data.user} course ${data.course}`);
-                return; // 👈 do not throw if wrapped in try/catch outside
+                return;
             }
             const lastLesson = yield service_1.ModuleService.getFirstLessonOfFirstModuleByCourse(data.course);
             if (!lastLesson) {
                 console.warn(`[MyCourse] Skipped: No lessons found for course ${data.course}`);
-                return; // 👈 safely skip if course has no lesson
+                return;
             }
             yield model_1.MyCourse.create(Object.assign(Object.assign({}, data), { completedLessons: (lastLesson === null || lastLesson === void 0 ? void 0 : lastLesson._id) || [], completionPercentage: 0 }));
             yield this.calculateCourseCompletion(data.user, data.course, lastLesson === null || lastLesson === void 0 ? void 0 : lastLesson._id);
+        });
+    }
+    addMultipleCourses(payloads) {
+        return __awaiter(this, void 0, void 0, function* () {
+            for (const payload of payloads) {
+                const alreadyEnrolled = yield model_1.MyCourse.findOne({
+                    user: payload.user,
+                    course: payload.course,
+                });
+                if (alreadyEnrolled)
+                    continue;
+                const lastLesson = yield service_1.ModuleService.getFirstLessonOfFirstModuleByCourse(new mongoose_1.Types.ObjectId(payload.course));
+                yield model_1.MyCourse.create(Object.assign(Object.assign({}, payload), { completedLessons: (lastLesson === null || lastLesson === void 0 ? void 0 : lastLesson._id) ? [lastLesson._id] : [], completionPercentage: 0 }));
+                if (!lastLesson) {
+                    console.warn(`[MyCourse] Skipped: No lessons found for course ${payload.course}`);
+                    return;
+                }
+                yield this.calculateCourseCompletion(new mongoose_1.Types.ObjectId(payload.user), new mongoose_1.Types.ObjectId(payload.course), lastLesson === null || lastLesson === void 0 ? void 0 : lastLesson._id);
+            }
         });
     }
     getMyCourses(userId) {

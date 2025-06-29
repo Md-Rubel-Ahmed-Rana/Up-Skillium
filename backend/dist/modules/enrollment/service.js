@@ -154,10 +154,6 @@ class Service {
                                 invoice: invoiceUrl,
                             },
                         });
-                        yield service_1.MyCourseService.addNewCourse({
-                            course: enrollment.course.id,
-                            user: enrollment.user._id,
-                        });
                         yield service_2.CourseService.addStudentToCourse((_b = enrollment === null || enrollment === void 0 ? void 0 : enrollment.course) === null || _b === void 0 ? void 0 : _b.id, (_c = enrollment === null || enrollment === void 0 ? void 0 : enrollment.user) === null || _c === void 0 ? void 0 : _c._id);
                         yield mail_service_1.MailService.enrollmentConfirmationMail(enrollment.user.email, enrollment.user.name, enrollment.course.title, invoiceUrl);
                     }
@@ -166,6 +162,15 @@ class Service {
                     }
                 }
             }
+            // add
+            const payload = enrollments.map((enrollment) => {
+                var _a, _b, _c, _d;
+                return ({
+                    user: ((_a = enrollment.user) === null || _a === void 0 ? void 0 : _a.id) || ((_b = enrollment.user) === null || _b === void 0 ? void 0 : _b._id),
+                    course: ((_c = enrollment.course) === null || _c === void 0 ? void 0 : _c.id) || ((_d = enrollment.course) === null || _d === void 0 ? void 0 : _d._id),
+                });
+            });
+            yield service_1.MyCourseService.addMultipleCourses(payload);
         });
     }
     deleteEnrollment(id) {
