@@ -1,5 +1,6 @@
 import CourseModuleLayout from "@/layout/CourseModuleLayout";
 import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import capitalizeLessonTitle from "@/utils/capitalizeLessonTitle";
 import PageMetadata from "@/utils/PageMetadata";
@@ -26,4 +27,6 @@ CourseModuleLessonPage.getLayout = function (page: ReactElement) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export default isAuthenticate(CourseModuleLessonPage);
+export default isAuthenticate(
+  AuthorizationGuard(CourseModuleLessonPage, "student")
+);

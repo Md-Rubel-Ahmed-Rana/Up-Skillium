@@ -7,8 +7,6 @@ type Props = {
 };
 
 const StudentList = ({ setSelectedStudent, students }: Props) => {
-  console.log(students);
-
   const menu = (
     <Menu className="w-full max-h-72 h-full overflow-y-auto">
       {students?.length <= 0 ? (

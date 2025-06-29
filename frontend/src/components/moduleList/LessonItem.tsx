@@ -33,7 +33,7 @@ const LessonItem: React.FC<Props> = ({
     (query?.lessonId as string) || lastCompletedLesson?.id;
 
   const handleChangeLesson = () => {
-    if (!lesson?.id || !nextLesson?.id) {
+    if (!lesson?.id) {
       return;
     }
 
