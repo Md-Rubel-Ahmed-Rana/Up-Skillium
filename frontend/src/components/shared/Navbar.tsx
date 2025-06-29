@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import navbarLogo from "../../../public/assets/images/navbarLogo.webp";
+import CourseCart from "../cart";
 import UserLoading from "./UserLoading";
 
 const Navbar = () => {
@@ -71,13 +72,16 @@ const Navbar = () => {
               >
                 Success Stories
               </Link>
+              <CourseCart />
               {user && user?.id && user?.role?.name === "student" && (
-                <Link
-                  href={"/dashboard/my-courses"}
-                  className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
-                >
-                  My Classes
-                </Link>
+                <>
+                  <Link
+                    href={"/dashboard/my-courses"}
+                    className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-lg"
+                  >
+                    My Classes
+                  </Link>
+                </>
               )}
             </div>
 
