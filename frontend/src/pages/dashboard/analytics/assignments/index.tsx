@@ -1,6 +1,8 @@
 import AssignmentSubmissionAnalytics from "@/components/dashboardAnalytics/AssignmentSubmissionAnalytics";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
 
@@ -25,4 +27,6 @@ AssignmentSubmissionAnalyticsPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default AssignmentSubmissionAnalyticsPage;
+export default isAuthenticate(
+  AuthorizationGuard(AssignmentSubmissionAnalyticsPage, "admin")
+);

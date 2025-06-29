@@ -1,6 +1,7 @@
 import InstructorAssignmentLesson from "@/components/instructorAssignmentLesson";
 import DashboardLayout from "@/layout/DashboardLayout";
 import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { ReactElement } from "react";
@@ -26,4 +27,6 @@ InstructorAssignmentLessonPage.getLayout = function (page: ReactElement) {
   );
 };
 
-export default isAuthenticate(InstructorAssignmentLessonPage);
+export default isAuthenticate(
+  AuthorizationGuard(InstructorAssignmentLessonPage, "instructor")
+);
