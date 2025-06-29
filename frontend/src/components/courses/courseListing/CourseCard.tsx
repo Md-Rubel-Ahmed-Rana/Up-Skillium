@@ -1,7 +1,7 @@
+import AddToCartButton from "@/components/cart/AddToCartButton";
 import { ICourse } from "@/types/course.type";
 import { Avatar, Card, Rate, Typography } from "antd/lib";
 import Image from "next/image";
-import CheckoutRedirectButton from "./CheckoutRedirectButton";
 import CourseDetailsRedirectButton from "./CourseDetailsRedirectButton";
 
 const { Meta } = Card;
@@ -28,20 +28,26 @@ const CourseCard = ({ course }: Props) => {
       actions={[
         <CourseDetailsRedirectButton
           buttonSize="middle"
-          buttonStyles="w-[90%] bg-yellow-500 text-white"
+          buttonStyles="w-[90%] bg-blue-500 text-white"
           buttonType="dashed"
           course={course}
           isButton={true}
           text="See Details"
           key={"1"}
         />,
-        <CheckoutRedirectButton
-          course={course}
-          buttonText="Buy Now"
+        <AddToCartButton
           key={"2"}
+          courseId={course?.id}
           buttonSize="middle"
-          styles="w-[90%]"
+          buttonWidth="w-[90%]"
         />,
+        // <CheckoutRedirectButton
+        //   course={course}
+        //   buttonText="Buy Now"
+        //   key={"2"}
+        //   buttonSize="middle"
+        //   styles="w-[90%]"
+        // />,
       ]}
     >
       <Meta className="pb-3" title={course?.title} />
