@@ -4,6 +4,7 @@ import { IMyCourse } from "@/types/myCourse.type";
 import { IUser } from "@/types/user.type";
 import { Button } from "antd/lib";
 import Link from "next/link";
+import { FiShoppingBag } from "react-icons/fi";
 
 type Props = {
   course: any;
@@ -27,7 +28,7 @@ const CheckoutRedirectButton = ({
         userId: user?.id || user?._id,
       },
       {
-        skip: !user, // only fetch courses when user is ready
+        skip: !user,
       }
     );
 
@@ -62,7 +63,8 @@ const CheckoutRedirectButton = ({
             key="2"
             iconPosition="start"
           >
-            {isLoading ? "Loading..." :buttonText}
+            <FiShoppingBag className="text-lg" />
+            {isLoading ? "Loading..." : buttonText}
           </Button>
         </Link>
       ) : (
