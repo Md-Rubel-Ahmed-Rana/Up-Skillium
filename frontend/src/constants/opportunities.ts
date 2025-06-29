@@ -7,7 +7,7 @@ const opportunitiesData = [
     description:
       "Experience a cutting-edge learning platform equipped with the latest tools, interactive lessons, and real-world projects. Our platform is designed to help you grasp concepts faster, stay engaged, and apply your knowledge effectively. It’s your gateway to mastering skills that align with industry standards and future-proof your career.",
     icon: "",
-    color: "#4A90E2",
+    color: "#578FCA",
   },
   {
     id: uuidv4(),

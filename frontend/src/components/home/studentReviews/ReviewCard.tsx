@@ -18,10 +18,9 @@ const ReviewCard = ({ review }: Props) => {
       hoverable
       style={{ borderRadius: 16, boxShadow: "0 4px 15px rgba(0,0,0,0.1)" }}
       styles={{ body: { minHeight: 280 } }}
-      className="bg-gradient-to-r border-gray-400 from-blue-600 via-purple-600 to-pink-600 text-white"
+      className="w-full"
     >
       <Space direction="vertical" size="middle" style={{ width: "100%" }}>
-        {/* Reviewer Info */}
         <Space size="middle" align="center">
           <Avatar
             size={48}
@@ -29,21 +28,14 @@ const ReviewCard = ({ review }: Props) => {
             alt={review.reviewer.name}
           />
           <div>
-            <Text className="text-white" strong>
-              {review.reviewer.name}
-            </Text>
+            <Text strong>{review.reviewer.name}</Text>
             <br />
-            <Text
-              className="text-white"
-              type="secondary"
-              style={{ fontSize: 12, color: "whitesmoke" }}
-            >
+            <Text type="secondary" style={{ fontSize: 12 }}>
               {dayjs(review.createdAt).format("MMM D, YYYY")}
             </Text>
           </div>
         </Space>
 
-        {/* Review Rating */}
         <Rate
           disabled
           allowHalf
@@ -51,15 +43,10 @@ const ReviewCard = ({ review }: Props) => {
           style={{ fontSize: 16, color: "#fadb14" }}
         />
 
-        {/* Feedback Text */}
-        <Paragraph
-          className="text-white"
-          ellipsis={{ rows: 4, expandable: true, symbol: "more" }}
-        >
+        <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: "more" }}>
           {review.feedback}
         </Paragraph>
 
-        {/* Review To (Course or Instructor) */}
         <Space size="small" align="center">
           <Avatar
             size={40}
@@ -68,13 +55,10 @@ const ReviewCard = ({ review }: Props) => {
             alt={isInstructor ? reviewTo?.name : reviewTo?.title}
           />
           <div className="flex flex-col gap-1">
-            <Text className="text-white" strong>
+            <Text strong>
               {isInstructor ? reviewTo?.name : reviewTo?.title}
             </Text>
-            <Text
-              type="secondary"
-              style={{ fontSize: 12, color: "whitesmoke" }}
-            >
+            <Text type="secondary" style={{ fontSize: 12 }}>
               {isInstructor ? "Instructor" : "Course"}
             </Text>
           </div>

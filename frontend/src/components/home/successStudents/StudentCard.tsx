@@ -26,7 +26,7 @@ const StudentCard = ({ student }: Props) => {
   return (
     <motion.div
       ref={ref}
-      className="p-2 border border-gray-400 rounded-md h-[290px] w-full  bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white"
+      className="p-2 border border-gray-200 shadow-md rounded-md h-[290px] w-full"
       variants={cardVariants}
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
