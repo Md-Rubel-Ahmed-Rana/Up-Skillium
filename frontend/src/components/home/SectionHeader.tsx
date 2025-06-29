@@ -24,7 +24,7 @@ const SectionHeader = ({
         className={
           titleStyles
             ? titleStyles
-            : "text-xl lg:text-3xl font-bold text-white text-center mb-3"
+            : "text-xl lg:text-3xl text-gray-800 font-bold text-center mb-3"
         }
       >
         {titleText}
@@ -34,7 +34,7 @@ const SectionHeader = ({
         className={
           descStyles
             ? descStyles
-            : "w-full lg:w-1/2 mx-auto text-center text-gray-300 text-sm lg:text-lg"
+            : "w-full lg:w-1/2 mx-auto text-center text-gray-700 text-sm lg:text-lg"
         }
       >
         {descText}

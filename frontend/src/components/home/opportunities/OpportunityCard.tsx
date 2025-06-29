@@ -42,7 +42,7 @@ const OpportunityCard = ({
           scale,
           top: `calc(-5vh + ${index * 25}px)`,
         }}
-        className={`flex flex-col lg:flex-row items-center justify-betweens lg:gap-10 relative -top-[25] lg:h-[300px] lg:w-[1000px] rounded-md lg:rounded-3xl p-2 lg:p-10 transform origin-top`}
+        className={`flex flex-col text-white lg:flex-row items-center justify-betweens lg:gap-10 relative -top-[25] lg:h-[300px] lg:w-[1000px] rounded-md lg:rounded-3xl p-2 lg:p-10 transform origin-top`}
       >
         {icons[index]}
         <div className="flex flex-col gap-2">

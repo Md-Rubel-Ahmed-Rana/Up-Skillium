@@ -4,10 +4,10 @@
   "main": "./dist/server.js",
   "license": "MIT",
   "scripts": {
-    "start": "node ./dist/server.js",
+    "start": "node api.js && node ./dist/server.js",
     "dev:test": "ts-node-dev --respawn --transpile-only src/testServer.ts",
-    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "npx tsc",
+    "dev": "node api.js && ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "node api.js && npx tsc",
     "test": "jest",
     "docker:build": "docker-compose build",
     "docker:start": "docker-compose up -d",
