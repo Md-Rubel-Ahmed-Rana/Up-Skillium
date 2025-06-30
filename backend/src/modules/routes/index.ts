@@ -19,6 +19,7 @@ import { AssignmentRoutes } from "../assignment/routes";
 import { LiveClassRoutes } from "../live-class/routes";
 import { MyCourseRoutes } from "../my-courses/routes";
 import { CartRoutes } from "../cart/routes";
+import { CommonRoutes } from "../common/routes";
 
 const router = Router();
 
@@ -61,5 +62,7 @@ router.use("/live-class", LiveClassRoutes);
 router.use("/my-course", MyCourseRoutes);
 
 router.use("/cart", CartRoutes);
+
+router.use("/common", CommonRoutes);
 
 export const RootRoutes = router;

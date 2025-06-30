@@ -37,6 +37,10 @@ export const userSchema = new Schema<IUser>(
       type: String,
       required: true,
     },
+    designation: {
+      type: String,
+      required: true,
+    },
     userRoleId: {
       type: String,
       required: true,

@@ -27,6 +27,7 @@ export type IGetUser = {
   name: string;
   image: string;
   email: string;
+  designation: string;
   role: Types.ObjectId;
   userRoleId: string;
   roleName: string;
@@ -40,6 +41,7 @@ export type IUser = {
   name: string;
   image: string;
   email: string;
+  designation: string;
   role: Types.ObjectId;
   userRoleId: string;
   roleName: string;

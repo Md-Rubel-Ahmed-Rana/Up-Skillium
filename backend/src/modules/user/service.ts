@@ -27,21 +27,21 @@ class Service {
       );
     }
 
-    const userRole = user?.role as string;
+    const userRole = (user?.role as string).toLowerCase();
     const role = await RoleService.getRoleByRoleName(userRole);
 
     user.password = await BcryptInstance.hash(user.password);
     user.role = role?.id as Types.ObjectId;
 
-    if (role?.name === "student") {
+    if (role?.name.toLowerCase().trim() === "student") {
       const studentId = await this.createStudentId();
       user.userRoleId = studentId;
       user.roleName = "student";
-    } else if (role?.name === "instructor") {
+    } else if (role?.name.toLowerCase().trim() === "instructor") {
       const instructorId = await this.createInstructorId();
       user.userRoleId = instructorId;
       user.roleName = "instructor";
-    } else if (role?.name === "admin") {
+    } else if (role?.name.toLowerCase().trim() === "admin") {
       const adminId = await this.createAdminId();
       user.userRoleId = adminId;
       user.roleName = "admin";
@@ -280,6 +280,27 @@ class Service {
         count: r?.count,
       })),
     };
+  }
+  async getAllStudent() {
+    const roles = await RoleService.getAllRoles();
+    const studentRole: any = roles.find((role) => role?.name === "student");
+    const students = await User.find({
+      role: studentRole?.id || studentRole?._id,
+    });
+    return students;
+  }
+  async getAllTeamMembers() {
+    const roles = await RoleService.getAllRoles();
+
+    const teamRoles = roles
+      .filter((role) => role?.name !== "student")
+      .map((role: any) => role?.id || role?._id);
+
+    const teamMembers = await User.find({
+      role: { $in: teamRoles },
+    });
+
+    return teamMembers;
   }
 }
 

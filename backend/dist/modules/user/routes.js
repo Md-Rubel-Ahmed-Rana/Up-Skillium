@@ -11,6 +11,8 @@ const fileUploaderMiddleware_1 = require("../../middlewares/fileUploaderMiddlewa
 const jwt_1 = require("../../lib/jwt");
 const router = (0, express_1.Router)();
 router.get("/", controller_1.UserController.findUsers);
+router.get("/students", controller_1.UserController.getAllStudent);
+router.get("/team", controller_1.UserController.getAllTeamMembers);
 router.get("/analytics-summary", jwt_1.JwtInstance.verifyToken, controller_1.UserController.getUserAnalyticsSummary);
 router.get("/:id", controller_1.UserController.getSingleUser);
 router.patch("/:id", jwt_1.JwtInstance.verifyToken, controller_1.UserController.updateUser);
