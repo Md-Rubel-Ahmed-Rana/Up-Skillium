@@ -1,10 +1,9 @@
 import store from "@/app/store";
 import "@/styles/globals.css";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { useEffect, type ReactElement, type ReactNode } from "react";
+import { Roboto } from "next/font/google";
+import { type ReactElement, type ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
 import "react-quill/dist/quill.snow.css";
 import { Provider } from "react-redux";
@@ -20,21 +19,20 @@ export type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+const roboto = Roboto({
+  weight: ["400", "900"],
+  subsets: ["latin"],
+});
+
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      easing: "ease-in-out",
-      once: false,
-    });
-  }, []);
-
   return (
-    <Provider store={store}>
-      {getLayout(<Component {...pageProps} />)}
-      <Toaster />
-    </Provider>
+    <main className={roboto.className}>
+      <Provider store={store}>
+        {getLayout(<Component {...pageProps} />)}
+        <Toaster />
+      </Provider>
+    </main>
   );
 }
