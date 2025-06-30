@@ -457,4 +457,5 @@ export const instructors: IUser[] = teamMembersData.map((user) => ({
     relationship: "",
   },
   address: { street: "", city: "", state: "", country: "", _id: "" },
+  designation: "",
 }));
