@@ -1,8 +1,9 @@
 import { coursesData } from "@/constants/courses";
+import { Student } from "@/types/student.type";
 import { IUser } from "@/types/user.type";
 import { Button } from "antd/lib";
 import Link from "next/link";
-import StudentCard, { Student } from "./StudentCard";
+import StudentCard from "./StudentCard";
 import SuccessHeader from "./SuccessHeader";
 
 type Props = {
