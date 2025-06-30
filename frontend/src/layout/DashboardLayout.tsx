@@ -8,7 +8,7 @@ type DashboardLayoutProps = {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col lg:flex-row justify-between gap-5">
-      <div>
+      <div className="sticky">
         <DashboardSidebar />
       </div>
       <div className="w-full">{children}</div>
