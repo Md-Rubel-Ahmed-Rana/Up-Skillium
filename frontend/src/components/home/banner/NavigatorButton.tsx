@@ -4,7 +4,7 @@ import Link from "next/link";
 const NavigatorButton = () => {
   return (
     <div className="text-center">
-      <h2 className="text-lg lg:text-3xl font-bold mb-2">
+      <h2 className="text-lg lg:text-3xl font-bold mb-">
         Ready to Start Your Journey?
       </h2>
       <Link

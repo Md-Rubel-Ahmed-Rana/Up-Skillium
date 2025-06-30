@@ -55,7 +55,7 @@ const CarouselCard = ({ course }: Props) => {
             {course.desc}
           </p>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mb-10">
           <NavigatorButton />
         </div>
       </div>
