@@ -14,7 +14,7 @@ const WelcomeContainer = () => {
     <div className="w-full py-5">
       <div className="max-w-4xl mx-auto text-center px-4">
         <motion.h1
-          className="text-2xl lg:text-3xl font-bold mb-4"
+          className="text-2xl lg:text-3xl font-bold"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -32,15 +32,6 @@ const WelcomeContainer = () => {
             <span className="blinking-cursor">|</span>
           </motion.div>
         </div>
-        <motion.p
-          className="mt-3 text-lg"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5 }}
-        >
-          We empower students to build successful careers in their chosen fields
-          with industry-leading resources and support.
-        </motion.p>
       </div>
     </div>
   );
