@@ -25,3 +25,11 @@ export type IMyStudent = {
     }
   ];
 };
+
+export type Student = {
+  id: string;
+  name: string;
+  image: string;
+  course: string;
+  score: number;
+};
