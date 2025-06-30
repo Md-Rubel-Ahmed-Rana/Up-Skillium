@@ -1,9 +1,11 @@
 import Profile from "@/components/profile";
-import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
+import dynamic from "next/dynamic";
+
+const TestDashboardLayout = dynamic(import("@/layout/TestDashboardLayout"), {
+  ssr: false,
+});
 
 const ProfilePage = () => {
   return (
@@ -13,18 +15,10 @@ const ProfilePage = () => {
         description="This is user profile page"
         keywords="up-skillium"
       />
-      <div className="max-w-[1400px] w-full mx-auto">
+      <TestDashboardLayout>
         <Profile />
-      </div>
+      </TestDashboardLayout>
     </>
-  );
-};
-
-ProfilePage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
   );
 };
 

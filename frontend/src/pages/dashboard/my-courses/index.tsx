@@ -1,9 +1,12 @@
 import MyCourses from "@/components/myCourses";
-import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
+import dynamic from "next/dynamic";
+
+const TestDashboardLayout = dynamic(import("@/layout/TestDashboardLayout"), {
+  ssr: false,
+});
 
 const MyCoursesPage = () => {
   return (
@@ -13,17 +16,11 @@ const MyCoursesPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <MyCourses />
+      <TestDashboardLayout>
+        <MyCourses />
+      </TestDashboardLayout>
     </>
   );
 };
 
-MyCoursesPage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(MyCoursesPage);
+export default isAuthenticate(AuthorizationGuard(MyCoursesPage, "student"));

@@ -1,9 +1,11 @@
 import StudentCertificates from "@/components/studentCertificates";
-import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
+import dynamic from "next/dynamic";
+const TestDashboardLayout = dynamic(import("@/layout/TestDashboardLayout"), {
+  ssr: false,
+});
 
 const StudentCertificatesPage = () => {
   return (
@@ -13,17 +15,13 @@ const StudentCertificatesPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <StudentCertificates />
+      <TestDashboardLayout>
+        <StudentCertificates />
+      </TestDashboardLayout>
     </>
   );
 };
 
-StudentCertificatesPage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(StudentCertificatesPage);
+export default isAuthenticate(
+  AuthorizationGuard(StudentCertificatesPage, "student")
+);

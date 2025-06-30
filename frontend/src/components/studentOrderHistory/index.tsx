@@ -55,7 +55,7 @@ const OrderHistories = () => {
   ];
 
   return (
-    <div className="p-2 lg:p-0 mt-3">
+    <div className="p-2">
       <h2 className="font-semibold mb-2 text-lg lg:text-xl">Order History</h2>
       {isLoading ? (
         <CertificateSkeleton />

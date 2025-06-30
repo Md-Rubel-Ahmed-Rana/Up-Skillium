@@ -12,8 +12,8 @@ const StudentLiveClasses = () => {
   });
   const liveClasses = data?.data as IGetLiveClass[];
   return (
-    <div className="mt-3 p-2">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-3">Live Classes</h2>
+    <div className="p-2">
+      <h2 className="text-lg lg:text-xl font-semibold mb-3">Live Classes</h2>
       <LiveClassTable classes={liveClasses} isLoading={isLoading} />
     </div>
   );
