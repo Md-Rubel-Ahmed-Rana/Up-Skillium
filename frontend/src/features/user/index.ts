@@ -17,6 +17,20 @@ const userApi = apiSlice.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getAllStudents: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/user/students`,
+      }),
+      providesTags: ["user"],
+    }),
+    getTeamMembers: builder.query({
+      query: () => ({
+        method: "GET",
+        url: `/user/team`,
+      }),
+      providesTags: ["user"],
+    }),
     getUsersAnalyticsSummary: builder.query({
       query: () => ({
         method: "GET",
@@ -146,4 +160,6 @@ export const {
   useDeleteUserAccountMutation,
   useResetPasswordMutation,
   useGetUsersAnalyticsSummaryQuery,
+  useGetAllStudentsQuery,
+  useGetTeamMembersQuery,
 } = userApi;

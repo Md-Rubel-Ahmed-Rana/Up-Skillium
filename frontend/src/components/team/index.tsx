@@ -1,14 +1,18 @@
-import { instructors } from "@/constants/teamMembers";
+import { IUser } from "@/types/user.type";
 import { Pagination } from "antd/lib";
 import { useState } from "react";
 import SectionHeader from "../home/SectionHeader";
 import MemberCard from "../home/team/MemberCard";
 
-const InstructorTeam = () => {
+type Props = {
+  teamMembers: IUser[];
+};
+
+const InstructorTeam = ({ teamMembers = [] }: Props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
 
-  const paginatedInstructors = instructors.slice(
+  const paginatedInstructors = teamMembers.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
@@ -34,7 +38,7 @@ const InstructorTeam = () => {
         <Pagination
           current={currentPage}
           pageSize={pageSize}
-          total={instructors.length}
+          total={teamMembers.length}
           onChange={(page) => setCurrentPage(page)}
           showSizeChanger={false}
         />
