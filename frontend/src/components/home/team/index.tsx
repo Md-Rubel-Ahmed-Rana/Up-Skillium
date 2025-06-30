@@ -1,5 +1,6 @@
 import { IUser } from "@/types/user.type";
 import { Button } from "antd/lib";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import MemberCard from "./MemberCard";
 import TeamHeader from "./TeamHeader";
@@ -13,11 +14,18 @@ const TeamContainer = ({ teamMembers }: Props) => {
     <div className="flex flex-col gap-6  py-20 px-2">
       <TeamHeader />
 
-      <div className="max-w-[1220px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <motion.div
+        className="max-w-[1220px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ staggerChildren: 0.15 }}
+      >
         {teamMembers.slice(0, 6).map((member) => (
           <MemberCard key={member?.id} member={member} />
         ))}
-      </div>
+      </motion.div>
+
       <div className="flex justify-center items-center w-full">
         <Link href={"/team"}>
           <Button className="inline-block font-semibold  rounded-lg shadow-md px-10 py-1 hover:shadow-lg transition-all duration-300">

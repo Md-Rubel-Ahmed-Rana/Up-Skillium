@@ -1,48 +1,51 @@
 import { IUser } from "@/types/user.type";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
 
 type Props = {
   member: IUser;
 };
 
-const overlayVariants = {
-  hidden: { y: "100%" },
-  visible: { y: "0%" },
-};
-
 const MemberCard = ({ member }: Props) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-20%" });
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-20%" });
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  useEffect(() => {
+    if (isInView && cardRef.current) {
+      gsap.fromTo(
+        cardRef.current,
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }
+      );
+    }
+  }, [isInView]);
 
   return (
     <motion.div
-      ref={ref}
-      initial="hidden"
-      whileHover={!isMobile ? "visible" : undefined}
-      animate={isMobile && isInView ? "visible" : "hidden"}
-      className="relative overflow-hidden h-[290px] w-full rounded-xl shadow-lg cursor-pointer"
+      ref={cardRef}
+      className="relative group rounded-2xl overflow-hidden shadow-xl bg-white transition-all duration-500 hover:shadow-2xl hover:scale-[1.02] cursor-pointer"
     >
       <motion.img
         src={member?.image}
-        alt="member image"
-        className="w-full h-full object-cover"
-        whileHover={!isMobile ? { scale: 1.05 } : undefined}
-        transition={{ duration: 0.3 }}
+        alt={member?.name}
+        className="w-full h-[300px] object-cover transition-transform duration-500 group-hover:scale-110"
       />
 
-      <motion.div
-        variants={overlayVariants}
-        transition={{ duration: 0.4, ease: "easeInOut" }}
-        className="absolute bottom-0 left-0 right-0 p-4 backdrop-blur-md text-gray-700 bg-gray-100"
-      >
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-80 group-hover:opacity-100 transition-all duration-500" />
+
+      <div className="absolute bottom-0 left-0 w-full text-white p-5 z-10">
         <h3 className="text-xl font-semibold">{member?.name}</h3>
-        <p className="text-sm opacity-80">
+        <p className="text-sm text-gray-300">
           {member?.designation || member?.role?.name}
         </p>
-      </motion.div>
+      </div>
+
+      {member?.role?.name && (
+        <div className="absolute top-4 left-4 bg-white text-black px-3 py-1 text-xs rounded-full shadow">
+          {member.role.name}
+        </div>
+      )}
     </motion.div>
   );
 };
