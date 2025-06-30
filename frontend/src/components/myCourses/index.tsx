@@ -22,7 +22,7 @@ const MyCourses = () => {
       ) : (
         <>
           {courses.length > 0 ? (
-            <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-2">
               {courses?.map((course) => (
                 <MyCourseCard key={course?.course?.id} course={course} />
               ))}

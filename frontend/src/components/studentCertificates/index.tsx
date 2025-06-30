@@ -71,7 +71,7 @@ const StudentCertificates = () => {
   ];
 
   return (
-    <div className="p-2 lg:p-4">
+    <div className="p-2">
       <h2 className="font-semibold mb-2 text-lg lg:text-xl">
         Student Certificates
       </h2>
