@@ -22,11 +22,20 @@ const ReviewCard = ({ review }: Props) => {
     >
       <Space direction="vertical" size="middle" style={{ width: "100%" }}>
         <Space size="middle" align="center">
-          <Avatar
-            size={48}
-            src={review.reviewer.image}
-            alt={review.reviewer.name}
-          />
+          {review.reviewer.image ? (
+            <Avatar
+              size={48}
+              src={review.reviewer.image}
+              alt={review.reviewer.name}
+            />
+          ) : (
+            <Avatar className="h-12 w-12">
+              {review.reviewer.name
+                .split(" ")
+                .map((word) => word.slice(0, 1).toUpperCase())}
+            </Avatar>
+          )}
+
           <div>
             <Text strong>{review.reviewer.name}</Text>
             <br />
@@ -43,7 +52,7 @@ const ReviewCard = ({ review }: Props) => {
           style={{ fontSize: 16, color: "#fadb14" }}
         />
 
-        <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: "more" }}>
+        <Paragraph ellipsis={{ rows: 2, expandable: true, symbol: "more" }}>
           {review.feedback}
         </Paragraph>
 

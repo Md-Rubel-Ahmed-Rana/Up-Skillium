@@ -1,16 +1,20 @@
-import { instructors } from "@/constants/teamMembers";
+import { IUser } from "@/types/user.type";
 import { Button } from "antd/lib";
 import Link from "next/link";
 import MemberCard from "./MemberCard";
 import TeamHeader from "./TeamHeader";
 
-const TeamContainer = () => {
+type Props = {
+  teamMembers: IUser[];
+};
+
+const TeamContainer = ({ teamMembers }: Props) => {
   return (
     <div className="flex flex-col gap-6  py-20 px-2">
       <TeamHeader />
 
       <div className="max-w-[1220px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {instructors.slice(0, 6).map((member) => (
+        {teamMembers.slice(0, 6).map((member) => (
           <MemberCard key={member?.id} member={member} />
         ))}
       </div>
