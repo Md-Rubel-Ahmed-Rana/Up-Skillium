@@ -38,6 +38,10 @@ exports.userSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    designation: {
+        type: String,
+        required: true,
+    },
     userRoleId: {
         type: String,
         required: true,

@@ -28,21 +28,21 @@ class Service {
             if (existingUser) {
                 throw new apiError_1.default(409, "Email already exists. Please use a different email.");
             }
-            const userRole = user === null || user === void 0 ? void 0 : user.role;
+            const userRole = (user === null || user === void 0 ? void 0 : user.role).toLowerCase();
             const role = yield service_1.RoleService.getRoleByRoleName(userRole);
             user.password = yield bcrypt_1.BcryptInstance.hash(user.password);
             user.role = role === null || role === void 0 ? void 0 : role.id;
-            if ((role === null || role === void 0 ? void 0 : role.name) === "student") {
+            if ((role === null || role === void 0 ? void 0 : role.name.toLowerCase().trim()) === "student") {
                 const studentId = yield this.createStudentId();
                 user.userRoleId = studentId;
                 user.roleName = "student";
             }
-            else if ((role === null || role === void 0 ? void 0 : role.name) === "instructor") {
+            else if ((role === null || role === void 0 ? void 0 : role.name.toLowerCase().trim()) === "instructor") {
                 const instructorId = yield this.createInstructorId();
                 user.userRoleId = instructorId;
                 user.roleName = "instructor";
             }
-            else if ((role === null || role === void 0 ? void 0 : role.name) === "admin") {
+            else if ((role === null || role === void 0 ? void 0 : role.name.toLowerCase().trim()) === "admin") {
                 const adminId = yield this.createAdminId();
                 user.userRoleId = adminId;
                 user.roleName = "admin";
@@ -280,6 +280,28 @@ class Service {
                     count: r === null || r === void 0 ? void 0 : r.count,
                 })),
             };
+        });
+    }
+    getAllStudent() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const roles = yield service_1.RoleService.getAllRoles();
+            const studentRole = roles.find((role) => (role === null || role === void 0 ? void 0 : role.name) === "student");
+            const students = yield model_1.User.find({
+                role: (studentRole === null || studentRole === void 0 ? void 0 : studentRole.id) || (studentRole === null || studentRole === void 0 ? void 0 : studentRole._id),
+            });
+            return students;
+        });
+    }
+    getAllTeamMembers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const roles = yield service_1.RoleService.getAllRoles();
+            const teamRoles = roles
+                .filter((role) => (role === null || role === void 0 ? void 0 : role.name) !== "student")
+                .map((role) => (role === null || role === void 0 ? void 0 : role.id) || (role === null || role === void 0 ? void 0 : role._id));
+            const teamMembers = yield model_1.User.find({
+                role: { $in: teamRoles },
+            });
+            return teamMembers;
         });
     }
 }

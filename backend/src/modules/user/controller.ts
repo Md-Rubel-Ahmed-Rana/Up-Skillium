@@ -137,6 +137,24 @@ class Controller extends RootController {
       });
     }
   );
+  getAllStudent = this.catchAsync(async (req: Request, res: Response) => {
+    const data = await UserService.getAllStudent();
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: `Students retrieved successfully!`,
+      data,
+    });
+  });
+  getAllTeamMembers = this.catchAsync(async (req: Request, res: Response) => {
+    const data = await UserService.getAllTeamMembers();
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: `Team members retrieved successfully!`,
+      data,
+    });
+  });
 }
 
 export const UserController = new Controller();

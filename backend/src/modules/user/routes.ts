@@ -8,6 +8,10 @@ const router = Router();
 
 router.get("/", UserController.findUsers);
 
+router.get("/students", UserController.getAllStudent);
+
+router.get("/team", UserController.getAllTeamMembers);
+
 router.get(
   "/analytics-summary",
   JwtInstance.verifyToken,
