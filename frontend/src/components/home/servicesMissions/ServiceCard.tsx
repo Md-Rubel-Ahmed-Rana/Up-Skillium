@@ -1,4 +1,6 @@
+import { useCardBottomToTopAnimation } from "@/hooks/useCardBottomToTopAnimation";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 type Service = {
   id: string;
@@ -14,8 +16,12 @@ type Props = {
 };
 
 const ServiceCard = ({ service, index, length }: Props) => {
+  const ref = useRef(null);
+  const { animation } = useCardBottomToTopAnimation(ref);
   return (
     <motion.div
+      {...animation}
+      ref={ref}
       key={index}
       className={`p-6 shadow-lg rounded-lg relative z-10 border-l-4 transition-transform transform hover:scale-100 hover:shadow-2xl ${
         index % 2 === 0 ? "border-blue-500 " : "border-green-500"

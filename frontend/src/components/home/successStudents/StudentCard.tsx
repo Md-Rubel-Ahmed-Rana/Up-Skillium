@@ -1,13 +1,4 @@
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  hover: { scale: 1.02, boxShadow: "0px 4px 15px rgba(0,0,0,0.2)" },
-};
-
-type Student = {
+export type Student = {
   id: string;
   name: string;
   image: string;
@@ -20,27 +11,17 @@ type Props = {
 };
 
 const StudentCard = ({ student }: Props) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { amount: 0.5 });
-
   return (
-    <motion.div
-      ref={ref}
-      className="p-2 border border-gray-200 shadow-md rounded-md h-[290px] w-full"
-      variants={cardVariants}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      whileHover="hover"
-    >
+    <div className="px-2 py-5 border border-gray-200 shadow-md rounded-md flex flex-col items-center w-full">
       <img
-        className="h-40 w-full rounded-md"
+        className="h-40 w-40 rounded-full border"
         src={student?.image}
         alt={student?.name}
       />
       <h3 className="text-xl font-bold mt-3">{student?.name}</h3>
       <p>Score: {student?.score}</p>
       <p>{student?.course}</p>
-    </motion.div>
+    </div>
   );
 };
 

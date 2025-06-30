@@ -19,6 +19,7 @@ export type IUser = {
   name: string;
   image: string;
   status: string;
+  designation: string;
   email: string;
   role: IRole;
   dateOfBirth: Date;
