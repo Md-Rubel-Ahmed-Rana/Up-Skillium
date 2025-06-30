@@ -89,17 +89,19 @@ const LoginForm: React.FC = () => {
 
   return (
     <div>
-      <div className="flex gap-2 mb-4">
-        <span className="font-medium">Auto login as:</span>
-        <Button size="small" onClick={() => handleAutoLogin("student")}>
-          Student
-        </Button>
-        <Button size="small" onClick={() => handleAutoLogin("instructor")}>
-          Instructor
-        </Button>
-        <Button size="small" onClick={() => handleAutoLogin("admin")}>
-          Admin
-        </Button>
+      <div className="flex flex-col lg:flex-row gap-2 mb-4">
+        <p className="font-medium">Auto login as:</p>
+        <div>
+          <Button size="small" onClick={() => handleAutoLogin("student")}>
+            Student
+          </Button>
+          <Button size="small" onClick={() => handleAutoLogin("instructor")}>
+            Instructor
+          </Button>
+          <Button size="small" onClick={() => handleAutoLogin("admin")}>
+            Admin
+          </Button>
+        </div>
       </div>
       <Form
         form={form}

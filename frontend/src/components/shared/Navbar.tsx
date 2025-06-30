@@ -96,7 +96,6 @@ const Navbar = () => {
                   <NavbarDropdown isToggleIcon={false} />
                 ) : (
                   <>
-                    <CourseCart />
                     <Link
                       href={"/login"}
                       className="block px-3 py-2 rounded-md text-sm font-medium hover:shadow-sm hover:text-blue-600"
@@ -109,6 +108,7 @@ const Navbar = () => {
                     >
                       Register
                     </Link>
+                    <CourseCart />
                   </>
                 )}
               </>

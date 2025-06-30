@@ -4,6 +4,7 @@ import { Avatar, Dropdown, MenuProps } from "antd/lib";
 import Link from "next/link";
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
+import CourseCart from "../cart";
 import LogoutButton from "./LogoutButton";
 
 type Props = {
@@ -15,28 +16,44 @@ const NavbarDropdown = ({ isToggleIcon }: Props) => {
   const { data } = useGetLoggedInUserQuery({});
   const user = data?.data as IUser;
 
-  const items: MenuProps["items"] = [
+  const commonItems = [
     {
-      key: "1",
-      label: <Link href="/dashboard/profile-info">Profile</Link>,
+      key: "courses",
+      label: <Link href="/courses">Courses</Link>,
     },
     {
-      key: "2",
-      label: <Link href={"/courses"}>Courses</Link>,
+      key: "team",
+      label: <Link href="/team">Our Team</Link>,
     },
     {
-      key: "3",
-      label: <Link href={"/team"}>Our Team</Link>,
-    },
-    {
-      key: "4",
-      label: <Link href={"/success-stories"}>Success Stories</Link>,
-    },
-    {
-      key: "5",
-      label: <LogoutButton />,
+      key: "success",
+      label: <Link href="/success-stories">Success Stories</Link>,
     },
   ];
+
+  const authItems = user?.id
+    ? [
+        {
+          key: "profile",
+          label: <Link href="/dashboard/profile-info">Profile</Link>,
+        },
+        {
+          key: "logout",
+          label: <LogoutButton />,
+        },
+      ]
+    : [
+        {
+          key: "login",
+          label: <Link href="/login">Login</Link>,
+        },
+        {
+          key: "register",
+          label: <Link href="/register">Register</Link>,
+        },
+      ];
+
+  const items: MenuProps["items"] = [...authItems, ...commonItems];
 
   return (
     <Dropdown
@@ -46,16 +63,18 @@ const NavbarDropdown = ({ isToggleIcon }: Props) => {
       arrow
       onOpenChange={(open) => setIsOpen(open)}
     >
-      {isToggleIcon ? (
-        <div> {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}</div>
+      {isToggleIcon && !user?.id ? (
+        <div className="flex items-center gap-4">
+          <CourseCart />
+          <span>{isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}</span>
+        </div>
       ) : (
         <div>
           {user && user?.image ? (
             <img
-              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
               src={user?.image}
               alt="Profile"
-              className="border-2 border-blue-600"
+              className="border-2 lg:w-12 lg:h-12 w-10 h-10 rounded-full border-blue-600"
             />
           ) : (
             <Avatar className="ring-2 bg-green-600">
