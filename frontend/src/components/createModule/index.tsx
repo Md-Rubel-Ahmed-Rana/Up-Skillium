@@ -107,9 +107,9 @@ const CreateCourseOutline = () => {
   const mergedColumns = getMergedColumns(columns, isEditing);
 
   return (
-    <div className="mt-4 space-y-2">
+    <div className="p-2 space-y-2">
       <div className="flex flex-col">
-        <h1 className="text-2xl font-semibold mb-2">Create Module</h1>
+        <h1 className="text-xl font-semibold mb-2">Create Module</h1>
         <CourseDropDownList />
         <div className="flex items-center gap-2 mt-2 text-lg font-semibold">
           <h4>Selected course: </h4>

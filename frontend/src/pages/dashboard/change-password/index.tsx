@@ -1,9 +1,7 @@
 import PasswordChange from "@/components/passwordChange";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
 
 const PasswordChangePage = () => {
   return (
@@ -13,16 +11,10 @@ const PasswordChangePage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <PasswordChange />
+      <DashboardLayout>
+        <PasswordChange />
+      </DashboardLayout>
     </>
-  );
-};
-
-PasswordChangePage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
   );
 };
 

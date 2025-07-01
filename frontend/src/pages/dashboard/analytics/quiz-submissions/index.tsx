@@ -1,10 +1,8 @@
 import QuizSubmissionAnalytics from "@/components/dashboardAnalytics/QuizSubmissionAnalytics";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
 import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
 
 const QuizSubmissionAnalyticsPage = () => {
   return (
@@ -14,19 +12,13 @@ const QuizSubmissionAnalyticsPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <QuizSubmissionAnalytics />
+      <DashboardLayout>
+        <QuizSubmissionAnalytics />
+      </DashboardLayout>
     </>
   );
 };
 
-QuizSubmissionAnalyticsPage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
 export default isAuthenticate(
-  AuthorizationGuard(QuizSubmissionAnalyticsPage, "admin")
+  AuthorizationGuard(QuizSubmissionAnalyticsPage, ["admin"])
 );

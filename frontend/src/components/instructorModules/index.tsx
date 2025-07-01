@@ -12,7 +12,7 @@ const InstructorModules = () => {
   });
   const modules = data?.data as IGetModule[];
   return (
-    <div className="mt-4 overflow-x-auto w-full">
+    <div className="p-2 overflow-x-auto w-full">
       <h2 className="text-lg lg:text-2xl font-semibold mb-3">
         Modules of Courses
       </h2>

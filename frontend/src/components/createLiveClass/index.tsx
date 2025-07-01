@@ -67,8 +67,8 @@ const CreateLiveClass = () => {
   };
 
   return (
-    <div className="mt-3 p-2">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-6">
+    <div className=" p-2">
+      <h2 className="text-lg lg:text-xl font-semibold mb-3">
         Create Live Class
       </h2>
       <Form

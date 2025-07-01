@@ -1,9 +1,8 @@
 import InstructorReviewedAssignments from "@/components/instructorReviewedAssignments";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
 
 const InstructorReviewedAssignmentPage = () => {
   return (
@@ -13,17 +12,13 @@ const InstructorReviewedAssignmentPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <InstructorReviewedAssignments />
+      <DashboardLayout>
+        <InstructorReviewedAssignments />
+      </DashboardLayout>
     </>
   );
 };
 
-InstructorReviewedAssignmentPage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(InstructorReviewedAssignmentPage);
+export default isAuthenticate(
+  AuthorizationGuard(InstructorReviewedAssignmentPage, ["instructor"])
+);

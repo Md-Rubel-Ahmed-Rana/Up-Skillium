@@ -61,8 +61,8 @@ const CertificateForm = ({ selectedCourse, selectedStudent }: Props) => {
   }, [selectedStudent, selectedCourse, form]);
 
   return (
-    <div className="border w-full lg:p-5 p-2 rounded-md">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-5">
+    <div className="border w-full p-2 rounded-md">
+      <h2 className="text-md lg:text-lg font-semibold mb-5">
         Create Certificate
       </h2>
       <Form

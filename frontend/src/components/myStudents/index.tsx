@@ -70,8 +70,8 @@ const MyStudents = () => {
     },
   ];
   return (
-    <div className="mt-3">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-3">My Students</h2>
+    <div className="p-2">
+      <h2 className="text-md lg:text-lg font-semibold mb-3">My Students</h2>
       <Table
         columns={columns}
         dataSource={students}

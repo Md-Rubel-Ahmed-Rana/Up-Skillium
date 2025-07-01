@@ -46,8 +46,8 @@ const CreateQuizLesson = () => {
   };
 
   return (
-    <div className="w-full  lg:mt-3 pb-20 p-2">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-3">
+    <div className="w-full p-2">
+      <h2 className="text-lg lg:text-xl font-semibold mb-3">
         Create quiz lesson
       </h2>
       <Form

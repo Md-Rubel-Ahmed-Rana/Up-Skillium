@@ -7,9 +7,11 @@ import extractHrefLinksFromDashboardSidebar from "@/utils/extractHrefLinksFromDa
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
 
+type userRoles = "admin" | "instructor" | "student";
+
 const AuthorizationGuard = (
   WrappedComponent: any,
-  role: "admin" | "instructor" | "student",
+  roles: userRoles[],
   route?: string
 ) => {
   const ComponentWithAuth = (props: any) => {
@@ -17,16 +19,23 @@ const AuthorizationGuard = (
     const router = useRouter();
     const user: IUser = data?.data;
 
-    let allowedRoutes: string[] = [];
-    if (role === "admin") {
-      allowedRoutes = extractHrefLinksFromDashboardSidebar(adminSidebarItems);
-    } else if (role === "instructor") {
-      allowedRoutes = extractHrefLinksFromDashboardSidebar(
-        instructorSidebarItems
-      );
-    } else if (role === "student") {
-      allowedRoutes = extractHrefLinksFromDashboardSidebar(studentSidebarItems);
-    }
+    const allowedRoutes: string[] = [];
+
+    roles.forEach((role) => {
+      if (role === "admin") {
+        allowedRoutes.push(
+          ...extractHrefLinksFromDashboardSidebar(adminSidebarItems)
+        );
+      } else if (role === "instructor") {
+        allowedRoutes.push(
+          ...extractHrefLinksFromDashboardSidebar(instructorSidebarItems)
+        );
+      } else if (role === "student") {
+        allowedRoutes.push(
+          ...extractHrefLinksFromDashboardSidebar(studentSidebarItems)
+        );
+      }
+    });
 
     if (route && !allowedRoutes.includes(route)) {
       allowedRoutes.push(route);
@@ -34,7 +43,7 @@ const AuthorizationGuard = (
 
     const currentPath = router.pathname;
 
-    const userRole = user?.role?.name;
+    const userRole = user?.role?.name as userRoles;
 
     if (isLoading) {
       return (
@@ -78,7 +87,10 @@ const AuthorizationGuard = (
       );
     }
 
-    if (userRole !== role || (route && !allowedRoutes.includes(currentPath))) {
+    if (
+      !roles.includes(userRole) ||
+      (route && !allowedRoutes.includes(currentPath))
+    ) {
       return (
         <>
           <PageMetadata

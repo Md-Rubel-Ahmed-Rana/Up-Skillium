@@ -4,7 +4,7 @@ import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import dynamic from "next/dynamic";
 
-const TestDashboardLayout = dynamic(import("@/layout/TestDashboardLayout"), {
+const DashboardLayout = dynamic(import("@/layout/DashboardLayout"), {
   ssr: false,
 });
 
@@ -16,11 +16,11 @@ const MyCoursesPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <TestDashboardLayout>
+      <DashboardLayout>
         <MyCourses />
-      </TestDashboardLayout>
+      </DashboardLayout>
     </>
   );
 };
 
-export default isAuthenticate(AuthorizationGuard(MyCoursesPage, "student"));
+export default isAuthenticate(AuthorizationGuard(MyCoursesPage, ["student"]));

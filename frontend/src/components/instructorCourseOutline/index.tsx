@@ -21,7 +21,7 @@ const InstructorCourseOutline = () => {
   const courseOutlines = data?.data as ICourseOutline[];
 
   return (
-    <div className="lg:p-5 px-2 pb-20">
+    <div className="p-2">
       <h1 className="text-2xl font-semibold mb-5">Course Outlines</h1>
       <div className="overflow-x-auto">
         <CourseOutlineTable

@@ -43,7 +43,7 @@ const FeedbackReviewsTable = ({ feedbacks, isLoading }: Props) => {
       key: "feedback",
       render: (feedback: string) => (
         <Tooltip title={feedback}>
-          <span className="truncate max-w-[200px]">{feedback}</span>
+          <p className="truncate max-w-[200px]">{feedback}</p>
         </Tooltip>
       ),
     },

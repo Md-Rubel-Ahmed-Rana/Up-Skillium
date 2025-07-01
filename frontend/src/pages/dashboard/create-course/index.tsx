@@ -1,9 +1,8 @@
 import CreateCourse from "@/components/createCourse";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
 
 const CreateCoursePage = () => {
   return (
@@ -13,17 +12,11 @@ const CreateCoursePage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <CreateCourse />
+      <DashboardLayout>
+        <CreateCourse />
+      </DashboardLayout>
     </>
   );
 };
 
-CreateCoursePage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(CreateCoursePage);
+export default isAuthenticate(AuthorizationGuard(CreateCoursePage, ["admin"]));
