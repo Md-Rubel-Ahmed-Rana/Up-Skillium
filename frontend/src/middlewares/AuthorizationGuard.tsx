@@ -1,7 +1,9 @@
-import { adminSidebarItems } from "@/components/dashboard/AdminSidebar";
-import { instructorSidebarItems } from "@/components/dashboard/InstructorSidebar";
-import { studentSidebarItems } from "@/components/dashboard/StudentSidebar";
 import { useGetLoggedInUserQuery } from "@/features/auth";
+import {
+  adminSidebarItems,
+  instructorSidebarItems,
+  studentSidebarItems,
+} from "@/layout/sidebarItems";
 import { IUser } from "@/types/user.type";
 import extractHrefLinksFromDashboardSidebar from "@/utils/extractHrefLinksFromDashboardSidebar";
 import PageMetadata from "@/utils/PageMetadata";
