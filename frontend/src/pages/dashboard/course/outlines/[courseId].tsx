@@ -1,10 +1,9 @@
 import DashboardCourseOutlines from "@/components/dashboardCourseOutline";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
-import { ReactElement } from "react";
 
 const DashboardCourseOutlinePage = () => {
   const { query } = useRouter();
@@ -18,17 +17,13 @@ const DashboardCourseOutlinePage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <DashboardCourseOutlines />
+      <DashboardLayout>
+        <DashboardCourseOutlines />
+      </DashboardLayout>
     </>
   );
 };
 
-DashboardCourseOutlinePage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(DashboardCourseOutlinePage);
+export default isAuthenticate(
+  AuthorizationGuard(DashboardCourseOutlinePage, ["admin", "instructor"])
+);

@@ -13,8 +13,8 @@ const InstructorCertificates = () => {
   const certificates = data?.data as ICertificate[];
 
   return (
-    <div className="mt-3 px-2 pb-20">
-      <h1 className="text-lg lg:text-2xl font-semibold mb-3">
+    <div className="p-2">
+      <h1 className="text-lg lg:text-xl font-semibold mb-3">
         My students certificates
       </h1>
       <div className="overflow-x-auto">

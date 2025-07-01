@@ -10,10 +10,10 @@ const InstructorQuizzes = () => {
   const { data, isLoading } = useGetAllQuizzesByInstructorQuery({
     instructorId: user?.id,
   });
-  const quizzes = data?.data as IGetQuizQuestion[];
+  const quizzes = (data?.data || []) as IGetQuizQuestion[];
 
   return (
-    <div className="mt-4 pb-20 overflow-x-auto w-full">
+    <div className="p-2 overflow-x-auto w-full">
       <h2 className="text-lg lg:text-2xl font-semibold mb-3">Quizzes</h2>
       <QuizTable isLoading={isLoading} quizzes={quizzes} />
     </div>

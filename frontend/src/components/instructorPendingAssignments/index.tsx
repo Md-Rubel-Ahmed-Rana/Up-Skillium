@@ -12,8 +12,8 @@ const InstructorPendingAssignments = () => {
   });
   const assignments = data?.data as IAssignmentSubmission[];
   return (
-    <div className="mt-4 overflow-x-auto w-full">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-3">
+    <div className="p-2 overflow-x-auto w-full">
+      <h2 className="text-lg lg:text-xl font-semibold mb-3">
         Pending Assignments
       </h2>
       <PendingAssignmentTable assignments={assignments} isLoading={isLoading} />

@@ -8,7 +8,7 @@ type Props = {
   isLoading: boolean;
 };
 
-const QuizTable = ({ quizzes, isLoading }: Props) => {
+const QuizTable = ({ quizzes = [], isLoading }: Props) => {
   const columns: TableProps<IGetQuizQuestion>["columns"] = [
     {
       title: "Question",
@@ -24,7 +24,7 @@ const QuizTable = ({ quizzes, isLoading }: Props) => {
       title: "Options",
       dataIndex: "options",
       key: "options",
-      render: (options: string[]) => (
+      render: (options: string[] = []) => (
         <ul className="list-disc pl-5 grid grid-cols-1 lg:grid-cols-2">
           {options.map((option, index) => (
             <li key={index}>{option}</li>

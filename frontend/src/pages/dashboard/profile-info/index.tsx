@@ -3,7 +3,7 @@ import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import dynamic from "next/dynamic";
 
-const TestDashboardLayout = dynamic(import("@/layout/TestDashboardLayout"), {
+const DashboardLayout = dynamic(import("@/layout/DashboardLayout"), {
   ssr: false,
 });
 
@@ -15,9 +15,9 @@ const ProfilePage = () => {
         description="This is user profile page"
         keywords="up-skillium"
       />
-      <TestDashboardLayout>
+      <DashboardLayout>
         <Profile />
-      </TestDashboardLayout>
+      </DashboardLayout>
     </>
   );
 };

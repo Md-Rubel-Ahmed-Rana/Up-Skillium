@@ -1,9 +1,9 @@
 import UserPasswordChange from "@/components/changeUserPassword";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
+import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
-import { ReactElement } from "react";
 
 const UserPasswordChangePage = () => {
   const { query } = useRouter();
@@ -18,17 +18,13 @@ const UserPasswordChangePage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <UserPasswordChange />
+      <DashboardLayout>
+        <UserPasswordChange />
+      </DashboardLayout>
     </>
   );
 };
 
-UserPasswordChangePage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default UserPasswordChangePage;
+export default isAuthenticate(
+  AuthorizationGuard(UserPasswordChangePage, ["admin"])
+);

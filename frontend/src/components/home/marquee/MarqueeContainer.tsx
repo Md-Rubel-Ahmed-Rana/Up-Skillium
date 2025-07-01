@@ -45,7 +45,7 @@ const MarqueeContainer = ({ documents }: Props) => {
         style={{ willChange: "transform" }}
       >
         {[...documents, ...documents].map((item, index) => (
-          <CountDownCard key={item.id} item={item} index={index} />
+          <CountDownCard key={item.id + index} item={item} index={index} />
         ))}
       </div>
     </div>

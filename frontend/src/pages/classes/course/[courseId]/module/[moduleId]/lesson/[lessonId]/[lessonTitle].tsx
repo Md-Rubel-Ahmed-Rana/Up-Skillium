@@ -28,5 +28,5 @@ CourseModuleLessonPage.getLayout = function (page: ReactElement) {
 };
 
 export default isAuthenticate(
-  AuthorizationGuard(CourseModuleLessonPage, "student")
+  AuthorizationGuard(CourseModuleLessonPage, ["student"])
 );

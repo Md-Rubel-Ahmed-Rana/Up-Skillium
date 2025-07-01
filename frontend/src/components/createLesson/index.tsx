@@ -10,7 +10,7 @@ const CreateLesson = () => {
   const { query } = useRouter();
   const type = query?.type as string;
   return (
-    <div className="mt-3 p-2 lg:p-4 mb-20">
+    <div className="p-2 mb-20">
       <SelectedCourseModule />
       <div className="flex flex-col lg:flex-row items-center lg:gap-5">
         <ModuleDropdown />

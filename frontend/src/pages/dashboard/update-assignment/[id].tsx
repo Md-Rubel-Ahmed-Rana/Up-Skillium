@@ -1,10 +1,9 @@
 import UpdateAssignment from "@/components/updateAssignment";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
 import { useRouter } from "next/router";
-import { ReactElement } from "react";
 
 const UpdateAssignmentPage = () => {
   const { query } = useRouter();
@@ -16,17 +15,13 @@ const UpdateAssignmentPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <UpdateAssignment />
+      <DashboardLayout>
+        <UpdateAssignment />
+      </DashboardLayout>
     </>
   );
 };
 
-UpdateAssignmentPage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(UpdateAssignmentPage);
+export default isAuthenticate(
+  AuthorizationGuard(UpdateAssignmentPage, ["admin", "instructor"])
+);

@@ -1,9 +1,8 @@
 import InstructorQuizzes from "@/components/instructorQuizzes";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
 
 const ManageQuizzesPage = () => {
   return (
@@ -13,17 +12,13 @@ const ManageQuizzesPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <InstructorQuizzes />
+      <DashboardLayout>
+        <InstructorQuizzes />
+      </DashboardLayout>
     </>
   );
 };
 
-ManageQuizzesPage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(ManageQuizzesPage);
+export default isAuthenticate(
+  AuthorizationGuard(ManageQuizzesPage, ["instructor"])
+);

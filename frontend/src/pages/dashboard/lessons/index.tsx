@@ -1,11 +1,10 @@
 import InstructorLessons from "@/components/instructorLessons";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
 
-const ModulesPage = () => {
+const InstructorLessonsPage = () => {
   return (
     <>
       <PageMetadata
@@ -13,17 +12,13 @@ const ModulesPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <InstructorLessons />
+      <DashboardLayout>
+        <InstructorLessons />
+      </DashboardLayout>
     </>
   );
 };
 
-ModulesPage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(ModulesPage);
+export default isAuthenticate(
+  AuthorizationGuard(InstructorLessonsPage, ["instructor"])
+);

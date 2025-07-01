@@ -35,7 +35,7 @@ const NavbarDropdown = ({ isToggleIcon }: Props) => {
     ? [
         {
           key: "profile",
-          label: <Link href="/dashboard/profile-info">Profile</Link>,
+          label: <Link href="/dashboard/profile-info">Dashboard</Link>,
         },
         {
           key: "logout",

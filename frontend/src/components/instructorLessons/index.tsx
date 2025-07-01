@@ -12,8 +12,8 @@ const InstructorLessons = () => {
   });
   const lessons = data?.data as IGetLesson[];
   return (
-    <div className="mt-4 overflow-x-auto w-full">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-3">All Lessons</h2>
+    <div className="p-2 overflow-x-auto w-full">
+      <h2 className="text-lg lg:text-xl font-semibold mb-3">All Lessons</h2>
       <LessonTable isLoading={isLoading} lessons={lessons} />
     </div>
   );

@@ -1,9 +1,8 @@
 import ManageModules from "@/components/manageModules";
 import DashboardLayout from "@/layout/DashboardLayout";
-import RootLayout from "@/layout/RootLayout";
+import AuthorizationGuard from "@/middlewares/AuthorizationGuard";
 import isAuthenticate from "@/middlewares/ProtectPrivateRoutes";
 import PageMetadata from "@/utils/PageMetadata";
-import { ReactElement } from "react";
 
 const ManageModulesPage = () => {
   return (
@@ -13,17 +12,11 @@ const ManageModulesPage = () => {
         description="this is up skillium home page"
         keywords="up skillium, online course, web development, digital marketing"
       />
-      <ManageModules />
+      <DashboardLayout>
+        <ManageModules />
+      </DashboardLayout>
     </>
   );
 };
 
-ManageModulesPage.getLayout = function (page: ReactElement) {
-  return (
-    <RootLayout>
-      <DashboardLayout>{page}</DashboardLayout>
-    </RootLayout>
-  );
-};
-
-export default isAuthenticate(ManageModulesPage);
+export default isAuthenticate(AuthorizationGuard(ManageModulesPage, ["admin"]));

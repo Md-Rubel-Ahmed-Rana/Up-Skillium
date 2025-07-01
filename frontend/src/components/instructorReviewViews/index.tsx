@@ -52,8 +52,8 @@ const InstructorReviewViews = () => {
   ];
 
   return (
-    <div className="mt-3">
-      <h2 className="text-lg lg:text-2xl font-semibold mb-3">Reviews</h2>
+    <div className="p-2">
+      <h2 className="text-lg lg:text-xl font-semibold mb-3">Reviews</h2>
       <Table
         dataSource={reviews}
         columns={columns}
