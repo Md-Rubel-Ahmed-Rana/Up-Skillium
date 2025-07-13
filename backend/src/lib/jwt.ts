@@ -9,7 +9,7 @@ class JWT {
   private signToken = async (
     payload: { id: Types.ObjectId | string; email: string },
     secret: string,
-    expiresIn: number | string
+    expiresIn: string
   ): Promise<string> => {
     return jwt.sign(payload, secret, { expiresIn });
   };

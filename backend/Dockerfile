@@ -1,12 +1,10 @@
 FROM node:18-alpine
 
-# RUN mkdir -p /app
-
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json yarn.lock ./
 
-RUN yarn install
+RUN yarn install --frozen-lockfile
 
 COPY . .
 
