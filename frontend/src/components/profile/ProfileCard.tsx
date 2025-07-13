@@ -17,7 +17,7 @@ const ProfileCard = ({ user, isProfileOwner }: Props) => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-4 p-4 border-b">
+    <div className="flex flex-col lg:flex-row items-center gap-4 pb-4 border-b">
       <div className="relative">
         <Avatar
           size={80}

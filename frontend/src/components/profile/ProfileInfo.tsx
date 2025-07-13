@@ -26,9 +26,9 @@ const ProfileInfo = ({ user, isLoading }: Props) => {
       {isLoading ? (
         <ProfileSkeleton />
       ) : (
-        <div className="flex flex-col items-center lg:p-4">
+        <div className="flex flex-col items-center">
           {/* User Profile Card */}
-          <Card className="w-full">
+          <Card className="w-full p-0">
             <ProfileCard user={user} isProfileOwner={isProfileOwner} />
 
             {/* Basic Information */}
