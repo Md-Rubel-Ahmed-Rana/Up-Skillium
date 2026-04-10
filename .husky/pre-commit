@@ -1,0 +1,15 @@
+
+if git diff --cached --name-only | grep -q "^backend/"; then
+  echo "🟢 Backend changes detected — running backend checks..."
+
+  cd backend
+
+  yarn install --silent
+  yarn type-check || exit 1
+  yarn lint-staged || exit 1
+  yarn build || exit 1
+
+  echo "✅ Backend pre-commit checks passed!"
+else
+  echo "ℹ️ No backend changes — skipping backend checks."
+fi

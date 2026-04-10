@@ -1,0 +1,28 @@
+set -e
+
+git fetch origin || true
+
+DEFAULT_BRANCH="main"
+
+CHANGED_FRONTEND=$(git diff --name-only origin/$DEFAULT_BRANCH HEAD | grep "^frontend/" || true)
+
+if [ -n "$CHANGED_FRONTEND" ]; then
+  echo "🟡 Frontend changes detected — running Next.js build..."
+
+  cd frontend
+
+  if [ -d ".next" ]; then
+    echo "=============================="
+    echo "🧹 Cleaning up previous Next.js build (.next folder)..."
+    echo "=============================="
+    rm -rf .next
+    echo "✅ .next folder removed successfully!"
+  fi
+
+  yarn install --silent
+  yarn build || { echo "❌ Frontend build failed"; exit 1; }
+
+  echo "🚀 Frontend build successful — pushing allowed!"
+else
+  echo "ℹ️ No frontend changes — skipping Next.js build."
+fi

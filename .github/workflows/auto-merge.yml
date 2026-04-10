@@ -1,0 +1,52 @@
+name: Auto Merge to Main
+
+on:
+  push:
+    branches:
+      - frontend
+      - backend
+
+jobs:
+  merge-to-main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Merge into main
+        id: merge
+        run: |
+          # Extract source branch name
+          SOURCE_BRANCH=${GITHUB_REF#refs/heads/}
+
+          # Make sure we have the latest main branch
+          git fetch origin main
+          git checkout main
+          git pull origin main
+
+          # Merge source branch into main
+          git merge --no-ff --allow-unrelated-histories origin/$SOURCE_BRANCH || echo "Merge conflict detected" > conflict.txt
+
+      - name: Check for conflicts
+        if: failure()
+        run: |
+          echo "❌ Merge conflict detected. Please resolve manually."
+          cat conflict.txt
+          exit 1
+
+      - name: Push changes to main
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          git push https://$GH_TOKEN@github.com/Md-Rubel-Ahmed-Rana/Up-Skillium.git HEAD:main
