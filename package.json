@@ -1,0 +1,28 @@
+{
+  "name": "up-skillium",
+  "version": "1.0.0",
+  "description": "This is online learning platform for students to learn new skills and enhance their knowledge.",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.0.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md}": [
+      "prettier --write"
+    ],
+    "frontend/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "backend/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
+  }
+}
