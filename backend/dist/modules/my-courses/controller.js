@@ -1,0 +1,74 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MyCourseController = void 0;
+const rootController_1 = __importDefault(require("../../shared/rootController"));
+const service_1 = require("./service");
+const mongoose_1 = require("mongoose");
+class Controller extends rootController_1.default {
+    constructor() {
+        super(...arguments);
+        this.getMyCourses = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.userId;
+            const courses = yield service_1.MyCourseService.getMyCourses(userId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "My courses retrieved successfully",
+                data: courses,
+            });
+        }));
+        this.getMySingleCourse = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.userId;
+            const courseId = req.params.courseId;
+            const course = yield service_1.MyCourseService.getMySingleCourse(userId, courseId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "My course retrieved successfully",
+                data: course,
+            });
+        }));
+        this.completeLesson = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const userId = req.params.userId;
+            const courseId = req.params.courseId;
+            const lessonId = req.params.lessonId;
+            yield service_1.MyCourseService.completeLesson(userId, courseId, lessonId);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Lesson marked as completed",
+                data: null,
+            });
+        }));
+        this.getStudentCourseProgressAnalyticsSummary = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { userId, courseId } = req.query;
+            const filters = {};
+            if (userId && mongoose_1.Types.ObjectId.isValid(userId)) {
+                filters.user = new mongoose_1.Types.ObjectId(userId);
+            }
+            if (courseId && mongoose_1.Types.ObjectId.isValid(courseId)) {
+                filters.course = new mongoose_1.Types.ObjectId(courseId);
+            }
+            const summary = yield service_1.MyCourseService.getStudentCourseProgressAnalyticsSummary(filters);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Student course progress analytics retrieved successfully",
+                data: summary,
+            });
+        }));
+    }
+}
+exports.MyCourseController = new Controller();

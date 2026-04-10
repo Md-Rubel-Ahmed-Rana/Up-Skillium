@@ -9,7 +9,7 @@ class JWT {
   private signToken = async (
     payload: { id: Types.ObjectId | string; email: string },
     secret: string,
-    expiresIn: number | string
+    expiresIn: string
   ): Promise<string> => {
     return jwt.sign(payload, secret, { expiresIn });
   };
@@ -45,11 +45,7 @@ class JWT {
     const refreshToken = req?.cookies?.upSkilliumRefreshToken;
 
     if (!accessToken || !refreshToken) {
-      return res.status(403).json({
-        statusCode: 403,
-        success: false,
-        message: "Missing authentication tokens",
-      });
+      return res.sendFile("unauthenticated.html", { root: "public" });
     }
 
     try {
@@ -65,11 +61,7 @@ class JWT {
         return this.handleExpiredAccessToken(refreshToken, res, next);
       }
 
-      return res.status(403).json({
-        statusCode: 403,
-        success: false,
-        message: "Unauthorized access",
-      });
+      return res.sendFile("unauthenticated.html", { root: "public" });
     }
   };
 
@@ -104,11 +96,7 @@ class JWT {
         return this.logoutUser(res);
       }
 
-      return res.status(403).json({
-        statusCode: 403,
-        success: false,
-        message: "Invalid refresh token",
-      });
+      return res.sendFile("unauthenticated.html", { root: "public" });
     }
   };
 
@@ -120,6 +108,64 @@ class JWT {
       message: "You have logged out",
       data: null,
     });
+  };
+
+  public async generatePasswordResetToken(
+    id: string,
+    email: string
+  ): Promise<string> {
+    const token = await this.signToken(
+      { id, email },
+      config.jwt.accessTokenSecret,
+      "10m"
+    );
+
+    return token;
+  }
+
+  public verifyResetPasswordToken = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    const resetToken = req?.query.token as string;
+
+    if (!resetToken) {
+      return res.status(400).json({
+        statusCode: 400,
+        success: false,
+        message: "Reset token is required.",
+      });
+    }
+
+    try {
+      const decoded = jwt.verify(resetToken, config.jwt.accessTokenSecret) as {
+        id: string;
+        email: string;
+        exp: number;
+      };
+
+      console.log(decoded);
+
+      if (Date.now() >= decoded.exp * 1000) {
+        return res.status(401).json({
+          statusCode: 401,
+          success: false,
+          message:
+            "The reset link has expired. Please request a new password reset link.",
+        });
+      }
+
+      req.user = decoded;
+      next();
+    } catch (error) {
+      return res.status(401).json({
+        statusCode: 401,
+        success: false,
+        message:
+          "Invalid or expired reset token. Please request a new password reset link.",
+      });
+    }
   };
 }
 

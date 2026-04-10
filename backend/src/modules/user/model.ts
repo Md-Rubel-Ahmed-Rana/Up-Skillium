@@ -1,21 +1,21 @@
 import { model, Schema } from "mongoose";
-import { ICreateUser } from "./user.interface";
+import schemaOption from "../../utils/schemaOption";
+import { IUser } from "./interface";
 
 const addressSchema = new Schema({
-  street: { type: String, required: true },
-  city: { type: String, required: true },
-  state: { type: String, required: true },
-  postalCode: { type: String, required: true },
-  country: { type: String, required: true },
+  street: { type: String },
+  city: { type: String },
+  state: { type: String },
+  country: { type: String },
 });
 
 const emergencyContactSchema = new Schema({
-  name: { type: String, required: true },
-  relationship: { type: String, required: true },
-  phone: { type: String, required: true },
+  name: { type: String },
+  relationship: { type: String },
+  phone: { type: String },
 });
 
-export const userSchema = new Schema<ICreateUser>(
+export const userSchema = new Schema<IUser>(
   {
     name: {
       type: String,
@@ -25,7 +25,23 @@ export const userSchema = new Schema<ICreateUser>(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+    },
     role: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Role",
+    },
+    roleName: {
+      type: String,
+      required: true,
+    },
+    designation: {
+      type: String,
+      required: true,
+    },
+    userRoleId: {
       type: String,
       required: true,
     },
@@ -42,24 +58,19 @@ export const userSchema = new Schema<ICreateUser>(
     gender: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
+    },
     address: {
       type: addressSchema,
     },
     emergencyContact: {
       type: emergencyContactSchema,
     },
-    permissions: {
-      type: [String],
-      required: true,
-    },
   },
-  {
-    timestamps: true,
-    toJSON: {
-      versionKey: false,
-      virtuals: true,
-    },
-  }
+  schemaOption
 );
 
 export const User = model("User", userSchema);

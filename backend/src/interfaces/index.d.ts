@@ -1,13 +1,17 @@
 import { JwtPayload } from "jsonwebtoken";
-import { GetUser } from "../modules/user/user.interface";
 
 declare global {
   namespace Express {
     interface Request {
-      user: JwtPayload | null | GetUser;
-      id: any;
-      email: string;
-      role: string;
+      user?: JwtPayload | null | GetUser;
+      id?: string;
+      email?: string;
+      role?: string;
+      files?: {
+        [fieldname: string]: Express.Multer.File[];
+        image?: Express.Multer.File[];
+        introductoryVideo?: Express.Multer.File[];
+      };
     }
   }
 }

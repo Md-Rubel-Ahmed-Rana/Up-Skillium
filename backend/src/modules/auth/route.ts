@@ -4,10 +4,20 @@ import { JwtInstance } from "../../lib/jwt";
 
 const router = Router();
 
+router.post("/register", AuthController.register);
+
 router.get("/", JwtInstance.verifyToken, AuthController.auth);
 
 router.post("/login", AuthController.login);
 
 router.delete("/logout", AuthController.logout);
+
+router.post("/forget-password", AuthController.forgetPassword);
+
+router.get(
+  "/verify-reset-password-token",
+  JwtInstance.verifyResetPasswordToken,
+  AuthController.verifyResetPasswordToken
+);
 
 export const AuthRoutes = router;

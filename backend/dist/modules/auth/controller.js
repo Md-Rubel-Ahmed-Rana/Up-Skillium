@@ -29,15 +29,24 @@ class Controller extends rootController_1.default {
                 data: result,
             });
         }));
+        this.register = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            yield service_1.AuthService.register(req.body);
+            this.apiResponse(res, {
+                statusCode: 201,
+                success: true,
+                message: "User registered successfully",
+                data: null,
+            });
+        }));
         this.login = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
             const { email, password } = req.body;
-            const { accessToken, refreshToken } = yield service_1.AuthService.login(email, password);
+            const { accessToken, refreshToken, user } = yield service_1.AuthService.login(email, password);
             cookies_1.cookieManager.setTokens(res, accessToken, refreshToken);
             this.apiResponse(res, {
                 statusCode: 200,
                 success: true,
                 message: "Login successful",
-                data: null,
+                data: user,
             });
         }));
         this.logout = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
@@ -46,6 +55,24 @@ class Controller extends rootController_1.default {
                 statusCode: 200,
                 success: true,
                 message: "Logout successful",
+                data: null,
+            });
+        }));
+        this.forgetPassword = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            const email = req.body.email;
+            yield service_1.AuthService.forgetPassword(email);
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "A password reset link has been sent to your email. Please check your inbox or spam folder and follow the instructions to reset your password.",
+                data: null,
+            });
+        }));
+        this.verifyResetPasswordToken = this.catchAsync((req, res) => __awaiter(this, void 0, void 0, function* () {
+            this.apiResponse(res, {
+                statusCode: 200,
+                success: true,
+                message: "Proceed to reset your password",
                 data: null,
             });
         }));

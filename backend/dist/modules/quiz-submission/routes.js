@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.QuizSubmissionRoutes = void 0;
+const express_1 = require("express");
+const controller_1 = require("./controller");
+const jwt_1 = require("../../lib/jwt");
+const router = (0, express_1.Router)();
+router.get("/result/:userId/:lessonId", jwt_1.JwtInstance.verifyToken, controller_1.QuizSubmissionController.getSubmittedQuizResultByLessonId);
+router.get("/analytics-summary", jwt_1.JwtInstance.verifyToken, controller_1.QuizSubmissionController.getQuizSubmissionAnalyticsSummary);
+router.get("/single/:id", jwt_1.JwtInstance.verifyToken, controller_1.QuizSubmissionController.getSingleQuizSubmission);
+router.post("/submit/:userId/:lessonId", jwt_1.JwtInstance.verifyToken, controller_1.QuizSubmissionController.submitQuiz);
+router.get("/", jwt_1.JwtInstance.verifyToken, controller_1.QuizSubmissionController.getAllQuizSubmissions);
+exports.QuizSubmissionRoutes = router;

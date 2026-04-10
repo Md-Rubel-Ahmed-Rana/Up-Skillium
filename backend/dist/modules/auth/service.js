@@ -17,6 +17,7 @@ const jwt_1 = require("../../lib/jwt");
 const apiError_1 = __importDefault(require("../../shared/apiError"));
 const bcrypt_1 = require("../../lib/bcrypt");
 const service_1 = require("../user/service");
+const mail_service_1 = require("../mail/mail.service");
 class Service {
     auth(id) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -28,11 +29,14 @@ class Service {
         return __awaiter(this, void 0, void 0, function* () {
             const isExist = yield service_1.UserService.findUserByEmailWithPassword(email);
             if (!isExist) {
-                throw new apiError_1.default(404, "User not found!");
+                throw new apiError_1.default(404, "User not found. Please check your email and try again.");
             }
-            const isMatchedPassword = yield bcrypt_1.BcryptInstance.compare(password, isExist === null || isExist === void 0 ? void 0 : isExist.password);
+            if ((isExist === null || isExist === void 0 ? void 0 : isExist.status) === "inactive") {
+                throw new apiError_1.default(403, "Your account is inactive. Please contact the support team or an administrator for assistance.");
+            }
+            const isMatchedPassword = yield bcrypt_1.BcryptInstance.compare(password, isExist.password);
             if (!isMatchedPassword) {
-                throw new apiError_1.default(401, "Password doesn't match");
+                throw new apiError_1.default(401, "Invalid password. Please try again or reset your password.");
             }
             const jwtPayload = {
                 id: isExist === null || isExist === void 0 ? void 0 : isExist._id,
@@ -40,7 +44,26 @@ class Service {
             };
             const accessToken = yield jwt_1.JwtInstance.generateAccessToken(jwtPayload);
             const refreshToken = yield jwt_1.JwtInstance.generateRefreshToken(jwtPayload);
-            return { accessToken, refreshToken };
+            isExist === null || isExist === void 0 ? true : delete isExist.password;
+            return { accessToken, refreshToken, user: isExist };
+        });
+    }
+    register(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield service_1.UserService.createUser({
+                name: data.name,
+                email: data.email,
+                role: data.role,
+                password: data.password,
+            });
+        });
+    }
+    forgetPassword(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield service_1.UserService.findUserByEmail(email);
+            const token = yield jwt_1.JwtInstance.generatePasswordResetToken(user === null || user === void 0 ? void 0 : user._id, user === null || user === void 0 ? void 0 : user.email);
+            const resetUrl = `https://upskillium.vercel.app/auth/reset-password?id=${user === null || user === void 0 ? void 0 : user._id}&name=${user === null || user === void 0 ? void 0 : user.name}&email=${user === null || user === void 0 ? void 0 : user.email}&token=${token}`;
+            yield mail_service_1.MailService.resetPasswordLink(user === null || user === void 0 ? void 0 : user.email, resetUrl);
         });
     }
 }

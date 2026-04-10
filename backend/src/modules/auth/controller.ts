@@ -14,9 +14,20 @@ class Controller extends RootController {
       data: result,
     });
   });
+
+  register = this.catchAsync(async (req: Request, res: Response) => {
+    await AuthService.register(req.body);
+    this.apiResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "User registered successfully",
+      data: null,
+    });
+  });
+
   login = this.catchAsync(async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    const { accessToken, refreshToken } = await AuthService.login(
+    const { accessToken, refreshToken, user } = await AuthService.login(
       email,
       password
     );
@@ -25,7 +36,7 @@ class Controller extends RootController {
       statusCode: 200,
       success: true,
       message: "Login successful",
-      data: null,
+      data: user,
     });
   });
 
@@ -38,6 +49,29 @@ class Controller extends RootController {
       data: null,
     });
   });
+
+  forgetPassword = this.catchAsync(async (req: Request, res: Response) => {
+    const email = req.body.email as string;
+    await AuthService.forgetPassword(email);
+    this.apiResponse(res, {
+      statusCode: 200,
+      success: true,
+      message:
+        "A password reset link has been sent to your email. Please check your inbox or spam folder and follow the instructions to reset your password.",
+      data: null,
+    });
+  });
+
+  verifyResetPasswordToken = this.catchAsync(
+    async (req: Request, res: Response) => {
+      this.apiResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Proceed to reset your password",
+        data: null,
+      });
+    }
+  );
 }
 
 export const AuthController = new Controller();

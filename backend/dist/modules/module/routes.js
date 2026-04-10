@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ModuleRoutes = void 0;
+const express_1 = require("express");
+const controller_1 = require("./controller");
+const jwt_1 = require("../../lib/jwt");
+const router = (0, express_1.Router)();
+router.post("/create", jwt_1.JwtInstance.verifyToken, controller_1.ModuleController.createNewModule);
+router.get("/", jwt_1.JwtInstance.verifyToken, controller_1.ModuleController.getAllModules);
+router.get("/:id", jwt_1.JwtInstance.verifyToken, controller_1.ModuleController.getSingleModule);
+router.get("/by-course/:courseId", jwt_1.JwtInstance.verifyToken, controller_1.ModuleController.getModuleByCourseId);
+router.get("/classes/:courseId", jwt_1.JwtInstance.verifyToken, controller_1.ModuleController.getFullClassByCourseId);
+router.patch("/:id", jwt_1.JwtInstance.verifyToken, controller_1.ModuleController.updateModule);
+router.delete("/:id", jwt_1.JwtInstance.verifyToken, controller_1.ModuleController.deleteModule);
+router.get("/by-instructor/modules/:instructorId", jwt_1.JwtInstance.verifyToken, controller_1.ModuleController.getAllModulesByInstructor);
+exports.ModuleRoutes = router;
