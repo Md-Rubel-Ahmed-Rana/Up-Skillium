@@ -11,7 +11,18 @@
     "test": "jest",
     "docker:build": "docker-compose build",
     "docker:start": "docker-compose up -d",
-    "docker:stop": "docker-compose down"
+    "docker:stop": "docker-compose down",
+    "lint-staged": "lint-staged",
+    "type-check": "tsc --noEmit"
+  },
+  "lint-staged": {
+    "**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.json": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -38,6 +49,7 @@
     "zod": "^3.23.5"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
@@ -49,8 +61,15 @@
     "@types/multer": "^1.4.12",
     "@types/nodemailer": "^6.4.17",
     "@types/supertest": "^6.0.2",
+    "@typescript-eslint/parser": "^8.58.1",
+    "eslint": "^10.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.4.5",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.1",
     "winston-daily-rotate-file": "^5.0.0"
   },
   "resolutions": {

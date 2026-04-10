@@ -19,8 +19,8 @@ if [ -n "$CHANGED_FRONTEND" ]; then
     echo "✅ .next folder removed successfully!"
   fi
 
-  yarn install --silent
-  yarn build || { echo "❌ Frontend build failed"; exit 1; }
+  npm install --silent
+  npm run build || { echo "❌ Frontend build failed"; exit 1; }
 
   echo "🚀 Frontend build successful — pushing allowed!"
 else

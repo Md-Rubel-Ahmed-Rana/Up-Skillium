@@ -19,7 +19,7 @@ const studentSchema = new Schema<INewStudent>(
       versionKey: false,
       virtuals: true,
     },
-  }
+  },
 );
 
 export const Student = model("Student", studentSchema);
