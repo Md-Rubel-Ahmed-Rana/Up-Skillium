@@ -11,10 +11,10 @@ import {
 import { BcryptInstance } from "../../lib/bcrypt";
 import ApiError from "../../shared/apiError";
 import { RoleService } from "../role/service";
-import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import generateStudentId from "../../utils/generateStudentId";
 import generateAdminId from "../../utils/generateAdminId";
 import generateTeacherId from "../../utils/generateTeacherId";
+import { CloudinaryService } from "../../cloudinary";
 
 class Service {
   async createUser(user: ICreateUser): Promise<void> {
@@ -23,7 +23,7 @@ class Service {
     if (existingUser) {
       throw new ApiError(
         409,
-        "Email already exists. Please use a different email."
+        "Email already exists. Please use a different email.",
       );
     }
 
@@ -88,7 +88,7 @@ class Service {
   async findUsers(
     search: string = "",
     page: number = 1,
-    limit: number = 5
+    limit: number = 5,
   ): Promise<IGetUser[]> {
     const searchQuery = search
       ? {
@@ -112,7 +112,7 @@ class Service {
     return await User.findOne({ email: email }).populate("role");
   }
   async getUsersEmailByIds(
-    ids: Types.ObjectId[]
+    ids: Types.ObjectId[],
   ): Promise<{ email: string }[]> {
     const users = await User.find({ _id: { $in: ids } }).select({
       email: 1,
@@ -124,25 +124,25 @@ class Service {
   }
   async updateUser(
     id: string,
-    updatedData: Partial<ICreateUser>
+    updatedData: Partial<ICreateUser>,
   ): Promise<void> {
     await User.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
   async updateUserBasicInfo(
     id: Types.ObjectId,
-    updatedData: IUserBasicInfo
+    updatedData: IUserBasicInfo,
   ): Promise<void> {
     await User.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
   async updateUserAddress(
     id: Types.ObjectId,
-    updatedData: IAddress
+    updatedData: IAddress,
   ): Promise<void> {
     await User.findByIdAndUpdate(id, { $set: { address: { ...updatedData } } });
   }
   async updateEmergencyContact(
     id: Types.ObjectId,
-    updatedData: IEmergencyContact
+    updatedData: IEmergencyContact,
   ): Promise<void> {
     await User.findByIdAndUpdate(id, {
       $set: { emergencyContact: { ...updatedData } },
@@ -151,7 +151,7 @@ class Service {
   async changePassword(
     userId: string,
     oldPassword: string,
-    newPassword: string
+    newPassword: string,
   ): Promise<void> {
     const isExist = await User.findById(userId);
     if (!isExist) {
@@ -159,12 +159,12 @@ class Service {
     } else {
       const isOldPasswordMatched = await BcryptInstance.compare(
         oldPassword,
-        isExist.password
+        isExist.password,
       );
       if (!isOldPasswordMatched) {
         throw new ApiError(
           400,
-          "Incorrect password. Please enter your correct password"
+          "Incorrect password. Please enter your correct password",
         );
       } else {
         const newHashedPassword = await BcryptInstance.hash(newPassword);
@@ -188,13 +188,13 @@ class Service {
   async updateProfileImage(id: Types.ObjectId, imageUrl: string) {
     const user = await User.findById(id);
     if (user && user?.image) {
-      await FileUploadMiddleware.deleteSingle(user?.image);
+      await CloudinaryService.deleteSingle(user?.image, "image");
     }
     await User.findByIdAndUpdate(id, { $set: { image: imageUrl } });
   }
   async activeOrInactiveAccount(
     userId: Types.ObjectId,
-    status: string
+    status: string,
   ): Promise<void> {
     await User.findByIdAndUpdate(userId, { $set: { status: status } });
   }

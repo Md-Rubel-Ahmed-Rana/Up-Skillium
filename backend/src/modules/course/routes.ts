@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { CourseController } from "./controller";
 import upload from "../../config/multer";
-import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { JwtInstance } from "../../lib/jwt";
+import { CourseUploadMiddleware } from "../../middlewares/course.upload";
 
 const router = Router();
 
@@ -13,8 +13,8 @@ router.post(
     { name: "image", maxCount: 1 },
     { name: "introductoryVideo" },
   ]),
-  FileUploadMiddleware.uploadCourseImageAndIntroVideo(),
-  CourseController.createCourse
+  CourseUploadMiddleware.uploadCourseThumbnailAndIntroductoryVideo,
+  CourseController.createCourse,
 );
 
 router.get("/", CourseController.getCourses);
@@ -25,7 +25,7 @@ router.get("/published/courses", CourseController.getOnlyPublishedCourses);
 
 router.get(
   "/category/courses/:category",
-  CourseController.getCoursesByCategory
+  CourseController.getCoursesByCategory,
 );
 
 router.get("/:id", CourseController.getSingleCourse);
@@ -33,19 +33,19 @@ router.get("/:id", CourseController.getSingleCourse);
 router.get(
   "/instructor/:instructorId",
   JwtInstance.verifyToken,
-  CourseController.getCoursesByInstructor
+  CourseController.getCoursesByInstructor,
 );
 
 router.get(
   "/my-students/:instructorId",
   JwtInstance.verifyToken,
-  CourseController.getMyStudentsByInstructor
+  CourseController.getMyStudentsByInstructor,
 );
 
 router.get(
   "/students/:courseId",
   JwtInstance.verifyToken,
-  CourseController.getStudentsFromCourse
+  CourseController.getStudentsFromCourse,
 );
 
 router.delete("/:id", JwtInstance.verifyToken, CourseController.deleteCourse);
@@ -53,41 +53,41 @@ router.delete("/:id", JwtInstance.verifyToken, CourseController.deleteCourse);
 router.patch(
   "/update-basic-info/:id",
   JwtInstance.verifyToken,
-  CourseController.updateCourseBasicInfo
+  CourseController.updateCourseBasicInfo,
 );
 
 router.patch(
   "/update-price/:id",
   JwtInstance.verifyToken,
-  CourseController.updateCoursePrice
+  CourseController.updateCoursePrice,
 );
 
 router.patch(
   "/update-tags-techs/:id",
   JwtInstance.verifyToken,
-  CourseController.updateCourseTagsTechnologies
+  CourseController.updateCourseTagsTechnologies,
 );
 
 router.patch(
   "/update-instructor/:courseId/:instructorId",
   JwtInstance.verifyToken,
-  CourseController.updateCourseInstructor
+  CourseController.updateCourseInstructor,
 );
 
 router.patch(
   "/change-course-image/:id",
   JwtInstance.verifyToken,
   upload.single("file"),
-  FileUploadMiddleware.singleFile("course-thumbnail-images"),
-  CourseController.updateCourseImage
+  CourseUploadMiddleware.updateCourseThumbnail,
+  CourseController.updateCourseImage,
 );
 
 router.patch(
   "/change-course-introductory-video/:id",
   JwtInstance.verifyToken,
   upload.single("file"),
-  FileUploadMiddleware.singleFile("course-introductory-videos"),
-  CourseController.updateCourseIntroductoryVideo
+  CourseUploadMiddleware.updateCourseIntroductoryVideo,
+  CourseController.updateCourseIntroductoryVideo,
 );
 
 export const CourseRoutes = router;

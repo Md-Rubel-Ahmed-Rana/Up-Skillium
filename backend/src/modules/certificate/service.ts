@@ -2,10 +2,10 @@ import { Types } from "mongoose";
 import { PdfCreatorService } from "../pdf-creator/certificate.service";
 import { ICertificate } from "./interface";
 import { Certificate } from "./model";
-import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import { IPdfCertificate } from "../pdf-creator/interface";
 import { CourseService } from "../course/service";
 import { MailService } from "../mail/mail.service";
+import { CloudinaryService } from "../../cloudinary";
 
 class Service {
   async createCertificate(data: ICertificate) {
@@ -15,16 +15,15 @@ class Service {
       score: data?.score,
       technologies: data?.technologies,
     };
-    const certificateUrl = await PdfCreatorService.createCertificate(
-      certificatePdfData
-    );
+    const certificateUrl =
+      await PdfCreatorService.createCertificate(certificatePdfData);
     const newCertificate = await Certificate.create({
       ...data,
       certificateUrl: certificateUrl,
     });
 
     const createdCertificate: any = await Certificate.findById(
-      newCertificate._id
+      newCertificate._id,
     ).populate("user", "email name");
 
     // send email to student
@@ -78,11 +77,10 @@ class Service {
     ]);
   }
   async getCertificatesByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<ICertificate[]> {
-    const courseIds = await CourseService.getCourseIdsByInstructor(
-      instructorId
-    );
+    const courseIds =
+      await CourseService.getCourseIdsByInstructor(instructorId);
     const certificates = await Certificate.find({
       course: { $in: courseIds },
     }).populate([
@@ -168,23 +166,24 @@ class Service {
   }
   async updateCertificate(
     id: Types.ObjectId,
-    updateData: IPdfCertificate
+    updateData: IPdfCertificate,
   ): Promise<void> {
     const certificate = await Certificate.findById(id);
-    if (certificate && certificate?.certificateUrl) {
-      await FileUploadMiddleware.deleteSingle(certificate?.certificateUrl);
-    }
-    const certificateUrl = await PdfCreatorService.createCertificate(
-      updateData
-    );
+
+    const certificateUrl =
+      await PdfCreatorService.createCertificate(updateData);
     await Certificate.findByIdAndUpdate(id, {
       certificateUrl: certificateUrl,
     });
+
+    if (certificate && certificate?.certificateUrl) {
+      await CloudinaryService.deleteSingle(certificate?.certificateUrl, "raw");
+    }
   }
   async deleteCertificate(id: Types.ObjectId): Promise<void> {
     const certificate = await Certificate.findById(id);
     if (certificate && certificate?.certificateUrl) {
-      await FileUploadMiddleware.deleteSingle(certificate?.certificateUrl);
+      await CloudinaryService.deleteSingle(certificate?.certificateUrl, "raw");
     }
     await Certificate.findByIdAndDelete(id);
   }
