@@ -85,7 +85,7 @@ const FooterPage = () => {
                 <FaLinkedin size={30} className="text-white" />
               </Link>
               <Link
-                href="https://github.com/Md-Rubel-Ahmed-Rana"
+                href="https://github.com/Md-Rubel-Ahmed-Rana/Up-Skillium"
                 className="text-black"
               >
                 <FaGithub size={30} className="text-white" />

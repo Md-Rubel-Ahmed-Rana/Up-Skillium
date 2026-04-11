@@ -1,0 +1,17 @@
+version: "3"
+services:
+  up-skillium-client:
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    container_name: up-skillium-client
+    ports:
+      - "3000:3000"
+    restart: always
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+    env_file:
+      - .env.local
+  

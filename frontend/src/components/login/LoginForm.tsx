@@ -51,7 +51,7 @@ const LoginForm: React.FC = () => {
         toast.error(
           response?.data?.message ||
             response?.error?.data?.message ||
-            "Something went wrong. Please try again!"
+            "Something went wrong. Please try again!",
         );
       }
     } catch (error: any) {
@@ -79,7 +79,7 @@ const LoginForm: React.FC = () => {
         toast.error(
           response?.data?.message ||
             response?.error?.data?.message ||
-            "Something went wrong. Please try again!"
+            "Something went wrong. Please try again!",
         );
       }
     } catch (error: any) {
@@ -91,7 +91,7 @@ const LoginForm: React.FC = () => {
     <div>
       <div className="flex flex-col lg:flex-row gap-2 mb-4">
         <p className="font-medium">Auto login as:</p>
-        <div>
+        <div className="flex gap-2">
           <Button size="small" onClick={() => handleAutoLogin("student")}>
             Student
           </Button>
