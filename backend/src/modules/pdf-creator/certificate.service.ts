@@ -2,9 +2,9 @@ import { PDFDocument, PDFFont, PDFPage, RGB, rgb } from "pdf-lib";
 import fs from "fs";
 import path from "path";
 import config from "../../config/envConfig";
-import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import textWrapLineBreaker from "../../utils/textWrapLineBreaker";
 import { IPdfCertificate } from "./interface";
+import { CloudinaryService } from "../../cloudinary";
 
 class Service {
   public async createCertificate(data: IPdfCertificate): Promise<string> {
@@ -44,7 +44,7 @@ class Service {
       colors,
       fonts,
       margins,
-      yPositions
+      yPositions,
     );
     this.drawCourseCompletion(
       page,
@@ -52,7 +52,7 @@ class Service {
       colors.bodyColor,
       fonts,
       margins,
-      yPositions.courseCompletion
+      yPositions.courseCompletion,
     );
     this.drawSkillsText(
       page,
@@ -60,21 +60,21 @@ class Service {
       colors.bodyColor,
       fonts.font,
       margins,
-      yPositions.skills
+      yPositions.skills,
     );
     this.drawMessageText(
       page,
       colors.bodyColor,
       fonts.font,
       margins,
-      yPositions.message
+      yPositions.message,
     );
     this.drawFooter(
       page,
       colors.titleColor,
       fonts.boldFont,
       margins,
-      yPositions.footer
+      yPositions.footer,
     );
 
     await this.drawLogo(pdfDoc, page);
@@ -115,7 +115,7 @@ class Service {
     colors: { titleColor: RGB; bodyColor: RGB; purpleColor: RGB },
     fonts: { font: PDFFont; boldFont: PDFFont },
     margins: { marginX: number; maxWidth: number },
-    yPositions: { title: number; studentName: number }
+    yPositions: { title: number; studentName: number },
   ) {
     page.drawText("Certificate of Completion", {
       x:
@@ -174,7 +174,7 @@ class Service {
     let sloganImageUrl = config.certificate.sloganUrl;
 
     const sloganBytes = await fetch(sloganImageUrl).then((res) =>
-      res.arrayBuffer()
+      res.arrayBuffer(),
     );
     const sloganImage = await pdfDoc.embedPng(sloganBytes);
 
@@ -198,7 +198,7 @@ class Service {
     bodyColor: RGB,
     fonts: { font: PDFFont; boldFont: PDFFont },
     margins: { marginX: number; maxWidth: number },
-    yPosition: number
+    yPosition: number,
   ) {
     const courseIntroText = "for the successful completion of the ";
     const courseIntroWidth = fonts.font.widthOfTextAtSize(courseIntroText, 16);
@@ -206,7 +206,7 @@ class Service {
       courseName,
       margins.maxWidth - courseIntroWidth,
       fonts.boldFont,
-      16
+      16,
     );
 
     page.drawText(courseIntroText, {
@@ -231,7 +231,7 @@ class Service {
       wrappedCourseName.length > 0
         ? fonts.boldFont.widthOfTextAtSize(
             wrappedCourseName[wrappedCourseName.length - 1],
-            16
+            16,
           )
         : 0;
     const courseXPosition =
@@ -252,16 +252,16 @@ class Service {
     bodyColor: RGB,
     font: PDFFont,
     margins: { marginX: number; maxWidth: number },
-    yPosition: number
+    yPosition: number,
   ) {
     const skillsText = `with a rigorous amount of ${technologies.join(
-      ", "
+      ", ",
     )} and applied these skills to build several projects.`;
     const wrappedSkillsText = textWrapLineBreaker(
       skillsText,
       margins.maxWidth,
       font,
-      14
+      14,
     );
 
     wrappedSkillsText.forEach((line, index) => {
@@ -280,7 +280,7 @@ class Service {
     bodyColor: RGB,
     font: PDFFont,
     margins: { marginX: number; maxWidth: number },
-    yPosition: number
+    yPosition: number,
   ) {
     const messageText =
       "We are proud of the student's hard work, dedication, and quick learning, which enabled them to complete assigned tasks on time.";
@@ -288,7 +288,7 @@ class Service {
       messageText,
       margins.maxWidth,
       font,
-      14
+      14,
     );
 
     wrappedMessageText.forEach((line, index) => {
@@ -307,7 +307,7 @@ class Service {
     titleColor: RGB,
     boldFont: PDFFont,
     margins: { marginX: number },
-    yPosition: number
+    yPosition: number,
   ) {
     page.drawText("You did it, and we are proud of you!", {
       x: margins.marginX,
@@ -338,11 +338,11 @@ class Service {
     pdfDoc: PDFDocument,
     page: PDFPage,
     colors: { bodyColor: RGB },
-    fonts: { font: PDFFont; boldFont: PDFFont }
+    fonts: { font: PDFFont; boldFont: PDFFont },
   ) {
     const ceoSignatureUrl = config.certificate.ceoSignatureUrl;
     const signatureBytes = await fetch(ceoSignatureUrl).then((res) =>
-      res.arrayBuffer()
+      res.arrayBuffer(),
     );
     const signatureImage = await pdfDoc.embedPng(signatureBytes);
 
@@ -377,11 +377,11 @@ class Service {
     pdfDoc: PDFDocument,
     page: PDFPage,
     colors: { bodyColor: RGB },
-    fonts: { font: PDFFont; boldFont: PDFFont }
+    fonts: { font: PDFFont; boldFont: PDFFont },
   ) {
     const caoSignatureUrl = config.certificate.caoSignatureUrl;
     const signatureBytes = await fetch(caoSignatureUrl).then((res) =>
-      res.arrayBuffer()
+      res.arrayBuffer(),
     );
     const signatureImage = await pdfDoc.embedPng(signatureBytes);
     const xPosition = 250;
@@ -417,7 +417,7 @@ class Service {
     const pdfBytes = await pdfDoc.save();
     const filePath = path.join(
       __dirname +
-        `../../../certificates/${studentName}-certificate-${Date.now()}.pdf`
+        `../../../certificates/${studentName}-certificate-${Date.now()}.pdf`,
     );
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
     fs.writeFileSync(filePath, pdfBytes);
@@ -427,17 +427,27 @@ class Service {
   private async deployCertificate(
     pdfDoc: PDFDocument,
     studentName: string,
-    courseName: string
+    courseName: string,
   ): Promise<string> {
     const pdfBytes = await pdfDoc.save();
     const filename = `${studentName}-${courseName}-certificate-${Date.now()}.pdf`;
     const pdfBuffer = Buffer.from(pdfBytes);
+    const file: any = {
+      fieldname: "file",
+      originalname: filename,
+      encoding: "7-bit",
+      mimetype: "application/pdf",
+      size: pdfBuffer.length,
+      buffer: pdfBuffer,
+      destination: "",
+      filename: filename,
+    };
 
     try {
-      const fileUrl = await FileUploadMiddleware.uploadCertificate(
+      const fileUrl = await CloudinaryService.uploadSingle(
+        file,
         "certificates",
-        pdfBuffer,
-        filename
+        "raw",
       );
       return fileUrl;
     } catch (error) {

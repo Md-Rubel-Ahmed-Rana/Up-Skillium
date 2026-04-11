@@ -3,7 +3,7 @@ import config from "../../config/envConfig";
 import fs from "fs";
 import path from "path";
 import { CourseInfo, CustomerInfo, IPdfInvoice } from "./interface";
-import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
+import { CloudinaryService } from "../../cloudinary";
 
 class InvoiceCreator {
   public async createInvoice(invoiceData: IPdfInvoice): Promise<string> {
@@ -50,7 +50,7 @@ class InvoiceCreator {
     return await this.deployInvoice(
       pdfDoc,
       invoiceData.customerInfo.name,
-      invoiceData.courseInfo.name
+      invoiceData.courseInfo.name,
     );
   }
 
@@ -64,7 +64,7 @@ class InvoiceCreator {
     let logoImageUrl = config.app.logo;
 
     const logoBytes = await fetch(logoImageUrl).then((res) =>
-      res.arrayBuffer()
+      res.arrayBuffer(),
     );
     const logoImage = await pdfDoc.embedPng(logoBytes);
 
@@ -114,7 +114,7 @@ class InvoiceCreator {
 
   private async addOrderIdIssueDate(
     page: PDFPage,
-    orderId: string
+    orderId: string,
   ): Promise<void> {
     const paidText = "PAID";
     // fetch order id from database
@@ -173,7 +173,7 @@ class InvoiceCreator {
   private async AddCustomerDetails(
     page: PDFPage,
     pdfDoc: PDFDocument,
-    customerInfo: CustomerInfo
+    customerInfo: CustomerInfo,
   ): Promise<void> {
     const customerNameText = `Name: ${customerInfo.name}`;
     const customerEmailText = `Email: ${customerInfo.email}`;
@@ -207,7 +207,7 @@ class InvoiceCreator {
 
   private async addPlatformDetails(
     page: PDFPage,
-    pdfDoc: PDFDocument
+    pdfDoc: PDFDocument,
   ): Promise<void> {
     const platformName = "Up Skillium";
     const address = "Amborkhana, Sylhet, Bangladesh";
@@ -245,7 +245,7 @@ class InvoiceCreator {
 
   private async addItemAndPriceHeader(
     page: PDFPage,
-    pdfDoc: PDFDocument
+    pdfDoc: PDFDocument,
   ): Promise<void> {
     const itemText = "Item";
     const priceText = "Price";
@@ -275,7 +275,7 @@ class InvoiceCreator {
 
   private async addCourseNameAndPrice(
     page: PDFPage,
-    courseData: CourseInfo
+    courseData: CourseInfo,
   ): Promise<void> {
     const yPosition = 270;
     const xPosition = 650;
@@ -310,7 +310,7 @@ class InvoiceCreator {
         y: yPosition - 50,
         size: 12,
         color: rgb(0, 0, 0),
-      }
+      },
     );
   }
 
@@ -342,7 +342,7 @@ class InvoiceCreator {
     x: number,
     y: number,
     width: number,
-    color: RGB
+    color: RGB,
   ) {
     page.drawLine({
       start: { x, y },
@@ -355,7 +355,7 @@ class InvoiceCreator {
   private async addColor(
     color1: number,
     color2: number,
-    color3: number
+    color3: number,
   ): Promise<RGB> {
     return rgb(color1 / 255, color2 / 255, color3 / 255);
   }
@@ -363,7 +363,7 @@ class InvoiceCreator {
   private async savePdf(pdfDoc: PDFDocument, courseName: string) {
     const pdfBytes = await pdfDoc.save();
     const filePath = path.join(
-      __dirname + `../../../invoices/${courseName}-invoice-${Date.now()}.pdf`
+      __dirname + `../../../invoices/${courseName}-invoice-${Date.now()}.pdf`,
     );
     fs.mkdirSync(path.dirname(filePath), { recursive: true });
     fs.writeFileSync(filePath, pdfBytes);
@@ -373,18 +373,26 @@ class InvoiceCreator {
   private async deployInvoice(
     pdfDoc: PDFDocument,
     studentName: string,
-    courseName: string
+    courseName: string,
   ): Promise<string> {
     console.log("Deploying invoice...", studentName, courseName);
     const pdfBytes = await pdfDoc.save();
     const filename = `Invoice-of-${courseName}-${studentName}-${Date.now()}.pdf`;
     const pdfBuffer = Buffer.from(pdfBytes);
+    const file: any = {
+      fieldname: filename,
+      originalname: filename,
+      encoding: "7-bit",
+      mimetype: "application/pdf",
+      buffer: pdfBuffer,
+      size: pdfBuffer.length,
+    };
 
     try {
-      const fileUrl = await FileUploadMiddleware.uploadInvoice(
+      const fileUrl = await CloudinaryService.uploadSingle(
+        file,
         "invoices",
-        pdfBuffer,
-        filename
+        "raw",
       );
       console.log("Invoice deployed successfully.", fileUrl);
       return fileUrl;

@@ -6,11 +6,11 @@ import {
   IPriceUpdate,
 } from "./interface";
 import { Course } from "./model";
-import { FileUploadMiddleware } from "../../middlewares/fileUploaderMiddleware";
 import incrementAverageRating from "../../utils/incrementAverageRating";
 import ApiError from "../../shared/apiError";
 import { IUser } from "../user/interface";
 import { MailService } from "../mail/mail.service";
+import { CloudinaryService } from "../../cloudinary";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -27,7 +27,7 @@ class Service {
       minPrice?: number;
       maxPrice?: number;
       status?: string;
-    } = {}
+    } = {},
   ): Promise<ICourse[]> {
     const searchQuery = search
       ? {
@@ -84,7 +84,7 @@ class Service {
       minPrice?: number;
       maxPrice?: number;
       status?: string;
-    } = {}
+    } = {},
   ): Promise<{ courses: ICourse[]; totalCourse: number }> {
     const searchQuery = search
       ? {
@@ -170,7 +170,7 @@ class Service {
   }
 
   async getCourseIdsByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<Types.ObjectId[]> {
     const courses = await Course.find({ instructor: instructorId });
     return courses.map((course) => course?.id);
@@ -179,7 +179,7 @@ class Service {
   async getMyStudentsByInstructor(instructorId: Types.ObjectId): Promise<any> {
     const courses = await Course.find({ instructor: instructorId }).populate(
       "students",
-      "name email image"
+      "name email image",
     );
 
     const studentMap = new Map();
@@ -216,7 +216,7 @@ class Service {
 
   async updateCourse(
     id: Types.ObjectId,
-    updatedData: Partial<ICourse>
+    updatedData: Partial<ICourse>,
   ): Promise<void> {
     await Course.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
@@ -227,7 +227,7 @@ class Service {
 
   async updateCourseBasicInfo(
     courseId: Types.ObjectId,
-    data: ICourseBasicInfo
+    data: ICourseBasicInfo,
   ) {
     await Course.findByIdAndUpdate(courseId, {
       $set: {
@@ -249,7 +249,7 @@ class Service {
 
   async updateCourseTagsTechnologies(
     courseId: Types.ObjectId,
-    data: ICourseTagsTechsUpdate
+    data: ICourseTagsTechsUpdate,
   ) {
     await Course.findByIdAndUpdate(courseId, {
       $set: { tags: data?.tags, technologies: data?.technologies },
@@ -258,7 +258,7 @@ class Service {
 
   async updateCourseInstructor(
     courseId: Types.ObjectId,
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<void> {
     const course: any = await Course.findByIdAndUpdate(courseId, {
       $set: { instructor: instructorId },
@@ -268,14 +268,14 @@ class Service {
     await MailService.sendMailToInstructorAssignedToCourse(
       course?.title,
       course?.instructor?.name,
-      course?.instructor?.email
+      course?.instructor?.email,
     );
   }
 
   async updateCourseImage(id: Types.ObjectId, imageUrl: string) {
     const course = await Course.findById(id);
     if (course && course?.image) {
-      await FileUploadMiddleware.deleteSingle(course?.image);
+      await CloudinaryService.deleteSingle(course?.image, "image");
     }
     await Course.findByIdAndUpdate(id, { $set: { image: imageUrl } });
   }
@@ -283,7 +283,7 @@ class Service {
   async updateCourseIntroductoryVideo(id: Types.ObjectId, videoUrl: string) {
     const course = await Course.findById(id);
     if (course && course?.introductoryVideo) {
-      await FileUploadMiddleware.deleteSingle(course?.introductoryVideo);
+      await CloudinaryService.deleteSingle(course?.introductoryVideo, "video");
     }
     await Course.findByIdAndUpdate(id, {
       $set: { introductoryVideo: videoUrl },
@@ -302,7 +302,7 @@ class Service {
         "ratings.averageRating": incrementAverageRating(
           course?.ratings?.totalReviews as number,
           course?.ratings?.averageRating as number,
-          newRating
+          newRating,
         ),
       },
       $inc: {
@@ -347,7 +347,7 @@ class Service {
   }
 
   async getCoursesByCategory(
-    category: string
+    category: string,
   ): Promise<{ courses: ICourse[]; otherCourses: ICourse[] }> {
     const courses = await Course.find({
       category: category,
@@ -389,7 +389,7 @@ class Service {
 
   async addStudentToCourse(
     courseId: Types.ObjectId,
-    studentId: Types.ObjectId
+    studentId: Types.ObjectId,
   ) {
     await Course.findByIdAndUpdate(courseId, {
       $addToSet: { students: studentId },
