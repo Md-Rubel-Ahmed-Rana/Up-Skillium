@@ -29,6 +29,7 @@ class Service {
           if (error) return reject(error);
 
           try {
+            console.log(result);
             resolve(result?.secure_url || "");
           } catch (dbError) {
             reject(

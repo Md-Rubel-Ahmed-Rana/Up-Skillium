@@ -9,11 +9,12 @@ class Middleware {
     next: NextFunction,
   ) {
     if (req.file) {
-      req.body.profilePictureUrl = await CloudinaryService.uploadSingle(
+      const newImageUrl = await CloudinaryService.uploadSingle(
         req.file as Express.Multer.File,
         MediaFolderEnum.USER_PROFILE_PICTURES,
         "image",
       );
+      req.url = newImageUrl;
     }
     next();
   }
