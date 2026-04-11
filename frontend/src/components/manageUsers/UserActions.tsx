@@ -4,23 +4,19 @@ import PublicProfileRedirectLink from "../publicProfile/PublicProfileRedirectLin
 import RedirectPasswordChange from "./RedirectPasswordChange";
 import UserActiveInactiveButton from "./UserActiveInactiveButton";
 import UserDeleteButton from "./UserDeleteButton";
+import { MoreOutlined } from "@ant-design/icons";
+import ChangeProfilePicture from "./ChangeProfilePicture";
+import { useState } from "react";
 
 type Props = {
   user: IUser;
 };
 
 const UserActions = ({ user }: Props) => {
+  const [open, setOpen] = useState(false);
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: "User Actions",
-      disabled: true,
-    },
-    {
-      type: "divider",
-    },
-    {
-      key: "2",
       label: (
         <PublicProfileRedirectLink
           buttonType="primary"
@@ -30,6 +26,12 @@ const UserActions = ({ user }: Props) => {
           buttonStyles="w-full"
           linkStyles="w-full"
         />
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <Button onClick={() => setOpen(true)}>Change Profile Picture</Button>
       ),
     },
     {
@@ -65,13 +67,20 @@ const UserActions = ({ user }: Props) => {
     },
   ];
   return (
-    <div className="flex items-center gap-2">
-      <Dropdown menu={{ items }}>
-        <Button className="w-full" type="primary">
-          Show
-        </Button>
-      </Dropdown>
-    </div>
+    <>
+      <div className="flex items-end justify-center gap-2">
+        <Dropdown menu={{ items }}>
+          <MoreOutlined className="border px-3 py-1 rounded-md border-blue-500 cursor-pointer" />
+        </Dropdown>
+      </div>
+      {open && (
+        <ChangeProfilePicture
+          isOpen={open}
+          setIsOpen={setOpen}
+          userId={user?.id || user?._id}
+        />
+      )}
+    </>
   );
 };
 
