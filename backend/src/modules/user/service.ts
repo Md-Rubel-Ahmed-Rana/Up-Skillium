@@ -186,6 +186,7 @@ class Service {
     }
   }
   async updateProfileImage(id: Types.ObjectId, imageUrl: string) {
+    console.log({ imageUrl });
     const user = await User.findById(id);
     if (user && user?.image) {
       await CloudinaryService.deleteSingle(user?.image, "image");
