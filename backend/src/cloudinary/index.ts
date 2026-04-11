@@ -3,7 +3,6 @@ import ApiError from "../shared/apiError";
 import { HttpStatusCode } from "../lib/httpStatus";
 import { Readable } from "stream";
 import config from "../config/envConfig";
-import { MediaFolder } from "../constants/mediaFolders";
 
 type FileType = "image" | "video" | "raw" | "auto";
 
@@ -48,24 +47,37 @@ class Service {
   }
 
   async deleteSingle(url: string, fileType: FileType = "raw") {
+    if (!this.isCloudinaryUrl(url)) {
+      console.info(
+        `[CloudinaryService] Skip delete: non-Cloudinary or invalid URL -> ${url}`,
+      );
+      return {
+        success: false,
+        skipped: true,
+        message: "URL is not a valid Cloudinary URL",
+      };
+    }
+
     const publicId = await this.extractPublicId(url);
 
     if (!publicId) {
       throw new ApiError(
         HttpStatusCode.BAD_REQUEST,
-        "Invalid URL provided, unable to extract public ID",
+        "Invalid Cloudinary URL provided, unable to extract public ID",
       );
     }
+
     return new Promise((resolve, reject) => {
       cloudinary.uploader.destroy(
         publicId,
         { resource_type: fileType },
         (error, result) => {
           if (error) {
-            console.log(error);
+            console.error("[CloudinaryService] Delete failed:", error);
             return reject(error);
           }
-          console.log(result);
+
+          console.log("[CloudinaryService] Delete result:", result);
           resolve(result);
         },
       );
@@ -100,6 +112,19 @@ class Service {
       return publicIdWithExtension.substring(0, lastDotIndex);
     } catch {
       return null;
+    }
+  }
+
+  private isCloudinaryUrl(url: string): boolean {
+    try {
+      const parsedUrl = new URL(url);
+
+      return (
+        parsedUrl.hostname === "res.cloudinary.com" ||
+        parsedUrl.hostname.endsWith(".cloudinary.com")
+      );
+    } catch {
+      return false;
     }
   }
 }
