@@ -2,6 +2,7 @@ import { bannerCourses } from "@/constants/courses";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CarouselCard from "./CarouselCard";
+import { makeUniqueId } from "@/utils/makeUniqueId";
 
 const CoursesCarousel = () => {
   return (
@@ -16,8 +17,8 @@ const CoursesCarousel = () => {
         640: { slidesPerView: 1 },
       }}
     >
-      {bannerCourses.map((course, index) => (
-        <SwiperSlide className="w-full" key={index}>
+      {bannerCourses.map((course) => (
+        <SwiperSlide className="w-full" key={makeUniqueId(course.title)}>
           <CarouselCard course={course} />
         </SwiperSlide>
       ))}
