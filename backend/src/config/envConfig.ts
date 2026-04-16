@@ -49,6 +49,9 @@ const config = {
     apiKey: process.env.CLOUDINARY_API_KEY as string,
     apiSecret: process.env.CLOUDINARY_API_SECRET as string,
   },
+  bugsnag: {
+    apiKey: process.env.BUGSNAG_API_KEY as string,
+  },
 };
 
 export default config;

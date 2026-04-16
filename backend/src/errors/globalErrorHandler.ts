@@ -3,6 +3,7 @@ import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import { IGenericErrorMessage } from "../interfaces/common";
 import ApiError from "../shared/apiError";
+import Bugsnag from "@bugsnag/js";
 
 class ErrorHandler {
   private statusCode: number | string = 500;
@@ -18,7 +19,7 @@ class ErrorHandler {
           path: issue?.path[issue.path.length - 1],
           message: issue?.message,
         };
-      }
+      },
     );
 
     this.statusCode = 400;
@@ -71,7 +72,7 @@ class ErrorHandler {
           path: el?.path,
           message: el?.message,
         };
-      }
+      },
     );
     this.statusCode = 400;
     this.errorMessages = errors;
@@ -82,8 +83,7 @@ class ErrorHandler {
     error,
     req: Request,
     res: Response,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    next: NextFunction
+    next: NextFunction,
   ) => {
     if (error?.name === "ValidationError") {
       this.handleValidationError(error);
@@ -96,6 +96,23 @@ class ErrorHandler {
     } else if (error instanceof Error) {
       this.handleGenericError(error);
     }
+
+    Bugsnag.notify(new Error(this.message), (event) => {
+      event.addMetadata("[Global Error handler]", {
+        statusCode: this.statusCode,
+        success: false,
+        message: this.message,
+        method: req.method,
+        traceId: req.traceId || null,
+        user: {
+          id: req.user?.id || "Unknown",
+          email: req.user?.email || "Unknown",
+        },
+        ipAddress: req.ip || "Unknown",
+        errorMessage: this.errorMessages,
+        stack: error?.stack || {},
+      });
+    });
 
     res.status(Number(this.statusCode)).json({
       success: false,
@@ -119,6 +136,7 @@ class ErrorHandler {
     }
 
     return {
+      statusCode: this.statusCode,
       success: false,
       message: this.message,
       errorMessage: this.errorMessages,

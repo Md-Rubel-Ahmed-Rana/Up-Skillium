@@ -25,6 +25,8 @@
     ]
   },
   "dependencies": {
+    "@bugsnag/js": "^8.9.0",
+    "@bugsnag/plugin-express": "^8.9.0",
     "bcrypt": "^5.1.1",
     "cloudinary": "^2.9.0",
     "cookie-parser": "^1.4.7",
@@ -46,6 +48,7 @@
     "stripe": "^17.3.1",
     "supertest": "^7.0.0",
     "ts-jest": "^29.1.2",
+    "uuid": "^13.0.0",
     "winston": "^3.13.0",
     "zod": "^3.23.5"
   },
@@ -63,7 +66,7 @@
     "@types/nodemailer": "^6.4.17",
     "@types/supertest": "^6.0.2",
     "@typescript-eslint/parser": "^8.58.1",
-    "eslint": "^10.2.0",
+    "eslint": "^9.39.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "lint-staged": "^16.4.0",
