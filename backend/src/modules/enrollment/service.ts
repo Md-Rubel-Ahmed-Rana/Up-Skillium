@@ -1,12 +1,13 @@
 import { Types } from "mongoose";
 import { EnrollmentAnalyticsParams, IEnrollment } from "./interface";
 import { Enrollment } from "./model";
-import { TrackOrderId } from "../../utils/trackOrderId";
 import { InvoiceService } from "../pdf-creator/invoice.service";
 import { MailService } from "../mail/mail.service";
 import { MyCourseService } from "../my-courses/service";
-import ApiError from "../../shared/apiError";
 import { CourseService } from "../course/service";
+import { TrackOrderId } from "@/utils/trackOrderId";
+import ApiError from "@/shared/apiError";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 class Service {
   async createEnrollment(data: IEnrollment): Promise<void> {
@@ -14,7 +15,7 @@ class Service {
     const lastEnrollment = await Enrollment.findOne().sort({ _id: -1 });
     const newOrderId = await TrackOrderId.generateOrderId(
       lastEnrollment as IEnrollment,
-      data.course.toString()
+      data.course.toString(),
     );
 
     await Enrollment.create({
@@ -27,7 +28,7 @@ class Service {
     for (const enrollment of enrollments) {
       const newOrderId = await TrackOrderId.generateOrderId(
         lastEnrollment as IEnrollment,
-        enrollment.course.toString()
+        enrollment.course.toString(),
       );
       await Enrollment.create({
         ...enrollment,
@@ -37,7 +38,7 @@ class Service {
   }
   async isExist(
     userId: Types.ObjectId,
-    courseId: Types.ObjectId
+    courseId: Types.ObjectId,
   ): Promise<void> {
     const isExist = await Enrollment.findOne({
       user: userId,
@@ -46,7 +47,10 @@ class Service {
     });
 
     if (isExist) {
-      throw new ApiError(400, "You already have enrolled to this course!");
+      throw new ApiError(
+        HttpStatusCode.CONFLICT,
+        "You already have enrolled to this course!",
+      );
     }
   }
   async getEnrollmentById(id: Types.ObjectId): Promise<IEnrollment | null> {
@@ -56,7 +60,7 @@ class Service {
   }
 
   async getLastEnrollmentByCourseId(
-    courseId: Types.ObjectId
+    courseId: Types.ObjectId,
   ): Promise<IEnrollment | null> {
     const lastEnrolledCourse = await Enrollment.findOne({
       course: courseId,
@@ -67,13 +71,13 @@ class Service {
 
   async updateEnrollment(
     id: string,
-    data: Partial<IEnrollment>
+    data: Partial<IEnrollment>,
   ): Promise<void> {
     await Enrollment.findByIdAndUpdate(id, data);
   }
 
   async getSuccessEnrollmentForStudent(
-    userId: Types.ObjectId
+    userId: Types.ObjectId,
   ): Promise<IEnrollment[]> {
     const data = await Enrollment.find({ user: userId, status: "success" })
       .populate("user", "-password")
@@ -82,7 +86,7 @@ class Service {
   }
 
   async getOrderEnrollmentHistoryForStudent(
-    userId: Types.ObjectId
+    userId: Types.ObjectId,
   ): Promise<IEnrollment[]> {
     const data = await Enrollment.find({ user: userId })
       .populate("user", "-password")
@@ -116,7 +120,7 @@ class Service {
 
       await Enrollment.updateOne(
         { paymentSessionId: sessionId },
-        { $set: { status: "success", invoice: invoiceUrl } }
+        { $set: { status: "success", invoice: invoiceUrl } },
       );
 
       await MyCourseService.addNewCourse({
@@ -126,14 +130,14 @@ class Service {
 
       await CourseService.addStudentToCourse(
         enrollment?.course?.id,
-        enrollment?.user?._id
+        enrollment?.user?._id,
       );
 
       await MailService.enrollmentConfirmationMail(
         enrollment.user.email,
         enrollment.user.name,
         enrollment.course.title,
-        invoiceUrl
+        invoiceUrl,
       );
     }
   }
@@ -175,14 +179,14 @@ class Service {
 
           await CourseService.addStudentToCourse(
             enrollment?.course?.id,
-            enrollment?.user?._id
+            enrollment?.user?._id,
           );
 
           await MailService.enrollmentConfirmationMail(
             enrollment.user.email,
             enrollment.user.name,
             enrollment.course.title,
-            invoiceUrl
+            invoiceUrl,
           );
         } catch (error) {
           console.error(`Error processing enrollment ${enrollment._id}`, error);
@@ -195,7 +199,7 @@ class Service {
       (enrollment: any) => ({
         user: enrollment.user?.id || enrollment.user?._id,
         course: enrollment.course?.id || enrollment.course?._id,
-      })
+      }),
     );
     await MyCourseService.addMultipleCourses(payload);
   }
@@ -221,7 +225,7 @@ class Service {
   async searchEnrollments(
     searchQuery: string,
     page: number = 1,
-    limit: number = 10
+    limit: number = 10,
   ): Promise<IEnrollment[]> {
     const skip = (page - 1) * limit;
 

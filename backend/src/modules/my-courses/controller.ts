@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { MyCourseService } from "./service";
 import { Types } from "mongoose";
 import { IAnalyticFilters } from "./interface";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   getMyCourses = this.catchAsync(async (req: Request, res: Response) => {
@@ -63,7 +63,7 @@ class Controller extends RootController {
         message: "Student course progress analytics retrieved successfully",
         data: summary,
       });
-    }
+    },
   );
 }
 

@@ -1,5 +1,5 @@
+import { userRoleTypes } from "@/constants/userRoles";
 import { Types } from "mongoose";
-import { userRoleTypes } from "../../constants/userRoles";
 
 export type IRole = {
   name: userRoleTypes;

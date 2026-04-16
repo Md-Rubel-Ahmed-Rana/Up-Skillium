@@ -1,6 +1,6 @@
 import { Schema, Document, model } from "mongoose";
 import { IEnrollment } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const EnrollmentSchema = new Schema<IEnrollment & Document>(
   {
@@ -43,10 +43,10 @@ const EnrollmentSchema = new Schema<IEnrollment & Document>(
       default: "failed",
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const Enrollment = model<IEnrollment & Document>(
   "Enrollment",
-  EnrollmentSchema
+  EnrollmentSchema,
 );

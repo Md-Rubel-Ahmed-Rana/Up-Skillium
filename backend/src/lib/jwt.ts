@@ -1,11 +1,11 @@
+import ApiError from "@/shared/apiError";
 import { NextFunction, Request, Response } from "express";
 import jwt, { TokenExpiredError } from "jsonwebtoken";
 import { Types } from "mongoose";
-import config from "../config/envConfig";
-import { cookieManager } from "../shared/cookies";
-import { UserService } from "../modules/user/service";
-import ApiError from "../shared/apiError";
 import { HttpStatusCode } from "./httpStatus";
+import config from "@/config/envConfig";
+import { cookieManager } from "@/shared/cookies";
+import { UserService } from "@/modules/user/service";
 
 class JWT {
   private readonly unauthorizedMessage =

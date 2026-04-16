@@ -1,8 +1,8 @@
-import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { UserService } from "./service";
 import { Types } from "mongoose";
 import { UserAnalyticsParams } from "./interface";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   findUsers = this.catchAsync(async (req: Request, res: Response) => {
@@ -100,7 +100,7 @@ class Controller extends RootController {
         message: "Emergency contact updated successfully",
         data: null,
       });
-    }
+    },
   );
   activeOrInactiveAccount = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -113,7 +113,7 @@ class Controller extends RootController {
         message: `User account has been ${status} successfully!`,
         data: null,
       });
-    }
+    },
   );
   deleteUserAccount = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
@@ -135,7 +135,7 @@ class Controller extends RootController {
         message: `Users analytics summary retrieved successfully!`,
         data,
       });
-    }
+    },
   );
   getAllStudent = this.catchAsync(async (req: Request, res: Response) => {
     const data = await UserService.getAllStudent();

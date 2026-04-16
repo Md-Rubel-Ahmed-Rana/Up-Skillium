@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
@@ -17,7 +17,7 @@ router.post("/forget-password", AuthController.forgetPassword);
 router.get(
   "/verify-reset-password-token",
   JwtInstance.verifyResetPasswordToken,
-  AuthController.verifyResetPasswordToken
+  AuthController.verifyResetPasswordToken,
 );
 
 export const AuthRoutes = router;

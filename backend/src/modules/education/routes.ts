@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { EducationController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
@@ -13,19 +13,19 @@ router.get("/:id", JwtInstance.verifyToken, EducationController.getEducation);
 router.get(
   "/by-user/:userId",
   JwtInstance.verifyToken,
-  EducationController.getEducationsByUserId
+  EducationController.getEducationsByUserId,
 );
 
 router.patch(
   "/:id",
   JwtInstance.verifyToken,
-  EducationController.updateEducation
+  EducationController.updateEducation,
 );
 
 router.delete(
   "/:id",
   JwtInstance.verifyToken,
-  EducationController.deleteEducation
+  EducationController.deleteEducation,
 );
 
 export const EducationRoutes = router;

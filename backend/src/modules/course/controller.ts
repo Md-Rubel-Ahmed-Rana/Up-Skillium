@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { CourseService } from "./service";
 import { Types } from "mongoose";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   createCourse = this.catchAsync(async (req: Request, res: Response) => {
@@ -26,7 +26,7 @@ class Controller extends RootController {
       searchText,
       page,
       limit,
-      filters
+      filters,
     );
 
     this.apiResponse(res, {
@@ -50,7 +50,7 @@ class Controller extends RootController {
         searchText,
         page,
         limit,
-        filters
+        filters,
       );
       this.apiResponse(res, {
         statusCode: 200,
@@ -58,7 +58,7 @@ class Controller extends RootController {
         message: "Published courses fetched successfully",
         data: data,
       });
-    }
+    },
   );
   getSingleCourse = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
@@ -80,7 +80,7 @@ class Controller extends RootController {
         message: "Courses fetched successfully",
         data: course,
       });
-    }
+    },
   );
   updateCourse = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
@@ -122,7 +122,7 @@ class Controller extends RootController {
         message: "Course introductory video uploaded successfully",
         data: null,
       });
-    }
+    },
   );
   updateCourseBasicInfo = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -134,7 +134,7 @@ class Controller extends RootController {
         message: "Course  basic info updated successfully",
         data: null,
       });
-    }
+    },
   );
   updateCoursePrice = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
@@ -156,7 +156,7 @@ class Controller extends RootController {
         message: "Course tags and technologies updated successfully",
         data: null,
       });
-    }
+    },
   );
   updateCourseInstructor = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -169,21 +169,20 @@ class Controller extends RootController {
         message: "Course instructor updated successfully",
         data: null,
       });
-    }
+    },
   );
   getMatchedRelatedCourses = this.catchAsync(
     async (req: Request, res: Response) => {
       const relatableText = req.query?.relatableText as string;
-      const courses = await CourseService.getMatchedRelatedCourses(
-        relatableText
-      );
+      const courses =
+        await CourseService.getMatchedRelatedCourses(relatableText);
       this.apiResponse(res, {
         statusCode: 200,
         success: true,
         message: "Related courses retrieved successfully",
         data: courses,
       });
-    }
+    },
   );
   getCoursesByCategory = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -195,7 +194,7 @@ class Controller extends RootController {
         message: "Courses retrieved by category successfully",
         data: courses,
       });
-    }
+    },
   );
   getStudentsFromCourse = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -207,22 +206,21 @@ class Controller extends RootController {
         message: "Students retrieved from a course successfully",
         data: students,
       });
-    }
+    },
   );
   getMyStudentsByInstructor = this.catchAsync(
     async (req: Request, res: Response) => {
       const instructorId = req.params
         ?.instructorId as unknown as Types.ObjectId;
-      const students = await CourseService.getMyStudentsByInstructor(
-        instructorId
-      );
+      const students =
+        await CourseService.getMyStudentsByInstructor(instructorId);
       this.apiResponse(res, {
         statusCode: 200,
         success: true,
         message: "My students retrieved successfully",
         data: students,
       });
-    }
+    },
   );
 }
 

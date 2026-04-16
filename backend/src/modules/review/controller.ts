@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { ReviewService } from "./service";
 import { Types } from "mongoose";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   addReview = this.catchAsync(async (req: Request, res: Response) => {
@@ -40,7 +40,7 @@ class Controller extends RootController {
         message: "Instructors reviews retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   getSingleReview = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
@@ -60,7 +60,7 @@ class Controller extends RootController {
       const data = await ReviewService.getAllReviewByReviewTo(
         reviewToId,
         page,
-        limit
+        limit,
       );
       this.apiResponse(res, {
         statusCode: 200,
@@ -68,7 +68,7 @@ class Controller extends RootController {
         message: "Reviews retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   updateReview = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;

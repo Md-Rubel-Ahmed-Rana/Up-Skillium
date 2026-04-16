@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ReviewController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
@@ -13,14 +13,14 @@ router.get("/course", ReviewController.getAllCourseReviews);
 router.get(
   "/instructor",
   JwtInstance.verifyToken,
-  ReviewController.getAllInstructorReviews
+  ReviewController.getAllInstructorReviews,
 );
 
 router.get("/:id", ReviewController.getSingleReview);
 
 router.get(
   "/by-review-to/:reviewToId",
-  ReviewController.getAllReviewByReviewTo
+  ReviewController.getAllReviewByReviewTo,
 );
 
 router.patch("/:id", JwtInstance.verifyToken, ReviewController.updateReview);

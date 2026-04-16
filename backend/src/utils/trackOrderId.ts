@@ -1,6 +1,6 @@
+import { IEnrollment } from "@/modules/enrollment/interface";
+import { EnrollmentService } from "@/modules/enrollment/service";
 import { Types } from "mongoose";
-import { IEnrollment } from "../modules/enrollment/interface";
-import { EnrollmentService } from "../modules/enrollment/service";
 
 class OrderId {
   // US for platform name Up Skillium, OR for Order,
@@ -9,7 +9,7 @@ class OrderId {
 
   public async generateOrderId(
     lastOrder: IEnrollment,
-    newCourseId: string
+    newCourseId: string,
   ): Promise<string> {
     const lastOrderId = lastOrder ? lastOrder?.orderId : OrderId.defaultOrderId;
     const parts = lastOrderId
@@ -22,7 +22,7 @@ class OrderId {
       .padStart(6, "0");
     const newCourseOrderId = await this.generateCourseOrderId(
       lastOrder,
-      newCourseId
+      newCourseId,
     );
 
     const incrementedId = `US-OR-${newGlobalOrderId}-${newCourseOrderId}`;
@@ -31,7 +31,7 @@ class OrderId {
 
   private async generateCourseOrderId(
     lastOrder: IEnrollment,
-    newCourseId: string
+    newCourseId: string,
   ): Promise<string> {
     const isSameCourse = lastOrder?.course.toString() === newCourseId;
     if (isSameCourse) {
@@ -39,7 +39,7 @@ class OrderId {
     } else {
       const lastEnrolledCourse =
         await EnrollmentService.getLastEnrollmentByCourseId(
-          newCourseId as unknown as Types.ObjectId
+          newCourseId as unknown as Types.ObjectId,
         );
       const lastOrderId = lastEnrolledCourse?.orderId;
       if (!lastOrderId) {
@@ -51,7 +51,7 @@ class OrderId {
   }
 
   private async generateNewCourseOrderId(
-    lastOrder: IEnrollment
+    lastOrder: IEnrollment,
   ): Promise<string> {
     const lastOrderId = lastOrder?.orderId as string;
     const parts = lastOrderId.split("-");

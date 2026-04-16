@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { UserController } from "./controller";
-import upload from "../../config/multer";
-import { JwtInstance } from "../../lib/jwt";
-import { UserUploadMiddleware } from "../../middlewares/user.upload";
+import { JwtInstance } from "@/lib/jwt";
+import upload from "@/config/multer";
+import { UserUploadMiddleware } from "@/middlewares/user.upload";
 
 const router = Router();
 

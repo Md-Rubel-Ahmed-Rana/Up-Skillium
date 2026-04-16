@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IModule } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const moduleSchema = new Schema<IModule>(
   {
@@ -21,7 +21,7 @@ const moduleSchema = new Schema<IModule>(
     },
     lessons: [{ type: Schema.Types.ObjectId, ref: "Lesson", default: [] }],
   },
-  schemaOption
+  schemaOption,
 );
 
 export const Module = model("Module", moduleSchema);

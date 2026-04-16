@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { QuizController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
@@ -11,7 +11,7 @@ router.get("/", JwtInstance.verifyToken, QuizController.getAllQuizzes);
 router.get(
   "/module/:moduleId",
   JwtInstance.verifyToken,
-  QuizController.getQuizzesByModuleId
+  QuizController.getQuizzesByModuleId,
 );
 
 router.get("/:id", JwtInstance.verifyToken, QuizController.getSingleQuiz);

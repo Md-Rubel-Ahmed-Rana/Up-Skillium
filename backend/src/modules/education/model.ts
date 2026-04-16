@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IEducation } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const educationSchema = new Schema<IEducation>(
   {
@@ -35,7 +35,7 @@ const educationSchema = new Schema<IEducation>(
       type: String,
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const Education = model<IEducation>("Education", educationSchema);

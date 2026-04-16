@@ -1,9 +1,9 @@
 import { PDFDocument, PDFPage, RGB, rgb } from "pdf-lib";
-import config from "../../config/envConfig";
 import fs from "fs";
 import path from "path";
 import { CourseInfo, CustomerInfo, IPdfInvoice } from "./interface";
-import { CloudinaryService } from "../../cloudinary";
+import config from "@/config/envConfig";
+import { CloudinaryService } from "@/config/cloudinary";
 
 class InvoiceCreator {
   public async createInvoice(invoiceData: IPdfInvoice): Promise<string> {

@@ -124,7 +124,7 @@ class Service {
   }
 
   async getUpcomingLiveClassesByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<ILiveClass[]> {
     const classes = await LiveClass.find({
       instructor: instructorId,
@@ -139,7 +139,7 @@ class Service {
   }
 
   async getCompletedLiveClassesByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<ILiveClass[]> {
     const classes = await LiveClass.find({
       instructor: instructorId,
@@ -154,7 +154,7 @@ class Service {
   }
 
   async getLiveClassesByStudent(
-    studentId: Types.ObjectId
+    studentId: Types.ObjectId,
   ): Promise<ILiveClass[]> {
     return await LiveClass.find({ students: studentId })
       .sort({ createdAt: -1 })
@@ -174,7 +174,7 @@ class Service {
 
   async updateClass(
     id: Types.ObjectId,
-    updatedData: Partial<ILiveClass>
+    updatedData: Partial<ILiveClass>,
   ): Promise<void> {
     await LiveClass.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
@@ -185,7 +185,7 @@ class Service {
 
   async updateStudentsAttendees(
     liveClassId: Types.ObjectId,
-    studentsIds: Types.ObjectId[]
+    studentsIds: Types.ObjectId[],
   ): Promise<void> {
     await LiveClass.findByIdAndUpdate(liveClassId, {
       $set: { students: studentsIds },

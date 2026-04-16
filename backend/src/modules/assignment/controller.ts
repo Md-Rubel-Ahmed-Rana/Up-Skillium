@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { AssignmentService } from "./service";
 import { Types } from "mongoose";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   getAllAssignments = this.catchAsync(async (req: Request, res: Response) => {

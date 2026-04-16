@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { CourseOutlineController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
 router.post(
   "/create",
   JwtInstance.verifyToken,
-  CourseOutlineController.createOutline
+  CourseOutlineController.createOutline,
 );
 
 router.get("/", CourseOutlineController.getOutlines);
@@ -19,25 +19,25 @@ router.get("/by-course/:courseId", CourseOutlineController.getOutlineByCourse);
 router.patch(
   "/update-module-serial/:courseId",
   JwtInstance.verifyToken,
-  CourseOutlineController.updateModuleSerialNumberFromDragDrop
+  CourseOutlineController.updateModuleSerialNumberFromDragDrop,
 );
 
 router.patch(
   "/update-module-name/:courseId/:moduleId",
   JwtInstance.verifyToken,
-  CourseOutlineController.updateModuleName
+  CourseOutlineController.updateModuleName,
 );
 
 router.delete(
   "/delete-module/:courseId/:moduleId",
   JwtInstance.verifyToken,
-  CourseOutlineController.deleteModule
+  CourseOutlineController.deleteModule,
 );
 
 router.patch(
   "/:id",
   JwtInstance.verifyToken,
-  CourseOutlineController.updateOutlineModules
+  CourseOutlineController.updateOutlineModules,
 );
 
 router.delete("/:id", CourseOutlineController.deleteOutline);
@@ -45,7 +45,7 @@ router.delete("/:id", CourseOutlineController.deleteOutline);
 router.get(
   "/by-instructor/outlines/:instructorId",
   JwtInstance.verifyToken,
-  CourseOutlineController.getOutlinesByInstructor
+  CourseOutlineController.getOutlinesByInstructor,
 );
 
 export const CourseOutlineRoutes = router;

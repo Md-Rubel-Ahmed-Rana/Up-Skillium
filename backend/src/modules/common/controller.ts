@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { CommonService } from "./service";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   getTotalDocumentCount = this.catchAsync(
@@ -12,7 +12,7 @@ class Controller extends RootController {
         message: "Total document count retrieved successfully",
         data,
       });
-    }
+    },
   );
 }
 

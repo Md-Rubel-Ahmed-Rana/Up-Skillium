@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
-import schemaOption from "../../utils/schemaOption";
 import { IUser } from "./interface";
+import schemaOption from "@/utils/schemaOption";
 
 const addressSchema = new Schema({
   street: { type: String },
@@ -70,7 +70,7 @@ export const userSchema = new Schema<IUser>(
       type: emergencyContactSchema,
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const User = model("User", userSchema);

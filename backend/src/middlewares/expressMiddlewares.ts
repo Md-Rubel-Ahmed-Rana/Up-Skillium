@@ -7,9 +7,9 @@ import cookieParser from "cookie-parser";
 import { corsConfig } from "../config/cors";
 import Bugsnag from "@bugsnag/js";
 import BugsnagPluginExpress from "@bugsnag/plugin-express";
-import { HttpStatusCode } from "../lib/httpStatus";
-import config from "../config/envConfig";
 import { traceMiddleware } from "./trace.middleware";
+import config from "@/config/envConfig";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 export const expressMiddlewares = (app: Application) => {
   Bugsnag.start({

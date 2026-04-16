@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 import { ILesson } from "./interface";
-import schemaOption from "../../utils/schemaOption";
 import { Module } from "../module/model";
+import schemaOption from "@/utils/schemaOption";
 
 export const lessonSchema = new Schema<ILesson>(
   {
@@ -33,7 +33,7 @@ export const lessonSchema = new Schema<ILesson>(
     },
     quizQuestions: [{ type: Schema.Types.ObjectId, ref: "Quiz", default: [] }],
   },
-  schemaOption
+  schemaOption,
 );
 
 lessonSchema.post("save", async function (doc) {

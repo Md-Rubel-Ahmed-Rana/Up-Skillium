@@ -1,8 +1,8 @@
 import { v2 as cloudinary } from "cloudinary";
-import ApiError from "../shared/apiError";
-import { HttpStatusCode } from "../lib/httpStatus";
 import { Readable } from "stream";
-import config from "../config/envConfig";
+import config from "./envConfig";
+import ApiError from "@/shared/apiError";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 type FileType = "image" | "video" | "raw" | "auto";
 

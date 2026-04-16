@@ -1,6 +1,6 @@
 import { model, Schema, Types } from "mongoose";
 import { IQuizSubmission, IModifiedAnswer } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const modifiedAnswerSchema = new Schema<IModifiedAnswer>(
   {
@@ -21,7 +21,7 @@ const modifiedAnswerSchema = new Schema<IModifiedAnswer>(
       required: true,
     },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const quizSubmissionSchema = new Schema<IQuizSubmission>(
@@ -53,10 +53,10 @@ const quizSubmissionSchema = new Schema<IQuizSubmission>(
       required: true,
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const QuizSubmission = model<IQuizSubmission>(
   "QuizSubmission",
-  quizSubmissionSchema
+  quizSubmissionSchema,
 );

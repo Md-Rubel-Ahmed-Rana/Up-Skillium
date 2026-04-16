@@ -8,13 +8,14 @@ import {
   IUserBasicInfo,
   UserAnalyticsParams,
 } from "./interface";
-import { BcryptInstance } from "../../lib/bcrypt";
-import ApiError from "../../shared/apiError";
 import { RoleService } from "../role/service";
-import generateStudentId from "../../utils/generateStudentId";
-import generateAdminId from "../../utils/generateAdminId";
-import generateTeacherId from "../../utils/generateTeacherId";
-import { CloudinaryService } from "../../cloudinary";
+import ApiError from "@/shared/apiError";
+import { HttpStatusCode } from "@/lib/httpStatus";
+import { BcryptInstance } from "@/lib/bcrypt";
+import generateStudentId from "@/utils/generateStudentId";
+import generateAdminId from "@/utils/generateAdminId";
+import generateTeacherId from "@/utils/generateTeacherId";
+import { CloudinaryService } from "@/config/cloudinary";
 
 class Service {
   async createUser(user: ICreateUser): Promise<void> {
@@ -22,7 +23,7 @@ class Service {
 
     if (existingUser) {
       throw new ApiError(
-        409,
+        HttpStatusCode.CONFLICT,
         "Email already exists. Please use a different email.",
       );
     }
@@ -186,7 +187,6 @@ class Service {
     }
   }
   async updateProfileImage(id: Types.ObjectId, imageUrl: string) {
-    console.log({ imageUrl });
     const user = await User.findById(id);
     if (user && user?.image) {
       await CloudinaryService.deleteSingle(user?.image, "image");

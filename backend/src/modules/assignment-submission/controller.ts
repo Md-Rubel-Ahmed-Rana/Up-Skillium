@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
-import RootController from "../../shared/rootController";
 import { AssignmentSubmissionService } from "./service";
 import { Request, Response } from "express";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   submit = this.catchAsync(async (req: Request, res: Response) => {
@@ -41,7 +41,7 @@ class Controller extends RootController {
         message: "Pending submissions retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   getAllReviewedSubmissions = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -53,7 +53,7 @@ class Controller extends RootController {
         message: "Reviewed submissions retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   getAssignmentSubmissionByLessonId = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -62,7 +62,7 @@ class Controller extends RootController {
       const data =
         await AssignmentSubmissionService.getAssignmentSubmissionByLessonId(
           userId,
-          lessonId
+          lessonId,
         );
       this.apiResponse(res, {
         statusCode: 200,
@@ -70,7 +70,7 @@ class Controller extends RootController {
         message: "Assignment submission retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   updateAssignmentReview = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -81,7 +81,7 @@ class Controller extends RootController {
         message: "Assignment reviewed retrieved successfully",
         data: null,
       });
-    }
+    },
   );
   updateSubmission = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
@@ -98,7 +98,7 @@ class Controller extends RootController {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
       const data =
         await AssignmentSubmissionService.getPendingAssignmentByInstructor(
-          instructorId
+          instructorId,
         );
       this.apiResponse(res, {
         statusCode: 200,
@@ -106,14 +106,14 @@ class Controller extends RootController {
         message: "Pending assignments retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   getCompletedAssignmentByInstructor = this.catchAsync(
     async (req: Request, res: Response) => {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
       const data =
         await AssignmentSubmissionService.getCompletedAssignmentByInstructor(
-          instructorId
+          instructorId,
         );
       this.apiResponse(res, {
         statusCode: 200,
@@ -121,7 +121,7 @@ class Controller extends RootController {
         message: "Completed assignments retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   getAssignmentSubmissionAnalyticsSummary = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -133,7 +133,7 @@ class Controller extends RootController {
         message: "Assignments submission analytics retrieved successfully",
         data: data,
       });
-    }
+    },
   );
 }
 

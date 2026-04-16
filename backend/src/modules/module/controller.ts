@@ -1,7 +1,7 @@
 import { Types } from "mongoose";
-import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { ModuleService } from "./service";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   createNewModule = this.catchAsync(async (req: Request, res: Response) => {
@@ -22,7 +22,7 @@ class Controller extends RootController {
       searchText,
       page,
       limit,
-      courseId
+      courseId,
     );
     this.apiResponse(res, {
       statusCode: 200,
@@ -61,7 +61,7 @@ class Controller extends RootController {
         message: "Classes fetched successfully",
         data: data,
       });
-    }
+    },
   );
   updateModule = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
@@ -93,7 +93,7 @@ class Controller extends RootController {
         message: "Modules retrieved successfully",
         data: data,
       });
-    }
+    },
   );
 }
 

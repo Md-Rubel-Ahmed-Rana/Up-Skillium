@@ -1,73 +1,73 @@
 import { Router } from "express";
 import { AssignmentSubmissionController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
 router.post(
   "/submit",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.submit
+  AssignmentSubmissionController.submit,
 );
 
 router.get(
   "/",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.getAllSubmission
+  AssignmentSubmissionController.getAllSubmission,
 );
 
 router.get(
   "/analytics-summary",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.getAssignmentSubmissionAnalyticsSummary
+  AssignmentSubmissionController.getAssignmentSubmissionAnalyticsSummary,
 );
 
 router.get(
   "/single/:id",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.getSingleSubmission
+  AssignmentSubmissionController.getSingleSubmission,
 );
 
 router.get(
   "/pending",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.getAllPendingSubmissions
+  AssignmentSubmissionController.getAllPendingSubmissions,
 );
 
 router.get(
   "/reviewed",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.getAllReviewedSubmissions
+  AssignmentSubmissionController.getAllReviewedSubmissions,
 );
 
 router.get(
   "/by-lesson/:userId/:lessonId",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.getAssignmentSubmissionByLessonId
+  AssignmentSubmissionController.getAssignmentSubmissionByLessonId,
 );
 
 router.patch(
   "/review",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.updateAssignmentReview
+  AssignmentSubmissionController.updateAssignmentReview,
 );
 
 router.patch(
   "/:id",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.updateSubmission
+  AssignmentSubmissionController.updateSubmission,
 );
 
 router.get(
   "/by-instructor/pending/:instructorId",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.getPendingAssignmentByInstructor
+  AssignmentSubmissionController.getPendingAssignmentByInstructor,
 );
 
 router.get(
   "/by-instructor/completed/:instructorId",
   JwtInstance.verifyToken,
-  AssignmentSubmissionController.getCompletedAssignmentByInstructor
+  AssignmentSubmissionController.getCompletedAssignmentByInstructor,
 );
 
 export const AssignmentSubmissionRoutes = router;

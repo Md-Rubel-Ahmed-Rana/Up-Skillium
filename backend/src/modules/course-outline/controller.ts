@@ -1,7 +1,7 @@
-import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { CourseOutlineService } from "./service";
 import { Types } from "mongoose";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   createOutline = this.catchAsync(async (req: Request, res: Response) => {
@@ -52,7 +52,7 @@ class Controller extends RootController {
         message: "Course outline fetched successfully",
         data: null,
       });
-    }
+    },
   );
   deleteOutline = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
@@ -69,7 +69,7 @@ class Controller extends RootController {
       const courseId = req.params.courseId as unknown as Types.ObjectId;
       await CourseOutlineService.updateModuleSerialNumberFromDragDrop(
         courseId,
-        req.body
+        req.body,
       );
       this.apiResponse(res, {
         statusCode: 200,
@@ -77,7 +77,7 @@ class Controller extends RootController {
         message: "Modules serial updated successfully",
         data: null,
       });
-    }
+    },
   );
   updateModuleName = this.catchAsync(async (req: Request, res: Response) => {
     const courseId = req.params.courseId as unknown as Types.ObjectId;
@@ -85,7 +85,7 @@ class Controller extends RootController {
     await CourseOutlineService.updateModuleName(
       courseId,
       moduleId,
-      req.body.name
+      req.body.name,
     );
     this.apiResponse(res, {
       statusCode: 200,
@@ -108,16 +108,15 @@ class Controller extends RootController {
   getOutlinesByInstructor = this.catchAsync(
     async (req: Request, res: Response) => {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
-      const data = await CourseOutlineService.getOutlinesByInstructor(
-        instructorId
-      );
+      const data =
+        await CourseOutlineService.getOutlinesByInstructor(instructorId);
       this.apiResponse(res, {
         statusCode: 200,
         success: true,
         message: "Outlines retrieved successfully",
         data: data,
       });
-    }
+    },
   );
 }
 

@@ -25,7 +25,7 @@ class Service {
   }
 
   async getSingleSubmission(
-    id: Types.ObjectId
+    id: Types.ObjectId,
   ): Promise<IAssignmentSubmission | null> {
     return await AssignmentSubmission.findById(id).populate([
       {
@@ -68,7 +68,7 @@ class Service {
   }
   async getAssignmentSubmissionByLessonId(
     userId: Types.ObjectId,
-    lessonId: Types.ObjectId
+    lessonId: Types.ObjectId,
   ) {
     return await AssignmentSubmission.findOne({
       user: userId,
@@ -82,7 +82,7 @@ class Service {
         lesson: data.lesson,
       },
       { $set: { ...data } },
-      { new: true }
+      { new: true },
     ).populate(["user", "lesson"]);
 
     // Send notification email to student
@@ -99,14 +99,14 @@ class Service {
   }
   async updateSubmission(
     id: Types.ObjectId,
-    updatedData: IAssignmentSubmission
+    updatedData: IAssignmentSubmission,
   ) {
     await AssignmentSubmission.findByIdAndUpdate(id, {
       $set: { ...updatedData },
     });
   }
   async getPendingAssignmentByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<IAssignmentSubmission[]> {
     const modules = await ModuleService.getAllModulesByInstructor(instructorId);
     const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];
@@ -117,7 +117,7 @@ class Service {
     return assignments;
   }
   async getCompletedAssignmentByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<IAssignmentSubmission[]> {
     const modules = await ModuleService.getAllModulesByInstructor(instructorId);
     const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];

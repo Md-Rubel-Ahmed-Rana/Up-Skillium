@@ -7,7 +7,7 @@ class Service {
   async submitQuiz(
     userId: Types.ObjectId,
     lessonId: Types.ObjectId,
-    data: IQuizSubmitData[]
+    data: IQuizSubmitData[],
   ) {
     const result = await QuizService.checkAndCalculateQuizAnswers(data);
     const newData: IQuizSubmission = {
@@ -18,7 +18,7 @@ class Service {
     await QuizSubmission.create(newData);
   }
   async getSingleQuizSubmission(
-    id: Types.ObjectId
+    id: Types.ObjectId,
   ): Promise<IQuizSubmission | null> {
     return await QuizSubmission.findById(id).populate([
       {
@@ -34,7 +34,7 @@ class Service {
   }
   async getSubmittedQuizResultByLessonId(
     userId: Types.ObjectId,
-    lessonId: Types.ObjectId
+    lessonId: Types.ObjectId,
   ): Promise<IQuizSubmission | null> {
     return QuizSubmission.findOne({ user: userId, lesson: lessonId }).populate([
       {

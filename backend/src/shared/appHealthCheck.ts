@@ -1,5 +1,5 @@
+import { HttpStatusCode } from "@/lib/httpStatus";
 import { Application, Request, Response } from "express";
-import { HttpStatusCode } from "../lib/httpStatus";
 
 export const healthCheckRoute = (app: Application) => {
   app.get("/", (req: Request, res: Response) => {

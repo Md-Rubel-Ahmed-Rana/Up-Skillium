@@ -1,55 +1,55 @@
 import { Router } from "express";
 import { CertificateController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
 router.post(
   "/create",
   JwtInstance.verifyToken,
-  CertificateController.createCertificate
+  CertificateController.createCertificate,
 );
 
 router.get(
   "/",
   JwtInstance.verifyToken,
-  CertificateController.getAllCertificate
+  CertificateController.getAllCertificate,
 );
 
 router.get(
   "/analytics-summary",
   JwtInstance.verifyToken,
-  CertificateController.getCertificateAnalyticsSummary
+  CertificateController.getCertificateAnalyticsSummary,
 );
 
 router.get(
   "/:id",
   JwtInstance.verifyToken,
-  CertificateController.getSingleCertificate
+  CertificateController.getSingleCertificate,
 );
 
 router.get(
   "/my-certificates/:userId",
   JwtInstance.verifyToken,
-  CertificateController.getCertificatesByUserId
+  CertificateController.getCertificatesByUserId,
 );
 
 router.get(
   "/instructor/:instructorId",
   JwtInstance.verifyToken,
-  CertificateController.getCertificatesByInstructor
+  CertificateController.getCertificatesByInstructor,
 );
 
 router.patch(
   "/:id",
   JwtInstance.verifyToken,
-  CertificateController.updateCertificate
+  CertificateController.updateCertificate,
 );
 
 router.delete(
   "/:id",
   JwtInstance.verifyToken,
-  CertificateController.deleteCertificate
+  CertificateController.deleteCertificate,
 );
 
 export const CertificateRoutes = router;

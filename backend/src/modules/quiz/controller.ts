@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { QuizService } from "./service";
 import { Types } from "mongoose";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   createQuiz = this.catchAsync(async (req: Request, res: Response) => {
@@ -20,7 +20,7 @@ class Controller extends RootController {
       search as string,
       moduleId ? new Types.ObjectId(moduleId as string) : undefined,
       Number(page),
-      Number(limit)
+      Number(limit),
     );
     this.apiResponse(res, {
       statusCode: 200,
@@ -34,7 +34,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const { moduleId } = req.params;
       const quizzes = await QuizService.getQuizzesByModuleId(
-        new Types.ObjectId(moduleId)
+        new Types.ObjectId(moduleId),
       );
       this.apiResponse(res, {
         statusCode: 200,
@@ -42,7 +42,7 @@ class Controller extends RootController {
         message: "Quizzes fetched successfully by module ID",
         data: quizzes,
       });
-    }
+    },
   );
 
   getSingleQuiz = this.catchAsync(async (req: Request, res: Response) => {

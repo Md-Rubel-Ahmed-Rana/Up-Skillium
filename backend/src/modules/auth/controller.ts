@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { AuthService } from "./service";
-import { cookieManager } from "../../shared/cookies";
+import RootController from "@/shared/rootController";
+import { cookieManager } from "@/shared/cookies";
 
 class Controller extends RootController {
   auth = this.catchAsync(async (req: Request, res: Response) => {
@@ -29,7 +29,7 @@ class Controller extends RootController {
     const { email, password } = req.body;
     const { accessToken, refreshToken, user } = await AuthService.login(
       email,
-      password
+      password,
     );
     cookieManager.setTokens(res, accessToken, refreshToken);
     this.apiResponse(res, {
@@ -70,7 +70,7 @@ class Controller extends RootController {
         message: "Proceed to reset your password",
         data: null,
       });
-    }
+    },
   );
 }
 

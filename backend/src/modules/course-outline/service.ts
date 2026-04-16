@@ -1,5 +1,4 @@
 import { Types } from "mongoose";
-import ApiError from "../../shared/apiError";
 import {
   ICourseOutline,
   IModuleOutline,
@@ -7,6 +6,8 @@ import {
 } from "./interface";
 import { CourseOutline } from "./model";
 import { CourseService } from "../course/service";
+import ApiError from "@/shared/apiError";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 class Service {
   async createOutline(data: ICourseOutline | ICourseOutline[]): Promise<void> {
@@ -37,7 +38,10 @@ class Service {
       },
     ]);
     if (!data) {
-      throw new ApiError(404, "Course outline was not found!");
+      throw new ApiError(
+        HttpStatusCode.NOT_FOUND,
+        "Course outline was not found!",
+      );
     }
     data.modules = data.modules.sort((a, b) => a.serial - b.serial);
     return data;
@@ -63,7 +67,7 @@ class Service {
 
   async updateOutlineModules(
     id: string,
-    modules: IModuleOutline[]
+    modules: IModuleOutline[],
   ): Promise<void> {
     await CourseOutline.findByIdAndUpdate(id, { $set: { modules: modules } });
   }
@@ -74,7 +78,7 @@ class Service {
 
   async updateModuleSerialNumberFromDragDrop(
     courseId: Types.ObjectId,
-    data: IModuleSerialUpdate
+    data: IModuleSerialUpdate,
   ) {
     const outline = await CourseOutline.findOne({ course: courseId });
     if (!outline) {
@@ -108,14 +112,14 @@ class Service {
   async deleteModule(courseId: Types.ObjectId, moduleId: Types.ObjectId) {
     await CourseOutline.updateOne(
       { course: courseId },
-      { $pull: { modules: { _id: moduleId } } }
+      { $pull: { modules: { _id: moduleId } } },
     );
   }
 
   async updateModuleName(
     courseId: Types.ObjectId,
     moduleId: Types.ObjectId,
-    updatedName: string
+    updatedName: string,
   ) {
     const outline = await CourseOutline.findOne({
       course: courseId,
@@ -136,11 +140,10 @@ class Service {
   }
 
   async getOutlinesByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<ICourseOutline[]> {
-    const courseIds = await CourseService.getCourseIdsByInstructor(
-      instructorId
-    );
+    const courseIds =
+      await CourseService.getCourseIdsByInstructor(instructorId);
     const outlines = await CourseOutline.find({
       course: { $in: courseIds },
     }).populate([
