@@ -149,54 +149,46 @@ class Service {
     });
   }
 
-  private async drawBadge(pdfDoc: PDFDocument, page: PDFPage, score: number) {
-    let badgeUrl;
-    if (score >= 80) {
-      badgeUrl = config.certificate.badges.level1;
-    } else if (score >= 60) {
-      badgeUrl = config.certificate.badges.level2;
-    } else if (score >= 40) {
-      badgeUrl = config.certificate.badges.level3;
-    } else if (score >= 20) {
-      badgeUrl = config.certificate.badges.level4;
-    } else {
-      return;
-    }
-
-    const badgeBytes = await this.fetchFileFromUrl(badgeUrl, "Badge");
-    const badgeImage = await pdfDoc.embedPng(badgeBytes);
-
-    const badgeWidth = 100;
-    const badgeHeight = (badgeImage.height / badgeImage.width) * badgeWidth;
-
-    const badgePadding = 50;
-
-    page.drawImage(badgeImage, {
-      x: page.getWidth() - badgeWidth - badgePadding,
-      y: page.getHeight() - badgeHeight - badgePadding,
-      width: badgeWidth,
-      height: badgeHeight,
-    });
-  }
-
   private async drawCertificateSlogan(pdfDoc: PDFDocument, page: PDFPage) {
     let sloganImageUrl = config.certificate.sloganUrl;
 
-    const sloganBytes = await this.fetchFileFromUrl(sloganImageUrl, "slogan");
-    const sloganImage = await pdfDoc.embedPng(sloganBytes);
+    const { bytes, contentType } = await this.fetchFileFromUrlWithMeta(
+      sloganImageUrl,
+      "slogan",
+    );
+    try {
+      let sloganImage;
 
-    const sloganWidth = 100;
-    const sloganHeight = (sloganImage.height / sloganImage.width) * sloganWidth;
+      if (contentType.includes("png")) {
+        sloganImage = await pdfDoc.embedPng(bytes);
+      } else if (contentType.includes("jpeg") || contentType.includes("jpg")) {
+        sloganImage = await pdfDoc.embedJpg(bytes);
+      } else {
+        throw new ApiError(
+          HttpStatusCode.INTERNAL_SERVER_ERROR,
+          `Unsupported badge image content-type: ${contentType}`,
+        );
+      }
 
-    const sloganXPosition = 50;
-    const sloganYPosition = page.getHeight() - sloganHeight - 50;
+      const sloganWidth = 100;
+      const sloganHeight =
+        (sloganImage.height / sloganImage.width) * sloganWidth;
 
-    page.drawImage(sloganImage, {
-      x: sloganXPosition,
-      y: sloganYPosition,
-      width: sloganWidth,
-      height: sloganHeight,
-    });
+      const sloganXPosition = 50;
+      const sloganYPosition = page.getHeight() - sloganHeight - 50;
+
+      page.drawImage(sloganImage, {
+        x: sloganXPosition,
+        y: sloganYPosition,
+        width: sloganWidth,
+        height: sloganHeight,
+      });
+    } catch (error: any) {
+      throw new ApiError(
+        HttpStatusCode.INTERNAL_SERVER_ERROR,
+        `Badge image not found to draw on certificate. Error: ${error?.message || error}`,
+      );
+    }
   }
 
   private drawCourseCompletion(
@@ -327,18 +319,91 @@ class Service {
 
   private async drawLogo(pdfDoc: PDFDocument, page: PDFPage) {
     const logoUrl = config.certificate.logoUrl;
-    const logoBytes = await this.fetchFileFromUrl(logoUrl, "Draw LOGO");
-    const logoImage = await pdfDoc.embedPng(logoBytes);
+    const { bytes, contentType } = await this.fetchFileFromUrlWithMeta(
+      logoUrl,
+      "Draw LOGO",
+    );
+    try {
+      let logoImage;
 
-    const logoWidth = 200;
-    const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
+      if (contentType.includes("png")) {
+        logoImage = await pdfDoc.embedPng(bytes);
+      } else if (contentType.includes("jpeg") || contentType.includes("jpg")) {
+        logoImage = await pdfDoc.embedJpg(bytes);
+      } else {
+        throw new ApiError(
+          HttpStatusCode.INTERNAL_SERVER_ERROR,
+          `Unsupported badge image content-type: ${contentType}`,
+        );
+      }
 
-    page.drawImage(logoImage, {
-      x: page.getWidth() - logoWidth - 25,
-      y: 28,
-      width: logoWidth,
-      height: logoHeight,
-    });
+      const logoWidth = 200;
+      const logoHeight = (logoImage.height / logoImage.width) * logoWidth;
+
+      page.drawImage(logoImage, {
+        x: page.getWidth() - logoWidth - 25,
+        y: 28,
+        width: logoWidth,
+        height: logoHeight,
+      });
+    } catch (error: any) {
+      throw new ApiError(
+        HttpStatusCode.INTERNAL_SERVER_ERROR,
+        `Badge image not found to draw on certificate. Error: ${error?.message || error}`,
+      );
+    }
+  }
+
+  private async drawBadge(pdfDoc: PDFDocument, page: PDFPage, score: number) {
+    let badgeUrl: string | undefined;
+
+    if (score >= 80) {
+      badgeUrl = config.certificate.badges.level1;
+    } else if (score >= 60) {
+      badgeUrl = config.certificate.badges.level2;
+    } else if (score >= 40) {
+      badgeUrl = config.certificate.badges.level3;
+    } else if (score >= 20) {
+      badgeUrl = config.certificate.badges.level4;
+    } else {
+      return;
+    }
+
+    const { bytes, contentType } = await this.fetchFileFromUrlWithMeta(
+      badgeUrl,
+      "Badge",
+    );
+
+    try {
+      let badgeImage;
+
+      if (contentType.includes("png")) {
+        badgeImage = await pdfDoc.embedPng(bytes);
+      } else if (contentType.includes("jpeg") || contentType.includes("jpg")) {
+        badgeImage = await pdfDoc.embedJpg(bytes);
+      } else {
+        throw new ApiError(
+          HttpStatusCode.INTERNAL_SERVER_ERROR,
+          `Unsupported badge image content-type: ${contentType}`,
+        );
+      }
+
+      const badgeWidth = 100;
+      const badgeHeight = (badgeImage.height / badgeImage.width) * badgeWidth;
+      const badgePadding = 50;
+
+      page.drawImage(badgeImage, {
+        x: page.getWidth() - badgeWidth - badgePadding,
+        y: page.getHeight() - badgeHeight - badgePadding,
+        width: badgeWidth,
+        height: badgeHeight,
+      });
+    } catch (error: any) {
+      throw new ApiError(
+        HttpStatusCode.INTERNAL_SERVER_ERROR,
+        `Badge image not found to draw on certificate. Error: ${error?.message || error}`,
+      );
+    }
   }
 
   private async drawCeoSignature(
@@ -348,37 +413,55 @@ class Service {
     fonts: { font: PDFFont; boldFont: PDFFont },
   ) {
     const ceoSignatureUrl = config.certificate.ceoSignatureUrl;
-    const signatureBytes = await this.fetchFileFromUrl(
+    const { bytes, contentType } = await this.fetchFileFromUrlWithMeta(
       ceoSignatureUrl,
       "CEO signature",
     );
-    const signatureImage = await pdfDoc.embedPng(signatureBytes);
+    try {
+      let signatureImage;
 
-    const signatureWidth = 100;
-    const signatureHeight =
-      signatureWidth * (signatureImage.height / signatureImage.width);
-    page.drawImage(signatureImage, {
-      x: 50,
-      y: 60,
-      width: signatureWidth,
-      height: signatureHeight,
-    });
+      if (contentType.includes("png")) {
+        signatureImage = await pdfDoc.embedPng(bytes);
+      } else if (contentType.includes("jpeg") || contentType.includes("jpg")) {
+        signatureImage = await pdfDoc.embedJpg(bytes);
+      } else {
+        throw new ApiError(
+          HttpStatusCode.INTERNAL_SERVER_ERROR,
+          `Unsupported badge image content-type: ${contentType}`,
+        );
+      }
 
-    page.drawText("Md Rubel Ahmed Rana", {
-      x: 50,
-      y: 50,
-      size: 12,
-      color: colors.bodyColor,
-      font: fonts.boldFont,
-    });
+      const signatureWidth = 100;
+      const signatureHeight =
+        signatureWidth * (signatureImage.height / signatureImage.width);
+      page.drawImage(signatureImage, {
+        x: 50,
+        y: 60,
+        width: signatureWidth,
+        height: signatureHeight,
+      });
 
-    page.drawText("CEO, Up Skillium", {
-      x: 50,
-      y: 35,
-      size: 12,
-      color: colors.bodyColor,
-      font: fonts.font,
-    });
+      page.drawText("Md Rubel Ahmed Rana", {
+        x: 50,
+        y: 50,
+        size: 12,
+        color: colors.bodyColor,
+        font: fonts.boldFont,
+      });
+
+      page.drawText("CEO, Up Skillium", {
+        x: 50,
+        y: 35,
+        size: 12,
+        color: colors.bodyColor,
+        font: fonts.font,
+      });
+    } catch (error: any) {
+      throw new ApiError(
+        HttpStatusCode.INTERNAL_SERVER_ERROR,
+        `Badge image not found to draw on certificate. Error: ${error?.message || error}`,
+      );
+    }
   }
 
   private async drawCAOSignature(
@@ -388,38 +471,56 @@ class Service {
     fonts: { font: PDFFont; boldFont: PDFFont },
   ) {
     const caoSignatureUrl = config.certificate.caoSignatureUrl;
-    const signatureBytes = await this.fetchFileFromUrl(
+    const { bytes, contentType } = await this.fetchFileFromUrlWithMeta(
       caoSignatureUrl,
       "CAO signature",
     );
-    const signatureImage = await pdfDoc.embedPng(signatureBytes);
-    const xPosition = 250;
+    try {
+      let signatureImage;
 
-    const signatureWidth = 100;
-    const signatureHeight =
-      signatureWidth * (signatureImage.height / signatureImage.width);
-    page.drawImage(signatureImage, {
-      x: xPosition,
-      y: 60,
-      width: signatureWidth,
-      height: signatureHeight,
-    });
+      if (contentType.includes("png")) {
+        signatureImage = await pdfDoc.embedPng(bytes);
+      } else if (contentType.includes("jpeg") || contentType.includes("jpg")) {
+        signatureImage = await pdfDoc.embedJpg(bytes);
+      } else {
+        throw new ApiError(
+          HttpStatusCode.INTERNAL_SERVER_ERROR,
+          `Unsupported badge image content-type: ${contentType}`,
+        );
+      }
+      const xPosition = 250;
 
-    page.drawText("Najim Uddin Helal", {
-      x: xPosition,
-      y: 50,
-      size: 12,
-      color: colors.bodyColor,
-      font: fonts.boldFont,
-    });
+      const signatureWidth = 100;
+      const signatureHeight =
+        signatureWidth * (signatureImage.height / signatureImage.width);
+      page.drawImage(signatureImage, {
+        x: xPosition,
+        y: 60,
+        width: signatureWidth,
+        height: signatureHeight,
+      });
 
-    page.drawText("CAO, Up Skillium", {
-      x: xPosition,
-      y: 35,
-      size: 12,
-      color: colors.bodyColor,
-      font: fonts.font,
-    });
+      page.drawText("Najim Uddin Helal", {
+        x: xPosition,
+        y: 50,
+        size: 12,
+        color: colors.bodyColor,
+        font: fonts.boldFont,
+      });
+
+      page.drawText("CAO, Up Skillium", {
+        x: xPosition,
+        y: 35,
+        size: 12,
+        color: colors.bodyColor,
+        font: fonts.font,
+      });
+    } catch (error: any) {
+      throw new ApiError(
+        HttpStatusCode.INTERNAL_SERVER_ERROR,
+        `Badge image not found to draw on certificate. Error: ${error?.message || error}`,
+      );
+    }
   }
 
   private async savePdf(pdfDoc: PDFDocument, studentName: string) {
@@ -444,6 +545,7 @@ class Service {
     const file: any = {
       fieldname: "file",
       originalname: filename,
+      original_filename: filename,
       encoding: "7-bit",
       mimetype: "application/pdf",
       size: pdfBuffer.length,
@@ -468,18 +570,29 @@ class Service {
     }
   }
 
-  private async fetchFileFromUrl(
+  private async fetchFileFromUrlWithMeta(
     url: string,
-    context: string,
-  ): Promise<ArrayBuffer> {
-    return await fetch(url)
-      .then((res) => res.arrayBuffer())
-      .catch((error) => {
-        throw new ApiError(
-          HttpStatusCode.BAD_REQUEST,
-          `We couldn't fetch [${context}] image. Error: ${error?.message || error}`,
-        );
-      });
+    name = "File",
+  ): Promise<{
+    bytes: Uint8Array;
+    contentType: string;
+  }> {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new ApiError(
+        HttpStatusCode.BAD_REQUEST,
+        `${name} could not be fetched from URL`,
+      );
+    }
+
+    const arrayBuffer = await response.arrayBuffer();
+    const contentType = response.headers.get("content-type") || "";
+
+    return {
+      bytes: new Uint8Array(arrayBuffer),
+      contentType,
+    };
   }
 }
 

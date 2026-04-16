@@ -7,6 +7,7 @@ const certificateSchema = new Schema<ICertificate>(
     user: {
       type: Schema.Types.ObjectId,
       required: true,
+      ref: "User",
     },
     course: { type: Schema.Types.ObjectId, required: true, ref: "Course" },
     courseName: {
