@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { CertificateService } from "./service";
 import { Types } from "mongoose";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   createCertificate = this.catchAsync(async (req: Request, res: Response) => {
@@ -33,7 +33,7 @@ class Controller extends RootController {
         message: "Certificate fetched successfully",
         data: data,
       });
-    }
+    },
   );
   getCertificatesByUserId = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -45,21 +45,20 @@ class Controller extends RootController {
         message: "Certificates retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   getCertificatesByInstructor = this.catchAsync(
     async (req: Request, res: Response) => {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
-      const data = await CertificateService.getCertificatesByInstructor(
-        instructorId
-      );
+      const data =
+        await CertificateService.getCertificatesByInstructor(instructorId);
       this.apiResponse(res, {
         statusCode: 200,
         success: true,
         message: "Certificates retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   updateCertificate = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
@@ -90,7 +89,7 @@ class Controller extends RootController {
         message: "Certificate analytics retrieved successfully",
         data,
       });
-    }
+    },
   );
 }
 

@@ -1,37 +1,37 @@
 import { Router } from "express";
 import { QuizSubmissionController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
 router.get(
   "/result/:userId/:lessonId",
   JwtInstance.verifyToken,
-  QuizSubmissionController.getSubmittedQuizResultByLessonId
+  QuizSubmissionController.getSubmittedQuizResultByLessonId,
 );
 
 router.get(
   "/analytics-summary",
   JwtInstance.verifyToken,
-  QuizSubmissionController.getQuizSubmissionAnalyticsSummary
+  QuizSubmissionController.getQuizSubmissionAnalyticsSummary,
 );
 
 router.get(
   "/single/:id",
   JwtInstance.verifyToken,
-  QuizSubmissionController.getSingleQuizSubmission
+  QuizSubmissionController.getSingleQuizSubmission,
 );
 
 router.post(
   "/submit/:userId/:lessonId",
   JwtInstance.verifyToken,
-  QuizSubmissionController.submitQuiz
+  QuizSubmissionController.submitQuiz,
 );
 
 router.get(
   "/",
   JwtInstance.verifyToken,
-  QuizSubmissionController.getAllQuizSubmissions
+  QuizSubmissionController.getAllQuizSubmissions,
 );
 
 export const QuizSubmissionRoutes = router;

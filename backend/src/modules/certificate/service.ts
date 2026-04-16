@@ -5,7 +5,7 @@ import { Certificate } from "./model";
 import { IPdfCertificate } from "../pdf-creator/interface";
 import { CourseService } from "../course/service";
 import { MailService } from "../mail/mail.service";
-import { CloudinaryService } from "../../cloudinary";
+import { CloudinaryService } from "../../config/cloudinary";
 
 class Service {
   async createCertificate(data: ICertificate) {

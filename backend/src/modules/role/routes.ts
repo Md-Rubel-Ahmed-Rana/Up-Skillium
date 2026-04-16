@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { RoleController } from "./controller";
-import { JwtInstance } from "../../lib/jwt";
+import { JwtInstance } from "@/lib/jwt";
 
 const router = Router();
 
@@ -13,7 +13,7 @@ router.get("/:id", JwtInstance.verifyToken, RoleController.getRoleById);
 router.get(
   "/by-name/:role",
   JwtInstance.verifyToken,
-  RoleController.getRoleByRoleName
+  RoleController.getRoleByRoleName,
 );
 
 router.patch("/:id", JwtInstance.verifyToken, RoleController.updateRole);

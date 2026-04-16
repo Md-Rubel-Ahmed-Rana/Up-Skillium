@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IReview } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const reviewSchema = new Schema<IReview>(
   {
@@ -28,7 +28,7 @@ const reviewSchema = new Schema<IReview>(
       required: true,
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const Review = model<IReview>("Review", reviewSchema);

@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IQuizQuestion } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 export const quizSchema = new Schema<IQuizQuestion>(
   {
@@ -19,7 +19,7 @@ export const quizSchema = new Schema<IQuizQuestion>(
     },
     options: [String],
   },
-  schemaOption
+  schemaOption,
 );
 
 export const Quiz = model("Quiz", quizSchema);

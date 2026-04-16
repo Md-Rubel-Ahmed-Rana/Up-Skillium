@@ -71,7 +71,7 @@ class Service {
   async getAllReviewByReviewTo(
     reviewToId: Types.ObjectId,
     page: number,
-    limit: number
+    limit: number,
   ): Promise<{ reviews: IReview[]; totalReviews: number }> {
     const skip = (page - 1) * limit;
     const reviews = await Review.find({ reviewTo: reviewToId })
@@ -96,7 +96,7 @@ class Service {
   }
   async updateReview(
     reviewId: Types.ObjectId,
-    data: { rating: number; feedback: string }
+    data: { rating: number; feedback: string },
   ): Promise<void> {
     await Review.findByIdAndUpdate(reviewId, {
       $set: { feedback: data?.feedback, rating: data?.rating },

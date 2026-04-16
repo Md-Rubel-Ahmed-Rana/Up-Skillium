@@ -1,6 +1,6 @@
 import { model, Schema, Types } from "mongoose";
 import { IAssignmentSubmission } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const submissionSchema = new Schema({
   content: { type: String, required: true },
@@ -21,10 +21,10 @@ const assignmentSubmissionSchema = new Schema<IAssignmentSubmission>(
     isLate: { type: Boolean, default: false },
     dueDate: { type: Date },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const AssignmentSubmission = model<IAssignmentSubmission>(
   "AssignmentSubmission",
-  assignmentSubmissionSchema
+  assignmentSubmissionSchema,
 );

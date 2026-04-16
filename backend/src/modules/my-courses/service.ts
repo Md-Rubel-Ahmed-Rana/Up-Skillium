@@ -13,17 +13,17 @@ class Service {
 
     if (isExist) {
       console.log(
-        `[MyCourse] Skipped: Already exists for user ${data.user} course ${data.course}`
+        `[MyCourse] Skipped: Already exists for user ${data.user} course ${data.course}`,
       );
       return;
     }
 
     const lastLesson = await ModuleService.getFirstLessonOfFirstModuleByCourse(
-      data.course
+      data.course,
     );
     if (!lastLesson) {
       console.warn(
-        `[MyCourse] Skipped: No lessons found for course ${data.course}`
+        `[MyCourse] Skipped: No lessons found for course ${data.course}`,
       );
       return;
     }
@@ -37,7 +37,7 @@ class Service {
     await this.calculateCourseCompletion(
       data.user,
       data.course,
-      lastLesson?._id
+      lastLesson?._id,
     );
   }
 
@@ -51,7 +51,7 @@ class Service {
 
       const lastLesson =
         await ModuleService.getFirstLessonOfFirstModuleByCourse(
-          new Types.ObjectId(payload.course)
+          new Types.ObjectId(payload.course),
         );
 
       await MyCourse.create({
@@ -62,14 +62,14 @@ class Service {
 
       if (!lastLesson) {
         console.warn(
-          `[MyCourse] Skipped: No lessons found for course ${payload.course}`
+          `[MyCourse] Skipped: No lessons found for course ${payload.course}`,
         );
         return;
       }
       await this.calculateCourseCompletion(
         new Types.ObjectId(payload.user),
         new Types.ObjectId(payload.course),
-        lastLesson?._id
+        lastLesson?._id,
       );
     }
   }
@@ -85,7 +85,7 @@ class Service {
 
   async getMySingleCourse(
     userId: Types.ObjectId,
-    courseId: Types.ObjectId
+    courseId: Types.ObjectId,
   ): Promise<IMyCourse | null> {
     return await MyCourse.findOne({ user: userId, course: courseId }).populate([
       "user",
@@ -98,7 +98,7 @@ class Service {
   async completeLesson(
     userId: Types.ObjectId,
     courseId: Types.ObjectId,
-    lessonId: Types.ObjectId
+    lessonId: Types.ObjectId,
   ): Promise<void> {
     await this.calculateCourseCompletion(userId, courseId, lessonId);
   }
@@ -183,7 +183,7 @@ class Service {
   private async calculateCourseCompletion(
     userId: Types.ObjectId,
     courseId: Types.ObjectId,
-    lastCompletedLessonId: Types.ObjectId
+    lastCompletedLessonId: Types.ObjectId,
   ): Promise<void> {
     let totalLessons = 0;
     let completedLessonsCount = 0;
@@ -218,7 +218,7 @@ class Service {
     const finalCount = Math.round(completionPercentage * 100) / 100;
 
     const lastCompletedIndex = lessons.findIndex(
-      (lesson) => lesson._id.toString() === lastCompletedLessonId.toString()
+      (lesson) => lesson._id.toString() === lastCompletedLessonId.toString(),
     );
 
     const nextLesson =

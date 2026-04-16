@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
-import schemaOption from "../../utils/schemaOption";
 import { ICart } from "./interface";
+import schemaOption from "@/utils/schemaOption";
 
 const cartSchema = new Schema<ICart>(
   {
@@ -15,7 +15,7 @@ const cartSchema = new Schema<ICart>(
       required: true,
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const Cart = model("Cart", cartSchema);

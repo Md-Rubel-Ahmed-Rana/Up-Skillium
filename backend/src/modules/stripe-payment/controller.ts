@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { StripePaymentService } from "./service";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   checkout = this.catchAsync(async (req: Request, res: Response) => {

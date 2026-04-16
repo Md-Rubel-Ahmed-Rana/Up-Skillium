@@ -3,11 +3,11 @@ import config from "./envConfig";
 
 class Database {
   async connect() {
-    console.info("Connecting to Database. Please wait...");
+    console.log("⏳ Connecting MongoDB Database...");
     try {
       await mongoose.connect(config.database.url);
 
-      console.info("Database connected...");
+      console.log("✅ MongoDB Connected Successfully!");
     } catch (error: any) {
       console.error(`Database connection error: ${error.message}`);
 
@@ -15,15 +15,15 @@ class Database {
     }
 
     mongoose.connection.on("connected", () => {
-      console.info("Mongoose connected to database");
+      console.log("✅ MongoDB Connected Successfully!");
     });
 
     mongoose.connection.on("error", (err) => {
-      console.error(`Mongoose connection error: ${err}`);
+      console.error(`MongoDB connection failed. Error: ${err}`);
     });
 
     mongoose.connection.on("disconnected", () => {
-      console.warn("Mongoose disconnected from database");
+      console.warn("MongoDB disconnected");
     });
   }
 }

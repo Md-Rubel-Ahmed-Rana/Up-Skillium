@@ -1,11 +1,11 @@
 import nodemailer from "nodemailer";
-import config from "../../config/envConfig";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 import {
   IAssignmentMarkedMail,
   IGotCertificateMail,
   ILiveClassMail,
 } from "./interface";
+import config from "@/config/envConfig";
 
 class Mail {
   private sendEmail(
@@ -13,7 +13,7 @@ class Mail {
     to: string | string[],
     htmlContent: string,
     bcc?: string[],
-    cc?: string[]
+    cc?: string[],
   ) {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -54,7 +54,7 @@ class Mail {
     receiver: string,
     studentName: string,
     courseName: string,
-    invoiceUrl: string
+    invoiceUrl: string,
   ) {
     const content = `
       <!DOCTYPE html>
@@ -203,7 +203,7 @@ class Mail {
                                       data.duration
                                     }</p>
                                     <p style="color: #555555; font-size: 16px;">Topics: ${data.topics.join(
-                                      ", "
+                                      ", ",
                                     )}</p>
                                     <p style="color: #555555; font-size: 16px;">Meeting Link: <a href=${
                                       data.meetingLink
@@ -247,14 +247,14 @@ class Mail {
     this.sendEmail(
       "Live Class Alert",
       data.students.map((s) => s.email),
-      content
+      content,
     );
   }
 
   async sendMailToInstructorAssignedToCourse(
     courseName: string,
     instructorName: string,
-    instructorEmail: string
+    instructorEmail: string,
   ) {
     const content = `
       <!DOCTYPE html>

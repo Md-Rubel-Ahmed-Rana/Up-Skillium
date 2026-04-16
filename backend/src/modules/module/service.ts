@@ -14,7 +14,7 @@ class Service {
     search: string = "",
     page: number = 1,
     limit: number = 10,
-    courseId?: string
+    courseId?: string,
   ): Promise<IModule[]> {
     const searchQuery: any = {
       ...(search && { title: { $regex: search, $options: "i" } }),
@@ -61,7 +61,7 @@ class Service {
   }
 
   async getModulesLessonsByCourseId(
-    courseId: Types.ObjectId
+    courseId: Types.ObjectId,
   ): Promise<IGetModulesWithLessons[]> {
     const modules = await Module.find({ course: courseId }).sort({ serial: 1 });
 
@@ -70,10 +70,10 @@ class Service {
         const lessons = await LessonService.getLessonsByModule(
           module.id,
           1,
-          100000
+          100000,
         );
         return { module, lessons };
-      })
+      }),
     );
 
     return modulesWithLessons;
@@ -81,7 +81,7 @@ class Service {
 
   async updateModule(
     id: Types.ObjectId,
-    updatedData: Partial<IModule>
+    updatedData: Partial<IModule>,
   ): Promise<void> {
     await Module.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
@@ -91,20 +91,19 @@ class Service {
   }
 
   async getAllModulesByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<IModule[]> {
-    const courseIds = await CourseService.getCourseIdsByInstructor(
-      instructorId
-    );
+    const courseIds =
+      await CourseService.getCourseIdsByInstructor(instructorId);
     const modules = await Module.find({ course: { $in: courseIds } }).populate(
       "course",
-      "title image category"
+      "title image category",
     );
     return modules;
   }
 
   async getFirstLessonOfFirstModuleByCourse(
-    courseId: Types.ObjectId
+    courseId: Types.ObjectId,
   ): Promise<ILesson | null> {
     const firstModule = await Module.findOne({ course: courseId })
       .sort({ serial: 1 })

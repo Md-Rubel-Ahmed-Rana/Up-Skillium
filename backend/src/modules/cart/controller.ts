@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import RootController from "../../shared/rootController";
 import { CartService } from "./service";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   addToCart = this.catchAsync(async (req: Request, res: Response) => {

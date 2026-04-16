@@ -1,6 +1,6 @@
-import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { EducationService } from "./service";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   addEducation = this.catchAsync(async (req: Request, res: Response) => {
@@ -41,7 +41,7 @@ class Controller extends RootController {
         message: "Educations fetched successfully",
         data: data,
       });
-    }
+    },
   );
   updateEducation = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;

@@ -2,11 +2,11 @@ import { PDFDocument, PDFFont, PDFPage, RGB, rgb } from "pdf-lib";
 import fs from "fs";
 import path from "path";
 import config from "../../config/envConfig";
-import textWrapLineBreaker from "../../utils/textWrapLineBreaker";
 import { IPdfCertificate } from "./interface";
-import { CloudinaryService } from "../../cloudinary";
-import ApiError from "../../shared/apiError";
-import { HttpStatusCode } from "../../lib/httpStatus";
+import textWrapLineBreaker from "@/utils/textWrapLineBreaker";
+import { CloudinaryService } from "@/config/cloudinary";
+import ApiError from "@/shared/apiError";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 class Service {
   public async createCertificate(data: IPdfCertificate): Promise<string> {

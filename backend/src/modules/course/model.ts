@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { ICourse } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const courseSchema = new Schema<ICourse>(
   {
@@ -40,7 +40,7 @@ const courseSchema = new Schema<ICourse>(
       default: "draft",
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 courseSchema.index({ title: "text", description: "text", tags: "text" });

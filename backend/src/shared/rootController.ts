@@ -1,5 +1,5 @@
+import { IApiResponse } from "@/interfaces/common";
 import { NextFunction, Request, RequestHandler, Response } from "express";
-import { IApiResponse } from "../interfaces/common";
 
 class RootController {
   catchAsync =

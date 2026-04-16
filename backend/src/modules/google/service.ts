@@ -1,7 +1,8 @@
 import { google } from "googleapis";
 import { ICreateMeetLink } from "./interface";
-import config from "../../config/envConfig";
-import ApiError from "../../shared/apiError";
+import config from "@/config/envConfig";
+import ApiError from "@/shared/apiError";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 const { google: googleCredentials } = config;
 
@@ -9,7 +10,7 @@ class Service {
   async createMeetLink(data: ICreateMeetLink): Promise<string> {
     const oauth2Client = new google.auth.OAuth2(
       googleCredentials.clientId,
-      googleCredentials.clientSecret
+      googleCredentials.clientSecret,
     );
     const {
       summary = "Up-Skillium Live Class",
@@ -58,8 +59,8 @@ class Service {
       return meetLink;
     } catch (error: any) {
       throw new ApiError(
-        400,
-        `Failed to create meet link. Error: ${error?.message}`
+        HttpStatusCode.INTERNAL_SERVER_ERROR,
+        `Failed to create meet link. Error: ${error?.message}`,
       );
     }
   }

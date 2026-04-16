@@ -1,9 +1,9 @@
 import Stripe from "stripe";
 import dotenv from "dotenv";
 import { IStripeCheckout } from "./interface";
-import config from "../../config/envConfig";
 import { IEnrollment } from "../enrollment/interface";
 import { EnrollmentService } from "../enrollment/service";
+import config from "@/config/envConfig";
 
 dotenv.config();
 
@@ -11,7 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
 class Service {
   async stripeCheckout(
-    items: IStripeCheckout[]
+    items: IStripeCheckout[],
   ): Promise<{ sessionId: string; sessionUrl: string }> {
     const storedData = items.map((item: IStripeCheckout) => {
       if (item?.quantity) {
@@ -55,7 +55,7 @@ class Service {
         price: item?.price,
         paymentSessionId: sessionId,
         paymentSessionUrl: sessionUrl,
-      })
+      }),
     );
 
     await EnrollmentService.createEnrollment(enrollmentData[0]);
@@ -73,7 +73,7 @@ class Service {
         price: item?.price,
         paymentSessionId: sessionId,
         paymentSessionUrl: sessionUrl,
-      })
+      }),
     );
 
     await EnrollmentService.createManyEnrollment(enrollmentData);

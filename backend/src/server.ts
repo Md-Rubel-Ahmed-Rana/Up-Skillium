@@ -6,9 +6,9 @@ const port = config.app.port;
 
 const startServer = async () => {
   try {
+    await Database.connect();
     const server = app.listen(port, async () => {
-      console.info(`Server is running on http://localhost:${port}`);
-      await Database.connect();
+      console.info(`🚀 Application is running on port ${port}`);
     });
 
     process.on("SIGINT", () => {

@@ -1,6 +1,6 @@
+import { CloudinaryService } from "@/config/cloudinary";
+import { MediaFolderEnum } from "@/constants/mediaFolders";
 import { NextFunction, Request, Response } from "express";
-import { CloudinaryService } from "../cloudinary";
-import { MediaFolderEnum } from "../constants/mediaFolders";
 
 class Middleware {
   async uploadUserProfilePicture(

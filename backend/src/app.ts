@@ -1,13 +1,13 @@
 import express, { Application } from "express";
 import dotenv from "dotenv";
 import Bugsnag from "@bugsnag/js";
-import { RootRoutes } from "./modules/routes";
 import {
   expressMiddlewares,
   notFoundRoutes,
 } from "./middlewares/expressMiddlewares";
-import globalErrorHandler from "./errors/globalErrorHandler";
 import { healthCheckRoute } from "./shared/appHealthCheck";
+import { RootRoutes } from "./modules/routes";
+import globalErrorHandler from "errors/globalErrorHandler";
 
 dotenv.config();
 

@@ -1,9 +1,9 @@
 import { ZodError, ZodIssue } from "zod";
 import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
-import { IGenericErrorMessage } from "../interfaces/common";
-import ApiError from "../shared/apiError";
 import Bugsnag from "@bugsnag/js";
+import { IGenericErrorMessage } from "@/interfaces/common";
+import ApiError from "@/shared/apiError";
 
 class ErrorHandler {
   private statusCode: number | string = 500;

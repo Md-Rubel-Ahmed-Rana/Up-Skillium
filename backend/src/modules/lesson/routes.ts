@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { LessonController } from "./controller";
-import upload from "../../config/multer";
-import { JwtInstance } from "../../lib/jwt";
-import { CourseUploadMiddleware } from "../../middlewares/course.upload";
+import { JwtInstance } from "@/lib/jwt";
+import upload from "@/config/multer";
+import { CourseUploadMiddleware } from "@/middlewares/course.upload";
 
 const router = Router();
 

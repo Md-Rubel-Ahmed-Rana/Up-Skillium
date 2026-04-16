@@ -6,11 +6,12 @@ import {
   IPriceUpdate,
 } from "./interface";
 import { Course } from "./model";
-import incrementAverageRating from "../../utils/incrementAverageRating";
-import ApiError from "../../shared/apiError";
 import { IUser } from "../user/interface";
 import { MailService } from "../mail/mail.service";
-import { CloudinaryService } from "../../cloudinary";
+import { CloudinaryService } from "@/config/cloudinary";
+import ApiError from "@/shared/apiError";
+import { HttpStatusCode } from "@/lib/httpStatus";
+import incrementAverageRating from "@/utils/incrementAverageRating";
 
 class Service {
   async createCourse(data: ICourse): Promise<void> {
@@ -294,7 +295,7 @@ class Service {
     const course = await Course.findById(id);
 
     if (!course) {
-      throw new ApiError(404, "Course not found");
+      throw new ApiError(HttpStatusCode.NOT_FOUND, "Course not found");
     }
 
     await Course.findByIdAndUpdate(id, {

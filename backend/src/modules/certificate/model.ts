@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
-import schemaOption from "../../utils/schemaOption";
 import { ICertificate } from "./interface";
+import schemaOption from "@/utils/schemaOption";
 
 const certificateSchema = new Schema<ICertificate>(
   {
@@ -30,7 +30,7 @@ const certificateSchema = new Schema<ICertificate>(
       required: true,
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const Certificate = model("Certificate", certificateSchema);

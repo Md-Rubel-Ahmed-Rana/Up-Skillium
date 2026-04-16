@@ -1,8 +1,8 @@
-import RootController from "../../shared/rootController";
 import { Request, Response } from "express";
 import { EnrollmentService } from "./service";
 import { Types } from "mongoose";
 import { EnrollmentAnalyticsParams } from "./interface";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   createEnrollment = this.catchAsync(async (req: Request, res: Response) => {
@@ -28,16 +28,15 @@ class Controller extends RootController {
   getSuccessEnrollmentForStudent = this.catchAsync(
     async (req: Request, res: Response) => {
       const userId = req.params.userId as unknown as Types.ObjectId;
-      const enrollment = await EnrollmentService.getSuccessEnrollmentForStudent(
-        userId
-      );
+      const enrollment =
+        await EnrollmentService.getSuccessEnrollmentForStudent(userId);
       this.apiResponse(res, {
         statusCode: 200,
         success: true,
         message: "Enrollments retrieved successfully",
         data: enrollment,
       });
-    }
+    },
   );
   getOrderEnrollmentHistoryForStudent = this.catchAsync(
     async (req: Request, res: Response) => {
@@ -50,7 +49,7 @@ class Controller extends RootController {
         message: "Order history retrieved successfully",
         data: enrollment,
       });
-    }
+    },
   );
 
   updateEnrollment = this.catchAsync(async (req: Request, res: Response) => {
@@ -91,7 +90,7 @@ class Controller extends RootController {
         message: "Enrollments retrieved successfully",
         data: result,
       });
-    }
+    },
   );
 
   searchEnrollments = this.catchAsync(async (req: Request, res: Response) => {
@@ -100,7 +99,7 @@ class Controller extends RootController {
     const result = await EnrollmentService.searchEnrollments(
       searchQuery as string,
       +page,
-      +limit
+      +limit,
     );
 
     this.apiResponse(res, {
@@ -114,9 +113,8 @@ class Controller extends RootController {
   getEnrollmentAnalyticsSummary = this.catchAsync(
     async (req: Request, res: Response) => {
       const params = req.query as EnrollmentAnalyticsParams;
-      const result = await EnrollmentService.getEnrollmentAnalyticsSummary(
-        params
-      );
+      const result =
+        await EnrollmentService.getEnrollmentAnalyticsSummary(params);
 
       this.apiResponse(res, {
         statusCode: 200,
@@ -124,7 +122,7 @@ class Controller extends RootController {
         message: "Enrollment analytics summary retrieved successfully",
         data: result,
       });
-    }
+    },
   );
 }
 

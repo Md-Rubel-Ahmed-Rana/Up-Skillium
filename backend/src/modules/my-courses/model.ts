@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { IMyCourse } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const myCourseSchema = new Schema<IMyCourse>(
   {
@@ -35,7 +35,7 @@ const myCourseSchema = new Schema<IMyCourse>(
       default: false,
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 myCourseSchema.index({ user: 1, course: 1 }, { unique: true });

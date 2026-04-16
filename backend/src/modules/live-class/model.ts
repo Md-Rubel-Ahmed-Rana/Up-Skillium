@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
-import schemaOption from "../../utils/schemaOption";
 import ILiveClass from "./interface";
+import schemaOption from "@/utils/schemaOption";
 
 const liveClassSchema = new Schema<ILiveClass>(
   {
@@ -56,7 +56,7 @@ const liveClassSchema = new Schema<ILiveClass>(
     topics: [String],
     tags: [String],
   },
-  schemaOption
+  schemaOption,
 );
 
 const LiveClass = model("LiveClass", liveClassSchema);

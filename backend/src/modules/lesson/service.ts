@@ -1,10 +1,11 @@
-import ApiError from "../../shared/apiError";
+import ApiError from "@/shared/apiError";
 import { ModuleService } from "../module/service";
 import { IQuizQuestion } from "../quiz/interface";
 import { QuizService } from "../quiz/service";
 import { ICreateQuizLesson, ILesson, IQuizUpdateOnLesson } from "./interface";
 import { Lesson } from "./model";
 import { Types } from "mongoose";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 class Service {
   async createLesson(data: ILesson | ILesson[]): Promise<void> {
@@ -18,11 +19,14 @@ class Service {
   async createQuizLesson(data: ICreateQuizLesson): Promise<void> {
     if (data?.quizQuestions && data?.quizQuestions?.length > 0) {
       const createdQuizzes = await QuizService.createQuizzes(
-        data?.quizQuestions as IQuizQuestion[]
+        data?.quizQuestions as IQuizQuestion[],
       );
       await Lesson.create({ ...data, quizQuestions: createdQuizzes });
     } else {
-      throw new ApiError(400, "Quizzes must be included with lesson data");
+      throw new ApiError(
+        HttpStatusCode.BAD_REQUEST,
+        "Quizzes must be included with lesson data",
+      );
     }
   }
 
@@ -30,7 +34,7 @@ class Service {
     search: string = "",
     type?: "video" | "instruction" | "quiz" | "assignment",
     page: number = 1,
-    limit: number = 10
+    limit: number = 10,
   ): Promise<ILesson[]> {
     const searchQuery: any = {
       ...(search && { title: { $regex: search, $options: "i" } }),
@@ -49,7 +53,7 @@ class Service {
   async getAllAssignmentLessons(): Promise<ILesson[]> {
     return await Lesson.find({ type: "assignment" }).populate(
       "module",
-      "title serial"
+      "title serial",
     );
   }
 
@@ -63,7 +67,7 @@ class Service {
   }
 
   async getLessonByIdWithQuizCorrectAnswer(
-    id: Types.ObjectId
+    id: Types.ObjectId,
   ): Promise<ILesson | null> {
     return await Lesson.findById(id)
       .populate({
@@ -74,7 +78,7 @@ class Service {
 
   async updateLesson(
     id: Types.ObjectId,
-    data: Partial<ILesson>
+    data: Partial<ILesson>,
   ): Promise<void> {
     await Lesson.findByIdAndUpdate(id, { ...data }).exec();
   }
@@ -85,7 +89,7 @@ class Service {
 
   async updateQuizzesInLesson(
     lessonId: Types.ObjectId,
-    quizzes: IQuizUpdateOnLesson[]
+    quizzes: IQuizUpdateOnLesson[],
   ) {
     const newQuizzes: IQuizUpdateOnLesson[] = [];
     const oldQuizzes: IQuizUpdateOnLesson[] = [];
@@ -99,9 +103,8 @@ class Service {
 
     await QuizService.updateManyQuizzes(oldQuizzes);
     const oldQuizIds = oldQuizzes.map((quiz) => new Types.ObjectId(quiz?.id));
-    const newQuizIds = await QuizService.createNewQuizFromLessonUpdate(
-      newQuizzes
-    );
+    const newQuizIds =
+      await QuizService.createNewQuizFromLessonUpdate(newQuizzes);
     const finalQuizIds = oldQuizIds.concat(newQuizIds);
     await Lesson.findByIdAndUpdate(lessonId, {
       $set: { quizQuestions: finalQuizIds },
@@ -111,7 +114,7 @@ class Service {
   async getLessonsByModule(
     moduleId: Types.ObjectId,
     page: number = 1,
-    limit: number = 10
+    limit: number = 10,
   ): Promise<ILesson[]> {
     const skip = (page - 1) * limit;
     return await Lesson.find({ module: moduleId })
@@ -128,7 +131,7 @@ class Service {
   }
 
   async getAllLessonsByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<ILesson[]> {
     const modules = await ModuleService.getAllModulesByInstructor(instructorId);
     const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];
@@ -141,7 +144,7 @@ class Service {
   }
 
   async getAllQuizLessonsByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<ILesson[]> {
     const modules = await ModuleService.getAllModulesByInstructor(instructorId);
     const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];
@@ -157,7 +160,7 @@ class Service {
   }
 
   async getAllAssignmentLessonsByInstructor(
-    instructorId: Types.ObjectId
+    instructorId: Types.ObjectId,
   ): Promise<ILesson[]> {
     const modules = await ModuleService.getAllModulesByInstructor(instructorId);
     const moduleIds = modules.map((module) => module?.id) as Types.ObjectId[];

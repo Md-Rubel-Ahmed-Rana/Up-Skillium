@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import { ILesson } from "../lesson/interface";
 import { LessonService } from "../lesson/service";
+import { ILesson } from "../lesson/interface";
 
 class Service {
   async getAllAssignments(): Promise<ILesson[]> {
@@ -12,7 +12,7 @@ class Service {
   }
   async updateAssignment(
     id: Types.ObjectId,
-    data: Partial<ILesson>
+    data: Partial<ILesson>,
   ): Promise<void> {
     await LessonService.updateLesson(id, data);
   }

@@ -1,5 +1,5 @@
+import { TraceService } from "@/lib/trace";
 import { Request, Response, NextFunction } from "express";
-import { TraceService } from "../lib/trace";
 
 export const traceMiddleware = (
   req: Request,

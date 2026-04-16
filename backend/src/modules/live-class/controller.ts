@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
-import RootController from "../../shared/rootController";
 import { LiveClassService } from "./service";
+import RootController from "@/shared/rootController";
 
 class Controller extends RootController {
   createLiveClass = this.catchAsync(async (req, res) => {
@@ -39,9 +39,8 @@ class Controller extends RootController {
   });
   getUpcomingLiveClassesByInstructor = this.catchAsync(async (req, res) => {
     const instructorId = req.params.instructorId as unknown as Types.ObjectId;
-    const classes = await LiveClassService.getUpcomingLiveClassesByInstructor(
-      instructorId
-    );
+    const classes =
+      await LiveClassService.getUpcomingLiveClassesByInstructor(instructorId);
 
     this.apiResponse(res, {
       statusCode: 200,
@@ -52,9 +51,8 @@ class Controller extends RootController {
   });
   getCompletedLiveClassesByInstructor = this.catchAsync(async (req, res) => {
     const instructorId = req.params.instructorId as unknown as Types.ObjectId;
-    const classes = await LiveClassService.getCompletedLiveClassesByInstructor(
-      instructorId
-    );
+    const classes =
+      await LiveClassService.getCompletedLiveClassesByInstructor(instructorId);
 
     this.apiResponse(res, {
       statusCode: 200,

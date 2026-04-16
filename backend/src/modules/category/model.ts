@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 import { ICategory } from "./interface";
-import schemaOption from "../../utils/schemaOption";
+import schemaOption from "@/utils/schemaOption";
 
 const categorySchema = new Schema<ICategory>(
   {
@@ -9,7 +9,7 @@ const categorySchema = new Schema<ICategory>(
       required: true,
     },
   },
-  schemaOption
+  schemaOption,
 );
 
 export const Category = model("Category", categorySchema);
