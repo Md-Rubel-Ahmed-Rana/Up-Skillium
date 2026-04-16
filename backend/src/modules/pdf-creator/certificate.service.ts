@@ -5,6 +5,8 @@ import config from "../../config/envConfig";
 import textWrapLineBreaker from "../../utils/textWrapLineBreaker";
 import { IPdfCertificate } from "./interface";
 import { CloudinaryService } from "../../cloudinary";
+import ApiError from "../../shared/apiError";
+import { HttpStatusCode } from "../../lib/httpStatus";
 
 class Service {
   public async createCertificate(data: IPdfCertificate): Promise<string> {
@@ -161,7 +163,7 @@ class Service {
       return;
     }
 
-    const badgeBytes = await fetch(badgeUrl).then((res) => res.arrayBuffer());
+    const badgeBytes = await this.fetchFileFromUrl(badgeUrl, "Badge");
     const badgeImage = await pdfDoc.embedPng(badgeBytes);
 
     const badgeWidth = 100;
@@ -180,9 +182,7 @@ class Service {
   private async drawCertificateSlogan(pdfDoc: PDFDocument, page: PDFPage) {
     let sloganImageUrl = config.certificate.sloganUrl;
 
-    const sloganBytes = await fetch(sloganImageUrl).then((res) =>
-      res.arrayBuffer(),
-    );
+    const sloganBytes = await this.fetchFileFromUrl(sloganImageUrl, "slogan");
     const sloganImage = await pdfDoc.embedPng(sloganBytes);
 
     const sloganWidth = 100;
@@ -327,7 +327,7 @@ class Service {
 
   private async drawLogo(pdfDoc: PDFDocument, page: PDFPage) {
     const logoUrl = config.certificate.logoUrl;
-    const logoBytes = await fetch(logoUrl).then((res) => res.arrayBuffer());
+    const logoBytes = await this.fetchFileFromUrl(logoUrl, "Draw LOGO");
     const logoImage = await pdfDoc.embedPng(logoBytes);
 
     const logoWidth = 200;
@@ -348,8 +348,9 @@ class Service {
     fonts: { font: PDFFont; boldFont: PDFFont },
   ) {
     const ceoSignatureUrl = config.certificate.ceoSignatureUrl;
-    const signatureBytes = await fetch(ceoSignatureUrl).then((res) =>
-      res.arrayBuffer(),
+    const signatureBytes = await this.fetchFileFromUrl(
+      ceoSignatureUrl,
+      "CEO signature",
     );
     const signatureImage = await pdfDoc.embedPng(signatureBytes);
 
@@ -387,8 +388,9 @@ class Service {
     fonts: { font: PDFFont; boldFont: PDFFont },
   ) {
     const caoSignatureUrl = config.certificate.caoSignatureUrl;
-    const signatureBytes = await fetch(caoSignatureUrl).then((res) =>
-      res.arrayBuffer(),
+    const signatureBytes = await this.fetchFileFromUrl(
+      caoSignatureUrl,
+      "CAO signature",
     );
     const signatureImage = await pdfDoc.embedPng(signatureBytes);
     const xPosition = 250;
@@ -464,6 +466,20 @@ class Service {
       console.error("Error uploading certificate:", error);
       throw new Error("Certificate upload failed.");
     }
+  }
+
+  private async fetchFileFromUrl(
+    url: string,
+    context: string,
+  ): Promise<ArrayBuffer> {
+    return await fetch(url)
+      .then((res) => res.arrayBuffer())
+      .catch((error) => {
+        throw new ApiError(
+          HttpStatusCode.BAD_REQUEST,
+          `We couldn't fetch [${context}] image. Error: ${error?.message || error}`,
+        );
+      });
   }
 }
 
