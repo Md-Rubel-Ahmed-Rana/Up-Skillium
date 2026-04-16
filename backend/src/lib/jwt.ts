@@ -4,12 +4,16 @@ import { Types } from "mongoose";
 import config from "../config/envConfig";
 import { cookieManager } from "../shared/cookies";
 import { UserService } from "../modules/user/service";
+import ApiError from "../shared/apiError";
+import { HttpStatusCode } from "./httpStatus";
 
 class JWT {
+  private readonly unauthorizedMessage =
+    "Unauthenticated access. Please login to access resource(s)";
   private signToken = async (
     payload: { id: Types.ObjectId | string; email: string },
     secret: string,
-    expiresIn: string
+    expiresIn: string,
   ): Promise<string> => {
     return jwt.sign(payload, secret, { expiresIn });
   };
@@ -21,7 +25,7 @@ class JWT {
     return this.signToken(
       payload,
       config.jwt.accessTokenSecret,
-      config.jwt.accessTokenExpire
+      config.jwt.accessTokenExpire,
     );
   };
 
@@ -32,20 +36,22 @@ class JWT {
     return this.signToken(
       payload,
       config.jwt.refreshTokenSecret,
-      config.jwt.refreshTokenExpire
+      config.jwt.refreshTokenExpire,
     );
   };
 
   public verifyToken = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) => {
     const accessToken = req?.cookies?.upSkilliumAccessToken;
     const refreshToken = req?.cookies?.upSkilliumRefreshToken;
 
     if (!accessToken || !refreshToken) {
-      return res.sendFile("unauthenticated.html", { root: "public" });
+      return next(
+        new ApiError(HttpStatusCode.UNAUTHORIZED, this.unauthorizedMessage),
+      );
     }
 
     try {
@@ -61,19 +67,21 @@ class JWT {
         return this.handleExpiredAccessToken(refreshToken, res, next);
       }
 
-      return res.sendFile("unauthenticated.html", { root: "public" });
+      return next(
+        new ApiError(HttpStatusCode.UNAUTHORIZED, this.unauthorizedMessage),
+      );
     }
   };
 
   private handleExpiredAccessToken = async (
     refreshToken: string,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) => {
     try {
       const result = jwt.verify(
         refreshToken,
-        config.jwt.refreshTokenSecret
+        config.jwt.refreshTokenSecret,
       ) as {
         id: string;
         email: string;
@@ -96,7 +104,9 @@ class JWT {
         return this.logoutUser(res);
       }
 
-      return res.sendFile("unauthenticated.html", { root: "public" });
+      return next(
+        new ApiError(HttpStatusCode.UNAUTHORIZED, this.unauthorizedMessage),
+      );
     }
   };
 
@@ -112,12 +122,12 @@ class JWT {
 
   public async generatePasswordResetToken(
     id: string,
-    email: string
+    email: string,
   ): Promise<string> {
     const token = await this.signToken(
       { id, email },
       config.jwt.accessTokenSecret,
-      "10m"
+      "10m",
     );
 
     return token;
@@ -126,7 +136,7 @@ class JWT {
   public verifyResetPasswordToken = async (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
   ) => {
     const resetToken = req?.query.token as string;
 
@@ -144,8 +154,6 @@ class JWT {
         email: string;
         exp: number;
       };
-
-      console.log(decoded);
 
       if (Date.now() >= decoded.exp * 1000) {
         return res.status(401).json({

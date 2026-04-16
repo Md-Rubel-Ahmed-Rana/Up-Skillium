@@ -1,7 +1,17 @@
 import { Application, Request, Response } from "express";
+import { HttpStatusCode } from "../lib/httpStatus";
 
 export const healthCheckRoute = (app: Application) => {
   app.get("/", (req: Request, res: Response) => {
-    res.sendFile("index.html");
+    res.status(HttpStatusCode.OK).json({
+      statusCode: HttpStatusCode.OK,
+      success: true,
+      traceId: req.traceId || null,
+      message: "Up Skillium application is up and running",
+      data: {
+        uptime: `${process.uptime().toFixed(2)} seconds`,
+        timestamp: new Date().toLocaleString(),
+      },
+    });
   });
 };

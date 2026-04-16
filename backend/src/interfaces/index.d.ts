@@ -12,6 +12,7 @@ declare global {
         image?: Express.Multer.File[];
         introductoryVideo?: Express.Multer.File[];
       };
+      traceId: string | undefined;
     }
   }
 }
