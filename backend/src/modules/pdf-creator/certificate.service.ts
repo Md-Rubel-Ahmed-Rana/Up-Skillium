@@ -76,14 +76,21 @@ class Service {
       margins,
       yPositions.footer,
     );
-
+    console.log("[PdfCreatorService]: Drawing logo");
     await this.drawLogo(pdfDoc, page);
+    console.log("[PdfCreatorService]: Drawn logo and start drawing badge");
 
     await this.drawBadge(pdfDoc, page, score);
 
+    console.log("[PdfCreatorService]: start drawCertificateSlogan");
+
     await this.drawCertificateSlogan(pdfDoc, page);
 
+    console.log("[PdfCreatorService]: start drawCeoSignature");
+
     await this.drawCeoSignature(pdfDoc, page, colors, fonts);
+
+    console.log("[PdfCreatorService]: start drawCAOSignature");
 
     await this.drawCAOSignature(pdfDoc, page, colors, fonts);
 
@@ -449,8 +456,11 @@ class Service {
         "certificates",
         "raw",
       );
+
+      console.log("[PdfCreatorService]: success deployCertificate");
       return fileUrl;
     } catch (error) {
+      console.log("[PdfCreatorService]: error deployCertificate");
       console.error("Error uploading certificate:", error);
       throw new Error("Certificate upload failed.");
     }
