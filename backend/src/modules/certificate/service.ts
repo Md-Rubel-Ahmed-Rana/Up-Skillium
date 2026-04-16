@@ -5,7 +5,7 @@ import { Certificate } from "./model";
 import { IPdfCertificate } from "../pdf-creator/interface";
 import { CourseService } from "../course/service";
 import { MailService } from "../mail/mail.service";
-import { CloudinaryService } from "../../config/cloudinary";
+import { CloudinaryService } from "@/config/cloudinary";
 
 class Service {
   async createCertificate(data: ICertificate) {
@@ -25,6 +25,15 @@ class Service {
     const createdCertificate: any = await Certificate.findById(
       newCertificate._id,
     ).populate("user", "email name");
+
+    console.log({
+      courseName: data.courseName,
+      student: {
+        name: data?.studentName,
+        email: createdCertificate?.user?.email,
+      },
+      certificateLink: certificateUrl,
+    });
 
     // send email to student
     await MailService.sendGotCertificateMail({

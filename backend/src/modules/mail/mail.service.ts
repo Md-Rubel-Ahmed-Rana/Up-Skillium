@@ -6,15 +6,22 @@ import {
   ILiveClassMail,
 } from "./interface";
 import config from "@/config/envConfig";
+import ApiError from "@/shared/apiError";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 class Mail {
-  private sendEmail(
+  private async sendEmail(
     subject: string,
     to: string | string[],
     htmlContent: string,
     bcc?: string[],
     cc?: string[],
   ) {
+    if (!to) {
+      const noRecipient = `[EmailService] ❌ Email receiver or recipient was not found to send email. Please check it!`;
+      console.log(noRecipient);
+      throw new ApiError(HttpStatusCode.INTERNAL_SERVER_ERROR, noRecipient);
+    }
     const transporter = nodemailer.createTransport({
       service: "gmail",
       secure: true,
@@ -41,13 +48,21 @@ class Mail {
       mailOptions.cc = cc;
     }
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log({ mailError: error });
-      } else {
-        console.log({ mailInfo: info });
-      }
-    });
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log(
+        `[EmailService] ✅ Email sent to: ${to} & Email ID: ${info.messageId}`,
+      );
+      return info;
+    } catch (error: any) {
+      console.error(
+        `[EmailService] ❌ Failed to send email to: ${to} with error: ${error.message}`,
+      );
+      throw new ApiError(
+        HttpStatusCode.INTERNAL_SERVER_ERROR,
+        "Failed to send email. Please try again later.",
+      );
+    }
   }
 
   async enrollmentConfirmationMail(

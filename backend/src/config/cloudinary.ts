@@ -14,37 +14,52 @@ class Service {
       api_secret: config.cloudinary.apiSecret,
     });
   }
+
   async uploadSingle(
     file: Express.Multer.File,
     folderName: string,
     fileType: FileType = "raw",
   ): Promise<string> {
     return new Promise((resolve, reject) => {
+      const ext = this.getExtensionFromMimeType(file.mimetype) || "pdf";
+      const publicId = `${folderName}/${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2)}.${ext}`;
+
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           resource_type: fileType || "raw",
-          folder: folderName,
+          public_id: publicId,
+          asset_folder: folderName,
         },
-        async (error, result) => {
+        (error, result) => {
           if (error) return reject(error);
-
-          try {
-            console.log(result);
-            resolve(result?.secure_url || "");
-          } catch (dbError) {
-            reject(
+          console.log({ from: "[CLOUDINARY]: Single file upload", result });
+          if (!result?.secure_url) {
+            return reject(
               new ApiError(
                 HttpStatusCode.INTERNAL_SERVER_ERROR,
-                "Failed to update user photo",
+                "Cloudinary did not return a secure URL",
               ),
             );
           }
+          resolve(result.secure_url);
         },
       );
 
-      const readableStream = Readable.from(file.buffer);
-      readableStream.pipe(uploadStream);
+      Readable.from(file.buffer).pipe(uploadStream);
     });
+  }
+
+  private getExtensionFromMimeType(mimetype: string): string | null {
+    const map: Record<string, string> = {
+      "application/pdf": "pdf",
+      "image/png": "png",
+      "image/jpeg": "jpg",
+      "image/jpg": "jpg",
+    };
+
+    return map[mimetype] || null;
   }
 
   async deleteSingle(url: string, fileType: FileType = "raw") {
