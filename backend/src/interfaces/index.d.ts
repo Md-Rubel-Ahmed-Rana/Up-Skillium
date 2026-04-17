@@ -1,4 +1,5 @@
 import { JwtPayload } from "jsonwebtoken";
+import type { Logger } from "pino";
 
 declare global {
   namespace Express {
@@ -13,6 +14,10 @@ declare global {
         introductoryVideo?: Express.Multer.File[];
       };
       traceId: string | undefined;
+      correlationId: string | undefined;
+    }
+    interface Response {
+      log: Logger;
     }
   }
 }

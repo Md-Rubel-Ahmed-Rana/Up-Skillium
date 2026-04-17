@@ -135,6 +135,31 @@ class ErrorHandler {
     res: Response,
     next: NextFunction,
   ) => {
+    const err = error instanceof Error ? error : new Error("Unknown error");
+    const requestId = String(req.id);
+    const correlationId = req.correlationId || requestId;
+
+    req.log.error(
+      {
+        err: err,
+        requestId,
+        correlationId,
+        method: req.method,
+        path: req.originalUrl,
+      },
+      "Unhandled application error",
+    );
+
+    // Optional manual notify for handled/custom scenarios
+    Bugsnag.notify(error, (event) => {
+      event.addMetadata("requestContext", {
+        requestId,
+        correlationId,
+        method: req.method,
+        path: req.originalUrl,
+      });
+    });
+
     if (error instanceof ZodError) {
       this.handleZodValidationError(error);
     } else if (

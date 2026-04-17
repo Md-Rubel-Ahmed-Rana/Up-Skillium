@@ -15,6 +15,7 @@ export type IGenericErrorMessage = {
 export type IJwtPayload = {
   id: Types.ObjectId | string;
   email: string;
+  role: string;
 };
 
 export type ITokens = { accessToken: string; refreshToken: string };
