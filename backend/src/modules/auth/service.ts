@@ -5,10 +5,17 @@ import { IUser } from "../user/interface";
 import ApiError from "@/shared/apiError";
 import { BcryptInstance } from "@/lib/bcrypt";
 import { JwtInstance } from "@/lib/jwt";
+import { HttpStatusCode } from "@/lib/httpStatus";
 
 class Service {
   async auth(id: string) {
     const user = await UserService.findUserById(id);
+    if (user?.status === "inactive") {
+      throw new ApiError(
+        HttpStatusCode.UNAUTHORIZED,
+        "Your account is inactive. Please contact the support team or an administrator for assistance.",
+      );
+    }
     return user;
   }
   async login(
@@ -19,14 +26,14 @@ class Service {
 
     if (!isExist) {
       throw new ApiError(
-        404,
+        HttpStatusCode.NOT_FOUND,
         "User not found. Please check your email and try again.",
       );
     }
 
     if (isExist?.status === "inactive") {
       throw new ApiError(
-        403,
+        HttpStatusCode.UNAUTHORIZED,
         "Your account is inactive. Please contact the support team or an administrator for assistance.",
       );
     }
@@ -46,6 +53,7 @@ class Service {
     const jwtPayload = {
       id: isExist?._id,
       email: isExist?.email,
+      role: isExist?.role?.name || "unknown role",
     };
 
     const accessToken = await JwtInstance.generateAccessToken(jwtPayload);
@@ -70,6 +78,7 @@ class Service {
     const token = await JwtInstance.generatePasswordResetToken(
       user?._id,
       user?.email,
+      user?.role?.name || "unknown role",
     );
     const resetUrl = `https://upskillium.vercel.app/auth/reset-password?id=${user?._id}&name=${user?.name}&email=${user?.email}&token=${token}`;
     await MailService.resetPasswordLink(user?.email, resetUrl);

@@ -8,6 +8,7 @@ const config = {
     env: process.env.NODE_ENV as string,
     corsOrigins: process.env.CORS_ORIGINS as any,
     logo: process.env.APP_LOGO as string,
+    name: (process.env.APP_NAME as string) || "Up Skillium",
   },
   database: {
     url: process.env.DATABASE_URL as string,

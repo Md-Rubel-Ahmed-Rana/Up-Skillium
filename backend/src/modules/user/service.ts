@@ -68,6 +68,7 @@ class Service {
       : generateAdminId("US-AD-0000");
     return adminId;
   }
+
   async createInstructorId(): Promise<string> {
     const lastInstructor = await User.findOne({ roleName: "instructor" }).sort({
       createdAt: -1,
@@ -77,15 +78,18 @@ class Service {
       : generateTeacherId("US-TE-0000");
     return instructorId;
   }
+
   async findUserByEmail(email: string) {
-    return User.findOne({ email: email });
+    return await User.findOne({ email: email }).populate("role");
   }
+
   async findUserById(id: string | Types.ObjectId) {
     const user = await User.findById(id)
       .select({ password: 0 })
       .populate("role");
     return user;
   }
+
   async findUsers(
     search: string = "",
     page: number = 1,
@@ -109,9 +113,11 @@ class Service {
       .limit(limit);
     return users;
   }
+
   async findUserByEmailWithPassword(email: string) {
     return await User.findOne({ email: email }).populate("role");
   }
+
   async getUsersEmailByIds(
     ids: Types.ObjectId[],
   ): Promise<{ email: string }[]> {
@@ -123,24 +129,28 @@ class Service {
     });
     return usersEmails;
   }
+
   async updateUser(
     id: string,
     updatedData: Partial<ICreateUser>,
   ): Promise<void> {
     await User.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
+
   async updateUserBasicInfo(
     id: Types.ObjectId,
     updatedData: IUserBasicInfo,
   ): Promise<void> {
     await User.findByIdAndUpdate(id, { $set: { ...updatedData } });
   }
+
   async updateUserAddress(
     id: Types.ObjectId,
     updatedData: IAddress,
   ): Promise<void> {
     await User.findByIdAndUpdate(id, { $set: { address: { ...updatedData } } });
   }
+
   async updateEmergencyContact(
     id: Types.ObjectId,
     updatedData: IEmergencyContact,
@@ -149,6 +159,7 @@ class Service {
       $set: { emergencyContact: { ...updatedData } },
     });
   }
+
   async changePassword(
     userId: string,
     oldPassword: string,
@@ -175,6 +186,7 @@ class Service {
       }
     }
   }
+
   async resetPassword(userId: string, newPassword: string): Promise<void> {
     const isExist = await User.findById(userId);
     if (!isExist) {
@@ -186,6 +198,7 @@ class Service {
       });
     }
   }
+
   async updateProfileImage(id: Types.ObjectId, imageUrl: string) {
     const user = await User.findById(id);
     if (user && user?.image) {
@@ -193,15 +206,18 @@ class Service {
     }
     await User.findByIdAndUpdate(id, { $set: { image: imageUrl } });
   }
+
   async activeOrInactiveAccount(
     userId: Types.ObjectId,
     status: string,
   ): Promise<void> {
     await User.findByIdAndUpdate(userId, { $set: { status: status } });
   }
+
   async deleteUserAccount(id: Types.ObjectId): Promise<void> {
     await User.findByIdAndDelete(id);
   }
+
   async getUserAnalyticsSummary(params: UserAnalyticsParams) {
     const { startDate, endDate } = params;
 
@@ -282,6 +298,7 @@ class Service {
       })),
     };
   }
+
   async getAllStudent() {
     const roles = await RoleService.getAllRoles();
     const studentRole: any = roles.find((role) => role?.name === "student");
@@ -290,6 +307,7 @@ class Service {
     });
     return students;
   }
+
   async getAllTeamMembers() {
     const roles = await RoleService.getAllRoles();
 

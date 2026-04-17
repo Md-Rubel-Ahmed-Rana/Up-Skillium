@@ -2,20 +2,13 @@ import path from "path";
 import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
-import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import { corsConfig } from "../config/cors";
 import Bugsnag from "@bugsnag/js";
-import BugsnagPluginExpress from "@bugsnag/plugin-express";
 import { traceMiddleware } from "./trace.middleware";
-import config from "@/config/envConfig";
 import { HttpStatusCode } from "@/lib/httpStatus";
 
 export const expressMiddlewares = (app: Application) => {
-  Bugsnag.start({
-    apiKey: config.bugsnag.apiKey,
-    plugins: [BugsnagPluginExpress],
-  });
   app.use(express.static(path.join(__dirname, "../../public")));
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
@@ -23,7 +16,6 @@ export const expressMiddlewares = (app: Application) => {
   app.use(helmet());
   // app.use(apiRateLimiter.limitAPIRequest());
   app.use(cookieParser());
-  app.use(morgan("dev"));
   app.use(traceMiddleware);
 };
 
