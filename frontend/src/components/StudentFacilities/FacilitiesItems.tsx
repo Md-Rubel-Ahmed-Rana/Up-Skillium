@@ -1,5 +1,5 @@
 import { Card, Row, Col } from "antd/lib";
-import cardData from "../StudentFacilities/facilities"; 
+import cardData from "../StudentFacilities/facilities";
 import gsap from "gsap";
 import React, { useEffect, useRef } from "react";
 
@@ -22,11 +22,12 @@ const FacilitiesItems = () => {
               start: "top 80%",
               toggleActions: "play none none reverse",
             },
-          }
+          },
         );
 
         gsap.to(el, {
-          background: "linear-gradient(120deg, rgba(255, 120, 0, 0.3), rgba(60, 180, 255, 0.3))",
+          background:
+            "linear-gradient(120deg, rgba(255, 120, 0, 0.3), rgba(60, 180, 255, 0.3))",
           backgroundSize: "200% 200%",
           backgroundPosition: "0% 50%",
           duration: 2,
@@ -45,12 +46,18 @@ const FacilitiesItems = () => {
           {cardData.map((card, index) => (
             <Col key={card.id} xs={24} sm={24} md={12} lg={10}>
               <div
-                ref={(el) => { cardsRef.current[index] = el; }}
+                ref={(el) => {
+                  cardsRef.current[index] = el;
+                }}
                 className="flex justify-center"
               >
                 <Card
-                  title={<h3 className="text-xl font-semibold text-gray-800">{card.title}</h3>}
-                  bordered={false}
+                  title={
+                    <h3 className="text-xl font-semibold text-gray-800">
+                      {card.title}
+                    </h3>
+                  }
+                  variant="outlined"
                   className="shadow-lg rounded-xl overflow-hidden transform transition-transform duration-300 ease-out hover:scale-105"
                   style={{
                     background: "rgba(240, 242, 245, 0.8)",
@@ -71,4 +78,3 @@ const FacilitiesItems = () => {
 };
 
 export default FacilitiesItems;
-

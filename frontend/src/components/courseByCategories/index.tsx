@@ -28,8 +28,8 @@ const CategorizedCourses = () => {
           <CourseSkeleton />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
-            {categorizedCourses?.map((course) => (
-              <CourseCard course={course} key={course?.id} />
+            {categorizedCourses?.map((course, index) => (
+              <CourseCard course={course} key={course?.id || index} />
             ))}
           </div>
         )}
@@ -47,8 +47,8 @@ const CategorizedCourses = () => {
           <CourseSkeleton />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 lg:gap-5">
-            {otherCourses?.map((course) => (
-              <CourseCard course={course} key={course?.id} />
+            {otherCourses?.map((course, index) => (
+              <CourseCard course={course} key={course?.id || index} />
             ))}
           </div>
         )}

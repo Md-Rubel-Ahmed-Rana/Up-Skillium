@@ -12,8 +12,8 @@ const CourseCategory = () => {
       rules={[{ required: true, message: "Please select a category" }]}
     >
       <Select placeholder="Select category" className="w-full">
-        {categories?.map((category) => (
-          <Select.Option key={category?.id} value={category?.name}>
+        {categories?.map((category, index) => (
+          <Select.Option key={category?.id || index} value={category?.name}>
             {category?.name}
           </Select.Option>
         ))}

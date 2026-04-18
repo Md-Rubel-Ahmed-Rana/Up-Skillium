@@ -17,7 +17,7 @@ const ShowQuizAnswers = ({ answers }: Props) => {
         {answers?.map((answer, index) => (
           <Card
             key={index}
-            bordered={false}
+            variant="outlined"
             className={`lg:p-4 rounded-lg ${
               answer?.isCorrect
                 ? "bg-green-100 border-l-4 border-green-500"

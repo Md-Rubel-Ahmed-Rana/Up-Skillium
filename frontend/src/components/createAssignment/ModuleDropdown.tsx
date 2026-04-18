@@ -55,10 +55,10 @@ const ModuleDropdown = ({ form }: Props) => {
           isLoading1 || isLoading2 ? <Spin size="small" /> : "No modules found"
         }
       >
-        {modules?.map((module) => (
+        {modules?.map((module, index) => (
           <Option
             className="border"
-            key={module?.id}
+            key={module?.id || index}
             value={module?.id}
             title={module?.title}
           >

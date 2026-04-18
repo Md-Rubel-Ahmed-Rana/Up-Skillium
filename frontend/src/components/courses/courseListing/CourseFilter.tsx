@@ -34,8 +34,8 @@ const CourseFilter: React.FC<Props> = ({ setFilters, filters }) => {
           value={filters.category || undefined}
           allowClear
         >
-          {categories.map((category) => (
-            <Select.Option key={category.id} value={category.name}>
+          {categories.map((category, index) => (
+            <Select.Option key={category.id || index} value={category.name}>
               {category.name}
             </Select.Option>
           ))}

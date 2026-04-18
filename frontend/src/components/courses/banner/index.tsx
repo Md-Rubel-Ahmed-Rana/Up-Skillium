@@ -8,7 +8,7 @@ type Props = {
 
 const CoursesBanner: React.FC<Props> = ({ courses }) => {
   const availableCategories = Array.from(
-    new Set(courses?.map((course) => course?.category))
+    new Set(courses?.map((course) => course?.category)),
   );
 
   return (
@@ -20,9 +20,9 @@ const CoursesBanner: React.FC<Props> = ({ courses }) => {
         className="h-full overflow-hidden"
         autoplay
       >
-        {courses?.map((course) => (
+        {courses?.map((course, index) => (
           <CarouselCard
-            key={course?.id}
+            key={course?.id || index}
             course={course}
             categories={availableCategories}
           />

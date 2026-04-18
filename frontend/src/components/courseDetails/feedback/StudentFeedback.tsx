@@ -10,7 +10,7 @@ type Props = {
 
 const StudentFeedback = ({ course }: Props) => {
   return (
-    <Card bordered={false} className="rounded-lg space-y-4">
+    <Card variant="outlined" className="rounded-lg space-y-4">
       <Divider>Student Feedback</Divider>
       <RatingCard
         ratings={{
