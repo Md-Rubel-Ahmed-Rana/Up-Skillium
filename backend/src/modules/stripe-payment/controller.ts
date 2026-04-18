@@ -5,7 +5,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   checkout = this.catchAsync(async (req: Request, res: Response) => {
     const result = await StripePaymentService.checkout(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Order created successfully!",
@@ -15,7 +15,7 @@ class Controller extends RootController {
 
   webhook = this.catchAsync(async (req: Request, res: Response) => {
     await StripePaymentService.webHook(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Event triggered from Webhook successfully",
@@ -25,7 +25,7 @@ class Controller extends RootController {
 
   webHookCart = this.catchAsync(async (req: Request, res: Response) => {
     await StripePaymentService.webHookCart(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Event triggered from Webhook cart successfully",

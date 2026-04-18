@@ -5,7 +5,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   addToCart = this.catchAsync(async (req: Request, res: Response) => {
     await CartService.addToCart(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Course added to cart successfully",
@@ -15,7 +15,7 @@ class Controller extends RootController {
 
   getAllCart = this.catchAsync(async (req: Request, res: Response) => {
     const data = await CartService.getAllCart();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Carts retrieved successfully",
@@ -26,7 +26,7 @@ class Controller extends RootController {
   getUserCart = this.catchAsync(async (req: Request, res: Response) => {
     const userId = req.params.userId;
     const data = await CartService.getUserCart(userId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Carts retrieved successfully",
@@ -37,7 +37,7 @@ class Controller extends RootController {
   removeFromCart = this.catchAsync(async (req: Request, res: Response) => {
     const cartId = req.params.cartId;
     const data = await CartService.removeFromCart(cartId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Course removed from cart successfully",
@@ -48,7 +48,7 @@ class Controller extends RootController {
   checkout = this.catchAsync(async (req: Request, res: Response) => {
     const userId = req.body.userId;
     const data = await CartService.checkout(userId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Checkout successful. Courses enrolled.",

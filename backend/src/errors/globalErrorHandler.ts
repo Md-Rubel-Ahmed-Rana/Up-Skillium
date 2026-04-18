@@ -186,8 +186,9 @@ class ErrorHandler {
         method: req.method,
         traceId: req.traceId || null,
         user: {
-          id: req.user?.id || "Unknown",
-          email: req.user?.email || "Unknown",
+          id: req.user?.id || req?.id || "Unknown",
+          email: req.user?.email || req?.email || "Unknown",
+          role: req.user?.role || req?.role || "Unknown",
         },
         ipAddress: req.ip || "Unknown",
         errorMessage: this.errorMessages,

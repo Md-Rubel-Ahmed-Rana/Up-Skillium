@@ -6,7 +6,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   createOutline = this.catchAsync(async (req: Request, res: Response) => {
     await CourseOutlineService.createOutline(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Course outline created successfully",
@@ -15,7 +15,7 @@ class Controller extends RootController {
   });
   getOutlines = this.catchAsync(async (req: Request, res: Response) => {
     const data = await CourseOutlineService.getOutlines();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Course outlines fetched successfully",
@@ -25,7 +25,7 @@ class Controller extends RootController {
   getOutline = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const data = await CourseOutlineService.getOutline(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Course outline fetched successfully",
@@ -35,7 +35,7 @@ class Controller extends RootController {
   getOutlineByCourse = this.catchAsync(async (req: Request, res: Response) => {
     const courseId = req.params.courseId;
     const data = await CourseOutlineService.getOutlineByCourse(courseId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Course outline fetched successfully",
@@ -46,7 +46,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const id = req.params.id;
       await CourseOutlineService.updateOutlineModules(id, req.body);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Course outline fetched successfully",
@@ -57,7 +57,7 @@ class Controller extends RootController {
   deleteOutline = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await CourseOutlineService.deleteOutline(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Course outline fetched successfully",
@@ -71,7 +71,7 @@ class Controller extends RootController {
         courseId,
         req.body,
       );
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Modules serial updated successfully",
@@ -87,7 +87,7 @@ class Controller extends RootController {
       moduleId,
       req.body.name,
     );
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Module name updated successfully",
@@ -98,7 +98,7 @@ class Controller extends RootController {
     const courseId = req.params.courseId as unknown as Types.ObjectId;
     const moduleId = req.params.moduleId as unknown as Types.ObjectId;
     await CourseOutlineService.deleteModule(courseId, moduleId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Module deleted successfully",
@@ -110,7 +110,7 @@ class Controller extends RootController {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
       const data =
         await CourseOutlineService.getOutlinesByInstructor(instructorId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Outlines retrieved successfully",

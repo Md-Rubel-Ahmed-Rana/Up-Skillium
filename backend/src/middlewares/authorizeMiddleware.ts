@@ -1,28 +1,27 @@
+import { IRoles } from "@/constants/roles";
+import { HttpStatusCode } from "@/lib/httpStatus";
+import ApiError from "@/shared/apiError";
 import { NextFunction, Request, Response } from "express";
 
-const checkAuthorization = (...roles: string[]) => {
+const checkAuthorization = (...allowedRoles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = req.user;
+      const role = req?.user?.role || req?.role;
 
-      if (!user || !user.role) {
-        console.info(`Unauthorized access attempt by ${user?.name}`);
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-
-      const userRole = user.role;
-
-      if (!roles.includes(userRole)) {
-        console.info(
-          `Unauthorized access for role: ${userRole} by ${user.name}`
-        );
-        return res.status(403).json({ message: "Forbidden" });
+      if (Array.isArray(allowedRoles) && allowedRoles.length > 0) {
+        if (!allowedRoles.includes(role?.trim()?.toLowerCase() as IRoles)) {
+          return next(
+            new ApiError(HttpStatusCode.FORBIDDEN, "Forbidden: Access denied"),
+          );
+        }
       }
 
       next();
     } catch (error) {
       console.error("Authorization Error:", error);
-      return res.status(500).json({ message: "Internal Server Error" });
+      return res
+        .status(HttpStatusCode.INTERNAL_SERVER_ERROR)
+        .json({ message: "Internal Server Error" });
     }
   };
 };

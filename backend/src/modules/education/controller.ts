@@ -5,7 +5,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   addEducation = this.catchAsync(async (req: Request, res: Response) => {
     await EducationService.addEducation(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Education added successfully",
@@ -14,7 +14,7 @@ class Controller extends RootController {
   });
   getEducations = this.catchAsync(async (req: Request, res: Response) => {
     const data = await EducationService.getEducations();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Educations fetched successfully",
@@ -24,7 +24,7 @@ class Controller extends RootController {
   getEducation = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const data = await EducationService.getEducation(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Education fetched successfully",
@@ -35,7 +35,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const userId = req.params.userId;
       const data = await EducationService.getEducationsByUserId(userId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Educations fetched successfully",
@@ -46,7 +46,7 @@ class Controller extends RootController {
   updateEducation = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await EducationService.updateEducation(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Education updated successfully",
@@ -56,7 +56,7 @@ class Controller extends RootController {
   deleteEducation = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await EducationService.deleteEducation(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Education deleted successfully",

@@ -5,7 +5,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   createRole = this.catchAsync(async (req: Request, res: Response) => {
     await RoleService.createRole(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Role created successfully",
@@ -14,7 +14,7 @@ class Controller extends RootController {
   });
   getAllRoles = this.catchAsync(async (req: Request, res: Response) => {
     const data = await RoleService.getAllRoles();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Roles fetched successfully",
@@ -24,7 +24,7 @@ class Controller extends RootController {
   getRoleById = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     const data = await RoleService.getRoleById(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Role fetched successfully",
@@ -34,7 +34,7 @@ class Controller extends RootController {
   getRoleByRoleName = this.catchAsync(async (req: Request, res: Response) => {
     const role = req.params.role;
     const data = await RoleService.getRoleByRoleName(role);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Role fetched successfully",
@@ -44,7 +44,7 @@ class Controller extends RootController {
   updateRole = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await RoleService.updateRole(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Role updated successfully",
@@ -54,7 +54,7 @@ class Controller extends RootController {
   deleteRole = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await RoleService.deleteRole(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Role deleted successfully",
