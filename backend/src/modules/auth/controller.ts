@@ -7,7 +7,7 @@ class Controller extends RootController {
   auth = this.catchAsync(async (req: Request, res: Response) => {
     const id: any = req?.id;
     const result = await AuthService.auth(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "User fetched  successfully",
@@ -17,7 +17,7 @@ class Controller extends RootController {
 
   register = this.catchAsync(async (req: Request, res: Response) => {
     await AuthService.register(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "User registered successfully",
@@ -32,7 +32,7 @@ class Controller extends RootController {
       password,
     );
     cookieManager.setTokens(res, accessToken, refreshToken);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Login successful",
@@ -42,7 +42,7 @@ class Controller extends RootController {
 
   logout = this.catchAsync(async (req: Request, res: Response) => {
     cookieManager.clearTokens(res);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Logout successful",
@@ -53,7 +53,7 @@ class Controller extends RootController {
   forgetPassword = this.catchAsync(async (req: Request, res: Response) => {
     const email = req.body.email as string;
     await AuthService.forgetPassword(email);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message:
@@ -64,7 +64,7 @@ class Controller extends RootController {
 
   verifyResetPasswordToken = this.catchAsync(
     async (req: Request, res: Response) => {
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Proceed to reset your password",

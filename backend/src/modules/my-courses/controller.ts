@@ -8,7 +8,7 @@ class Controller extends RootController {
   getMyCourses = this.catchAsync(async (req: Request, res: Response) => {
     const userId = req.params.userId as unknown as Types.ObjectId;
     const courses = await MyCourseService.getMyCourses(userId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "My courses retrieved successfully",
@@ -19,7 +19,7 @@ class Controller extends RootController {
     const userId = req.params.userId as unknown as Types.ObjectId;
     const courseId = req.params.courseId as unknown as Types.ObjectId;
     const course = await MyCourseService.getMySingleCourse(userId, courseId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "My course retrieved successfully",
@@ -32,7 +32,7 @@ class Controller extends RootController {
     const courseId = req.params.courseId as unknown as Types.ObjectId;
     const lessonId = req.params.lessonId as unknown as Types.ObjectId;
     await MyCourseService.completeLesson(userId, courseId, lessonId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Lesson marked as completed",
@@ -57,7 +57,7 @@ class Controller extends RootController {
       const summary =
         await MyCourseService.getStudentCourseProgressAnalyticsSummary(filters);
 
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Student course progress analytics retrieved successfully",

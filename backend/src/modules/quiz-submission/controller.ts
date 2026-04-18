@@ -10,15 +10,15 @@ class Controller extends RootController {
       const lessonId = req.params.lessonId as unknown as Types.ObjectId;
       const data = await QuizSubmissionService.getSubmittedQuizResultByLessonId(
         userId,
-        lessonId
+        lessonId,
       );
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Quiz result retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   submitQuiz = this.catchAsync(async (req: Request, res: Response) => {
     const userId = req.params.userId as unknown as Types.ObjectId;
@@ -26,9 +26,9 @@ class Controller extends RootController {
     const data = await QuizSubmissionService.submitQuiz(
       userId,
       lessonId,
-      req.body
+      req.body,
     );
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Quiz submitted successfully",
@@ -38,37 +38,37 @@ class Controller extends RootController {
   getAllQuizSubmissions = this.catchAsync(
     async (req: Request, res: Response) => {
       const data = await QuizSubmissionService.getAllQuizSubmissions();
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Quiz submissions retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   getSingleQuizSubmission = this.catchAsync(
     async (req: Request, res: Response) => {
       const id = req.params.id as unknown as Types.ObjectId;
       const data = await QuizSubmissionService.getSingleQuizSubmission(id);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Quiz submission retrieved successfully",
         data: data,
       });
-    }
+    },
   );
   getQuizSubmissionAnalyticsSummary = this.catchAsync(
     async (req: Request, res: Response) => {
       const data =
         await QuizSubmissionService.getQuizSubmissionAnalyticsSummary();
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Quiz submission analytics retrieved successfully",
         data: data,
       });
-    }
+    },
   );
 }
 

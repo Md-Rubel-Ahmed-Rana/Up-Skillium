@@ -15,6 +15,10 @@ const config = {
   },
   jwt: {
     accessTokenSecret: process.env.JWT_ACCESS_TOKEN_SECRET as string,
+    accessCookieName:
+      process.env.ACCESS_TOKEN_COOKIE_NAME || "upSkilliumAccessToken",
+    refreshCookieName:
+      process.env.REFRESH_TOKEN_COOKIE_NAME || "upSkilliumRefreshToken",
     refreshTokenSecret: process.env.JWT_REFRESH_TOKEN_SECRET as string,
     accessTokenExpire: process.env.JWT_ACCESS_TOKEN_EXPIRE as string,
     refreshTokenExpire: process.env.JWT_REFRESH_TOKEN_EXPIRE as string,
