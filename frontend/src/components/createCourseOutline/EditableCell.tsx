@@ -1,5 +1,4 @@
 import { Form, Input, InputNumber } from "antd/lib";
-import React from "react";
 
 interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
   editing: boolean;

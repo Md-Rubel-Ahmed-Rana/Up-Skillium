@@ -3,7 +3,6 @@ import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd/lib";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
 import toast from "react-hot-toast";
 import { MdEmail, MdLock } from "react-icons/md";
 

@@ -15,7 +15,7 @@ type Props = {
 const CarouselCard = ({ course }: Props) => {
   return (
     <Card
-      bordered={false}
+      variant="outlined"
       style={{
         height: "80vh",
         overflow: "hidden",

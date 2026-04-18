@@ -31,7 +31,7 @@ const CheckoutRedirectButton = ({
       },
       {
         skip: !user,
-      }
+      },
     );
 
   const myCourses = myCourseData?.data as IMyCourse[];
@@ -39,7 +39,7 @@ const CheckoutRedirectButton = ({
 
   const isStudent = user?.role?.name === "student";
   const isAlreadyEnrolled = courses?.find(
-    (crs: any) => crs._id === course?.id || crs._id === course?._id
+    (crs: any) => crs._id === course?.id || crs._id === course?._id,
   );
 
   const isLoading = isUserLoading || isCoursesLoading;
@@ -76,7 +76,7 @@ const CheckoutRedirectButton = ({
           size={buttonSize}
           type="primary"
           className={styles}
-          key="2"
+          key="1"
           iconPosition="start"
         >
           {isAlreadyEnrolled && (

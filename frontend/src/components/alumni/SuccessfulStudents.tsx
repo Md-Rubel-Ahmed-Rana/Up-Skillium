@@ -23,13 +23,13 @@ const SuccessfulStudents = ({ students }: Props) => {
 
   const paginatedStudents = studentData.slice(
     (currentPage - 1) * pageSize,
-    currentPage * pageSize
+    currentPage * pageSize,
   );
   return (
     <div>
       <div className="max-w-[1200px] w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-        {paginatedStudents.map((student) => (
-          <StudentCard student={student} key={student?.id} />
+        {paginatedStudents.map((student, index: number) => (
+          <StudentCard student={student} key={student?.id || index} />
         ))}
       </div>
 

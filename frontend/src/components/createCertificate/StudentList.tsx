@@ -14,7 +14,7 @@ const StudentList = ({ setSelectedStudent, students }: Props) => {
           <p>No students found</p>
         </div>
       ) : (
-        students?.map((student) => (
+        students?.map((student, index) => (
           <Menu.Item
             onClick={() =>
               setSelectedStudent({
@@ -22,7 +22,7 @@ const StudentList = ({ setSelectedStudent, students }: Props) => {
                 name: student?.name,
               })
             }
-            key={student?.id}
+            key={student?.id || index}
           >
             <div className="p-1  border rounded-sm hover:bg-white hover:border-primary">
               <p className="font-semibold">{student?.name}</p>
