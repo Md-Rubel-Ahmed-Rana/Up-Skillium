@@ -20,6 +20,11 @@ import { LiveClassRoutes } from "../live-class/routes";
 import { MyCourseRoutes } from "../my-courses/routes";
 import { CartRoutes } from "../cart/routes";
 import { CommonRoutes } from "../common/routes";
+import { JwtInstance } from "@/lib/jwt";
+import { AdminRoutes } from "./admin.routes";
+import { ROLES } from "@/constants/roles";
+import { StudentRoutes } from "./student.routes";
+import { InstructorRoutes } from "./instructor.routes";
 
 const router = Router();
 
@@ -64,5 +69,20 @@ router.use("/my-course", MyCourseRoutes);
 router.use("/cart", CartRoutes);
 
 router.use("/common", CommonRoutes);
+
+// role base api access (RBAC)
+router.use("/admin", JwtInstance.authenticate([ROLES.ADMIN]), AdminRoutes);
+
+router.use(
+  "/student",
+  JwtInstance.authenticate([ROLES.STUDENT]),
+  StudentRoutes,
+);
+
+router.use(
+  "/instructor",
+  JwtInstance.authenticate([ROLES.INSTRUCTOR]),
+  InstructorRoutes,
+);
 
 export const RootRoutes = router;

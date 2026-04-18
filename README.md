@@ -157,6 +157,7 @@ The application uses **Pino** and **pino-http** for high-performance structured 
   "statusCode": 200,
   "durationMs": 45
 }
+```
 
 ## Challenges
 
@@ -215,4 +216,7 @@ Contributions to the **Up Skillium** LMS project are advanced welcome. Whether y
 ## License MIT
 
 This project has not been licensed yet.
+
+```
+
 ```

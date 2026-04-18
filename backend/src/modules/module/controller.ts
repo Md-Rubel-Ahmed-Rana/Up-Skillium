@@ -6,7 +6,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   createNewModule = this.catchAsync(async (req: Request, res: Response) => {
     await ModuleService.createNewModule(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Module created successfully",
@@ -24,7 +24,7 @@ class Controller extends RootController {
       limit,
       courseId,
     );
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Modules fetched successfully",
@@ -34,7 +34,7 @@ class Controller extends RootController {
   getSingleModule = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const data = await ModuleService.getSingleModule(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Module fetched successfully",
@@ -44,7 +44,7 @@ class Controller extends RootController {
   getModuleByCourseId = this.catchAsync(async (req: Request, res: Response) => {
     const courseId = req.params.courseId as unknown as Types.ObjectId;
     const data = await ModuleService.getModuleByCourseId(courseId);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Modules fetched successfully",
@@ -55,7 +55,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const courseId = req.params.courseId as unknown as Types.ObjectId;
       const data = await ModuleService.getFullClassByCourseId(courseId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Classes fetched successfully",
@@ -66,7 +66,7 @@ class Controller extends RootController {
   updateModule = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await ModuleService.updateModule(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Module updated successfully",
@@ -76,7 +76,7 @@ class Controller extends RootController {
   deleteModule = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await ModuleService.deleteModule(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Module deleted successfully",
@@ -87,7 +87,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
       const data = await ModuleService.getAllModulesByInstructor(instructorId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Modules retrieved successfully",

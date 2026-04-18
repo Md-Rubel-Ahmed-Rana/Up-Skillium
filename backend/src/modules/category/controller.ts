@@ -5,7 +5,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   createCategory = this.catchAsync(async (req: Request, res: Response) => {
     await CategoryService.createCategory(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Category created successfully",
@@ -14,7 +14,7 @@ class Controller extends RootController {
   });
   getCategories = this.catchAsync(async (req: Request, res: Response) => {
     const data = await CategoryService.getCategories();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Categories fetched successfully",
@@ -23,7 +23,7 @@ class Controller extends RootController {
   });
   updateCategories = this.catchAsync(async (req: Request, res: Response) => {
     await CategoryService.updateCategories(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Categories updated successfully",
@@ -32,7 +32,7 @@ class Controller extends RootController {
   });
   deleteCategories = this.catchAsync(async (req: Request, res: Response) => {
     await CategoryService.deleteCategories(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Categories deleted successfully",

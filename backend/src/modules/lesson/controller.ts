@@ -6,7 +6,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   createLesson = this.catchAsync(async (req: Request, res: Response) => {
     await LessonService.createLesson(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Lesson created successfully",
@@ -15,7 +15,7 @@ class Controller extends RootController {
   });
   createVideoLesson = this.catchAsync(async (req: Request, res: Response) => {
     await LessonService.createVideoLesson(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Video lesson created successfully",
@@ -24,7 +24,7 @@ class Controller extends RootController {
   });
   createQuizLesson = this.catchAsync(async (req: Request, res: Response) => {
     await LessonService.createQuizLesson(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Quiz lesson created successfully",
@@ -40,7 +40,7 @@ class Controller extends RootController {
       Number(page),
       Number(limit),
     );
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Lessons fetched successfully",
@@ -51,7 +51,7 @@ class Controller extends RootController {
   getLessonById = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const lesson = await LessonService.getLessonById(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Lesson fetched successfully",
@@ -64,7 +64,7 @@ class Controller extends RootController {
       const lessonId = req.params.lessonId as unknown as Types.ObjectId;
       const lesson =
         await LessonService.getLessonByIdWithQuizCorrectAnswer(lessonId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Lesson fetched with quiz correct answer successfully",
@@ -76,7 +76,7 @@ class Controller extends RootController {
   updateLesson = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await LessonService.updateLesson(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Lesson updated successfully",
@@ -87,7 +87,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const lessonId = req.params.lessonId as unknown as Types.ObjectId;
       await LessonService.updateQuizzesInLesson(lessonId, req.body);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Lesson quizzes updated successfully",
@@ -99,7 +99,7 @@ class Controller extends RootController {
   deleteLesson = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await LessonService.deleteLesson(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Lesson deleted successfully",
@@ -115,7 +115,7 @@ class Controller extends RootController {
       Number(page),
       Number(limit),
     );
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Lessons for course fetched successfully",
@@ -127,7 +127,7 @@ class Controller extends RootController {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
       const lessons =
         await LessonService.getAllLessonsByInstructor(instructorId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Lessons retrieved successfully",
@@ -140,7 +140,7 @@ class Controller extends RootController {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
       const lessons =
         await LessonService.getAllQuizLessonsByInstructor(instructorId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Quizzes retrieved successfully",
@@ -153,7 +153,7 @@ class Controller extends RootController {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
       const lessons =
         await LessonService.getAllAssignmentLessonsByInstructor(instructorId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Assignments retrieved successfully",

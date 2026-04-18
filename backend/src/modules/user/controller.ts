@@ -10,7 +10,7 @@ class Controller extends RootController {
     const page = parseInt(req.query.page as string) || 1;
     const limit = parseInt(req.query.limit as string) || 10;
     const users = await UserService.findUsers(searchText, page, limit);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Users found successfully",
@@ -20,7 +20,7 @@ class Controller extends RootController {
   getSingleUser = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params?.id as unknown as Types.ObjectId;
     const user = await UserService.findUserById(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "User found successfully",
@@ -30,7 +30,7 @@ class Controller extends RootController {
   updateUser = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id;
     await UserService.updateUser(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "User updated successfully",
@@ -42,7 +42,7 @@ class Controller extends RootController {
     const oldPassword = req.body.oldPassword;
     const newPassword = req.body.newPassword;
     await UserService.changePassword(userId, oldPassword, newPassword);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Password has been changed successfully",
@@ -53,7 +53,7 @@ class Controller extends RootController {
     const userId = req.body.id;
     const newPassword = req.body.password;
     await UserService.resetPassword(userId, newPassword);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Password has been reset successfully",
@@ -63,7 +63,7 @@ class Controller extends RootController {
   updateProfileImage = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await UserService.updateProfileImage(id, req.url);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Profile picture changed successfully",
@@ -73,7 +73,7 @@ class Controller extends RootController {
   updateUserBasicInfo = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await UserService.updateUserBasicInfo(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "User basic info updated successfully",
@@ -83,7 +83,7 @@ class Controller extends RootController {
   updateUserAddress = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await UserService.updateUserAddress(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Address updated successfully",
@@ -94,7 +94,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const id = req.params.id as unknown as Types.ObjectId;
       await UserService.updateEmergencyContact(id, req.body);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Emergency contact updated successfully",
@@ -107,7 +107,7 @@ class Controller extends RootController {
       const id = req.params.id as unknown as Types.ObjectId;
       const status = req.params?.status as string;
       await UserService.activeOrInactiveAccount(id, status);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: `User account has been ${status} successfully!`,
@@ -118,7 +118,7 @@ class Controller extends RootController {
   deleteUserAccount = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await UserService.deleteUserAccount(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: `User account has been deleted successfully!`,
@@ -129,7 +129,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const params = req.query as UserAnalyticsParams;
       const data = await UserService.getUserAnalyticsSummary(params);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: `Users analytics summary retrieved successfully!`,
@@ -139,7 +139,7 @@ class Controller extends RootController {
   );
   getAllStudent = this.catchAsync(async (req: Request, res: Response) => {
     const data = await UserService.getAllStudent();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: `Students retrieved successfully!`,
@@ -148,7 +148,7 @@ class Controller extends RootController {
   });
   getAllTeamMembers = this.catchAsync(async (req: Request, res: Response) => {
     const data = await UserService.getAllTeamMembers();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: `Team members retrieved successfully!`,

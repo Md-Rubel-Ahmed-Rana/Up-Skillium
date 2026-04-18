@@ -6,7 +6,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   addReview = this.catchAsync(async (req: Request, res: Response) => {
     await ReviewService.addReview(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Review added successfully",
@@ -15,7 +15,7 @@ class Controller extends RootController {
   });
   getAllReviews = this.catchAsync(async (req: Request, res: Response) => {
     const data = await ReviewService.getAllReviews();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Reviews retrieved successfully",
@@ -24,7 +24,7 @@ class Controller extends RootController {
   });
   getAllCourseReviews = this.catchAsync(async (req: Request, res: Response) => {
     const data = await ReviewService.getAllCourseReviews();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Courses reviews retrieved successfully",
@@ -34,7 +34,7 @@ class Controller extends RootController {
   getAllInstructorReviews = this.catchAsync(
     async (req: Request, res: Response) => {
       const data = await ReviewService.getAllInstructorReviews();
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Instructors reviews retrieved successfully",
@@ -45,7 +45,7 @@ class Controller extends RootController {
   getSingleReview = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const data = await ReviewService.getSingleReview(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Review retrieved successfully",
@@ -62,7 +62,7 @@ class Controller extends RootController {
         page,
         limit,
       );
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Reviews retrieved successfully",
@@ -73,7 +73,7 @@ class Controller extends RootController {
   updateReview = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await ReviewService.updateReview(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Review updated successfully",
@@ -83,7 +83,7 @@ class Controller extends RootController {
   deleteReview = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await ReviewService.deleteReview(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Review deleted successfully",
