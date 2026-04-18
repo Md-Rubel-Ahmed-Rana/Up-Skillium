@@ -9,7 +9,7 @@ type Props = {
 
 const CourseInformation = ({ course }: Props) => {
   return (
-    <Card bordered={false} className="rounded-lg space-y-4">
+    <Card variant="outlined" className="rounded-lg space-y-4">
       <Divider>Course Information</Divider>
 
       <div className="space-y-2">
@@ -39,8 +39,8 @@ const CourseInformation = ({ course }: Props) => {
             Technologies:
           </Text>
           <div className="flex flex-wrap gap-2">
-            {course?.technologies?.map((tech) => (
-              <Tag color="geekblue" key={tech}>
+            {course?.technologies?.map((tech, index) => (
+              <Tag color="geekblue" key={tech || index}>
                 {tech}
               </Tag>
             ))}

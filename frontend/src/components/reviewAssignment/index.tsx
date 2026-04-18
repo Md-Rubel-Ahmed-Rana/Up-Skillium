@@ -12,7 +12,10 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import ShowAssignmentRequirements from "./ShowAssignmentRequirements";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const TiptapEditor = dynamic(() => import("../editor/TiptapEditor"), {
+  ssr: false,
+});
 
 const ReviewAssignment = () => {
   const { query, back } = useRouter();
@@ -32,10 +35,10 @@ const ReviewAssignment = () => {
   const assignment = data?.data as IAssignmentSubmission;
 
   const [fullMarks, setFullMarks] = useState<number | 0>(
-    assignment?.fullMark || 0
+    assignment?.fullMark || 0,
   );
   const [yourMarks, setYourMarks] = useState<number | 0>(
-    assignment?.yourMark || 0
+    assignment?.yourMark || 0,
   );
 
   const [feedback, setFeedback] = useState<string>(assignment?.feedback || "");
@@ -66,7 +69,7 @@ const ReviewAssignment = () => {
           res?.error?.message ||
             res?.error?.data?.message ||
             res?.data?.error?.message ||
-            "Failed to submit feedback"
+            "Failed to submit feedback",
         );
       }
     } catch (error: any) {
@@ -149,13 +152,11 @@ const ReviewAssignment = () => {
                 <label className="block text-sm font-medium mb-1">
                   Feedback:
                 </label>
-                <ReactQuill
+
+                <TiptapEditor
                   value={assignment?.feedback || feedback}
+                  placeholder="Write your lesson content here..."
                   onChange={(value) => setFeedback(value)}
-                  defaultValue={assignment?.feedback}
-                  theme="snow"
-                  placeholder="Write your answer here..."
-                  className="bg-white rounded-lg shadow-sm"
                 />
               </div>
 
@@ -170,8 +171,8 @@ const ReviewAssignment = () => {
                 {isSubmitting
                   ? "Submitting"
                   : assignment
-                  ? "Resubmit Feedback"
-                  : "Submit Feedback"}
+                    ? "Resubmit Feedback"
+                    : "Submit Feedback"}
               </Button>
             </Card>
           )}

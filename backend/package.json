@@ -4,9 +4,9 @@
   "main": "./dist/server.js",
   "license": "MIT",
   "scripts": {
-    "build": "tsc && tsc-alias",
-    "dev": "ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/server.ts",
-    "start": "node -r tsconfig-paths/register dist/server.js",
+    "build": "node api.js && tsc && tsc-alias",
+    "dev": "node api.js && ts-node-dev --respawn --transpile-only -r tsconfig-paths/register src/server.ts",
+    "start": "node api.js && node -r tsconfig-paths/register dist/server.js",
     "test": "jest",
     "docker:build": "docker-compose build",
     "docker:start": "docker-compose up -d",

@@ -22,7 +22,7 @@ const OutlineModules = ({ modules }: Props) => {
             {modules?.map((module, index) => (
               <li
                 className="bg-white p-2 rounded-md font-serif text-xs"
-                key={module?.id}
+                key={module?.id || index}
               >
                 {`Module-${index + 1} : ${module?.name}`}
               </li>

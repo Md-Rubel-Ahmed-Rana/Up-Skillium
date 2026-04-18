@@ -5,7 +5,10 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import ModuleDropdown from "./ModuleDropdown";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const TiptapEditor = dynamic(() => import("../editor/TiptapEditor"), {
+  ssr: false,
+});
 
 const CreateAssignment = () => {
   const [form] = Form.useForm();
@@ -24,14 +27,14 @@ const CreateAssignment = () => {
       const result: any = await createAssignment({ data: assignment });
       if (result?.data?.statusCode === 201) {
         toast.success(
-          result?.data?.message || "Assignment created successfully!"
+          result?.data?.message || "Assignment created successfully!",
         );
       } else {
         toast.error(
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to create assignment."
+            "Failed to create assignment.",
         );
       }
     } catch (error: any) {
@@ -82,10 +85,8 @@ const CreateAssignment = () => {
           name="content"
           rules={[{ required: true, message: "Content is required" }]}
         >
-          <ReactQuill
-            theme="snow"
-            placeholder="Write your content here..."
-            className="bg-white rounded-lg shadow-sm"
+          <TiptapEditor
+            value={form.getFieldValue("content")}
             onChange={(value) => form.setFieldValue("content", value)}
           />
         </Form.Item>

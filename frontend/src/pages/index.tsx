@@ -6,7 +6,7 @@ import { ICourse } from "@/types/course.type";
 import { IReview } from "@/types/review.type";
 import { IUser } from "@/types/user.type";
 import PageMetadata from "@/utils/PageMetadata";
-import Lenis from "@studio-freight/lenis";
+import Lenis from "lenis";
 import { ReactElement, useEffect } from "react";
 
 type HomePageProps = {

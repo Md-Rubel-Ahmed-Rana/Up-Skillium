@@ -43,6 +43,7 @@ import {
   MdAddToQueue,
   MdAssignmentTurnedIn,
   MdHistory,
+  MdLocationOn,
   MdOutlineLibraryBooks,
   MdPassword,
   MdPublishedWithChanges,
@@ -401,6 +402,11 @@ export const adminSidebarItems: MenuProps["items"] = [
   },
   {
     key: "13",
+    icon: <MdLocationOn />,
+    label: <Link href={"/dashboard/address"}>Address</Link>,
+  },
+  {
+    key: "14",
     icon: <FaSignOutAlt />,
     label: <LogoutButton />,
   },
@@ -571,6 +577,11 @@ export const instructorSidebarItems: MenuProps["items"] = [
     label: <Link href="/dashboard/my-students">My Students</Link>,
   },
   {
+    key: "9",
+    icon: <MdLocationOn />,
+    label: <Link href={"/dashboard/address"}>Address</Link>,
+  },
+  {
     key: "10",
     icon: <FaSignOutAlt />,
     label: <LogoutButton />,
@@ -605,6 +616,11 @@ export const studentSidebarItems: MenuProps["items"] = [
   },
   {
     key: "6",
+    icon: <MdLocationOn />,
+    label: <Link href={"/dashboard/address"}>Address</Link>,
+  },
+  {
+    key: "7",
     icon: <FaSignOutAlt />,
     label: <LogoutButton />,
   },

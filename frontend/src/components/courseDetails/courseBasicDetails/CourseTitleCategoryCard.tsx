@@ -10,7 +10,7 @@ type Props = {
 
 const CourseTitleCategoryCard = ({ title, category, totalStudents }: Props) => {
   return (
-    <Card bordered={false} className="rounded-lg p-4">
+    <Card variant="outlined" className="rounded-lg p-4">
       <h3 className="font-semibold text-lg lg:text-2xl">{title}</h3>
       <Text className="text-gray-500 block mb-2">{category}</Text>
       <Button

@@ -7,7 +7,9 @@ import { Button, Form, Input } from "antd/lib";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const TiptapEditor = dynamic(() => import("../editor/TiptapEditor"), {
+  ssr: false,
+});
 
 const UpdateAssignment = () => {
   const { query, back } = useRouter();
@@ -30,14 +32,14 @@ const UpdateAssignment = () => {
       });
       if (result?.data?.statusCode === 200) {
         toast.success(
-          result?.data?.message || "Assignment updated successfully!"
+          result?.data?.message || "Assignment updated successfully!",
         );
       } else {
         toast.error(
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to update assignment."
+            "Failed to update assignment.",
         );
       }
     } catch (error: any) {
@@ -83,12 +85,10 @@ const UpdateAssignment = () => {
               name="content"
               rules={[{ required: true, message: "Content is required" }]}
             >
-              <ReactQuill
-                theme="snow"
-                placeholder="Write your content here..."
-                className="bg-white rounded-lg shadow-sm"
+              <TiptapEditor
+                value={form.getFieldValue("content")}
+                placeholder="Write your lesson content here..."
                 onChange={(value) => form.setFieldValue("content", value)}
-                value={assignment?.content}
               />
             </Form.Item>
             <div className="flex justify-between">

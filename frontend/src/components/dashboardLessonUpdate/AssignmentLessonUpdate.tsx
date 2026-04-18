@@ -5,7 +5,9 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const TiptapEditor = dynamic(() => import("../editor/TiptapEditor"), {
+  ssr: false,
+});
 
 type Props = {
   lesson: ILesson;
@@ -32,7 +34,7 @@ const AssignmentLessonUpdate = ({ lesson }: Props) => {
       });
       if (result?.data?.statusCode === 200) {
         toast.success(
-          result?.data?.message || "Lesson was updated successfully!"
+          result?.data?.message || "Lesson was updated successfully!",
         );
         router.back();
       } else {
@@ -40,7 +42,7 @@ const AssignmentLessonUpdate = ({ lesson }: Props) => {
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to update lesson"
+            "Failed to update lesson",
         );
       }
     } catch (error: any) {
@@ -93,13 +95,11 @@ const AssignmentLessonUpdate = ({ lesson }: Props) => {
         <Input type="number" placeholder="Enter lesson serial" />
       </Form.Item>
       <Form.Item label="Content" name="content">
-        <ReactQuill
-          value={content}
-          onChange={handleContentChange}
-          theme="snow"
-          placeholder="Write content here..."
-          className="bg-white rounded-lg shadow-sm"
-        />{" "}
+        <TiptapEditor
+          value={form.getFieldValue("content")}
+          placeholder="Write your lesson content here..."
+          onChange={(value) => form.setFieldValue("content", value)}
+        />
       </Form.Item>
 
       <Form.Item>

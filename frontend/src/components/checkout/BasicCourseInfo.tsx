@@ -20,8 +20,8 @@ const BasicCourseInfo = ({ title, category, image, technologies }: Props) => {
         {category}
       </h3>
       <div className="flex flex-wrap gap-2 mt-2">
-        {technologies?.map((tech) => (
-          <Tag color="geekblue" key={tech}>
+        {technologies?.map((tech, index) => (
+          <Tag color="geekblue" key={tech || index}>
             {tech}
           </Tag>
         ))}

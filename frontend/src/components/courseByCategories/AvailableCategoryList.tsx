@@ -17,17 +17,17 @@ const AvailableCategoryList = () => {
 
   return (
     <div className="flex lg:flex-wrap lg:gap-4 gap-2 mt-4 w-full lg:w-auto overflow-x-auto mb-4">
-      {availableCategoriesCourses?.map((course) => (
+      {availableCategoriesCourses?.map((course, index) => (
         <Link
-          key={course?.id}
+          key={course?.id || index}
           href={`/courses/category/${makeCategoryAsUrl(
-            course?.category
+            course?.category,
           )}?category=${course?.category}&courseTitle=${
             course?.title
           }&description=${
             course?.description
           }&techs=${course?.technologies?.join("-")}&tags=${course?.tags?.join(
-            "-"
+            "-",
           )}&courseId=${course?.id}`}
         >
           <Button
