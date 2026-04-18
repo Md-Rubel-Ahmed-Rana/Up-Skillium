@@ -32,26 +32,26 @@ const ModuleContainer = ({ modules: initialModules, courseId }: Props) => {
     const droppedData = handleCourseOutlineDragEndDrop(
       source?.index,
       destination?.index,
-      initialModules,
+      initialModules
     );
     await handleUpdateModuleSerialNumber(droppedData);
   };
 
   const handleUpdateModuleSerialNumber = async (
-    data: ICourseOutlineModuleSerialUpdate,
+    data: ICourseOutlineModuleSerialUpdate
   ) => {
     try {
       const result: any = await updateSerial({ courseId, data });
       if (result?.data?.statusCode === 200) {
         toast.success(
-          result?.data?.message || "Modules serial updated successfully!",
+          result?.data?.message || "Modules serial updated successfully!"
         );
       } else {
         toast.error(
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to update modules serial.",
+            "Failed to update modules serial."
         );
       }
     } catch (error: any) {
@@ -63,28 +63,24 @@ const ModuleContainer = ({ modules: initialModules, courseId }: Props) => {
     setModules(initialModules);
   }, [initialModules]);
 
-  const DragDropContextComponent = DragDropContext as any;
-  const DroppableComponent = Droppable as any;
-  const DraggableComponent = Draggable as any;
-
   return (
-    <DragDropContextComponent onDragEnd={handleDragEnd}>
+    <DragDropContext onDragEnd={handleDragEnd}>
       <div className="lg:p-4 p-2 bg-gray-100 rounded-lg shadow-md">
         <h2 className="text-lg font-semibold mb-4">Module List</h2>
-        <DroppableComponent droppableId={courseId}>
-          {(provided: any) => (
+        <Droppable droppableId={courseId}>
+          {(provided) => (
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
               className="space-y-3"
             >
               {modules?.map((module, index) => (
-                <DraggableComponent
+                <Draggable
                   key={module?.id.toString()}
                   draggableId={module?.id.toString()}
                   index={index}
                 >
-                  {(provided: any) => (
+                  {(provided) => (
                     <div ref={provided.innerRef} {...provided.draggableProps}>
                       <ModuleItem
                         module={module}
@@ -93,14 +89,14 @@ const ModuleContainer = ({ modules: initialModules, courseId }: Props) => {
                       />
                     </div>
                   )}
-                </DraggableComponent>
+                </Draggable>
               ))}
               {provided.placeholder}
             </div>
           )}
-        </DroppableComponent>
+        </Droppable>
       </div>
-    </DragDropContextComponent>
+    </DragDropContext>
   );
 };
 
