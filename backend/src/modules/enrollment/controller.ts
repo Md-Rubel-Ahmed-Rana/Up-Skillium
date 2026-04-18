@@ -7,7 +7,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   createEnrollment = this.catchAsync(async (req: Request, res: Response) => {
     await EnrollmentService.createEnrollment(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Enrollment created successfully",
@@ -18,7 +18,7 @@ class Controller extends RootController {
   getEnrollmentById = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const enrollment = await EnrollmentService.getEnrollmentById(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Enrollment retrieved successfully",
@@ -30,7 +30,7 @@ class Controller extends RootController {
       const userId = req.params.userId as unknown as Types.ObjectId;
       const enrollment =
         await EnrollmentService.getSuccessEnrollmentForStudent(userId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Enrollments retrieved successfully",
@@ -43,7 +43,7 @@ class Controller extends RootController {
       const userId = req.params.userId as unknown as Types.ObjectId;
       const enrollment =
         await EnrollmentService.getOrderEnrollmentHistoryForStudent(userId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Order history retrieved successfully",
@@ -54,7 +54,7 @@ class Controller extends RootController {
 
   updateEnrollment = this.catchAsync(async (req: Request, res: Response) => {
     await EnrollmentService.updateEnrollment(req.params.id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Enrollment updated successfully",
@@ -64,7 +64,7 @@ class Controller extends RootController {
 
   deleteEnrollment = this.catchAsync(async (req: Request, res: Response) => {
     await EnrollmentService.deleteEnrollment(req.params.id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Enrollment deleted successfully",
@@ -74,7 +74,7 @@ class Controller extends RootController {
 
   getAllOrderHistory = this.catchAsync(async (req: Request, res: Response) => {
     const result = await EnrollmentService.getAllOrderHistory();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Order histories retrieved successfully",
@@ -84,7 +84,7 @@ class Controller extends RootController {
   getAllSuccessEnrollments = this.catchAsync(
     async (req: Request, res: Response) => {
       const result = await EnrollmentService.getAllSuccessEnrollments();
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Enrollments retrieved successfully",
@@ -102,7 +102,7 @@ class Controller extends RootController {
       +limit,
     );
 
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Search results retrieved successfully",
@@ -116,7 +116,7 @@ class Controller extends RootController {
       const result =
         await EnrollmentService.getEnrollmentAnalyticsSummary(params);
 
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Enrollment analytics summary retrieved successfully",

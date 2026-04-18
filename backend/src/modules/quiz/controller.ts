@@ -6,7 +6,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   createQuiz = this.catchAsync(async (req: Request, res: Response) => {
     await QuizService.createQuiz(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Quiz created successfully",
@@ -22,7 +22,7 @@ class Controller extends RootController {
       Number(page),
       Number(limit),
     );
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Quizzes fetched successfully",
@@ -36,7 +36,7 @@ class Controller extends RootController {
       const quizzes = await QuizService.getQuizzesByModuleId(
         new Types.ObjectId(moduleId),
       );
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Quizzes fetched successfully by module ID",
@@ -48,7 +48,7 @@ class Controller extends RootController {
   getSingleQuiz = this.catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
     const quiz = await QuizService.getSingleQuiz(new Types.ObjectId(id));
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Single quiz fetched successfully",
@@ -59,7 +59,7 @@ class Controller extends RootController {
   updateQuiz = this.catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
     await QuizService.updateQuiz(new Types.ObjectId(id), req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Quiz updated successfully",
@@ -70,7 +70,7 @@ class Controller extends RootController {
   deleteQuiz = this.catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
     await QuizService.deleteQuiz(new Types.ObjectId(id));
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Quiz deleted successfully",

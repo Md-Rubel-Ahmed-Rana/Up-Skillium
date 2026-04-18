@@ -6,7 +6,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   submit = this.catchAsync(async (req: Request, res: Response) => {
     await AssignmentSubmissionService.submit(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Assignment submitted successfully",
@@ -15,7 +15,7 @@ class Controller extends RootController {
   });
   getAllSubmission = this.catchAsync(async (req: Request, res: Response) => {
     const data = await AssignmentSubmissionService.getAllSubmission();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Assignment submissions retrieved successfully",
@@ -25,7 +25,7 @@ class Controller extends RootController {
   getSingleSubmission = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const data = await AssignmentSubmissionService.getSingleSubmission(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Assignment submission retrieved successfully",
@@ -35,7 +35,7 @@ class Controller extends RootController {
   getAllPendingSubmissions = this.catchAsync(
     async (req: Request, res: Response) => {
       const data = await AssignmentSubmissionService.getAllPendingSubmissions();
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Pending submissions retrieved successfully",
@@ -47,7 +47,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const data =
         await AssignmentSubmissionService.getAllReviewedSubmissions();
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Reviewed submissions retrieved successfully",
@@ -64,7 +64,7 @@ class Controller extends RootController {
           userId,
           lessonId,
         );
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Assignment submission retrieved successfully",
@@ -75,7 +75,7 @@ class Controller extends RootController {
   updateAssignmentReview = this.catchAsync(
     async (req: Request, res: Response) => {
       await AssignmentSubmissionService.updateAssignmentReview(req.body);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Assignment reviewed retrieved successfully",
@@ -86,7 +86,7 @@ class Controller extends RootController {
   updateSubmission = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await AssignmentSubmissionService.updateSubmission(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Assignment reviewed retrieved successfully",
@@ -100,7 +100,7 @@ class Controller extends RootController {
         await AssignmentSubmissionService.getPendingAssignmentByInstructor(
           instructorId,
         );
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Pending assignments retrieved successfully",
@@ -115,7 +115,7 @@ class Controller extends RootController {
         await AssignmentSubmissionService.getCompletedAssignmentByInstructor(
           instructorId,
         );
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Completed assignments retrieved successfully",
@@ -127,7 +127,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const data =
         await AssignmentSubmissionService.getAssignmentSubmissionAnalyticsSummary();
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Assignments submission analytics retrieved successfully",

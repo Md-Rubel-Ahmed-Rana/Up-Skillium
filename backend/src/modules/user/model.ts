@@ -2,13 +2,6 @@ import { model, Schema } from "mongoose";
 import { IUser } from "./interface";
 import schemaOption from "@/utils/schemaOption";
 
-const addressSchema = new Schema({
-  street: { type: String },
-  city: { type: String },
-  state: { type: String },
-  country: { type: String },
-});
-
 const emergencyContactSchema = new Schema({
   name: { type: String },
   relationship: { type: String },
@@ -64,7 +57,9 @@ export const userSchema = new Schema<IUser>(
       default: "active",
     },
     address: {
-      type: addressSchema,
+      type: Schema.Types.ObjectId,
+      default: null,
+      ref: "Address",
     },
     emergencyContact: {
       type: emergencyContactSchema,

@@ -1,12 +1,5 @@
 import { Types } from "mongoose";
 
-export type IAddress = {
-  street: string;
-  city: string;
-  state: string;
-  country: string;
-};
-
 export type IEmergencyContact = {
   name: string;
   relationship: string;
@@ -33,7 +26,7 @@ export type IGetUser = {
   roleName: string;
   dateOfBirth: Date;
   gender: string;
-  address: IAddress;
+  address: Types.ObjectId;
   emergencyContact: IEmergencyContact;
   phoneNumber: string;
 };
@@ -49,7 +42,7 @@ export type IUser = {
   password: string;
   gender: string;
   status: "active" | "inactive";
-  address: IAddress;
+  address?: Types.ObjectId;
   emergencyContact: IEmergencyContact;
   phoneNumber: string;
 };

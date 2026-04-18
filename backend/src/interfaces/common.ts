@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 
 export type IApiResponse<T> = {
   statusCode: number;
+  traceId?: string | undefined;
   success: boolean;
   message?: string | null;
   data?: T | null;
@@ -19,3 +20,10 @@ export type IJwtPayload = {
 };
 
 export type ITokens = { accessToken: string; refreshToken: string };
+
+export type IPaginationOptions = {
+  page?: number;
+  limit?: number;
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+};

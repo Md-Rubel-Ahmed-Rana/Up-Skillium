@@ -7,7 +7,7 @@ class Controller extends RootController {
   createCertificate = this.catchAsync(async (req: Request, res: Response) => {
     console.log("From certificate controller", req.body);
     await CertificateService.createCertificate(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Certificate created successfully",
@@ -16,7 +16,7 @@ class Controller extends RootController {
   });
   getAllCertificate = this.catchAsync(async (req: Request, res: Response) => {
     const data = await CertificateService.getAllCertificate();
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Certificates fetched successfully",
@@ -27,7 +27,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const id = req.params.id as unknown as Types.ObjectId;
       const data = await CertificateService.getSingleCertificate(id);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Certificate fetched successfully",
@@ -39,7 +39,7 @@ class Controller extends RootController {
     async (req: Request, res: Response) => {
       const userId = req.params.userId as unknown as Types.ObjectId;
       const data = await CertificateService.getCertificatesByUserId(userId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Certificates retrieved successfully",
@@ -52,7 +52,7 @@ class Controller extends RootController {
       const instructorId = req.params.instructorId as unknown as Types.ObjectId;
       const data =
         await CertificateService.getCertificatesByInstructor(instructorId);
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Certificates retrieved successfully",
@@ -63,7 +63,7 @@ class Controller extends RootController {
   updateCertificate = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await CertificateService.updateCertificate(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Certificate updated successfully",
@@ -73,7 +73,7 @@ class Controller extends RootController {
   deleteCertificate = this.catchAsync(async (req: Request, res: Response) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await CertificateService.deleteCertificate(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Certificate deleted successfully",
@@ -83,7 +83,7 @@ class Controller extends RootController {
   getCertificateAnalyticsSummary = this.catchAsync(
     async (req: Request, res: Response) => {
       const data = await CertificateService.getCertificateAnalyticsSummary();
-      this.apiResponse(res, {
+      this.apiResponse(req, res, {
         statusCode: 200,
         success: true,
         message: "Certificate analytics retrieved successfully",

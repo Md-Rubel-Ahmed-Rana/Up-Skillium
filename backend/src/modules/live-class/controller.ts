@@ -5,7 +5,7 @@ import RootController from "@/shared/rootController";
 class Controller extends RootController {
   createLiveClass = this.catchAsync(async (req, res) => {
     await LiveClassService.createLiveClass(req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 201,
       success: true,
       message: "Live class created successfully!",
@@ -30,7 +30,7 @@ class Controller extends RootController {
 
     const classes = await LiveClassService.getAllLiveClasses(filters);
 
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Live classes retrieved successfully!",
@@ -42,7 +42,7 @@ class Controller extends RootController {
     const classes =
       await LiveClassService.getUpcomingLiveClassesByInstructor(instructorId);
 
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Upcoming live classes retrieved successfully!",
@@ -54,7 +54,7 @@ class Controller extends RootController {
     const classes =
       await LiveClassService.getCompletedLiveClassesByInstructor(instructorId);
 
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Completed live classes retrieved successfully!",
@@ -65,7 +65,7 @@ class Controller extends RootController {
     const studentId = req.params.studentId as unknown as Types.ObjectId;
     const classes = await LiveClassService.getLiveClassesByStudent(studentId);
 
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Live classes retrieved successfully!",
@@ -75,7 +75,7 @@ class Controller extends RootController {
   getSingleClass = this.catchAsync(async (req, res) => {
     const id = req.params.id as unknown as Types.ObjectId;
     const data = await LiveClassService.getSingleClass(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Live class retrieved successfully!",
@@ -85,7 +85,7 @@ class Controller extends RootController {
   updateClass = this.catchAsync(async (req, res) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await LiveClassService.updateClass(id, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Live class updated successfully!",
@@ -95,7 +95,7 @@ class Controller extends RootController {
   deleteClass = this.catchAsync(async (req, res) => {
     const id = req.params.id as unknown as Types.ObjectId;
     await LiveClassService.deleteClass(id);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Live class deleted successfully!",
@@ -105,7 +105,7 @@ class Controller extends RootController {
   updateStudentsAttendees = this.catchAsync(async (req, res) => {
     const liveClassId = req.params.liveClassId as unknown as Types.ObjectId;
     await LiveClassService.updateStudentsAttendees(liveClassId, req.body);
-    this.apiResponse(res, {
+    this.apiResponse(req, res, {
       statusCode: 200,
       success: true,
       message: "Students attendees updated successfully!",

@@ -1,7 +1,6 @@
 import { Types } from "mongoose";
 import { User } from "./model";
 import {
-  IAddress,
   ICreateUser,
   IEmergencyContact,
   IGetUser,
@@ -16,6 +15,7 @@ import generateStudentId from "@/utils/generateStudentId";
 import generateAdminId from "@/utils/generateAdminId";
 import generateTeacherId from "@/utils/generateTeacherId";
 import { CloudinaryService } from "@/config/cloudinary";
+import { IAddress } from "../address/address.interface";
 
 class Service {
   async createUser(user: ICreateUser): Promise<void> {
