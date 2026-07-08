@@ -10,7 +10,7 @@ const LessonVideoPlayer = ({ videoUrl }: Props) => {
     <Card
       className="w-full rounded-lg overflow-hidden ring-2 bg-blue-100"
       styles={{ body: { padding: "0px" } }}
-      bordered={false}
+      variant="outlined"
     >
       <div className="relative pb-[56.25%]">
         <ReactPlayer

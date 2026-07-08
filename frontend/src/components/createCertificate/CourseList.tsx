@@ -39,8 +39,8 @@ const CourseList = ({ setSelectedCourse, setStudents }: Props) => {
   };
 
   const courseList: MenuProps["items"] =
-    courses?.map((course) => ({
-      key: course?.id,
+    courses?.map((course, index) => ({
+      key: course?.id || index,
       label: (
         <Button onClick={() => handleSelectCourse(course)} className="w-full">
           {course?.title}

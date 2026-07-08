@@ -6,7 +6,10 @@ import { Button } from "antd/lib";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import toast from "react-hot-toast";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+const TiptapEditor = dynamic(() => import("../../editor/TiptapEditor"), {
+  ssr: false,
+});
 
 type Props = {
   setIsSubmit: (value: boolean) => void;
@@ -18,10 +21,6 @@ const AssignmentSubmitForm = ({ setIsSubmit, lesson }: Props) => {
   const user = userData?.data as IUser;
   const [content, setContent] = useState("");
   const [submitAssignment, { isLoading }] = useSubmitAssignmentMutation();
-
-  const handleContentChange = (value: string) => {
-    setContent(value);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,18 +35,18 @@ const AssignmentSubmitForm = ({ setIsSubmit, lesson }: Props) => {
       });
       if (result?.data?.statusCode === 201) {
         toast.success(
-          result?.data?.message || "Assignment submitted successfully!"
+          result?.data?.message || "Assignment submitted successfully!",
         );
       } else {
         toast.error(
           result?.error?.message ||
             result?.error?.data?.message ||
-            "Something went wrong to submit assignment"
+            "Something went wrong to submit assignment",
         );
       }
     } catch (error: any) {
       toast.error(
-        `Something went wrong to submit assignment. error: ${error?.message}`
+        `Something went wrong to submit assignment. error: ${error?.message}`,
       );
     }
   };
@@ -63,12 +62,10 @@ const AssignmentSubmitForm = ({ setIsSubmit, lesson }: Props) => {
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Answer
           </label>
-          <ReactQuill
+          <TiptapEditor
             value={content}
-            onChange={handleContentChange}
-            theme="snow"
-            placeholder="Write your answer here..."
-            className="bg-white rounded-lg shadow-sm"
+            placeholder="Write your lesson content here..."
+            onChange={(value) => setContent(value)}
           />
         </div>
 

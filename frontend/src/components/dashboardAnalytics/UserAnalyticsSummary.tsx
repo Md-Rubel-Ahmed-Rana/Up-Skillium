@@ -1,7 +1,6 @@
 import { useGetUsersAnalyticsSummaryQuery } from "@/features/user";
 import { IUserAnalytics } from "@/types/user.type";
 import { Card, Col, Row, Spin, Statistic, Typography } from "antd/lib";
-import React from "react";
 import {
   CartesianGrid,
   Cell,

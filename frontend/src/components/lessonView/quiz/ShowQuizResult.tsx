@@ -19,7 +19,7 @@ const ShowQuizResult = ({ result }: Props) => {
           Quiz Results
         </Title>
       }
-      bordered={false}
+      variant="outlined"
       style={{
         width: "100%",
         margin: "20px auto",
@@ -27,7 +27,7 @@ const ShowQuizResult = ({ result }: Props) => {
       }}
     >
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
-        <Card bordered={false} style={{ backgroundColor: "#E6F7FF" }}>
+        <Card variant="outlined" style={{ backgroundColor: "#E6F7FF" }}>
           <Space
             direction="horizontal"
             size="large"
@@ -39,7 +39,7 @@ const ShowQuizResult = ({ result }: Props) => {
             </Text>
           </Space>
         </Card>
-        <Card bordered={false} style={{ backgroundColor: "#F6FFED" }}>
+        <Card variant="outlined" style={{ backgroundColor: "#F6FFED" }}>
           <Space
             direction="horizontal"
             size="large"
@@ -51,7 +51,7 @@ const ShowQuizResult = ({ result }: Props) => {
             </Text>
           </Space>
         </Card>
-        <Card bordered={false} style={{ backgroundColor: "#FFF2F0" }}>
+        <Card variant="outlined" style={{ backgroundColor: "#FFF2F0" }}>
           <Space
             direction="horizontal"
             size="large"

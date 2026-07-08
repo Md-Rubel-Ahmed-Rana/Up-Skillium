@@ -9,7 +9,7 @@ type Props = {
 
 const InstructorCard = ({ instructor }: Props) => {
   return (
-    <Card bordered={false} className="rounded-lg space-y-4">
+    <Card variant="outlined" className="rounded-lg space-y-4">
       <div className="flex items-center space-x-6">
         <div className="flex items-center space-x-3">
           <img
