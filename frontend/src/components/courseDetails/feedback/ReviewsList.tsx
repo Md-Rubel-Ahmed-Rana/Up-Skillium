@@ -17,7 +17,7 @@ const ReviewsList = ({ courseId }: Props) => {
   const user = userData?.data as IUser;
   const [isEditReview, setIsEditReview] = useState(false);
   const [pagination, setPagination] = useState<{ page: number; limit: number }>(
-    { page: 1, limit: 5 }
+    { page: 1, limit: 5 },
   );
   const { data, isLoading } = useGetAllReviewsByReviewToQuery({
     reviewToId: courseId,
@@ -38,10 +38,10 @@ const ReviewsList = ({ courseId }: Props) => {
             <div className="flex flex-col gap-2">
               {reviews?.length > 0 ? (
                 <>
-                  {reviews?.map((review) => (
+                  {reviews?.map((review, index) => (
                     <div
                       className="flex flex-col gap-2 bg-gray-50 p-2 rounded-md border"
-                      key={review?.id}
+                      key={review?.id || index}
                     >
                       <div className="flex justify-between">
                         <div className="flex items-center gap-2">

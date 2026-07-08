@@ -13,15 +13,15 @@ const AvailableCategories = ({ categories, course }: Props) => {
     <div>
       <h3 className="text-lg lg:text-4xl font-bold">Explore categories</h3>
       <div className="flex lg:flex-wrap lg:gap-4 gap-2 mt-2 w-full lg:w-auto overflow-x-auto mb-4">
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <Link
-            key={category}
+            key={category || index}
             href={`/courses/category/${makeCategoryAsUrl(category)}?category=${
               course?.category
             }&courseTitle=${course?.title}&description=${
               course?.description
             }&techs=${course?.technologies?.join(
-              "-"
+              "-",
             )}&tags=${course?.tags?.join("-")}&courseId=${course?.id}`}
           >
             <Button

@@ -20,8 +20,8 @@ const TopSellingCourses = () => {
           <CourseSkeleton />
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sortedCourses.map((course) => (
-              <TopSellingCard key={course?.id} course={course} />
+            {sortedCourses.map((course, index) => (
+              <TopSellingCard key={course?.id || index} course={course} />
             ))}
           </div>
         )}

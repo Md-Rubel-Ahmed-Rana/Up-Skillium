@@ -12,17 +12,15 @@ type Service = {
 type Props = {
   service: Service;
   index: number;
-  length: number;
 };
 
-const ServiceCard = ({ service, index, length }: Props) => {
+const ServiceCard = ({ service, index }: Props) => {
   const ref = useRef(null);
   const { animation } = useCardBottomToTopAnimation(ref);
   return (
     <motion.div
       {...animation}
       ref={ref}
-      key={index}
       className={`p-6 shadow-lg rounded-lg relative z-10 border-l-4 transition-transform transform hover:scale-100 hover:shadow-2xl ${
         index % 2 === 0 ? "border-blue-500 " : "border-green-500"
       }`}

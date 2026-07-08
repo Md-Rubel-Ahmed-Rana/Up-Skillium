@@ -8,7 +8,9 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import CreateLessonCommonFields from "./CreateLessonCommonFields";
 import CreateLessonFormWrapper from "./CreateLessonFormWrapper";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const TiptapEditor = dynamic(() => import("../editor/TiptapEditor"), {
+  ssr: false,
+});
 
 const AssignmentOrInstructionForm = () => {
   const [form] = Form.useForm();
@@ -46,10 +48,9 @@ const AssignmentOrInstructionForm = () => {
           name="content"
           rules={[{ required: true, message: "Lesson content is required" }]}
         >
-          <ReactQuill
-            theme="snow"
+          <TiptapEditor
+            value={form.getFieldValue("content")}
             placeholder="Write your lesson content here..."
-            className="bg-white rounded-lg shadow-sm"
             onChange={(value) => form.setFieldValue("content", value)}
           />
         </Form.Item>

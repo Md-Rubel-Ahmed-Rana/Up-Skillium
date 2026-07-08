@@ -4,7 +4,7 @@ import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import { type ReactElement, type ReactNode } from "react";
 import { Toaster } from "react-hot-toast";
-import "react-quill/dist/quill.snow.css";
+import "react-quill-new/dist/quill.snow.css";
 import { Provider } from "react-redux";
 import "swiper/css";
 import "swiper/css/navigation";

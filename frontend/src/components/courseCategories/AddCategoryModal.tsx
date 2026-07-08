@@ -29,7 +29,7 @@ const AddCategoryModal = () => {
       const result: any = await createCategory({ data: newCategories });
       if (result?.data?.statusCode === 201) {
         toast.success(
-          result?.data?.message || "Categories created successfully!"
+          result?.data?.message || "Categories created successfully!",
         );
         setIsCreateCategory(false);
       } else {
@@ -37,7 +37,7 @@ const AddCategoryModal = () => {
           result?.error?.message ||
             result?.error?.data?.message ||
             result?.data?.error?.message ||
-            "Failed to create category."
+            "Failed to create category.",
         );
       }
     } catch (error: any) {
@@ -87,9 +87,9 @@ const AddCategoryModal = () => {
           </Form.Item>
 
           <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
+            {categories.map((category, index) => (
               <Tag
-                key={category}
+                key={category || index}
                 closable
                 onClose={() => handleRemoveCategory(category)}
                 className="bg-blue-100 text-blue-700"

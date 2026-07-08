@@ -25,8 +25,8 @@ const CartDrawer = ({ open, setOpen, isLoading, items }: Props) => {
         <Empty description="No courses in your cart" />
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {items.map((item) => (
-            <CartItem item={item} key={item?.id || item?.course?.id} />
+          {items.map((item, index) => (
+            <CartItem item={item} key={item?.id || item?.course?.id || index} />
           ))}
         </div>
       )}
